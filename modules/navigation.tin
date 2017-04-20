@@ -1,0 +1,349 @@
+#ACTION {^[Exits: %*}
+{
+	#if {"$topExits" == "true"}
+	{
+		#variable {exitString} {%0};
+		#line {gag}
+	};
+	#regexp {%0} {{.*} [Doors: {.*}} {play door};
+	#script {exits} {echo "%1" | tr -d "[:punct:]"};
+	#replace {exits[1]} { } {;};
+	#list {exits} {create} {$exits[1]};
+	#list {exits} {size} {exitCount};
+	#forall {$exits}{#if {"$exitfind" == "&0"}{synth_play exitFindSound}};
+	#if {&{tracking}}
+	{
+		nearby | grep -i $tracking | prefix tracking_
+	};
+	#if {&{automap}}
+	{
+		map
+	};
+	#if {"$autoscent" == "true"}
+	{
+		scent of death
+	}
+}
+{1}
+
+#ACTION {^You enter a huge portal.$}
+{
+	seq_play portal
+}
+{5}
+
+#ACTION {^{You would need to be trained in the art of climbing|You'll have to climb} to go there.}
+{
+	#line {gag};
+	#if {"$autoclimb" == "true"}
+	{
+		climb $lastDirection
+	};
+	#else
+	{
+		#echo {You'll have to climb to go there. (You can enable autoclimbing by typing autoclimb.)}
+	}
+}
+{5}
+
+#ACTION {%1 arrives from%2portal%3}
+{
+	seq_play portal
+}
+{9}
+
+#ACTION {%1 begins {her|his|its} climb %2ward.}
+{
+	#if {"%1" == "$groupLeader"}
+	{
+		climb %2;
+		Add_Direction %2
+	}
+}
+{9}
+
+#ACTION {%1 {are|is} closed.$}
+{
+	#regexp {%1} {{.*} {.*}} {#variable {doorName} {&2}}
+}
+{9}
+
+#ACTION {^(You {may be able to|can} use waypoint %1 {to|to more easily} bridge the distance.)$}
+{
+	#if {"${auto.waypoint}" == "true"}
+	{
+		#send {waypoint %1};
+		waypoint $waypoint
+	}
+}
+{9}
+
+#ACTION {^({down|east|north|northeast|northwest|south|southeast|southwest|up|west}) %2 is closed.$}
+{
+	#variable {lastDirection} {%1};
+	#regexp {%2} {{.*} {.*}} {#variable {doorName} {&2}}
+}
+{9}
+
+#ACTION {^Alas, you cannot go that way.$}
+{
+	play bump;
+	#if {"$pathing" == "true"}
+	{
+		#path {del}
+	}
+}
+{9}
+
+#ACTION {^It seems to be locked.$}
+{
+	#if {&{doorName} && "${skillsAndSpells.pick locks}" == "true"}
+	{
+		pick $doorName $lastDirection
+	}
+}
+{9}
+
+#ACTION {^You stand up and prepare to follow the group.$}
+{
+	#unvariable {position}
+}
+{9}
+
+#ALIAS {^{way|wayp|waypo|waypoi|waypoin|waypoint} %1}
+{
+	#variable {waypoint} {%1};
+	\waypoint %1
+}
+{8}
+
+#ALIAS {^exit{f|fi|fin|find} {down|east|north|northeast|northwest|south|southeast|southwest|up|west}$}
+{
+	#variable {exitfind} {%2};
+	#showme {you will now be notified when there is a $exitfind exit.}
+}
+{9}
+
+#ALIAS {^noexit{f|fi|fin|find}$}
+{
+	#variable {exitfind} {false};
+	#showme {Exit notifications disabled.}
+}
+{9}
+
+#ALIAS {^nostealth$}
+{
+	#if {"$stealth" == "true"}
+	{
+		#unvariable {stealth};
+		#showme {you will no longer automatically use stealthy movement.}
+	};
+	#else
+	{
+		#showme {You are not currently using stealthy movement.}
+	}
+}
+{9}
+
+#ALIAS {^stealth$}
+{
+	#if {"$stealthyMovement" == "true"}
+	{
+		#variable {stealth} {true};
+		#showme {you will now automatically use stealthy movement.}
+	};
+	#else
+	{
+		#showme {This setting requires the stealthy movement skill.}
+	}
+}
+{9}
+
+#ALIAS {^te{r|rr|rra|rrai|rrain}$}
+{
+	help kxwt terrain | grep " ${kxwt.terrain}" | head -n 1
+}
+{9}
+
+#ALIAS {^{auto|noauto}climb$}
+{
+	#if {"%0" == "autoclimb"}
+	{
+		#showme {Autoclimbing enabled.};
+		#variable {autoclimb} {true}
+	};
+	#else
+	{
+		#showme {Autoclimbing disabled.};
+		#unvariable {autoclimb}
+	}
+}
+{9}
+
+#ALIAS {^{auto|noauto}waypoint$}
+{
+	#if {"%0" == "autowaypoint"}
+	{
+		#showme {You will now try to bridge waypoints automatically.};
+		#variable {auto.waypoint} {true}
+	};
+	#else
+	{
+		#showme {You will no longer try to bridge waypoints automatically.};
+		#unvariable {auto.waypoint}
+	}
+}
+{9}
+
+#ALIAS {^{d|do|dow|down|e|ea|eas|east|n|ne|nea|neas|neast|no|nor|nort|north|northe|northea|northeas|northeast|northw|northwe|northwes|northwest|nw|nwe|nwes|nwest|s|se|sea|seas|seast|so|sou|sout|south|southe|southea|southeas|southeast|southw|southwe|southwes|southwest|sw|swe|swes|swest|u|up|w|we|wes|west}$}
+{
+	#variable {lastDirection} {%0};
+	#if {"$retreat" == "true" && "$autoretreat" == "true" && "$inBattle" == "true"}
+	{
+		retreat $lastDirection
+	};
+	#elseif {"$stealth" == "true"}
+	{
+		#send {sneak %0}
+	};
+	#else
+	{
+		#send {%0}
+	}
+}
+{9}
+
+#ALIAS {^{not|t}opexi{t|ts}$}
+{
+	#if {"%0" == "topexi{t|ts}"}
+	{
+		#showme {Exits will now be displayed before room information.};
+		#variable {topExits} {true}
+	};
+	#else
+	{
+		#showme {Exits will now be displayed normally.};
+		#unvariable {topExits}
+	}
+}
+{9}
+
+#ALIAS {^{op|ope|open|pi|pic|pick} %*}
+{
+	#variable {doorName} {%2};
+	#send {%0}
+}
+{9}
+
+#MACRO {\e,}
+{
+	south
+}
+
+#MACRO {\e.}
+{
+	southeast
+}
+
+#MACRO {\e<}
+{
+	down
+}
+
+#MACRO {\eI}
+{
+	up
+}
+
+#MACRO {\eJ}
+{
+	#if {"$pathLoaded" == "true"}
+	{
+		#path {walk} {backward}
+	};
+	#else
+	{
+		#showme {Path not loaded.}
+	}
+}
+
+#MACRO {\eK}
+{
+	enter portal
+}
+
+#MACRO {\eL}
+{
+	#if {"$pathLoaded" == "true"}
+	{
+		#path {walk} {forward}
+	};
+	#else
+	{
+		#showme {Path not loaded.}
+	}
+}
+
+#MACRO {\eO}
+{
+	#if {&{doorName}}
+	{
+		open $doorName $lastDirection
+	};
+	#else
+	{
+		#showme {Nothing to open.}
+	}
+}
+
+#MACRO {\ei}
+{
+	north
+}
+
+#MACRO {\ej}
+{
+	west
+}
+
+#MACRO {\ek}
+{
+	scan
+}
+
+#MACRO {\el}
+{
+	east
+}
+
+#MACRO {\em}
+{
+	southwest
+}
+
+#MACRO {\eo}
+{
+	northeast
+}
+
+#MACRO {\eu}
+{
+	northwest
+}
+
+#PATHDIR          {d}  {u}  {32}
+#PATHDIR          {e}  {w}  {2}
+#PATHDIR          {n}  {s}  {1}
+#PATHDIR          {ne}  {sw}  {3}
+#PATHDIR          {nw}  {se}  {9}
+#PATHDIR          {s}  {n}  {4}
+#PATHDIR          {se}  {nw}  {6}
+#PATHDIR          {sw}  {ne}  {12}
+#PATHDIR          {u}  {d}  {16}
+#PATHDIR          {w}  {e}  {8}
+#VARIABLE         {exitCount}  {}
+#VARIABLE         {exitString}  {}
+#VARIABLE         {exitfind}  {false}
+#VARIABLE         {exits}  {}
+#VARIABLE         {lastDirection}  {}
+#VARIABLE         {waypoint}  {}

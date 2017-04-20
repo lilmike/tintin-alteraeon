@@ -1,0 +1,20 @@
+#TICKER           {bot}
+{
+	#nop {This is the heart of the bot. Decrease the number in braces at the end to make it walk faster, increase it to make it walk slower.};
+	#nop {Make sure we're in the same area, if not, backtrack.};
+	#if {$areaNumber != $targetAreaNumber}
+	{
+		backward
+	};
+	#else
+	{
+		#nop {We're in the right area, so pick an exit at random};
+		#math {exitChoice} {1d$exitCount};
+		#nop {Walk in the random exit.};
+		${exits[$exitChoice]};
+	}
+}                                                                                                                                                                                                                                                                                                                                                                                        {3}
+{3}
+
+#VARIABLE         {exitChoice}  {}
+#VARIABLE         {targetAreaNumber}  {$areaNumber}

@@ -1,0 +1,148 @@
+#ACTION {^casting_%1_You are asleep... ZZZZZZZZ *snork* ZZZZZ...}
+{
+	#list {recastList} {size} {i};
+	#if {"$wakeSpamControler" == "false" && $i != 0}
+	{
+		#line {gag};
+		#variable {wakeSpamControler} {true};
+		getup;
+		recast;
+		#delay {0.5} {#variable {wakeSpamControler} {false}}
+	}
+}
+{8}
+
+#ACTION {^kxwt_spell{down|up} %2}
+{
+	#if {"%1" == "down" && "${skillsAndSpells.%2}" == "true"}
+	{
+		add_spell %2
+	};
+	#else
+	{
+		remove_spell %2
+	}
+}
+{8}
+
+#ACTION {^Sorry, '%1' is a spell.  In order to cast it, you must use the 'cast' command.$}
+{
+	cast %1;
+	#line {gag}
+}
+{9}
+
+#ACTION {^casting%*_You don't know that spell at all, but attempt to cast it anyway.$}
+{
+	#if {"$auto.recast" == "true"}
+	{
+		#variable {auto.recast} {unknown}
+	}
+}
+{9}
+
+#ACTION {^casting_%1_You fail to cast the spell%*.$}
+{
+	#if {"${auto.recast}" == "true"}
+	{
+		cast %1
+	};
+	#if {"${auto.recast}" == "unknown"}
+	{
+		#variable {auto.recast} {true}
+	}
+}
+{9}
+
+#ACTION {^silent_Missing '%1'.$}
+{
+	add_spell %1
+}
+{9}
+
+#ALIAS {^remove_spell %1}
+{
+	#list {recastList} {find} {%1} {recastListIndex};
+	#if {$recastListIndex != 0}
+	{
+		#list {recastList} {delete} {$recastListIndex}
+	};
+	#if {&{position}}
+	{
+		recast
+	}
+}
+{8}
+
+#ALIAS {^add_spell %1}
+{
+	#if {"${auto.recast}" == "true" && "%1" != "{$excludedSpells}"}
+	{
+		#list {recastList} {find} {%1} {recastListIndex};
+		#if {$recastListIndex == 0}
+		{
+			#list {recastList} {add} {%1}
+		};
+		recast
+	}
+}
+{9}
+
+#ALIAS {^recast$}
+{
+	#if {"$busy" != "true" && "$editorMode" != "true" && "$inBattle" != "true"}
+	{
+		#list {recastList} {size} {recastListSize};
+		#if {$recastListSize > 0}
+		{
+			cast ${recastList[-1]}
+		};
+		#else
+		{
+			#if {&{position}}
+			{
+				$position
+			}
+		}
+	}
+}
+{9}
+
+#ALIAS {^{c|ca|cas|cast} %2}
+{
+	#if {"%2" == "{spe|spel|spell|spells|spellse|spellset}"}
+	{
+		#unvariable {recastList};
+		#unvariable {recastListIndex};
+		affect | prefix silent_
+	};
+	#else
+	{
+		#send {%1 %2 | prefix casting_%2_}
+	}
+}
+{9}
+
+#ALIAS {^{noauto|auto}recast$}
+{
+	#if {"%0" == "noautorecast"}
+	{
+		#variable {auto.recast} {false};
+		#showme {Spells will no longer automatically recast.}
+	};
+	#else
+	{
+		#variable {auto.recast} {true};
+		#showme {Some spells will now automatically recast when they drop}
+	};
+	#variable {recastList} {}
+}
+{9}
+
+#SUBSTITUTE       {^%scasting_%1_}  {}  {1}
+#SUBSTITUTE       {^casting_%1_}  {}  {1}
+#VARIABLE         {excludedSpells}  {barkskin|burning hands|chill touch|clsap of corruption|confusion|deathly sleep|enhancement|faerie fire|famine|feeble mind|haste|lethargy|noxious cloud|prayer for the dying|regeneration|sacred touch|sanctuary|shocking grasp|shadow bind|shadow decoy|sickening touch|stoneskin|sundrinker|sunscreen|trollsblut|valor|weaken}
+#VARIABLE         {recastList}  {}
+#VARIABLE         {recastListIndex}  {0}
+#VARIABLE         {recastListSize}  {0}
+#VARIABLE         {wakeSpamControler}  {false}
