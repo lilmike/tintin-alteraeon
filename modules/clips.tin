@@ -1,0 +1,191 @@
+#ACTION {^%S %2{: |, '}https://dl.dropboxusercontent.com/u/%S.{mp3|ogg|wav}%?$}
+{
+#variable {clipProvider} {dropbox};
+	#line {gag};
+	#if {"%2" == "{tell|tells} the group"}
+	{
+		#variable {clipType} {group}
+	};
+	#elseif {"%2" == "{tell|tells|replies to} %S"}
+	{
+		#variable {clipType} {private}
+	};
+	#else
+	{
+		#variable {clipType}  {public}
+	};
+	#variable {clipInfo} {%1};
+	#replace {clipInfo} {Replayin_} {};
+	#variable {soundClip} {{1}{$clipInfo}};
+	#script {clipInfo} {echo "%4.%5" | sed -e "s/'$//"};
+	#variable {clipInfo} {${clipInfo[1]}};
+	#variable {soundClip} {{1}{${soundClip[1]}}{2}{$clipInfo}};
+	#if {"$autosoundclip" == "true" || "%1" == "{$autoClipList}"}
+	{
+		#echo {Playing $clipType sound clip from ${soundClip[1]}, press alt+shift+| to stop playback.};
+		playclip %4.%5
+	};
+	#else
+	{
+		play new-clip;
+		#echo {%1 shared a $clipType sound clip. Press alt+' to listen. You can stop playback with alt+shift+|.}
+	}
+}
+{7}
+
+#ACTION {^%S %2{: |, '}http://sndup.net/%S/{a|d|a'|d'}$}
+{
+#variable {clipProvider} {sndup};
+	#line {gag};
+	#if {"%2" == "{tell|tells} the group"}
+	{
+		#variable {clipType} {group}
+	};
+	#elseif {"%2" == "{tell|tells|replies to} %S"}
+	{
+		#variable {clipType} {private}
+	};
+	#else
+	{
+		#variable {clipType}  {public}
+	};
+	#variable {clipInfo} {%1};
+	#replace {clipInfo} {Replayin_} {};
+	#variable {soundClip} {{1}{$clipInfo}{2}{%4}};
+	#if {"$autosoundclip" == "true" || "%1" == "{$autoClipList}"}
+	{
+		#echo {Playing $clipType sound clip from ${soundClip[1]}, press alt+shift+| to stop playback.};
+		playclip %4
+	};
+	#else
+	{
+		play new-clip;
+		#echo {%1 shared a $clipType sound clip. Press alt+' to listen. You can stop playback with alt+shift+|.}
+	}
+}
+{7}
+
+#ALIAS {Sound_Clip_Handler %1}
+{
+	#if {"$recordingPID" == "false"}
+	{
+		#variable {soundClipChannel} {%1};
+		#echo {recording. Press alt+shift+P again to stop and post your clip.};
+		#system {rec -qV0 $HOME/clip.ogg &echo "#variable {recordingPID} {$!}" > "$HOME/.recordingpid"};
+		#read {$HOME/.recordingpid}
+	};
+	#else
+	{
+		#system {kill $recordingPID};
+		#echo {Posting soundclip...};
+		#system {bash scripts/uploadclip.sh $soundClipChannel&};
+		#variable {recordingPID} {false}
+	}
+}
+{7}
+
+#ALIAS {^clipchat %S}
+{
+	#variable {clipTellTarget} {%1};
+	#if {"$clipTellTarget" != "reply"}
+	{
+		#showme {You can now send  sound clips to $clipTellTarget with alt+shift+T}
+	};
+	#else
+	{
+		#showme {Private soundclips set to reply.}
+	}
+}
+{7}
+
+#ALIAS {^playclip %S$}
+{
+#if {$clipProvider} {sndup}
+{
+	#system {play -qV0 http://sndup.net/%1/d gain $volume &> /dev/null& echo "$!" > "$HOME/.clippid"}
+};
+#if {$clipProvider} {dropbox}
+{
+	#system {play -qV0 https://dl.dropboxusercontent.com/u/%1 gain $volume &> /dev/null& echo "$!" > "$HOME/.clippid"}
+};
+	#script {soundClipPID} {cat "$HOME/.clippid"};
+	#variable {soundClipPID} {${soundClipPID[1]}}
+}
+{7}
+
+#ALIAS {^{a|noa}utosoundclip$}
+{
+	#if {"%0" == "autosoundclip"}
+	{
+		#variable {autosoundclip} {true};
+		#echo {sound clips will play as soon as they are posted.}
+	};
+	#else
+	{
+		#unvariable {autosoundclip};
+		#echo {Autosoundclip disabled.}
+	}
+}
+{7}
+
+#MACRO {\e"}
+{
+	#if {!&{autoClipList}}
+	{
+		#variable {autoClipList} {${soundClip[1]}}
+	};
+	#else
+	{
+		#variable {autoClipList} {${autoClipList}|${soundClip[1]}}
+	};
+	#echo {${soundClip[1]} added to your allow list for sound clips.}
+}
+
+#MACRO {\e'}
+{
+	#echo {Playing sound clip from ${soundClip[1]}, press alt+shift+" to always allow clips from them. Press alt+shift+~ to download this clip.};
+	playclip ${soundClip[2]}
+}
+
+#MACRO {\eG}
+{
+	Sound_Clip_Handler gtell
+}
+
+#MACRO {\eP}
+{
+	Sound_Clip_Handler cowsay
+}
+
+#MACRO {\eT}
+{
+	#if {"$clipTellTarget" != "reply"}
+	{
+		Sound_Clip_Handler tell $clipTellTarget
+	};
+	#else
+	{
+		Sound_Clip_Handler reply
+	}
+}
+
+#MACRO {\e|}
+{
+	#if {&{soundClipPID}}
+	{
+		#system {kill -9 $soundClipPID}
+	}
+}
+
+#MACRO {\e~}
+{
+	#system {bash scripts/downloadclip.sh ${soundClip[1]} ${soundClip[2]}}
+}
+
+#TICKER           {post_clip}  {#script {if [ -f $HOME/cliplink.txt ] ; then echo "#textin {$HOME/cliplink.txt}";rm $HOME/cliplink.txt;fi}}                                                                 {1}
+#VARIABLE         {clipInfo}  {}
+#VARIABLE         {clipTellTarget}  {reply}
+#VARIABLE         {clipType}  {}
+#VARIABLE         {clipProvider}  {}
+#VARIABLE         {recordingPID}  {false}
+#VARIABLE         {soundClip}  {}

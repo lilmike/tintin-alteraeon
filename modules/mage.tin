@@ -1,0 +1,102 @@
+#ACTION {^You {are drowning|struggle for air but find none|struggle desperately for air to breathe}!$}
+{
+	#if {"${skillsAndSpells.water breathing}" == "true" && "$castingWaterBreathing" == "false"}
+	{
+		c water breathing;
+		#variable {castingWaterBreathing} {true};
+		#delay {60} {#variable {castingWaterBreathing} {false}}
+	}
+}
+{1}
+
+#ACTION {^{An|A|a|an} {greater ice|ice|lesser ice} elemental {starts|stops} following you.$}
+{
+	#if {"${client.releasing}" != "true"}
+	{
+		#if {"${auto.iceElemental}" == "true" && ${character.currentMana} > 200}
+		{
+			#if {"%3" == "stops"}
+			{
+				#if {"%2" != "ice"}
+				{
+					add_spell ice elemental %2
+				};
+				#else
+				{
+					add_spell ice elemental
+				}
+			};
+			#if {"%2" != "ice"}
+			{
+				remove_spell ice elemental %2
+			};
+			#else
+			{
+				remove_spell ice elemental
+			}
+		};
+		#elseif {"${auto.iceElemental}" == "true" && ${character.currentMana} < 200}
+		{
+			synth_play warningSound
+		}
+	};
+	#else
+	{
+		#variable {client.releasing} {false}
+	}
+}
+{9}
+
+#ACTION {^{A|a} {crystal|greater crystal|lesser crystal|fire|greater fire|lesser fire|lightning|greater lightning|lesser lightning} {elemental|pillar elemental} {starts|stops} following you.$}
+{
+	#if {"${client.releasing}" == "true"}
+	{
+		#regexp {%2} {{.*} {crystal|fire|lightning}} {#variable {i} {&2}};
+		#else
+		{
+			#variable {i} {%2}
+		};
+		#if {"${auto.${i}Elemental}" == "true" && ${character.currentMana} >= 250}
+		{
+			#regexp {%2} {{.*} {crystal|fire|lightning}} {#variable {i} {&2 elemental &1}};
+			#else
+			{
+				#variable {i} {%2 elemental}
+			};
+			#if {"%4" == "stops"}
+			{
+				add_spell $i
+			};
+			#else
+			{
+				remove_spell $i
+			}
+		}
+	};
+	#else
+	{
+		#variable {client.releasing} {false}
+	}
+}
+{9}
+
+#ALIAS {^{noauto|auto}{crystal|fire|ice|lightning}$}
+{
+	#if {"%1" == "auto"}
+	{
+		#if {"${auto.recast}" != "true"}
+		{
+			#echo {In order for auto %2 delemental to work, you need to turn on autorecast.}
+		};
+		#variable {auto.%2Elemental} {true};
+		#echo {auto %2 elemental enabled}
+	};
+	#else
+	{
+		#variable {auto.%2Elemental} {false};
+		#echo {auto %2 elemental disabled}
+	}
+}
+{9}
+
+#VARIABLE         {castingWaterBreathing}   {false}
