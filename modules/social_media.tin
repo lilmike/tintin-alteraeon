@@ -105,7 +105,8 @@
 	#variable {gusername} {%1};
 	#variable {gurl} {https://%2};
 	#variable {gpassword} {%4};
-	#showme {Now posting to GNU Social as %1@%2.}
+	#showme {Now posting to GNU Social as %1@%2.};
+	#history {delete}
 }
 {9}
 
