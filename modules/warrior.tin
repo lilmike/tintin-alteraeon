@@ -57,19 +57,6 @@
 }
 {9}
 
-#ACTION {^You {feel your enhanced courage fading|make a cut and paint yourself with your own blood, but don't feel any different}.$}
-{
-	#if {${character.currentHp} > ${character.maxHp} / 2}
-	{
-		@command{val;valor}
-	};
-	#if {"%1" == "feel your enhanced courage fading"}
-	{
-		play valor-drop 
-	}
-}
-{9}
-
 #ACTION {^You got a %d attack combo%2}
 {
 	play combo-partial-%1
@@ -85,6 +72,19 @@
 #ACTION {^You successfully finished a full %d attack combo!}
 {
 	play combo-full-%1
+}
+{9}
+
+#ACTION {^You {feel your enhanced courage fading|make a cut and paint yourself with your own blood, but don't feel any different}.$}
+{
+	#if {${character.currentHp} > ${character.maxHp} / 2}
+	{
+		@command{val;valor}
+	};
+	#if {"%1" == "feel your enhanced courage fading"}
+	{
+		play valor-drop
+	}
 }
 {9}
 
@@ -121,9 +121,12 @@
 	get_random_attack;
 	#list {randomAttack} {size} {i};
 	#math {r} {1d$i};
-	#while {$r == ${lastRandomAttack[1]} || $r == ${lastRandomAttack[2]}}
+	#if {$i >= 3}
 	{
-		#math {r} {1d$i}
+		#while {$r == ${lastRandomAttack[1]} || $r == ${lastRandomAttack[2]}}
+		{
+			#math {r} {1d$i}
+		}
 	};
 	#variable {lastRandomAttack[2]} {${lastRandomAttack[1]}};
 	#variable {lastRandomAttack[1]} {$r};
@@ -295,6 +298,12 @@
 	#if {"${skillsAndSpells.whirlwind}" == "true" && "$advancedTactics" == "true"}
 	{
 		#list {randomAttack} {add} {whirlwind}
+	};
+	#list {randomAttack} {size} {i};
+	#if {$i == 0}
+	{
+		#list {randomAttack} {add} {#echo {You do not currently have any warrior attacks. If you believe this is wrong, try the load command.}};
+		#unvariable {lastRandomAttack}
 	}
 }
 {9}
@@ -304,10 +313,7 @@
 	get_random_attack;
 	#list {randomAttack} {size} {i};
 	#math {r} {1d$i};
-	#while {$r == ${lastRandomAttack[1]} || $r == ${lastRandomAttack[2]}}
-	{
-		#math {r} {1d$i}
-	};
+	if {$i >= 3}{#while {$r == ${lastRandomAttack[1]} || $r == ${lastRandomAttack[2]}}{#math {r} {1d$i}}};
 	#variable {lastRandomAttack[2]} {${lastRandomAttack[1]}};
 	#variable {lastRandomAttack[1]} {$r};
 	${randomAttack[$r]}
