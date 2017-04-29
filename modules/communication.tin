@@ -57,6 +57,14 @@
 }
 {7}
 
+#ACTION {^Monsters are worth double experience for the next %*}
+{
+	synth_play notificationSound;
+	Add_Event %0;
+	notify-send %0
+}
+{7}
+
 #ACTION {%1-EBG31@ %2}
 {
 	#line {gag};
