@@ -1,15 +1,11 @@
 #ACTION {^!!SOUND(%1.wav{\)| R=\d*\)}$}
 {
-	#variable {versionFormatString} {%1};
-	#replace {versionFormatString} {/} {_};
-	#if {!&{sound[$versionFormatString]}}
+	#nop {Keep track of the last 10 items sent via msp.};
+	#list {soundHistory} {insert} {1} {%1};
+	#list {soundHistory} {size} {i};
+	#if {$i >= 11}
 	{
-		#variable {sound[$versionFormatString]} {%2}
-	};
-	#elseif {${sound[$versionFormatString]} != %2}
-	{
-		#system {rm -f $HOME/sounds/%1.opus};
-		#variable {sound[$versionFormatString]} {%2}
+		#list {soundHistory} {delete} {11}
 	};
 	#system {if [ ! -f "$HOME/sounds/%1.opus" ] ; then DIR=$(echo "%1.wav" | sed "s/\(.*\\/\)[^\\/]*$/\\1/");FNAME=$(echo "%1.wav" | sed -e "s/.*\\/\([^\\/]*\)$/\\1/" -e "s/\.wav$/.opus/");mkdir -p "$HOME/sounds/$DIR";sox -V0 "http://alteraeon.com/soundpack/wav_v1/%1.wav" -t wav - | opusenc --quiet --bitrate 50 - "$HOME/sounds/$DIR/$FNAME" 2> /dev/null;fi};
 	#switch {"%1"}
@@ -71,6 +67,15 @@
 }
 {9}
 
+#ALIAS {^play_norandom %S$}
+{
+	#if {"$msp" == "true"}
+	{
+		#system {play -qV0 "$HOME/sounds/%1.opus" gain $volume &> /dev/null &}
+	}
+}
+{8}
+
 #ALIAS {^news$}
 {
 	#if {$motdStatus != 200 && $motdStatus != 404}
@@ -123,15 +128,6 @@
 	}
 }
 {9}
-
-#ALIAS {^play_norandom %S$}
-{
-	#if {"$msp" == "true"}
-	{
-		#system {play -qV0 "$HOME/sounds/%1.opus" gain $volume &> /dev/null &}
-	}
-}
-{8}
 
 #ALIAS {seq_{play|play_norandom} %S}
 {
@@ -217,5 +213,6 @@
 }
 
 #VARIABLE         {msp}  {true}
+#VARIABLE         {soundHistory}  {}
 #VARIABLE         {versionFormatString}  {}
 #VARIABLE         {volume}  {0}
