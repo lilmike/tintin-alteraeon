@@ -214,5 +214,4 @@
 
 #VARIABLE         {msp}  {true}
 #VARIABLE         {soundHistory}  {}
-#VARIABLE         {versionFormatString}  {}
 #VARIABLE         {volume}  {0}
