@@ -12,6 +12,13 @@
 }
 {1}
 
+#ACTION {^A deadly mist begins rising from %* body...$}
+{
+	say \cc;
+	play dying-breath-release
+}
+{1}
+
 #ACTION {^A tall prison of jagged bone teeth cracks and shatters as you break free!$}
 {
 	#if {&{position}}
