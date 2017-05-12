@@ -42,7 +42,7 @@
 }
 {9}
 
-#ALIAS {^{ke|key|keyp|keypr|keypro|keyprof|keyprofi|keyprofil|keyprofile|kp|kpr|kpro|kprof|kprofi|kprofil|kprofile} %s%S$}
+#ALIAS {^{ke|key|keyp|keypr|keypro|keyprof|keyprofi|keyprofil|keyprofile|kp|kpr|kpro|kprof|kprofi|kprofil|kprofile|ks|kse|kset|keys|keyse|keyset} %s%S$}
 {
 	#format {keySetName} {%n} {%3};
 	#if {!&{keyProfile[${keySetName}]}}
