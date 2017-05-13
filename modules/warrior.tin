@@ -225,7 +225,7 @@ riposte
 	{
 		#list {randomAttack} {add} {feint}
 	};
-	#if {"${skillsAndSpells.ground strike}" == "true" && "${character.inBattle}" == "true" && "${skillsAndSpells.advanced tactics}" == "true"}
+	#if {"${skillsAndSpells.ground strike}" == "true" && "${character.inBattle}" == "true" && "${skillsAndSpells.advanced tactics}" == "true" && "${kxwt.terrain}" != "{7|18|19|20|21|23|25|29|31|32}"}
 	{
 		#list {randomAttack} {add} {gstrike}
 	};
