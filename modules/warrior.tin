@@ -1,3 +1,12 @@
+#action {^{You give up waiting, and shift out of your riposte stance|Your riposte .*|.* notices your riposte and moves quickly to block it}{\.|!}$}
+{
+#if {"${skillsAndSpells.riposte}" == "true" && "${auto.riposte}" == "true" && "${character.inBattle}" == "true"}
+{
+riposte
+}
+}
+{9}
+
 #ACTION {^You are rescued from certain death by %1!}
 {
 	a
@@ -23,14 +32,6 @@
 }
 {5}
 
-#ACTION {^But no-one is attacking {her|him|it}!$}
-{
-	#math {rescueIncrementer} {$rescueIncrementer + 1};
-	#replace {lastRescued} {%d} {$rescueIncrementer};
-	rescue $lastRescued
-}
-{9}
-
 #ACTION {^The physical reserve deep within you feels replenished.$}
 {
 	#unvariable {character.exhausted};
@@ -45,12 +46,6 @@
 }
 {9}
 
-#ACTION {^You do not see anyone named that here.$}
-{
-	#variable {rescueIncrementer} {1}
-}
-{9}
-
 #ACTION {^You don't have enough energy to do that again so soon.$}
 {
 	#send {assist}
@@ -60,12 +55,6 @@
 #ACTION {^You got a %d attack combo%2}
 {
 	play combo-partial-%1
-}
-{9}
-
-#ACTION {^You heroically rescue %*}
-{
-	#variable {rescueIncrementer} {1}
 }
 {9}
 
@@ -93,6 +82,7 @@
 	#variable {combo.attack} {%2};
 	#replace {combo.attack} {\x7c} { ${combo.target};};
 	#replace {combo.attack} {berserking} {berserk};
+	#replace {combo.attack} {ground strike} {gstrike};
 	#replace {combo.attack} {leap attack} {leap};
 	#replace {combo.attack} {pommel strike} {pommel};
 	#replace {combo.attack} {x} {randomattack};
@@ -143,14 +133,6 @@
 	\wield %1
 }
 {5}
-
-#ALIAS {^re{s|sc|scu|scue} %s%d.%4}
-{
-	#variable {rescueIncrementer} {%3};
-	#variable {lastRescued} {%4};
-	#send {%0}
-}
-{8}
 
 #ALIAS {^xcombo %S %S$}
 {
@@ -223,11 +205,11 @@
 	{
 		#list {randomAttack} {add} {bash}
 	};
-	#if {"${skillsAndSpells.bloodletting stab}" == "true" && "$crossClassTactics" == "true"}
+	#if {"${skillsAndSpells.bloodletting stab}" == "true" && "${skillsAndSpells.cross class tactics}" == "true" && "${character.inBattle}" == "true"}
 	{
 		#list {randomAttack} {add} {stab}
 	};
-	#if {"${skillsAndSpells.charge}" == "true" && "$inBattle" != "true"}
+	#if {"${skillsAndSpells.charge}" == "true" && "${character.inBattle}" != "true"}
 	{
 		#list {randomAttack} {add} {charge}
 	};
@@ -239,19 +221,19 @@
 	{
 		#list {randomAttack} {add} {disarm}
 	};
-	#if {"${skillsAndSpells.feint}" == "true" && "$inBattle" == "true"}
+	#if {"${skillsAndSpells.feint}" == "true" && "${character.inBattle}" == "true"}
 	{
 		#list {randomAttack} {add} {feint}
 	};
-	#if {"${skillsAndSpells.ground strike}" == "true" && "$inBattle" == "true" && "$advancedTactics" == "true"}
+	#if {"${skillsAndSpells.ground strike}" == "true" && "${character.inBattle}" == "true" && "${skillsAndSpells.advanced tactics}" == "true"}
 	{
 		#list {randomAttack} {add} {gstrike}
 	};
-	#if {"${skillsAndSpells.flourish}" == "true" && "$inBattle" == "true"}
+	#if {"${skillsAndSpells.flourish}" == "true" && "${character.inBattle}" == "true"}
 	{
 		#list {randomAttack} {add} {flourish}
 	};
-	#if {"${skillsAndSpells.intimidate}" == "true" && "$advancedTactics" == "true"}
+	#if {"${skillsAndSpells.intimidate}" == "true" && "${skillsAndSpells.advanced tactics}" == "true"}
 	{
 		#list {randomAttack} {add} {intimidate}
 	};
@@ -279,7 +261,7 @@
 	{
 		#list {randomAttack} {add} {pommel}
 	};
-	#if {"${skillsAndSpells.riposte}" == "true" && "$inBattle" == "true"}
+	#if {"${skillsAndSpells.riposte}" == "true" && "${character.inBattle}" == "true"}
 	{
 		#list {randomAttack} {add} {riposte}
 	};
@@ -287,7 +269,7 @@
 	{
 		#list {randomAttack} {add} {stomp}
 	};
-	#if {"${skillsAndSpells.taunt}" == "true" && "$inBattle" != "true"}
+	#if {"${skillsAndSpells.taunt}" == "true"}
 	{
 		#list {randomAttack} {add} {taunt}
 	};
@@ -295,11 +277,11 @@
 	{
 		#list {randomAttack} {add} {thrust}
 	};
-	#if {"${skillsAndSpells.trip}" == "true" && "$crossClassTactics" == "true"}
+	#if {"${skillsAndSpells.trip}" == "true" && "${skillsAndSpells.cross class tactics}" == "true"}
 	{
 		#list {randomAttack} {add} {trip}
 	};
-	#if {"${skillsAndSpells.whirlwind}" == "true" && "$advancedTactics" == "true"}
+	#if {"${skillsAndSpells.whirlwind}" == "true" && "${skillsAndSpells.advanced tactics}" == "true"}
 	{
 		#list {randomAttack} {add} {whirlwind}
 	};
@@ -326,7 +308,7 @@
 
 #ALIAS {^re{s|sc|scu|scue} %s%3}
 {
-	#variable {lastRescued} {1.%3};
+	#variable {lastRescued} {%3};
 	#send {%0}
 }
 {9}
@@ -352,7 +334,7 @@
 }
 {9}
 
-#ALIAS {^{auto|noauto}{charge|retreat|valor}$}
+#ALIAS {^{auto|noauto}{charge|retreat|riposte|valor}$}
 {
 	#if {"%1" == "auto"}
 	{
@@ -412,8 +394,7 @@
 }
 {9}
 
-#VARIABLE         {combo}  {}
+#VARIABLE         {combo.setKey}  {false}
 #VARIABLE         {exhausted}  {}
 #VARIABLE         {lastRandomAttack}  {{1}{0}{2}{0}}
 #VARIABLE         {lastRescued}  {}
-#VARIABLE         {rescueIncrementer}  {1}
