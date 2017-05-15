@@ -1,22 +1,3 @@
-#ACTION {^%S has %2 of %3 hitpoints.$}
-{
-	#if {"$autoheal" == "true"}
-	{
-		#if {%2 <= %3 / 3}
-		{
-			#if {"%1" == "You"}
-			{
-				@heal{}
-			};
-			#else
-			{
-				@heal{%1}
-			}
-		}
-	}
-}
-{1}
-
 #ACTION {^A magical hammer disappears in a blinding flash of light! (worn by you)}
 {
 	#if {"${skillsAndSpells.spirit hammer}" == "true" && "${auto.recast}" == "true"}
@@ -59,37 +40,30 @@
 
 #ALIAS {^FULL_HEAL$}
 {
-	#if {"$fullHeal" != "false" && ${character.currentMana} > ${character.maxMana} / 5 && ${character.currentHp} < ${character.maxHp} && "${character.inBattle}" != "true" && "$busy" != "true"}
+	#if {"&{character.fullHeal}"  && ${character.currentMana} > ${character.maxMana} / 5 && ${character.currentHp} < ${character.maxHp} && "${character.inBattle}" != "true" && "$busy" != "true"}
 	{
-		#delay {0.3} {c $fullHeal};
+		#delay {0.6} {c ${character.fullHeal}};
 		#variable {msg} {false}
 	};
-	#elseif {${character.currentMana} < ${character.maxMana} / 5 && "$fullHeal" != "false"}
+	#elseif {${character.currentMana} < ${character.maxMana} / 5 && &{character.fullHeal}}
 	{
-		#variable {fullHeal} {false};
+		#unvariable {character.fullHeal};
 		#variable {msg} {Fullheal interupted due to low mana.}
 	};
-	#elseif {${character.currentHp} >= ${character.maxHp}  && "$fullHeal" != "false"}
+	#elseif {${character.currentHp} >= ${character.maxHp}  && &{character.fullHeal}}
 	{
-		#variable {fullHeal} {false};
+		#unvariable {character.fullHeal};
 		#variable {msg} {Fullheal complete.}
 	};
-	#elseif {"${character.inBattle}" == "true" || "$busy" == "true" && "$fullHeal" != "false"}
+	#elseif {"${character.inBattle}" == "true" || "$busy" == "true" && &{character.fullHeal}}
 	{
-		#variable {fullHeal} {false}
+		#unvariable {character.fullHeal}
 	};
 	#if {&{msg} && "$msg" != "false"}
 	{
 		#echo {$msg};
 		#variable {msg} {false}
 	}
-}
-{9}
-
-#ALIAS {^autoheal$}
-{
-	#variable {autoheal} {true};
-	#showme {Autoheal is now on.}
 }
 {9}
 
@@ -102,30 +76,23 @@
 
 #ALIAS {^fullheal$}
 {
-	#if {"${skillsAndSpells.heal}" == "true"}
+	#if {"${skillsAndSpells.major heal}" == "true"}
 	{
-		#variable {fullHeal} {heal}
+		#variable {character.fullHeal} {major heal}
 	};
-	#elseif {"${skillsAndSpells.cure critical wounds}" == "true"}
+	#elseif {"${skillsAndSpells.heal}" == "true"}
 	{
-		#variable {fullHeal} {cure critical wounds}
+		#variable {character.fullHeal} {heal}
 	};
-	#elseif {"${skillsAndSpells.cure serious wounds}" == "true"}
+	#elseif {"${skillsAndSpells.bolster}" == "true"}
 	{
-		#variable {fullHeal} {cure serious wounds}
+		#variable {character.fullHeal} {bolster}
 	};
 	#else
 	{
-		#variable {fullHeal} {cure light wounds}
+		#variable {character.fullHeal} {soothe wounds}
 	};
-	cast $fullHeal
-}
-{9}
-
-#ALIAS {^noautoheal$}
-{
-	#unvariable {autoheal};
-	#showme {Autoheal is now off.}
+	cast ${character.fullHeal}
 }
 {9}
 
@@ -146,21 +113,21 @@
 {
 	#if {"${skillsAndSpells.harm}" == "true"}
 	{
-		#variable {harmSpell} {harm}
+		#variable {character.harmSpell} {harm}
 	};
-	#elseif {"${skillsAndSpells.cause critical wounds}" == "true"}
+	#elseif {"${skillsAndSpells.inflict suffering}" == "true"}
 	{
-		#variable {harmSpell} {cause critical wounds}
+		#variable {character.harmSpell} {inflict suffering}
 	};
-	#elseif {"${skillsAndSpells.cause serious wounds}" == "true"}
+	#elseif {"${skillsAndSpells.chasten}" == "true"}
 	{
-		#variable {harmSpell} {cause serious wounds}
+		#variable {character.harmSpell} {chasten}
 	};
 	#else
 	{
-		#variable {harmSpell} {cause light wounds}
+		#variable {character.harmSpell} {inflict wounds}
 	};
-	#variable {result} {c $harmSpell %0}
+	#variable {result} {c ${character.harmSpell} %0}
 }
 
 #FUNCTION {heal}
@@ -173,26 +140,24 @@
 	{
 		#if {"${skillsAndSpells.breath of life}" == "true"}
 		{
-			#variable {healSpell} {breath of life}
+			#variable {character.healSpell} {breath of life}
+		};
+		#elseif {"${skillsAndSpells.major heal}" == "true"}
+		{
+			#variable {character.healSpell} {major heal}
 		};
 		#elseif {"${skillsAndSpells.heal}" == "true"}
 		{
-			#variable {healSpell} {heal}
+			#variable {character.healSpell} {heal}
 		};
-		#elseif {"${skillsAndSpells.cure critical wounds}" == "true"}
+		#elseif {"${skillsAndSpells.bolster}" == "true"}
 		{
-			#variable {healSpell} {cure critical wounds}
-		};
-		#elseif {"${skillsAndSpells.cure serious wounds}" == "true"}
-		{
-			#variable {healSpell} {cure serious wounds}
+			#variable {character.healSpell} {bolster}
 		};
 		#else
 		{
-			#variable {healSpell} {cure light wounds}
+			#variable {character.healSpell} {soothe wounds}
 		};
-		#variable {result} {c $healSpell %0}
+		#variable {result} {c ${character.healSpell} %0}
 	}
 }
-
-#VARIABLE         {fullHeal}  {false}
