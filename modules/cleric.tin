@@ -13,7 +13,7 @@
 }
 {9}
 
-#ACTION {^casting_%1_You try to heal some of your {minor|more critical|more serious} {injuries|wounds}.$}
+#ACTION {^casting_%1_You feel {a little better|better}{\.|!}$}
 {
 	FULL_HEAL
 }
@@ -40,7 +40,7 @@
 
 #ALIAS {^FULL_HEAL$}
 {
-	#if {"&{character.fullHeal}"  && ${character.currentMana} > ${character.maxMana} / 5 && ${character.currentHp} < ${character.maxHp} && "${character.inBattle}" != "true" && "$busy" != "true"}
+	#if {&{character.fullHeal}  && ${character.currentMana} > ${character.maxMana} / 5 && ${character.currentHp} < ${character.maxHp} && "${character.inBattle}" != "true" && "$busy" != "true"}
 	{
 		#delay {0.6} {c ${character.fullHeal}};
 		#variable {msg} {false}
