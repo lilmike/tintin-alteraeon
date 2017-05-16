@@ -86,6 +86,7 @@ riposte
 	#replace {combo.attack} {leap attack} {leap};
 	#replace {combo.attack} {pommel strike} {pommel};
 	#replace {combo.attack} {x} {randomattack};
+	#replace {combo.attack} {shield slam} {slam};
 	#if {"${combo.setKey}" != "false"}
 	{
 		set${combo.setKey} ${combo.attack}
@@ -264,6 +265,10 @@ riposte
 	#if {"${skillsAndSpells.riposte}" == "true" && "${character.inBattle}" == "true"}
 	{
 		#list {randomAttack} {add} {riposte}
+	};
+	#if {"${skillsAndSpells.shield slam}" == "true" && "${skillsAndSpells.advanced tactics}" == "true"}
+	{
+		#list {randomAttack} {add} {slam}
 	};
 	#if {"${skillsAndSpells.stomp}" == "true"}
 	{
