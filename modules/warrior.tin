@@ -1,12 +1,3 @@
-#action {^{You give up waiting, and shift out of your riposte stance|Your riposte .*|.* notices your riposte and moves quickly to block it}{\.|!}$}
-{
-#if {"${skillsAndSpells.riposte}" == "true" && "${auto.riposte}" == "true" && "${character.inBattle}" == "true"}
-{
-riposte
-}
-}
-{9}
-
 #ACTION {^You are rescued from certain death by %1!}
 {
 	a
@@ -104,6 +95,15 @@ riposte
 {
 	#math {i} {1d%1};
 	tactics all | grep -i length | grep -v x | grep -v charge | grep -v taunt | prefix silent_ | tail -n $i | head -n 1
+}
+{9}
+
+#ACTION {^{You give up waiting, and shift out of your riposte stance|Your riposte .*|.* notices your riposte and moves quickly to block it}{\.|!}$}
+{
+	#if {"${skillsAndSpells.riposte}" == "true" && "${auto.riposte}" == "true" && "${character.inBattle}" == "true"}
+	{
+		riposte
+	}
 }
 {9}
 
@@ -206,6 +206,13 @@ riposte
 	{
 		#list {randomAttack} {add} {bash}
 	};
+	#if {"${skillsAndSpells.berserking}" == "true" && "${skillsAndSpells.advanced tactics}" == "true" && "${auto.berserk}" == "true" && "${character.inBattle}" == "true"}
+	{
+		#if {${character.currentHp} >= ${character.maxHp} / 2 && ${character.currentMv} >= ${character.maxMv} / 2}
+		{
+			#list {randomAttack} {add} {berserk}
+		}
+	};
 	#if {"${skillsAndSpells.bloodletting stab}" == "true" && "${skillsAndSpells.cross class tactics}" == "true" && "${character.inBattle}" == "true"}
 	{
 		#list {randomAttack} {add} {stab}
@@ -214,15 +221,15 @@ riposte
 	{
 		#list {randomAttack} {add} {charge}
 	};
-	#if {"${skillsAndSpells.cleave}" == "true" && "$advancedTactics" == "true"}
+	#if {"${skillsAndSpells.cleave}" == "true" && "${skillsAndSpells.advanced tactics}" == "true"}
 	{
 		#list {randomAttack} {add} {cleave}
 	};
-	#if {"${skillsAndSpells.disarm}" == "true" && "$advancedTactics" == "true"}
+	#if {"${skillsAndSpells.disarm}" == "true" && "${skillsAndSpells.advanced tactics}" == "true" && "${auto.disarm}" == "true"}
 	{
 		#list {randomAttack} {add} {disarm}
 	};
-	#if {"${skillsAndSpells.feint}" == "true" && "${character.inBattle}" == "true"}
+	#if {"${skillsAndSpells.feint}" == "true" && "${skillsAndSpells.cross class tactics}" == "true" && "${character.inBattle}" == "true"}
 	{
 		#list {randomAttack} {add} {feint}
 	};
@@ -266,7 +273,7 @@ riposte
 	{
 		#list {randomAttack} {add} {riposte}
 	};
-	#if {"${skillsAndSpells.shield slam}" == "true" && "${skillsAndSpells.advanced tactics}" == "true"}
+	#if {"${skillsAndSpells.shield slam}" == "true" && "${skillsAndSpells.advanced tactics}" == "true" && "${auto.slam}" == "true"}
 	{
 		#list {randomAttack} {add} {slam}
 	};
@@ -339,7 +346,7 @@ riposte
 }
 {9}
 
-#ALIAS {^{auto|noauto}{charge|retreat|riposte|valor}$}
+#ALIAS {^{auto|noauto}{berserk|charge|disarm|retreat|riposte|slam|valor}$}
 {
 	#if {"%1" == "auto"}
 	{
@@ -399,7 +406,7 @@ riposte
 }
 {9}
 
-#VARIABLE         {combo.setKey}  {false}
+#VARIABLE         {combo}  {{setKey}{false}}
 #VARIABLE         {exhausted}  {}
 #VARIABLE         {lastRandomAttack}  {{1}{0}{2}{0}}
 #VARIABLE         {lastRescued}  {}
