@@ -1,16 +1,3 @@
-#ACTION {^You are now a group member.$}
-{
-	#variable {group.ratingIndex} {1};
-	#delay {autoGroupRating} {#echo {To give the group leader the recommend rank of ${group.rating[${group.ratingIndex}]}, type rate.};synth_play notificationSound} {1200}
-}
-{9}
-
-#ACTION {^You have been removed from the group.$}
-{
-	#undelay {autoGroupRating}
-}
-{9}
-
 #ACTION {^%S quickly climbs up the side and boards the ship.$}
 {
 	#if {"$group.leader" == "%1"}
@@ -45,9 +32,16 @@
 }
 {9}
 
-#ACTION {^You {are already|start} following %1.$}
+#ACTION {^You are now a group member.$}
 {
-	#variable {group.leader} {%1}
+	#variable {groupRating.index} {1};
+	#delay {autoGroupRating} {#echo {To give the group leader the recommend rank of ${groupRating[${groupRating.index}]}, type rate.};synth_play notificationSound} {1200}
+}
+{9}
+
+#ACTION {^You have been removed from the group.$}
+{
+	#undelay {autoGroupRating}
 }
 {9}
 
@@ -67,7 +61,13 @@
 }
 {9}
 
-#ACTION {^Your blood curdles as you hear ${group.tank}'s dying scream!$}
+#ACTION {^You {are already|start} following %1.$}
+{
+	#variable {group.leader} {%1}
+}
+{9}
+
+#ACTION {^Your blood curdles as you hear 's dying scream!$}
 {
 	#if {"${auto.earthwall}" == "true"}
 	{
@@ -140,6 +140,12 @@
 }
 {9}
 
+#ALIAS {^rating$}
+{
+	#echo {The suggested rating for ${group.leader}'s group is ${group.rating[${group.ratingIndex}]}\.}
+}
+{9}
+
 #ALIAS {^{auto|noauto}follow$}
 {
 	#if {"%0" == "autofollow"}
@@ -155,25 +161,20 @@
 }
 {9}
 
-#ALIAS {^rating$}
-{
-	#echo {The suggested rating for ${group.leader}'s group is ${group.rating[${group.ratingIndex}]}\.}
-}
-{9}
-
 #ALIAS {^{rat|rate}$}
 {
-	#echo {Rating group as ${group.rating[${group.ratingIndex}]}\.};
-	group rate ${group.rating[${group.ratingIndex}]}
+	#echo {Rating group as ${groupRating[${groupRating.index}]}\.};
+	group rate ${groupRating[${groupRating.index}]}
 }
 {9}
 
 #ALIAS {^{rat|rate}%s%d$}
 {
-	#echo {Rating ${group.leader}'s group as ${group.rating[%3]}\. The suggested rating is ${group.rating[${group.ratingIndex}]}\.};
-	group rate ${group.rating[%3]}
+	#echo {Rating ${group.leader}'s group as ${groupRating[%3]}\. The suggested rating is ${groupRating[${groupRating.index}]}\.};
+	group rate ${groupRating[%3]}
 }
 {9}
 
 #SUBSTITUTE       {^%S would like to join your group!  Use the 'group summon' command to add {her|him|it}.}                                                                     {%1 would like to join your group!  Press alt+shift+Y or use the 'group summon' command to add %2.}                                                                          {5}
-#VARIABLE         {group}  {{1}{excellent}{2}{great}{3}{good}{4}{fair}{5}{poor}{6}{bad}{7}{dangerous}{8}{gamlin}}
+#VARIABLE         {group}  {}
+#VARIABLE         {groupRating}  {{index}{1}{1}{excellent}{2}{great}{3}{good}{4}{fair}{5}{poor}{6}{bad}{7}{dangerous}{8}{gamlin}}
