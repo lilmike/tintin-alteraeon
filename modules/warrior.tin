@@ -73,7 +73,7 @@
 	#variable {combo.attack} {%2};
 	#replace {combo.attack} {\x7c} { ${combo.target};};
 	#replace {combo.attack} {berserking} {berserk};
-	#replace {combo.attack} {cleave {.*};} {cleave;};
+	#replace {combo.attack} {cleave {\s.\w};} {cleave;};
 	#replace {combo.attack} {ground strike} {gstrike};
 	#replace {combo.attack} {leap attack} {leap};
 	#replace {combo.attack} {pommel strike} {pommel};
