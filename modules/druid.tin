@@ -16,7 +16,7 @@
 
 #ACTION {^A shambling mound {begins to fall apart and lose cohesion|stops following you}.}
 {
-	#if {"$auto.mound" == "true"}
+	#if {"${auto.mound}" == "true"}
 	{
 		c shambling mound
 	}
@@ -399,7 +399,7 @@
 	{
 		#variable {auto.suncatcherRoom} {$kxwt.rvnum};
 		#variable {auto.suncatcher} {true};
-		#showme {You will now automatically hide and retrieve suncatcher that need filling in room $suncatcherRoom\.}
+		#showme {You will now automatically hide and retrieve suncatcher that need filling in room ${auto.suncatcherRoom}\.}
 	};
 	#else
 	{
@@ -410,5 +410,5 @@
 }
 {9}
 
-#TICKER           {lightcatcher}  {#if {"$suncatcher" == "true" && !&{inBattle}}{gather lightcatcher list | prefix silent_}}                                                                 {300.00}
+#TICKER           {lightcatcher}  {#if {"${auto.suncatcher}" == "true" && "${character.inBattle}" == "false"}{gather lightcatcher list | prefix silent_}}                                                                 {300.00}
 #VARIABLE         {runeCarveMessage}  {}
