@@ -567,6 +567,7 @@
 		#replace {channel.message} {You {have sudden insight, and become|learn from your mistakes, and become|become}} {};
 		#format {channel.message} {%p} {${channel.message}};
 		#format {channel.message} {%n} {${channel.message}};
+		#replace {channel.message} {You discover} {I discovered};
 		#replace {channel.message} {You gain} {I gained};
 		#replace {channel.message} {your} {my};
 		#replace {channel.message} {Your} {My};

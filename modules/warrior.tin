@@ -33,6 +33,7 @@
 #ACTION {^You discover a way to use %1 in combination!$}
 {
 	Add_Event %0;
+	autobrag %0;
 	play new-combo
 }
 {9}
