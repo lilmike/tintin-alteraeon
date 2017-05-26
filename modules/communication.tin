@@ -57,7 +57,7 @@
 }
 {7}
 
-#ACTION {^Double {experience|mob}%*{\.|!}$}
+#ACTION {^{The|Double} {experience|mob|monster death exp cap}%*{\.|!}$}
 {
 	synth_play notificationSound;
 	Add_Event %0;
