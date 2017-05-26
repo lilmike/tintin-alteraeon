@@ -57,7 +57,7 @@
 }
 {7}
 
-#ACTION {^{Double |Monsters |Monster }%*{\.|!}$}
+#ACTION {^Double {experience|mob}%*{\.|!}$}
 {
 	synth_play notificationSound;
 	Add_Event %0;
