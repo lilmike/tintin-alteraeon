@@ -54,13 +54,13 @@
 
 #ACTION {%1 begins {her|his|its} climb %2ward.}
 {
-	#if {"%1" == "$group.leader"}
+	#if {"%1" == "${group.leader}"}
 	{
 		climb %2;
 		Add_Direction %2
 	}
 }
-{9}
+{8}
 
 #ACTION {%1 {are|is} closed.$}
 {
