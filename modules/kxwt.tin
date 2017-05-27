@@ -396,6 +396,8 @@
 #ACTION {^kxwt_supported$}
 {
 	#cursor {echo} {on};
+	#variable {client.gagPing} {true};
+	ping;
 	set ctrigger on | prefix silent_;
 	set telnetga off | prefix silent_;
 	SHOW_VERSION;

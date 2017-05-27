@@ -1,6 +1,22 @@
-#ACTION {^*pong*$}
+#ACTION {^*{pingtime\s+\d+|pong}*$}
 {
-	pang
+	#if {"%1" == "pong"}
+	{
+		pang;
+		#if {"${client.gagPing}" == "true"}
+		{
+			#line {gag}
+		}
+	};
+	#else
+	{
+		#if {"${client.gagPing}" == "true"}
+		{
+			#line {gag};
+			#variable {client.gagPing} {false};
+			#delay {lagStat} {#variable {client.gagPing} {true};ping} {3d5+15}
+		}
+	}
 }
 {1}
 
