@@ -69,6 +69,14 @@
 }
 {9}
 
+#ALIAS {^musiclinks %s%S %s%S$}
+{
+	#variable {music.links[apiUrl]} {%2/yourls-api.php};
+	#variable {music.links[apiKey]} {%4};
+	#echo {music links enabled using ${music.links[apiUrl]}\.}
+}
+{9}
+
 #ALIAS {^musicplayer %s{audacious|cmus|moc|mopidy|mpc|mpd|pianobar|xmms2}$}
 {
 	#if {"%2" == "mpc"}
@@ -86,7 +94,18 @@
 #ALIAS {^m{p|po|pos|post} %2}
 {
 	Get_Music_Message_String;
-	%2 Now playing: $msg via ${music.player}\.
+	#if {!&{music.links[apiKey]}}
+	{
+		%2 Now playing: $msg via ${music.player}\.
+	};
+	#else
+	{
+		#variable {music.links[longUrl]} {https://www.youtube.com/results?search_query=${music.newAutoTitleString}};
+		#replace {music.links[longUrl]} { } {+};
+		#script {i} {curl -s --data "signature=${music.links[apiKey]}" --data "action=shorturl" --data "format=text" --data-urlencode "url=${music.links[longUrl]}" ${music.links[apiUrl]}};
+		#variable {music.links[shortUrl]} {${i[1]}};
+		%2 Now playing: $msg via ${music.player}\. ${music.links[shortUrl]}
+	}
 }
 {9}
 
@@ -109,6 +128,22 @@
 {
 	#variable {channel.music} {%3};
 	#echo {Music channel set to %3.}
+}
+{9}
+
+#ALIAS {^{nom|m}usiclinks$}
+{
+	#if {"%0" == "musiclinks"}
+	{
+		#variable {music.links[apiUrl]} {https://1u.rs/yourls-api.php};
+		#variable {music.links[apiKey]} {b0dda9c182};
+		#echo {music links enabled using ${music.links[apiUrl]}\.}
+	};
+	#else
+	{
+		#unvariable {music.links};
+		#echo {Music links disabled.}
+	}
 }
 {9}
 
@@ -473,4 +508,4 @@
 	}
 }
 
-#TICKER           {autotitle}  {#if {"${auto.title}" == "true" && "$editorMode" != "true"}{Get_Music_Message_String;#if {"${music.newAutoTitleString}" != "${music.oldAutoTitleString}"}{#variable {music.oldAutoTitleString} {${music.newAutoTitleString}};title ${music.newAutoTitleString} | prefix silent_}}}                                                                                                                                                                                                           {1.50}
+#TICKER           {autotitle}  {#if {"${auto.title}" == "true" && "$editorMode" != "true"}{Get_Music_Message_String;#if {"${music.newAutoTitleString}" != "${music.oldAutoTitleString}"}{#variable {music.oldAutoTitleString} {${music.newAutoTitleString}};title ${music.newAutoTitleString} | prefix silent_}}}                                                                                                                                                                                                                                                         {1.50}
