@@ -365,7 +365,7 @@
 
 #ALIAS {^{a|as|ass|assi|assis|assist}$}
 {
-	#if {"${skillsAndSpells.charge}" == "true" && "${auto.charge}" == "true"}
+	#if {"${skillsAndSpells.charge}" == "true" && "${auto.charge}" == "true" && ${character.currentMv} > 20}
 	{
 		charge
 	};
