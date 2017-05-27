@@ -131,16 +131,17 @@
 }
 {9}
 
-#ALIAS {^{noauto|auto}stealth$}
+#ALIAS {^{noauto|auto}{stealth}$}
 {
 	#if {"%1" == "auto"}
 	{
-		#variable {auto.%1} {true};
-		#echo {auto%1 enabled.};
+		#variable {auto.%2} {true};
+		#echo {auto%2 enabled.};
 	};
 	#else
 	{
-		#echo {auto%1 disabled.}
+		#variable {auto.%2} {false};
+		#echo {auto%2 disabled.}
 	}
 }
 {9}
