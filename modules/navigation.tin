@@ -131,30 +131,16 @@
 }
 {9}
 
-#ALIAS {^nostealth$}
+#ALIAS {^{noauto|auto}stealth$}
 {
-	#if {"$stealth" == "true"}
+	#if {"%1" == "auto"}
 	{
-		#unvariable {stealth};
-		#showme {you will no longer automatically use stealthy movement.}
+		#variable {auto.%1} {true};
+		#echo {auto%1 enabled.};
 	};
 	#else
 	{
-		#showme {You are not currently using stealthy movement.}
-	}
-}
-{9}
-
-#ALIAS {^stealth$}
-{
-	#if {"$stealthyMovement" == "true"}
-	{
-		#variable {stealth} {true};
-		#showme {you will now automatically use stealthy movement.}
-	};
-	#else
-	{
-		#showme {This setting requires the stealthy movement skill.}
+		#echo {auto%1 disabled.}
 	}
 }
 {9}
@@ -202,7 +188,7 @@
 	{
 		retreat $lastDirection
 	};
-	#elseif {"$stealth" == "true"}
+	#elseif {"${auto.stealth}" == "true"}
 	{
 		#send {sneak %0}
 	};
