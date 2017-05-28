@@ -355,7 +355,7 @@
 }
 {9}
 
-#ACTION {^To see the lost exp hall of fame, try the 'exp lost' command.$}
+#ACTION {^To see the lost exp hall of fame, see the 'lost experience' leaderboard.$}
 {
 	#if {"${character.cspam}" == "true"}
 	{
