@@ -17,7 +17,7 @@
 
 #ACTION {^Yo{u|ur} {lock picking skills failed you during that try|try another go at picking the lock|continue to manipulate the lock|attempt to pick the lock|thief abilities were insufficient for that attempt}{\.|\.\.\.}$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}

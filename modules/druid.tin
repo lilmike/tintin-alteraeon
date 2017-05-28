@@ -1,6 +1,6 @@
 #ACTION {^casting_liveoak%*You add A liveoak to your group.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -98,7 +98,7 @@
 
 #ACTION {^You have collected %d acorns.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#showme {%1 acorns.};
 		#line {gag}

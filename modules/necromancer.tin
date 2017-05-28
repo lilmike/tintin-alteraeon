@@ -43,7 +43,7 @@
 		#variable {lastSoulsteal} {%1}
 	};
 	seq_play mortally-wounded;
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#showme {%1 is morted.};
 		#line {gag}
@@ -121,7 +121,7 @@
 
 #ACTION {^With the last soulstone, A prepared %1 corpse is fully prepared.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag};
 		#showme {A %1 corpse is fully prepared.}
@@ -145,7 +145,7 @@
 
 #ACTION {^A %1 {rips a bone from|claws at and begins eating|rips and tears into} the corpse of %3{!|, devouring it!| as a replacement\.}$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#if {"%2" == "rips a bone from"}
 		{
@@ -225,7 +225,7 @@
 
 #ACTION {^You chant a spell to magically bind a %1 soulstone to A prepared %2 corpse.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag};
 		#showme {You bind a %1 soulstone to a %2.}
@@ -389,7 +389,7 @@
 
 #ACTION {^You sacrifice blood from the corpse %1, drawing power from it!$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#showme {You sacrifice blood from the corpse.};
 		#line {gag}

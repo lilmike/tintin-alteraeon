@@ -6,7 +6,7 @@
 	{
 		keyprofile %1
 	};
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#showme {You are now wearing '%1'.};
 		#line {gag}

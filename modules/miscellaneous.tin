@@ -496,13 +496,6 @@
 }
 {9}
 
-#ALIAS {^cspam$}
-{
-	#variable {cspam} {true};
-	#showme {Client side spam filters applied.}
-}
-{9}
-
 #ALIAS {^getup$}
 {
 	\stand
@@ -559,13 +552,6 @@
 {
 	#unvariable {auto.thank};
 	#showme {You will no longer thank people for newbie gifts automatically.}
-}
-{9}
-
-#ALIAS {^nocspam$}
-{
-	#unvariable {cspam};
-	#showme {Client side spam filters disabled.}
 }
 {9}
 

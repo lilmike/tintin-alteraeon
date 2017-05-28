@@ -115,7 +115,7 @@
 			};
 			#case {"tell the clan"}
 			{
-				#if {"$cspam" == "true"}
+				#if {"${character.cspam}" == "true"}
 				{
 					#showme {You ct, '%2'};
 					#line {gag}
@@ -125,7 +125,7 @@
 			};
 			#case {"tell the group"}
 			{
-				#if {"$cspam" == "true"}
+				#if {"${character.cspam}" == "true"}
 				{
 					#line {ignore} {#showme {You gt, '%2'}};
 					#line {gag}
@@ -195,7 +195,7 @@
 			};
 			#case {"tells the cla"}
 			{
-				#if {"$cspam" == "true"}
+				#if {"${character.cspam}" == "true"}
 				{
 					#showme {%1 ct, '%3'};
 					#line {gag}
@@ -205,7 +205,7 @@
 			};
 			#case {"tells the grou"}
 			{
-				#if {"$cspam" == "true"}
+				#if {"${character.cspam}" == "true"}
 				{
 					#line {ignore} {#showme {%1 gt, '%3'}};
 					#line {gag}

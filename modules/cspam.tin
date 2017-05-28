@@ -1,24 +1,6 @@
-#ACTION {^{\s+Y|Y}ou {gain|receive} %d experience{\.|!}$}
-{
-	#if {"$cspam" == "true"}
-	{
-		#showme {%3 exp%4};
-		#line {gag}
-	};
-#if {%3 > ${kxwt.expcap}}
-{
-play overcap
-};
-#elseif {%3 == ${kxwt.expcap}}
-{
-play cap
-}
-}
-{8}
-
 #ACTION {^casting_%1_%S appreciates your sacrifice of %3.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#echo {%2 appreciates your sacrifice.};
 		#line {gag}
@@ -26,13 +8,31 @@ play cap
 }
 {8}
 
+#ACTION {^{\s+Y|Y}ou {gain|receive} %d experience{\.|!}$}
+{
+	#if {"${character.cspam}" == "true"}
+	{
+		#showme {%3 exp%4};
+		#line {gag}
+	};
+	#if {%3 > ${kxwt.expcap}}
+	{
+		play overcap
+	};
+	#elseif {%3 == ${kxwt.expcap}}
+	{
+		play cap
+	}
+}
+{8}
+
 #ACTION {%1 *** %2 *** %3!$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
-		#variable {cspamFormatString} {%0};
-		#replace {cspamFormatString} {***} {*};
-		#showme {$cspamFormatString};
+		#variable {cspam.formatString} {%0};
+		#replace {cspam.formatString} {***} {*};
+		#showme {${cspam.formatString}};
 		#line {gag}
 	}
 }
@@ -40,7 +40,7 @@ play cap
 
 #ACTION {%1 kicks at %2 but barely makes contact.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -49,7 +49,7 @@ play cap
 
 #ACTION {A ball of light flies idly in circles around your head.}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -58,7 +58,7 @@ play cap
 
 #ACTION {You carefully extract one %1 and put it in your bag.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#showme {You extract a %1.};
 		#line {gag}
@@ -68,7 +68,7 @@ play cap
 
 #ACTION {You don't see any of your group members here to split the gold with}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -77,16 +77,7 @@ play cap
 
 #ACTION {You don't see anything by that name here.}
 {
-	#if {"$cspam" == "true"}
-	{
-		#line {gag}
-	}
-}
-{9}
-
-#ACTION {^You see nothing in it for you to get.$}
-{
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -95,7 +86,7 @@ play cap
 
 #ACTION {^%S appreciates your sacrifice of %2.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#echo {%1 appreciates your sacrifice.};
 		#line {gag}
@@ -105,27 +96,17 @@ play cap
 
 #ACTION {^%S dra{w|ws} a strange pattern on the ground with a stick, ligh{t|ts} it up, and dro{p|ps} {an acorn|something} in the middle of it.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
 }
 {9}
 
-#ACTION {^%S gives you 0 gold coins.$}
+#ACTION {^%S gives you {0|1} gold coi{n|ns}.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
-		#line {gag}
-	}
-}
-{9}
-
-#ACTION {^%S gives you 1 gold coins.$}
-{
-	#if {"$cspam" == "true"}
-	{
-		#showme {%1 gives you 1 gold coin.};
 		#line {gag}
 	}
 }
@@ -133,7 +114,7 @@ play cap
 
 #ACTION {^%S has restored you to full health!$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#showme {%1 restored you!};
 		#line {gag}
@@ -143,7 +124,7 @@ play cap
 
 #ACTION {^%S twitches and starts fidgeting.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -152,7 +133,7 @@ play cap
 
 #ACTION {^%S {taps|tap} {her|his|its|your} life, and {a swarm of|a} blood red {demons|winged demon} {flaps|flap|flies|fly} quickly toward %7!$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#echo {%4 blood red %5 %6 toward %7!};
 		#line {gag}
@@ -162,7 +143,7 @@ play cap
 
 #ACTION {^(FYI: %1 has just sent you a mudmail)$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#showme {New mail from %1.};
 		#line {gag}
@@ -172,7 +153,7 @@ play cap
 
 #ACTION {^A %1 is too much for you to carry, so you prepare a spot on the ground for it.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#showme {You drop a %1.};
 		#line {gag}
@@ -182,7 +163,7 @@ play cap
 
 #ACTION {^A ghoul jumps at %1 clawing and biting!$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -191,7 +172,7 @@ play cap
 
 #ACTION {^A ghoul rips and tears into %1 with filthy, diseased claws!$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -200,7 +181,7 @@ play cap
 
 #ACTION {^A skeletal mage throws %1 at %2!$}
 {
-	#if {"%2" != "you" && "$cspam" == "true"}
+	#if {"%2" != "you" && "${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -209,7 +190,7 @@ play cap
 
 #ACTION {^A skeleton lands a textbook roundhouse kick squarely on%*}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -218,7 +199,7 @@ play cap
 
 #ACTION {^A skeleton's {shield bash|slash|slice|pierce|flail}%*}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -227,7 +208,7 @@ play cap
 
 #ACTION {^A vampire quietly hisses an unintelligible and foul sounding word...$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -236,7 +217,7 @@ play cap
 
 #ACTION {^A vampire shouts a ferocious warcry at %1!$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -245,7 +226,7 @@ play cap
 
 #ACTION {^A vampire's eyes take on an unsettling red glow, and it glares at %1!}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -254,7 +235,7 @@ play cap
 
 #ACTION {^A {bone guardian|ghoul|skeleton|vampire} knocks the legs out from under%*}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -263,7 +244,7 @@ play cap
 
 #ACTION {^A {bone guardian|ghoul|skeleton|vampire} trips%*}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -272,7 +253,7 @@ play cap
 
 #ACTION {^A {bone|clay|flesh|shadow|wood} {beast|fiend|guardian|man|woad} stands up.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -281,7 +262,7 @@ play cap
 
 #ACTION {^A {clay man|flesh beast|ghoul|vampire|wood woad|zombie}'s {bite|claw|crush|grapple|pound|punch|splat}%*}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -290,7 +271,7 @@ play cap
 
 #ACTION {^A {coyote|feral boar|swarm of rats|viper}'s {bash|bite|gore|poisonous bite|venomous bite} %*{\.|!}$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -299,7 +280,7 @@ play cap
 
 #ACTION {^A {ghoul|vampire} bites%*}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -308,7 +289,7 @@ play cap
 
 #ACTION {^All present and accounted for.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#showme {All present.};
 		#line {gag}
@@ -318,7 +299,7 @@ play cap
 
 #ACTION {^CLANWAR STARTS IN APPROXIMATELY %D MINUTES, FYI.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#showme {Clan war in %1 minutes.};
 		#line {gag}
@@ -328,7 +309,7 @@ play cap
 
 #ACTION {^It is {mid|near}%*.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -337,7 +318,7 @@ play cap
 
 #ACTION {^Sorry, but you're missing ingredient '%1' for this recipe.}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#showme {Ingredient '%1' is missing.};
 		#line {gag}
@@ -347,7 +328,7 @@ play cap
 
 #ACTION {^The demonic flames engulf and follow %1!}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#showme {Flames engulf %1!};
 		#line {gag}
@@ -357,7 +338,7 @@ play cap
 
 #ACTION {^The tooth splits, unfolds, and grows into %*}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -366,7 +347,7 @@ play cap
 
 #ACTION {^The {corpse|gutted carcass|skinned corpse} of %2 is too big for you to sacrifice.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#showme {It's too big to sac.};
 		#line {gag}
@@ -376,7 +357,7 @@ play cap
 
 #ACTION {^To see the lost exp hall of fame, try the 'exp lost' command.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -385,7 +366,7 @@ play cap
 
 #ACTION {^You add %1 to your group.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#showme {You group %1.};
 		#line {gag}
@@ -395,7 +376,7 @@ play cap
 
 #ACTION {^You are not allowed to harm other players minions.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -404,7 +385,7 @@ play cap
 
 #ACTION {^You feel extremely jittery and awake.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -413,7 +394,7 @@ play cap
 
 #ACTION {^You find yourself unable to sit still, gotta keep moving...$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -422,7 +403,7 @@ play cap
 
 #ACTION {^You have %d %w out of %d max.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#showme {%1 %2 of %3.};
 		#line {gag}
@@ -432,7 +413,7 @@ play cap
 
 #ACTION {^You link hands with %S to the {left|right}.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -441,7 +422,7 @@ play cap
 
 #ACTION {^You reanimate and unpack a ball of twisted bones, forming it into A bone guardian.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#showme {You animate A bone guardian.};
 		#line {gag}
@@ -449,9 +430,18 @@ play cap
 }
 {9}
 
+#ACTION {^You see nothing in it for you to get.$}
+{
+	#if {"${character.cspam}" == "true"}
+	{
+		#line {gag}
+	}
+}
+{9}
+
 #ACTION {^You see nothing left to loot from the gutted carcass of %1}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#showme {There's nothing left to loot from the carcass of %1.};
 		#line {gag}
@@ -461,7 +451,7 @@ play cap
 
 #ACTION {^You shatter one of the teeth attempting to remove it.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#showme {The tooth shatters.};
 		#line {gag}
@@ -471,7 +461,7 @@ play cap
 
 #ACTION {^You use magic to rip the bones and cartilage from%*}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#showme {You make a bone guardian.};
 		#line {gag}
@@ -481,7 +471,7 @@ play cap
 
 #ACTION {^\x28%s%d\x29%3}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#showme {%3 %2};
 		#line {gag}
@@ -492,7 +482,7 @@ play cap
 
 #ACTION {^{A|An|The} %1 twitches and starts fidgeting.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -501,7 +491,7 @@ play cap
 
 #ACTION {^{You|A .*} {are|have|has|is} {a few scratches|in excellent condition}.$}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -510,7 +500,7 @@ play cap
 
 #ACTION {^{head|neck|arms|wrist|hands|finger|on body|about body|waist|legs|feet|shield|weapon}%s- $}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		#line {gag}
 	}
@@ -520,36 +510,48 @@ play cap
 #ALIAS {^{l|lo|loo|look} %s%S$}
 {
 	#send {%0};
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
 		lecho silent_update
 	}
 }
 {9}
 
+#ALIAS {^{noc|c}spam$}
+{
+	#if {"%0" == "cspam"}
+	{
+		#variable {character.cspam} {true};
+		#echo {Client side spam filters applied.}
+	};
+	#else
+	{
+		#variable {character.cspam} {false};
+		#echo {Client side spam filters removed.}
+	}
+}
+{9}
+
 #EVENT {RECEIVED LINE}
 {
-	#if {"$cspam" == "true"}
+	#if {"${character.cspam}" == "true"}
 	{
-		#if {"$lastLineOfText" == "%0" && "%0" != "{$textCounterExceptions}" && "%0" != ""}
+		#if {"${cspam.lastLineOfText}" == "%0" && "%0" != "{${cspam.textCounterExceptions}}" && "%0" != ""}
 		{
-			#math {lastLineOfTextCounter} {$lastLineOfTextCounter + 1};
+			#math {cspam.lastLineOfTextCounter} {${cspam.lastLineOfTextCounter} + 1};
 			#line {gag}
 		};
 		#else
 		{
-			#if {$lastLineOfTextCounter > 1}
+			#if {${lastLineOfTextCounter} > 1}
 			{
-				#echo {(X$lastLineOfTextCounter)};
-				#variable {oldText} {$lastLineOfText}
+				#echo {(X${cspam.lastLineOfTextCounter})};
+				#variable {oldText} {${cspam.lastLineOfText}}
 			};
-			#variable {lastLineOfText} {%0};
-			#variable {lastLineOfTextCounter} {1}
+			#variable {cspam.lastLineOfText} {%0};
+			#variable {cspam.lastLineOfTextCounter} {1}
 		}
 	}
 }
 
-#VARIABLE         {cspamFormatString}  {}
-#VARIABLE         {lastLineOfText}  {}
-#VARIABLE         {lastLineOfTextCounter}   {1}
-#VARIABLE         {textCounterExceptions}   {!!SOUND.*|Alas,.*|casting_.*|kxwt.*|\(auction\).*|\*tick\*|finger      - .*|neck        - .*|wrist       - .*|.* growls at you, warning you away\.|.* is mortally wounded, and will die soon if not aided\.|.* someone else beat .*|Mudmail.*|You .*|.* rips a bone .*|.* starts harvesting .*|.* from the corpse.*|Nothing\.|Someone.*|\[new line\]:|.*cannot carry any more weight without sinking\.|In your dreams, or what\?|silent_.*}
+#VARIABLE         {cspam}  {{formatString}{}{lastLineOfText}{}{lastLineOfTextCounter}{1}{textCounterExceptions}{!!SOUND.*|Alas,.*|casting_.*|kxwt.*|\(auction\).*|\*tick\*|finger      - .*|neck        - .*|wrist       - .*|.* growls at you, warning you away\.|.* is mortally wounded, and will die soon if not aided\.|.* someone else beat .*|Mudmail.*|You .*|.* rips a bone .*|.* starts harvesting .*|.* from the corpse.*|Nothing\.|Someone.*|\[new line\]:|.*cannot carry any more weight without sinking\.|In your dreams, or what\?|silent_.*}}
