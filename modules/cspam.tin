@@ -543,10 +543,10 @@
 		};
 		#else
 		{
-			#if {${lastLineOfTextCounter} > 1}
+			#if {${cspam.lastLineOfTextCounter} > 1}
 			{
 				#echo {(X${cspam.lastLineOfTextCounter})};
-				#variable {oldText} {${cspam.lastLineOfText}}
+				#variable {cspam.oldText} {${cspam.lastLineOfText}}
 			};
 			#variable {cspam.lastLineOfText} {%0};
 			#variable {cspam.lastLineOfTextCounter} {1}
@@ -554,4 +554,4 @@
 	}
 }
 
-#VARIABLE         {cspam}  {{formatString}{}{lastLineOfText}{}{lastLineOfTextCounter}{1}{textCounterExceptions}{!!SOUND.*|Alas,.*|casting_.*|kxwt.*|\(auction\).*|\*tick\*|finger      - .*|neck        - .*|wrist       - .*|.* growls at you, warning you away\.|.* is mortally wounded, and will die soon if not aided\.|.* someone else beat .*|Mudmail.*|You .*|.* rips a bone .*|.* starts harvesting .*|.* from the corpse.*|Nothing\.|Someone.*|\[new line\]:|.*cannot carry any more weight without sinking\.|In your dreams, or what\?|silent_.*}}
+#VARIABLE         {cspam}  {{formatString}{}{lastLineOfText}{}{lastLineOfTextCounter}{1}{oldText}{}{textCounterExceptions}{!!SOUND.*|Alas,.*|casting_.*|kxwt.*|\(auction\).*|\*tick\*|finger      - .*|neck        - .*|wrist       - .*|.* growls at you, warning you away\.|.* is mortally wounded, and will die soon if not aided\.|.* someone else beat .*|Mudmail.*|You .*|.* rips a bone .*|.* starts harvesting .*|.* from the corpse.*|Nothing\.|Someone.*|\[new line\]:|.*cannot carry any more weight without sinking\.|In your dreams, or what\?|silent_.*}}
