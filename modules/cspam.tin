@@ -1,10 +1,18 @@
-#ACTION {^You {gain|receive} %d experience{\.|!}$}
+#ACTION {^{\s+Y|Y}ou {gain|receive} %d experience{\.|!}$}
 {
 	#if {"$cspam" == "true"}
 	{
-		#showme {%2 exp%3};
+		#showme {%3 exp%4};
 		#line {gag}
-	}
+	};
+#if {%3 > ${kxwt.expcap}}
+{
+play overcap
+};
+#elseif {%3 == ${kxwt.expcap}}
+{
+play cap
+}
 }
 {8}
 
