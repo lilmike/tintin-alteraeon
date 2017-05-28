@@ -8,7 +8,7 @@
 }
 {8}
 
-#ACTION {^{\s+Y|Y}ou {gain|receive} %d experience{\.|!}$}
+#ACTION {^{\s+Y|casting.*Y|Y}ou {gain|receive} %d experience{\.|!}$}
 {
 	#if {"${character.cspam}" == "true"}
 	{
