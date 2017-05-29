@@ -493,7 +493,9 @@
 {
 	#if {"$notifications" == "true"}
 	{
-		#system {if [ -n "$DISPLAY" ]; then notify-send "%1";fi}
+		#variable {msg} {%1};
+		#replace {msg} {"} {\"};
+		#system {if [ -n "$DISPLAY" ]; then notify-send "$msg";fi}
 	}
 }
 {5}
