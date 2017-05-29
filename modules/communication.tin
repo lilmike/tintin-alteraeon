@@ -493,7 +493,7 @@
 {
 	#if {"$notifications" == "true"}
 	{
-		#system {if [ -n "$DISPLAY" ]; then notify-send "%1";fi}
+		#system {if [ -n "$DISPLAY" ]; then notify-send -- "%1";fi}
 	}
 }
 {5}
