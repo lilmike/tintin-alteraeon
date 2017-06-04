@@ -141,7 +141,7 @@
 
 #SUBSTITUTE       {^%scasting_%1_}  {}  {1}
 #SUBSTITUTE       {^casting_%1_}  {}  {1}
-#VARIABLE         {excludedSpells}  {barkskin|burning hands|chill touch|clsap of corruption|confusion|deathly sleep|enhancement|faerie fire|famine|feeble mind|haste|lethargy|noxious cloud|prayer for the dying|regeneration|sacred touch|sanctuary|shocking grasp|shadow bind|shadow decoy|sickening touch|stoneskin|sundrinker|sunscreen|trollsblut|valor|weaken}
+#VARIABLE         {excludedSpells}  {barkskin|burning hands|chill touch|clsap of corruption|confusion|deathly sleep|enhancement|faerie fire|famine|feeble mind|haste|lethargy|noxious cloud|prayer for the dying|regeneration|sacred touch|sanctuary|shocking grasp|shadow bind|shadow decoy|sickening touch|static blast|stoneskin|sundrinker|sunscreen|trollsblut|valor|weaken}
 #VARIABLE         {recastList}  {}
 #VARIABLE         {recastListIndex}  {0}
 #VARIABLE         {recastListSize}  {0}
