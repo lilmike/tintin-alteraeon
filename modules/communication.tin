@@ -466,11 +466,25 @@
 {
 	#if {%2 <= 0}
 	{
-		replay %3 | head -2
+		#if {"${channel.timeStamps}" == "true"}
+		{
+			replay -t %3 | head -2
+		};
+		#else
+		{
+			replay %3 | head -2
+		}
 	};
 	#elseif {%2 > 0 && %2 < 5 || %2 == 8 || %2 == 9}
 	{
-		replay %1 %3 | head -2
+		#if {"${channel.timeStamps}" == "true"}
+		{
+			replay -t %1 %3 | head -2
+		};
+		#else
+		{
+			replay %1 %3 | head -2
+		}
 	};
 	#elseif {%2 == 5}
 	{
@@ -478,11 +492,25 @@
 	};
 	#elseif {%2 == 6}
 	{
-		replay | grep -i (friend) | tail %3 | head -1
+		#if {"${channel.timeStamps}" == "true"}
+		{
+			replay -t | grep -i (friend) | tail %3 | head -1
+		};
+		#else
+		{
+			replay | grep -i (friend) | tail %3 | head -1
+		}
 	};
 	#else
 	{
-		replay | grep -i the group, ' | tail %3 | head -1
+		#if {"${channel.timeStamps}" == "true"}
+		{
+			replay -t | grep -i the group, ' | tail %3 | head -1
+		};
+		#else
+		{
+			replay | grep -i the group, ' | tail %3 | head -1
+		}
 	};
 	#variable {replaying} {true};
 	#delay {2} {#unvariable {replaying}}
@@ -659,6 +687,21 @@
 	{
 		#showme {Notifications disabled.};
 		#unvariable {notifications}
+	}
+}
+{9}
+
+#ALIAS {^{not|t}imestamps$}
+{
+	#if {"%0" == "timestamps"}
+	{
+		#variable {channel.timeStamps} {true};
+		#echo {Channel time stamps enabled.}
+	};
+	#else
+	{
+		#variable {channel.timeStamps} {true};
+		#echo {Channel time stamps disabled.}
 	}
 }
 {9}
