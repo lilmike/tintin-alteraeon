@@ -324,7 +324,7 @@
 			}
 		}
 	};
-	#if {"${skillsAndSpells.secondWind}" == "true" && "${character.exhausted}" != "true" && ${character.currentMv} < ${character.maxMv} / 10}
+	#if {"${skillsAndSpells.second wind}" == "true" && "${character.exhausted}" != "true" && ${character.currentMv} < ${character.maxMv} / 10}
 	{
 		second wind;
 		#variable {character.exhausted} {true}
