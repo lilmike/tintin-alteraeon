@@ -700,7 +700,7 @@
 	};
 	#else
 	{
-		#variable {channel.timeStamps} {true};
+		#variable {channel.timeStamps} {false};
 		#echo {Channel time stamps disabled.}
 	}
 }
