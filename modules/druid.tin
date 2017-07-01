@@ -1,4 +1,4 @@
-#ACTION {^casting_liveoak%*You add A liveoak to your group.$}
+#ACTION {^You add A liveoak to your group.$}
 {
 	#if {"${character.cspam}" == "true"}
 	{
@@ -127,14 +127,14 @@
 }
 {9}
 
-#ACTION {^casting_%*_There are no suitable trees here, but you could use an acorn if necessary.$}
+#ACTION {^There are no suitable trees here, but you could use an acorn if necessary.$}
 {
 	#line {gag};
 	c liveoak acorn
 }
 {9}
 
-#ACTION {^casting_%1_A shambling mound starts following you.$}
+#ACTION {^A shambling mound starts following you.$}
 {
 	#if {!&{auto.mound}}
 	{
@@ -144,7 +144,7 @@
 }
 {9}
 
-#ACTION {^casting_%1_An earth wall starts following you.$}
+#ACTION {^An earth wall starts following you.$}
 {
 	#if {!&{auto.earthwall}}
 	{
@@ -154,7 +154,7 @@
 }
 {9}
 
-#ACTION {^casting_%1_There's not enough light left in a suncatcher bottle to create a liveoak.$}
+#ACTION {^There's not enough light left in a suncatcher bottle to create a liveoak.$}
 {
 	#if {"${auto.liveoak}" == "true"}
 	{
@@ -190,16 +190,16 @@
 	gather %3;
 	#if {%5 == 100}
 	{
-		put %3 $container
+		put %3 $character.container
 	}
 }
 {9}
 
-#ACTION {^{casting_liveoak_|A} liveoak {starts|stops} following you.$}
+#ACTION {^A liveoak {starts|stops} following you.$}
 {
 	#if {"${auto.liveoak}" == "true"}
 	{
-		#if {"%2" == "stops"}
+		#if {"%1" == "stops"}
 		{
 			#if {"${character.inBattle}" != "true"}
 			{

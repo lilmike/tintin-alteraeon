@@ -1,7 +1,6 @@
 #ACTION {^silent_paste_END_OF_PASTE_TEXT$}
 {
 	#replace {pasteText} {silent_%*_} {};
-	#replace {pasteText} {_casting_%*   } {};
 	#replace {pasteText} { %s} { };
 	#format {pasteText} {%.500s} {$pasteText};
 	$pasteChannel $pasteText
@@ -445,7 +444,7 @@
 }
 {9}
 
-#ACTION {^{casting_.*You|You} {have sudden insight, and become|learn from your mistakes, and become|become} %3{\.|!|\)}$}
+#ACTION {^You {have sudden insight, and become|learn from your mistakes, and become|become} %3{\.|!|\)}$}
 {
 	#if {"%0" != "You become {indignant and agitated, blustering your way out of harm|unable to sense the presence of poison|unable to sense the presence of undead creatures}."}
 	{
@@ -587,11 +586,7 @@
 		{
 			#variable {channel.brag} {xp}
 		};
-		#regexp {%1} {casting_{.*}_{.*}} {#variable {channel.message} {&2}};
-		#else
-		{
-			#variable {channel.message} {%1}
-		};
+			#variable {channel.message} {%1};
 		#replace {channel.message} {You {have sudden insight, and become|learn from your mistakes, and become|become}} {};
 		#format {channel.message} {%p} {${channel.message}};
 		#format {channel.message} {%n} {${channel.message}};

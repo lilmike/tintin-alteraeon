@@ -51,18 +51,18 @@
 }
 {2}
 
-#ACTION {^{casting_clay man_A|A} {clay man|bone guardian|flesh beast|metal construct|wood woad} {starts|stops} following you.$}
+#ACTION {^A {clay man|bone guardian|flesh beast|metal construct|wood woad} {starts|stops} following you.$}
 {
 	#if {"${client.releasing}" != "true"}
 	{
-		#if {"%3" == "starts"}
+		#if {"%2" == "starts"}
 		{
 			remove_spell clay man
 		};
-		#if {"${auto.clay}" == "true" && "%3" == "stops"}
+		#if {"${auto.clay}" == "true" && "%2" == "stops"}
 		{
 			'\cc;
-			add_spell clay man
+			cast clay man
 		};
 		#if {"${auto.woad}" == "true" && "$castTankMinion" == "true"}
 		{
@@ -81,7 +81,7 @@
 		{
 			#if {${kxwt.terrain} == 33}
 			{
-				c metal
+				cast metal
 			};
 			#else
 			{
@@ -100,22 +100,8 @@
 {
 	#if {"$boneShield" == "true" && "$autorecast" == "true"}
 	{
-		#if {!&{inBattle}}
-		{
-			c bone shield
-		};
-		#else
-		{
-			Add_Cast bone shield
-		}
+		c bone shield
 	}
-}
-{5}
-
-#ACTION {^You need at least one harvested dragon tooth to complete that spell.$}
-{
-	Remove_Spell skeletal warrior;
-	Remove_Spell skeletal mage
 }
 {5}
 
@@ -175,6 +161,42 @@
 }
 {9}
 
+#ACTION {^A {skeletal mage|skeletal spider|skeleton} {starts|stops} following you.}
+{
+	#variable {i} {%1};
+	#replace {i} {skeleton} {skeletal warrior};
+	#if {"$auto.skeletonSpam" != "$i"}
+	{
+		#variable {auto.skeletonSpam} {$i};
+		#delay {1} {#variable {auto.skeletonSpam} {false}}
+	};
+	#if {"%2" == "stops"}
+	{
+		#if {"${auto.skeleton}" == "true"}
+		{
+			cast $i
+		}
+	};
+	#if {"%2" == "starts"}
+	{
+		#if {!&{auto.skeletonStone}}
+		{
+			#variable {auto.skeletonStone} {deep blue soulstone}
+		};
+		#if {"%1" == "skeleton" && "${skillsAndSpells.skeletal knight}" == "true"}
+		{
+			get ${auto.skeletonStone} ${character.container} | grep nospam;
+			c skeletal knight
+		};
+		#if {"%1" == "skeletal mage" && "${skillsAndSpells.skeletal lich}" == "true"}
+		{
+			get ${auto.skeletonStone} ${character.container} | grep nospam;
+			c skeletal lich
+		}
+	}
+}
+{9}
+
 #ACTION {^An animated corpse stops following you.$}
 {
 	#if {"${auto.flesh}" == "true" && "$castTankMinion" == "true"}
@@ -212,13 +234,66 @@
 
 #ACTION {^Sorry, there are no buyers for a %1 soulstone at this time.$}
 {
-	#if {!&{soulstoneContainer}}
+	#if {!&{character.soulstoneContainer}}
 	{
-		#variable {soulstoneContainer} {$container}
+		#variable {character.soulstoneContainer} {${character.container}}
 	};
 	#if {"${auto.store}" == "true"}
 	{
-		put %1 soulstone $soulstoneContainer
+		put %1 soulstone ${character.soulstoneContainer}
+	}
+}
+{9}
+
+#ACTION {^The tooth melts and forms a pinkish mass, which you quickly pull and shape into a bone shield.$}
+{
+	#if {"${skillsAndSpells.soulbind}" == "true"}
+	{
+		#if {&{character.soulstoneContainer}}
+		{
+			#send {stand;get ${character.defaultSoulstone} from ${character.soulstoneContainer}}
+		};
+		#else
+		{
+			#send {stand;get ${character.defaultSoulstone} from ${character.container}}
+		};
+		remove shield;
+		soulbind shield;
+		wear shield
+	};
+	#if {&{position}}
+	{
+		$position
+	}
+}
+{9}
+
+#ACTION {^You add A %1 to your group.$}
+{
+	#if {"%1" == "zombie" || "%1" == "ghoul" || "%1" == "mummy" || "%1" == "vampire"}
+	{
+		variable lastRaisedMinion %1 | prefix silent_
+	};
+	#if {"%1" == "bone guardian"}
+	{
+		look in ${character.tankContainer} ${auto.boneMaterial} | prefix boneguardianCounter_
+	};
+	#if {"%1" == "metal construct"}
+	{
+		look in ${character.tankContainer} ${auto.metalMaterial} | prefix metalcounter_
+	};
+	#if {"%1" == "wood woad"}
+	{
+		look in ${character.tankContainer} ${auto.woadMaterial} | prefix woadcounter_
+	}
+}
+{9}
+
+#ACTION {^You cast a powerful spell on the corpse of %1, slowing its decay.$}
+{
+	#if {"${client.makeUndead}" != "false"}
+	{
+		prepare corpse ${client.makeUndead}
 	}
 }
 {9}
@@ -230,7 +305,7 @@
 		#line {gag};
 		#showme {You bind a %1 soulstone to a %2.}
 	};
-	#delay {0.25}{#if {"$needsMoreSoulstones" == "true" && "$makeUndead" != "false"}{#if {&{soulstoneContainer}} {get $defaultSoulstone from $soulstoneContainer};#else {get $defaultSoulstone from $container};prepare corpse soulstone}}
+	#delay {0.25}{#if {"$needsMoreSoulstones" == "true" && "$makeUndead" != "false"}{#if {&{character.soulstoneContainer}} {get ${character.defaultSoulstone} from ${character.soulstoneContainer}};#else {get ${character.defaultSoulstone} from ${character.container}};prepare corpse soulstone}}
 }
 {9}
 
@@ -264,7 +339,7 @@
 {
 	#if {"${skillsAndSpells.giscos giblet grenade}" == "true"}
 	{
-		put cutfromcorpse $container
+		put cutfromcorpse ${character.container}
 	};
 	#elseif {"${auto.junk}" == "true"}
 	{
@@ -277,13 +352,13 @@
 {
 	#if {"${skillsAndSpells.soulbind}" == "true"}
 	{
-		#if {&{soulstoneContainer}}
+		#if {&{character.soulstoneContainer}}
 		{
-			#send {stand;get $defaultSoulstone from $soulstoneContainer}
+			#send {stand;get ${character.defaultSoulstone} from ${character.soulstoneContainer}}
 		};
 		#else
 		{
-			#send {stand;get $defaultSoulstone from $container}
+			#send {stand;get ${character.defaultSoulstone} from ${character.container}}
 		};
 		soulbind armor
 	};
@@ -298,7 +373,7 @@
 {
 	#if {"${skillsAndSpells.giscos giblet grenade}" == "true"}
 	{
-		put cutfromcorpse $container
+		put cutfromcorpse ${character.container}
 	};
 	#elseif {"${auto.junk}" == "true"}
 	{
@@ -311,7 +386,7 @@
 {
 	#if {"${skillsAndSpells.giscos giblet grenade}" == "true"}
 	{
-		put cutfromcorpse $container
+		put cutfromcorpse ${character.container}
 	};
 	#elseif {"${auto.junk}" == "true"}
 	{
@@ -333,13 +408,13 @@
 {
 	#if {"$makeUndead" == "false"}
 	{
-		#if {&{soulstoneContainer}}
+		#if {&{character.soulstoneContainer}}
 		{
-			#send {stand;get %1 soulstone from $soulstoneContainer}
+			#send {stand;get %1 soulstone from ${character.soulstoneContainer}}
 		};
 		#else
 		{
-			#send {stand;get %1 soulstone from $container}
+			#send {stand;get %1 soulstone from ${character.container}}
 		};
 		prepare corpse %1 soulstone
 	}
@@ -350,12 +425,18 @@
 {
 	#if {"${skillsAndSpells.giscos giblet grenade}" == "true"}
 	{
-		put cutfromcorpse $container
+		put cutfromcorpse ${character.container}
 	};
 	#elseif {"${auto.junk}" == "true"}
 	{
 		${auto.junkType} cutfromcorpse
 	}
+}
+{9}
+
+#ACTION {^You quickly place a hand on the inside of a bone shield to bind it to you.$}
+{
+	wear shield
 }
 {9}
 
@@ -378,7 +459,7 @@
 {
 	#if {"${skillsAndSpells.giscos giblet grenade}" == "true"}
 	{
-		put cutfromcorpse $container
+		put cutfromcorpse ${character.container}
 	};
 	#elseif {"${auto.junk}" == "true"}
 	{
@@ -401,7 +482,48 @@
 {
 	#if {"${auto.store}" == "true"}
 	{
-		put blood vial bottle bvial preserved $container
+		put blood vial bottle bvial preserved ${character.container}
+	}
+}
+{9}
+
+#ACTION {^You utter a short invocation over a tooth and pull it like taffy into a long bone blade.$}
+{
+	#if {"${skillsAndSpells.soulbind}" == "true"}
+	{
+		#if {&{character.soulstoneContainer}}
+		{
+			#send {stand;get ${character.defaultSoulstone} from ${character.soulstoneContainer}}
+		};
+		#else
+		{
+			#send {stand;get ${character.defaultSoulstone} from ${character.container}}
+		};
+		remove blade;
+		soulbind blade;
+		wield blade
+	};
+	#if {&{position}}
+	{
+		$position
+	}
+}
+{9}
+
+#ACTION {^You {can't soulsteal from that|can only soulsteal from living things}{\.|!}}
+{
+	#list {noSoulstealMobsList} {find} {$lastSoulsteal} {noSoulstealIndex};
+	#if {$noSoulstealIndex == 0}
+	{
+		#if {&{noSoulstealMobsList}}
+		{
+			#list {noSoulstealMobsList} {add} {$lastSoulsteal}
+		};
+		#else
+		{
+			#list {noSoulstealMobsList} {create} {$lastSoulsteal}
+		};
+		#variable {noSoulstealIndex} {0}
 	}
 }
 {9}
@@ -411,15 +533,37 @@
 	#if {"$makeUndead" != "false"}
 	{
 		#variable {needsMoreSoulstones} {true};
-		#if {&{soulstoneContainer}}
+		#if {&{character.soulstoneContainer}}
 		{
-			get $defaultSoulstone from $soulstoneContainer
+			get ${character.defaultSoulstone} from ${character.soulstoneContainer}
 		};
 		#else
 		{
-			get $defaultSoulstone from $container
+			get ${character.defaultSoulstone} from ${characte.rcontainer}
 		};
 		prepare corpse soulstone
+	}
+}
+{9}
+
+#ACTION {^You {cast the spell to separate soul from body, and|struggle to} pull %2's essence into a %3 soulstone!$}
+{
+	#if {!&{character.soulstoneContainer}}
+	{
+		#variable {character.soulstoneContainer} {${character.container}}
+	};
+	#variable {i} {%2};
+	#replace {i} { } {};
+	#if {"${autosell[$i]}" == "true"}
+	{
+		smarket value soulstone | prefix silent_
+	};
+	#else
+	{
+		#if {"${auto.store}" == "true"}
+		{
+			put soulstone ${character.soulstoneContainer}
+		}
 	}
 }
 {9}
@@ -449,88 +593,6 @@
 }
 {9}
 
-#ACTION {^casting_%1_The tooth melts and forms a pinkish mass, which you quickly pull and shape into a bone shield.$}
-{
-	#if {"${skillsAndSpells.soulbind}" == "true"}
-	{
-		#if {&{soulstoneContainer}}
-		{
-			#send {stand;get $defaultSoulstone from $soulstoneContainer}
-		};
-		#else
-		{
-			#send {stand;get $defaultSoulstone from $container}
-		};
-		remove shield;
-		soulbind shield;
-		wear shield
-	};
-	#if {&{position}}
-	{
-		$position
-	}
-}
-{9}
-
-#ACTION {^casting_%1_You add A %1 to your group.$}
-{
-	#if {"%1" == "zombie" || "%1" == "ghoul" || "%1" == "mummy" || "%1" == "vampire"}
-	{
-		variable lastRaisedMinion %1 | prefix silent_
-	};
-	#if {"%1" == "bone guardian"}
-	{
-		look in $tankContainer ${auto.boneMaterial} | prefix boneguardianCounter_
-	};
-	#if {"%1" == "metal construct"}
-	{
-		look in $tankContainer ${auto.metalMaterial} | prefix metalcounter_
-	};
-	#if {"%1" == "wood woad"}
-	{
-		look in $tankContainer ${auto.woadMaterial} | prefix woadcounter_
-	}
-}
-{9}
-
-#ACTION {^casting_%1_You cast a powerful spell on the corpse of %2, slowing its decay.$}
-{
-	#if {"$makeUndead" != "false"}
-	{
-		prepare corpse $makeUndead
-	}
-}
-{9}
-
-#ACTION {^casting_%1_You quickly place a hand on the inside of a bone shield to bind it to you.$}
-{
-	wear shield
-}
-{9}
-
-#ACTION {^casting_%1_You utter a short invocation over a tooth and pull it like taffy into a long bone blade.$}
-{
-	#if {"${skillsAndSpells.soulbind}" == "true"}
-	{
-		#if {&{soulstoneContainer}}
-		{
-			#send {stand;get pale blue soulstone from $soulstoneContainer}
-		};
-		#else
-		{
-			#send {stand;get $defaultSoulstone from $container}
-		};
-		remove blade;
-		soulbind blade;
-		wield blade
-	};
-	#if {&{position}}
-	{
-		$position
-	}
-}
-{9}
-
 #ACTION {^large chunks. (worn by you)$}
 {
 	play drop/bone-armor;
@@ -543,9 +605,9 @@
 
 #ACTION {^silent_A %1 soulstone has an estimated selling price of %d gold coins.$}
 {
-	#if {!&{soulstoneContainer}}
+	#if {!&{character.soulstoneContainer}}
 	{
-		#variable {soulstoneContainer} {$container}
+		#variable {character.soulstoneContainer} {${character.container}}
 	};
 	#variable {i} {%1};
 	#replace {i} { } {};
@@ -555,18 +617,18 @@
 	};
 	#else
 	{
-		put soulstone $soulstoneContainer
+		put soulstone ${character.soulstoneContainer}
 	}
 }
 {9}
 
 #ACTION {^silent_Sorry, there are no buyers for a %1 soulstone at this time.$}
 {
-	#if {!&{soulstoneContainer}}
+	#if {!&{character.soulstoneContainer}}
 	{
-		#variable {soulstoneContainer} {$container}
+		#variable {character.soulstoneContainer} {${character.container}}
 	};
-	put soulstone $soulstoneContainer
+	put soulstone ${character.soulstoneContainer}
 }
 {9}
 
@@ -588,65 +650,6 @@
 #ACTION {^silent_{sell|nosell}_Sorry, no soulstone color '%2' found.$}
 {
 	#showme {Sorry, the soulstone color %2 was not found.}
-}
-{9}
-
-#ACTION {^{casting_.*_You|You} {cast the spell to separate soul from body, and|struggle to} pull %2's essence into a %3 soulstone!$}
-{
-	#if {!&{soulstoneContainer}}
-	{
-		#variable {soulstoneContainer} {$container}
-	};
-	#variable {i} {%3};
-	#replace {i} { } {};
-	#if {"${autosell[$i]}" == "true"}
-	{
-		smarket value soulstone | prefix silent_
-	};
-	#else
-	{
-		#if {"${auto.store}" == "true"}
-		{
-			put soulstone $soulstoneContainer
-		}
-	}
-}
-{9}
-
-#ACTION {^{casting_s.* m.*_A|casting_s.* s.*_A|casting_s.* w.*_A|A} {skeletal mage|skeletal spider|skeleton} {starts|stops} following you.}
-{
-	#variable {i} {%2};
-	#replace {i} {skeleton} {skeletal warrior};
-	#if {"$auto.skeletonSpam" != "$i"}
-	{
-		#variable {auto.skeletonSpam} {$i};
-		#delay {1} {#variable {auto.skeletonSpam} {false}}
-	};
-	#if {"%3" == "stops"}
-	{
-		#if {"${auto.skeleton}" == "true"}
-		{
-			add_spell $i
-		}
-	};
-	#if {"%3" == "starts"}
-	{
-		remove_spell $i;
-		#if {!&{auto.skeletonStone}}
-		{
-			#variable {auto.skeletonStone} {deep blue soulstone}
-		};
-		#if {"%2" == "skeleton" && "${skillsAndSpells.skeletal knight}" == "true"}
-		{
-			get ${auto.skeletonStone} $container | grep nospam;
-			c skeletal knight
-		};
-		#if {"%2" == "skeletal mage" && "${skillsAndSpells.skeletal lich}" == "true"}
-		{
-			get ${auto.skeletonStone} $container | grep nospam;
-			c skeletal lich
-		}
-	}
 }
 {9}
 
@@ -683,33 +686,15 @@
 }
 {9}
 
-#ACTION {casting_soulsteal_You {can't soulsteal from that|can only soulsteal from living things}{\.|!}}
-{
-	#list {noSoulstealMobsList} {find} {$lastSoulsteal} {noSoulstealIndex};
-	#if {$noSoulstealIndex == 0}
-	{
-		#if {&{noSoulstealMobsList}}
-		{
-			#list {noSoulstealMobsList} {add} {$lastSoulsteal}
-		};
-		#else
-		{
-			#list {noSoulstealMobsList} {create} {$lastSoulsteal}
-		};
-		#variable {noSoulstealIndex} {0}
-	}
-}
-{9}
-
 #ALIAS {^guardian$}
 {
 	#nop {Interupt the queue and make a new bone guardian instantly};
 	'\cc;
-	#if {!&{tankContainer}}
+	#if {!&{character.tankContainer}}
 	{
-		#variable {tankContainer} {$container}
+		#variable {character.tankContainer} {${character.container}}
 	};
-	get ${auto.boneMaterial} from $tankContainer;
+	get ${auto.boneMaterial} from ${character.tankContainer};
 	#if {&{auto.bone}}
 	{
 		#variable {$castTankMinion} {false};
@@ -735,11 +720,11 @@
 {
 	#nop {Interupt the queue and make a new woad instantly};
 	'\cc;
-	#if {!&{tankContainer}}
+	#if {!&{character.tankContainer}}
 	{
-		#variable {tankContainer} {$container}
+		#variable {character.tankContainer} {${character.container}}
 	};
-	get ${auto.woadMaterial} from $tankContainer;
+	get ${auto.woadMaterial} from ${character.tankContainer};
 	drop ${auto.woadMaterial};
 	#delay {0.2} {c wood ${auto.woadMaterial}};
 	#if {&{auto.woad}}
@@ -836,7 +821,7 @@
 
 #ALIAS {^blood{m|mi|mis|mist}$}
 {
-	get blood vial bottle bvial preserved $container | grep nospam;
+	get blood vial bottle bvial preserved ${character.container} | grep nospam;
 	@command{c bloodm;cast bloodmist}
 }
 {9}
@@ -865,13 +850,13 @@
 {
 	#nop {Interupt the queue and make a new metal construct instantly};
 	'\cc;
-	#if {!&{tankcontainer}}
+	#if {!&{character.tankcontainer}}
 	{
-		#variable {tankContainer} {$container}
+		#variable {character.tankContainer} {${character.container}}
 	};
 	#if {${kxwt.terrain} != 33}
 	{
-		get ${auto.metalMaterial} $container;
+		get ${auto.metalMaterial} ${character.container};
 		drop ${auto.metalMaterial}
 	};
 	#variable {castTankMinion} {false};
@@ -902,13 +887,13 @@
 
 #ALIAS {^shadowfiend$}
 {
-	#if {&{soulstoneContainer}}
+	#if {&{character.soulstoneContainer}}
 	{
-		get deep blue soulstone $soulstoneContainer
+		get deep blue soulstone ${character.soulstoneContainer}
 	};
 	#else
 	{
-		get deep blue soulstone from $container
+		get deep blue soulstone from ${character.container}
 	};
 	summon demon fiend soulstone
 }
@@ -930,9 +915,9 @@
 
 #ALIAS {^woad%s%S$}
 {
-	#if {!&{tankContainer}}
+	#if {!&{character.tankContainer}}
 	{
-		#variable {tankContainer} {$container}
+		#variable {character.tankContainer} {${character.container}}
 	};
 	#variable {auto.woadMaterial} {%2};
 	#showme {You will now use %2 to make wood woads.};
@@ -1066,7 +1051,7 @@
 #ALIAS {^{t|ta|tan|tank}container %w$}
 {
 	#showme {You will now get tank minion materials from %2.};
-	#variable {tankContainer} {%2}
+	#variable {character.tankContainer} {%2}
 }
 {9}
 
@@ -1074,13 +1059,13 @@
 {
 	#if {"${skillsAndSpells.demonfire}" == "true"}
 	{
-		#if {&{soulstoneContainer}}
+		#if {&{character.soulstoneContainer}}
 		{
-			get $defaultSoulstone $soulstoneContainer
+			get ${character.defaultSoulstone} ${character.soulstoneContainer}
 		};
 		#else
 		{
-			get $defaultSoulstone $container
+			get ${character.defaultSoulstone} ${character.container}
 		};
 		c demonfire %1
 	};
@@ -1093,7 +1078,7 @@
 
 #ALIAS {{ggg|gis|gisc|gisco|giscos|giscos g|giscos gi|giscos gib|giscos gibl|giscos gibl|giscos gible|giscos giblet|giscos giblet g|giscos giblet gr|giscos giblet gre|giscos giblet gren|giscos giblet grena|giscos giblet grenad|giscos giblet grenade}}
 {
-	get cutfromcorpse $container | grep nospam;
+	get cutfromcorpse ${character.container} | grep nospam;
 	@command{c gi;cast giscos giblet grenade}
 }
 {9}

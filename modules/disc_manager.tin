@@ -26,9 +26,8 @@
 }
 {9}
 
-#ACTION {^casting_%1_A floating blue-tinted disc slowly solidifies and hovers before you.$}
+#ACTION {^A floating blue-tinted disc slowly solidifies and hovers before you.$}
 {
-	remove_spell tensors floating disc;
 	#list {discList} {find} {all} {discIndex};
 	#if {$discIndex != 0}
 	{

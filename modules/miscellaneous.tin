@@ -238,7 +238,7 @@
 #ACTION {^silent_%*$battleScroll}
 {
 	get $battleScroll corpse;
-	put $battleScroll $container
+	put $battleScroll ${character.container}
 }
 {9}
 
@@ -370,9 +370,9 @@
 
 #ALIAS {^autostore %S}
 {
-	#variable {soulstoneContainer} {%1};
+	#variable {character.soulstoneContainer} {%1};
 	#variable {auto.store} {true};
-	#showme {You will now put soulstones in your $soulstoneContainer\.}
+	#showme {You will now put soulstones in your ${character.soulstoneContainer}\.}
 }
 {8}
 
@@ -473,12 +473,12 @@
 
 #ALIAS {^autostore$}
 {
-	#if {!&{soulstoneContainer}}
+	#if {!&{character.soulstoneContainer}}
 	{
-		#variable {soulstoneContainer} {$container}
+		#variable {character.soulstoneContainer} {${character.container}}
 	};
 	#variable {auto.store} {true};
-	#showme {You will now put soulstones in your $soulstoneContainer\.}
+	#showme {You will now put soulstones in your ${character.soulstoneContainer}\.}
 }
 {9}
 
@@ -492,7 +492,7 @@
 #ALIAS {^cont{a|ai|ain|aine|ainer} %S$}
 {
 	#showme {Container set to %2.};
-	#variable {container} {%2}
+	#variable {character.container} {%2}
 }
 {9}
 
@@ -726,9 +726,9 @@
 
 #ALIAS {^{g|ge|get|gi|giv|give|p|pu|put} %2 %S$}
 {
-	#if {!&{container} && "%1" == "{p|pu|put}"}
+	#if {!&{character.container} && "%1" == "{p|pu|put}"}
 	{
-		#variable {container} {%3}
+		#variable {character.container} {%3}
 	};
 	#variable {i} {%2};
 	#replace {i} {,} {;};
@@ -806,10 +806,10 @@
 	};
 	#else
 	{
-		#regexp {$battleScroll} {{.*} {.*}} {l in $container &2 | prefix scrollcounter_};
+		#regexp {$battleScroll} {{.*} {.*}} {l in ${character.container} &2 | prefix scrollcounter_};
 		#else
 		{
-			l in $container $battleScroll | prefix scrollcounter_
+			l in ${character.container} $battleScroll | prefix scrollcounter_
 		}
 	}
 }
@@ -918,12 +918,12 @@
 
 #MACRO {\e\}
 {
-	#regexp {$battleScroll} {{.*} {.*}} {get $battleScroll $container;use &2;l in $container &2 | prefix scrollcounter_};
+	#regexp {$battleScroll} {{.*} {.*}} {get $battleScroll ${character.container};use &2;l in ${character.container} &2 | prefix scrollcounter_};
 	#else
 	{
-		get $battleScroll $container;
+		get $battleScroll ${character.container};
 		use $battleScroll;
-		l in $container $battleScroll | prefix scrollcounter_
+		l in ${character.container} $battleScroll | prefix scrollcounter_
 	}
 }
 
