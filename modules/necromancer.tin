@@ -73,9 +73,9 @@
 		{
 			guardian
 		};
-		#if {"${auto.flesh}" == "true"}
+		#if {"${auto.flesh}" == "true" && "%2" == "stops"}
 		{
-			#variable {castTankMinion} {true};
+			#variable {castTankMinion} {flesh beast corpse};
 			release corpse
 		};
 		#if {"${auto.metal}" == "true" && "$%2" == "stops"}
@@ -187,10 +187,9 @@
 
 #ACTION {^An animated corpse stops following you.$}
 {
-	#if {"${auto.flesh}" == "true" && "$castTankMinion" == "true"}
+	#if {"${auto.flesh}" == "true" && "$castTankMinion" == "flesh%*"}
 	{
-		c flesh corpse;
-		#delay {1.5} {#variable {castTankMinion} {false}}
+		c flesh corpse
 	}
 }
 {9}
@@ -212,10 +211,9 @@
 
 #ACTION {^Sorry, that's too small.$}
 {
-	#if {"${auto.flesh}" == "true" && "$castTankMinion" == "true"}
+	#if {"${auto.flesh}" == "true" && "$castTankMinion" == "flesh%*"}
 	{
-		c clay;
-		#delay {0.5} {#variable {castTankMinion} {false}}
+		c clay
 	}
 }
 {9}
@@ -315,10 +313,9 @@
 
 #ACTION {^You don't have any minions by that name.$}
 {
-	#if {"${auto.flesh}" == "true" && "$castTankMinion" == "true"}
+	#if {"${auto.flesh}" == "true" && "$castTankMinion" == "flesh%*"}
 	{
-		c clay;
-		#delay {0.5} {#variable {castTankMinion} {false}}
+		c clay
 	}
 }
 {9}
@@ -539,7 +536,7 @@
 	{
 		#variable {character.soulstoneContainer} {${character.container}}
 	};
-	#variable {i} {%2};
+	#variable {i} {%3};
 	#replace {i} { } {};
 	#if {"${autosell[$i]}" == "true"}
 	{
@@ -592,7 +589,7 @@
 
 #ACTION {^silent_A %1 soulstone has an estimated selling price of %d gold coins.$}
 {
-	#if {!&{character.soulstoneContainer}}
+#if {!&{character.soulstoneContainer}}
 	{
 		#variable {character.soulstoneContainer} {${character.container}}
 	};
