@@ -11,6 +11,10 @@
 
 #ACTION {^{An|A|a|an} {greater ice|ice|lesser ice} elemental {starts|stops} following you.$}
 {
+	#if {"%3" == "starts"}
+	{
+		#variable {castTankMinion} {true}
+	};
 	#if {"${client.releasing}" != "true"}
 	{
 		#if {"${auto.iceElemental}" == "true" && ${character.currentMana} > 200}
@@ -19,20 +23,14 @@
 			{
 				#if {"%2" != "ice"}
 				{
-					add_spell ice elemental %2
+					#variable {castTankMinion} {ice elemental %2};
+					cast ice elemental %2
 				};
 				#else
 				{
+					#variable {castTankMinion} {ice elemental};
 					add_spell ice elemental
 				}
-			};
-			#if {"%2" != "ice"}
-			{
-				remove_spell ice elemental %2
-			};
-			#else
-			{
-				remove_spell ice elemental
 			}
 		};
 		#elseif {"${auto.iceElemental}" == "true" && ${character.currentMana} < 200}
@@ -47,54 +45,17 @@
 }
 {9}
 
-#ACTION {^{A|a} {crystal|greater crystal|lesser crystal|fire|greater fire|lesser fire|lightning|greater lightning|lesser lightning} {elemental|pillar elemental} {starts|stops} following you.$}
-{
-	#if {"${client.releasing}" == "true"}
-	{
-		#regexp {%2} {{.*} {crystal|fire|lightning}} {#variable {i} {&2}};
-		#else
-		{
-			#variable {i} {%2}
-		};
-		#if {"${auto.${i}Elemental}" == "true" && ${character.currentMana} >= 250}
-		{
-			#regexp {%2} {{.*} {crystal|fire|lightning}} {#variable {i} {&2 elemental &1}};
-			#else
-			{
-				#variable {i} {%2 elemental}
-			};
-			#if {"%4" == "stops"}
-			{
-				add_spell $i
-			};
-			#else
-			{
-				remove_spell $i
-			}
-		}
-	};
-	#else
-	{
-		#variable {client.releasing} {false}
-	}
-}
-{9}
-
-#ALIAS {^{noauto|auto}{crystal|fire|ice|lightning}$}
+#ALIAS {^{noauto|auto}ice$}
 {
 	#if {"%1" == "auto"}
 	{
-		#if {"${auto.recast}" != "true"}
-		{
-			#echo {In order for auto %2 delemental to work, you need to turn on autorecast.}
-		};
-		#variable {auto.%2Elemental} {true};
-		#echo {auto %2 elemental enabled}
+		#variable {auto.iceElemental} {true};
+		#echo {auto ice elemental enabled}
 	};
 	#else
 	{
-		#variable {auto.%2Elemental} {false};
-		#echo {auto %2 elemental disabled}
+		#variable {auto.iceElemental} {false};
+		#echo {auto ice elemental disabled}
 	}
 }
 {9}
