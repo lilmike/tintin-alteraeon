@@ -1,11 +1,40 @@
+#ACTION {^You fail to cast the spell '%1'.$}
+{
+	#if {"${auto.cast}" == "true"}
+	{
+		cast %1
+	}
+}
+{9}
+
 #ACTION {^silent_Missing '%1'.$}
 {
 	cast %1
 }
 {9}
 
+#ACTION {^silent_recast_%S_Spell '%2', %3 remaining%*}
+{
+	recast %1 %2
+}
+{9}
+
 #ALIAS {^{c|ca|cas|cast} %s{spellset|missing|all}$}
 {
 	affects | prefix silent_
+}
+{9}
+
+#ALIAS {^{recas|recast} %s{a|ad|add|r|re|rem|remo|remov|remove} %sall$}
+{
+	#if {"%3" == "a%*"}
+	{
+		recast start
+	};
+	#else
+	{
+		recast stop
+	};
+	affects | prefix silent_recast_%3_
 }
 {9}
