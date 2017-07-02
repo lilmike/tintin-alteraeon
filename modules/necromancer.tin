@@ -165,20 +165,6 @@
 
 #ACTION {^A {skeletal mage|skeletal spider|skeleton} {starts|stops} following you.}
 {
-	#variable {i} {%1};
-	#replace {i} {skeleton} {skeletal warrior};
-	#if {"$auto.skeletonSpam" != "$i"}
-	{
-		#variable {auto.skeletonSpam} {$i};
-		#delay {1} {#variable {auto.skeletonSpam} {false}}
-	};
-	#if {"%2" == "stops"}
-	{
-		#if {"${auto.skeleton}" == "true"}
-		{
-			cast $i
-		}
-	};
 	#if {"%2" == "starts"}
 	{
 		#if {!&{auto.skeletonStone}}
@@ -947,7 +933,7 @@
 }
 {9}
 
-#ALIAS {^{noauto|auto}{bloodsacrifice|bonearmor|boneprison|consume|fiend|skeleton}$}
+#ALIAS {^{noauto|auto}{bloodsacrifice|bonearmor|boneprison|consume|fiend}$}
 {
 	#if {"%1" == "auto"}
 	{
