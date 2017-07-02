@@ -57,14 +57,17 @@
 	{
 		#if {"%2" == "starts"}
 		{
-			remove_spell clay man
+#if {"$castTankMinion" != "false"}
+{
+#variable {castTankMinion} {true}
+}
 		};
 		#if {"${auto.clay}" == "true" && "%2" == "stops"}
 		{
 			'\cc;
 			cast clay man
 		};
-		#if {"${auto.woad}" == "true" && "$castTankMinion" == "true"}
+		#if {"${auto.woad}" == "true" && "$castTankMinion" == "woad"}
 		{
 			woad
 		};
@@ -695,11 +698,7 @@
 		#variable {character.tankContainer} {${character.container}}
 	};
 	get ${auto.boneMaterial} from ${character.tankContainer};
-	#if {&{auto.bone}}
-	{
-		#variable {$castTankMinion} {false};
-		#delay {10} {#variable {castTankMinion} {true}}
-	};
+	#variable {castTankMinion} {guardian};
 	c bone guardian ${auto.boneMaterial}
 }
 {5}
@@ -726,11 +725,10 @@
 	};
 	get ${auto.woadMaterial} from ${character.tankContainer};
 	drop ${auto.woadMaterial};
-	#delay {0.2} {c wood ${auto.woadMaterial}};
+	c wood ${auto.woadMaterial};
 	#if {&{auto.woad}}
 	{
-		#variable {$castTankMinion} {false};
-		#delay {10} {#variable {castTankMinion} {true}}
+		#variable {$castTankMinion} {woad}
 	}
 }
 {8}
