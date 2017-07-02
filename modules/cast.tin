@@ -1,6 +1,15 @@
+#ACTION {^You fail to cast the spell.$}
+{
+	#if { "$castTankMinion" != "true"}
+	{
+		cast $castTankMinion
+	}
+}
+{9}
+
 #ACTION {^You fail to cast the spell '%1'.$}
 {
-	#if {"${auto.cast}" == "true"}
+	#if {"${auto.cast}" == "true" || "$castTankMinion" != "true"}
 	{
 		cast %1
 	}

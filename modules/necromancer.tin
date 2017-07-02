@@ -57,21 +57,19 @@
 	{
 		#if {"%2" == "starts"}
 		{
-#if {"$castTankMinion" != "false"}
-{
 #variable {castTankMinion} {true}
-}
 		};
 		#if {"${auto.clay}" == "true" && "%2" == "stops"}
 		{
 			'\cc;
+#variable {castTankMinion} {%2};
 			cast clay man
 		};
-		#if {"${auto.woad}" == "true" && "$castTankMinion" == "woad"}
+		#if {"${auto.woad}" == "true" && "%2" == "stops"}
 		{
 			woad
 		};
-		#if {"${auto.bone}" == "true" && "$castTankMinion" == "true"}
+		#if {"${auto.bone}" == "true" && "%2" == "stops"}
 		{
 			guardian
 		};
@@ -80,10 +78,11 @@
 			#variable {castTankMinion} {true};
 			release corpse
 		};
-		#if {"${auto.metal}" == "true" && "$castTankMinion" == "true"}
+		#if {"${auto.metal}" == "true" && "$%2" == "stops"}
 		{
 			#if {${kxwt.terrain} == 33}
 			{
+				#variable {castTankMinion} {%2};
 				cast metal
 			};
 			#else
@@ -445,7 +444,7 @@
 
 #ACTION {^You realize that you have made a mistake, and the preparation fails.$}
 {
-	#if {&{makeUndead}}
+	#if {&{client.makeUndead}}
 	{
 		prepare corpse $makeUndead
 	}
@@ -697,7 +696,7 @@
 		#variable {character.tankContainer} {${character.container}}
 	};
 	get ${auto.boneMaterial} from ${character.tankContainer};
-	#variable {castTankMinion} {guardian};
+	#variable {castTankMinion} {bone guardian ${auto.boneMaterial}};
 	c bone guardian ${auto.boneMaterial}
 }
 {5}
@@ -725,10 +724,7 @@
 	get ${auto.woadMaterial} from ${character.tankContainer};
 	drop ${auto.woadMaterial};
 	c wood ${auto.woadMaterial};
-	#if {&{auto.woad}}
-	{
-		#variable {$castTankMinion} {woad}
-	}
+	#variable {castTankMinion} {wood woad ${auto.woadMaterial}}
 }
 {8}
 
@@ -856,16 +852,16 @@
 		get ${auto.metalMaterial} ${character.container};
 		drop ${auto.metalMaterial}
 	};
-	#variable {castTankMinion} {false};
 	#if {${kxwt.terrain} == 33}
 	{
+	#variable {castTankMinion} {metal construct};
 		#delay {0.2} {c metal construct}
 	};
 	#else
 	{
+	#variable {castTankMinion} {metal construct ${auto.metalMaterial}};
 		#delay {0.2} {c metal construct ${auto.metalMaterial}}
-	};
-	#delay {10} {#variable {castTankMinion} {true}}
+	}
 }
 {9}
 
@@ -991,7 +987,7 @@
 				#variable {auto.flesh} {false};
 				#variable {auto.metal} {false};
 				#variable {auto.woad} {false};
-				#variable {castTankMinion} {true}
+				#variable {castTankMinion} {bone guardian}
 			};
 			#case {"clay"}
 			{
@@ -1000,7 +996,7 @@
 				#variable {auto.flesh} {false};
 				#variable {auto.metal} {false};
 				#variable {auto.woad} {false};
-				#variable {castTankMinion} {true}
+				#variable {castTankMinion} {clay man}
 			};
 			#case {"flesh"}
 			{
@@ -1009,7 +1005,7 @@
 				#variable {auto.flesh} {true};
 				#variable {auto.metal} {false};
 				#variable {auto.woad} {false};
-				#variable {castTankMinion} {true}
+				#variable {castTankMinion} {flesh beast}
 			};
 			#case {"metal"}
 			{
@@ -1018,7 +1014,7 @@
 				#variable {auto.flesh} {false};
 				#variable {auto.metal} {true};
 				#variable {auto.woad} {false};
-				#variable {castTankMinion} {true}
+				#variable {castTankMinion} {metal construct}
 			};
 			#case {"woad"}
 			{
@@ -1027,7 +1023,7 @@
 				#variable {auto.flesh} {false};
 				#variable {auto.metal} {false};
 				#variable {auto.woad} {true};
-				#variable {castTankMinion} {true}
+				#variable {castTankMinion} {wood woad}
 			}
 		};
 		#echo {auto%2 enabled.}
