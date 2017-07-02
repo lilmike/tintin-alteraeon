@@ -115,9 +115,10 @@
 		#line {gag};
 		#showme {A %1 corpse is fully prepared.}
 	};
-	#variable {needsMoreSoulstones} {false};
-	#if {"$makeUndead" != "false"}
+	#unvariable {client.needsMoreSoulstones};
+	#if {&{client.makeUndead}}
 	{
+		#unvariable {client.makeUndead};
 		#if {"${skillsAndSpells.infuse element}" != "true"}
 		{
 			c raise undead corpse
@@ -128,7 +129,6 @@
 			#variable {yes} {c raise corpse}
 		}
 	};
-	#variable {makeUndead} {false}
 }
 {8}
 
@@ -294,7 +294,7 @@
 
 #ACTION {^You cast a powerful spell on the corpse of %1, slowing its decay.$}
 {
-	#if {"${client.makeUndead}" != "false"}
+	#if {&{client.makeUndead}}
 	{
 		prepare corpse ${client.makeUndead}
 	}
@@ -308,7 +308,7 @@
 		#line {gag};
 		#showme {You bind a %1 soulstone to a %2.}
 	};
-	#delay {0.25}{#if {"$needsMoreSoulstones" == "true" && "$makeUndead" != "false"}{#if {&{character.soulstoneContainer}} {get ${character.defaultSoulstone} from ${character.soulstoneContainer}};#else {get ${character.defaultSoulstone} from ${character.container}};prepare corpse soulstone}}
+	#delay {0.5}{#if {"${client.needsMoreSoulstones}" == "true" && &{client.makeUndead}}{#if {&{character.soulstoneContainer}} {get ${character.defaultSoulstone} from ${character.soulstoneContainer}};#else {get ${character.defaultSoulstone} from ${character.container}};prepare corpse soulstone}}
 }
 {9}
 
@@ -409,7 +409,7 @@
 
 #ACTION {^You make a mistake, the preparation fails, and a %1 soulstone is lost.$}
 {
-	#if {"$makeUndead" == "false"}
+	#if {&{client.makeUndead}}
 	{
 		#if {&{character.soulstoneContainer}}
 		{
@@ -445,7 +445,7 @@
 
 #ACTION {^You realize that you have made a mistake, and the preparation fails.$}
 {
-	#if {"$makeUndead" != "false"}
+	#if {&{makeUndead}}
 	{
 		prepare corpse $makeUndead
 	}
@@ -533,9 +533,8 @@
 
 #ACTION {^You {carefully wrap and prepare|drain the blood from|prepare} the corpse of %1{ and prepare it| }to become %*}
 {
-	#if {"$makeUndead" != "false"}
+	#if {&{client.makeUndead}}
 	{
-		#variable {needsMoreSoulstones} {true};
 		#if {&{character.soulstoneContainer}}
 		{
 			get ${character.defaultSoulstone} from ${character.soulstoneContainer}
@@ -833,14 +832,14 @@
 
 #ALIAS {^dstone %1}
 {
-	#variable {defaultSoulstone} {%1 soulstone};
+	#variable {character.defaultSoulstone} {%1 soulstone};
 	dstone
 }
 {9}
 
 #ALIAS {^dstone$}
 {
-	#variable {defaultSoulstone}
+	#variable {character.defaultSoulstone}
 }
 {9}
 
@@ -899,7 +898,8 @@
 
 #ALIAS {^sire {ghoul|mummy|vampire|zombie}$}
 {
-	#variable {makeUndead} {%1};
+	#variable {client.makeUndead} {%1};
+	#variable {client.needsMoreSoulstones} {true};
 	cast preservation corpse
 }
 {9}
@@ -1085,6 +1085,4 @@
 #GAG              {^None of your minions seem hungry at the moment.$}
 #GAG              {^{boneguardian|metal|woad}{C|c}ounter_%*}
 #VARIABLE         {boneFortBreakCounter}  {0}
-#VARIABLE         {makeUndead}  {false}
-#VARIABLE         {needsMoreSoulstones}  {false}
 #VARIABLE         {noSoulstealIndex}  {0}

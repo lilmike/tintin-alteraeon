@@ -1,0 +1,11 @@
+#ACTION {^silent_Missing '%1'.$}
+{
+	cast %1
+}
+{9}
+
+#ALIAS {^{c|ca|cas|cast} %s{spellset|missing|all}$}
+{
+	affects | prefix silent_
+}
+{9}
