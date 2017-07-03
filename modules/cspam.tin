@@ -1,13 +1,3 @@
-#ACTION {^%S appreciates your sacrifice of %3.$}
-{
-	#if {"${character.cspam}" == "true"}
-	{
-		#echo {%2 appreciates your sacrifice.};
-		#line {gag}
-	}
-}
-{8}
-
 #ACTION {^{\s+Y|casting.*Y|Y}ou {gain|receive} %d experience{\.|!}$}
 {
 	#if {"${character.cspam}" == "true"}
