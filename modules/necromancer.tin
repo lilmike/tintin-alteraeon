@@ -254,7 +254,7 @@
 }
 {9}
 
-#ACTION {^You add A %1 to your group.$}
+#ACTION {^%sYou add A %1 to your group.$}
 {
 	#if {"%1" == "zombie" || "%1" == "ghoul" || "%1" == "mummy" || "%1" == "vampire"}
 	{
