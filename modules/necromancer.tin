@@ -98,15 +98,6 @@
 }
 {4}
 
-#ACTION {^A twisted bone shield fractures, splits, and abruptly crumbles to dust! (worn by you)$}
-{
-	#if {"$boneShield" == "true" && "$autorecast" == "true"}
-	{
-		c bone shield
-	}
-}
-{5}
-
 #ACTION {^With the last soulstone, A prepared %1 corpse is fully prepared.$}
 {
 	#if {"${character.cspam}" == "true"}
@@ -120,12 +111,12 @@
 		#unvariable {client.makeUndead};
 		#if {"${skillsAndSpells.infuse element}" != "true"}
 		{
-			c raise undead corpse
+			vcast raise undead corpse
 		};
 		#else
 		{
 			#showme {The corpse is ready to be raised. Enter yes to continue};
-			#variable {yes} {c raise corpse}
+			#variable {yes} {vcast raise corpse}
 		}
 	};
 }
@@ -174,12 +165,12 @@
 		#if {"%1" == "skeleton" && "${skillsAndSpells.skeletal knight}" == "true"}
 		{
 			get ${auto.skeletonStone} ${character.container} | grep nospam;
-			c skeletal knight
+			vcast skeletal knight
 		};
 		#if {"%1" == "skeletal mage" && "${skillsAndSpells.skeletal lich}" == "true"}
 		{
 			get ${auto.skeletonStone} ${character.container} | grep nospam;
-			c skeletal lich
+			vcast skeletal lich
 		}
 	}
 }
@@ -582,7 +573,7 @@
 	play drop/bone-armor;
 	#if {"${auto.bonearmor}" == "true"}
 	{
-		c bone armor $name
+		vcast bone armor $name
 	}
 }
 {9}
@@ -798,7 +789,7 @@
 #ALIAS {^blood{m|mi|mis|mist}$}
 {
 	get blood vial bottle bvial preserved ${character.container} | grep nospam;
-	@command{c bloodm;cast bloodmist}
+	@command{vcast bloodm;vcast bloodmist}
 }
 {9}
 
@@ -926,7 +917,7 @@
 
 #ALIAS {^{forg|forge} %1}
 {
-	c soulforge %1 2.%1
+	vcast soulforge %1 2.%1
 }
 {9}
 
@@ -1056,7 +1047,7 @@
 #ALIAS {{ggg|gis|gisc|gisco|giscos|giscos g|giscos gi|giscos gib|giscos gibl|giscos gibl|giscos gible|giscos giblet|giscos giblet g|giscos giblet gr|giscos giblet gre|giscos giblet gren|giscos giblet grena|giscos giblet grenad|giscos giblet grenade}}
 {
 	get cutfromcorpse ${character.container} | grep nospam;
-	@command{c gi;cast giscos giblet grenade}
+	@command{vcast gi;vcast giscos giblet grenade}
 }
 {9}
 

@@ -380,23 +380,23 @@
 {
 	#if {"${skillsAndSpells.burning hands}" == "true"}
 	{
-		c burning hands %1
+		vcast burning hands %1
 	};
 	#if {"${skillsAndSpells.clasp of corruption}" == "true"}
 	{
-		c clasp of corruption %1
+		vcast clasp of corruption %1
 	};
 	#if {"${skillsAndSpells.shocking grasp}" == "true"}
 	{
-		c shocking grasp %1
+		vcast shocking grasp %1
 	};
 	#if {"${skillsAndSpells.sacred touch}" == "true"}
 	{
-		c sacred touch %1
+		vcast sacred touch %1
 	};
 	#if {"${skillsAndSpells.sickening touch}" == "true"}
 	{
-		c sickening touch %1
+		vcast sickening touch %1
 	}
 }
 {8}
@@ -506,23 +506,23 @@
 {
 	#if {"${skillsAndSpells.burning hands}" == "true"}
 	{
-		c burning hands
+		vcast burning hands
 	};
 	#if {"${skillsAndSpells.clasp of corruption}" == "true"}
 	{
-		c clasp of corruption
+		vcast clasp of corruption
 	};
 	#if {"${skillsAndSpells.shocking grasp}" == "true"}
 	{
-		c shocking grasp
+		vcast shocking grasp
 	};
 	#if {"${skillsAndSpells.sacred touch}" == "true"}
 	{
-		c sacred touch
+		vcast sacred touch
 	};
 	#if {"${skillsAndSpells.sickening touch}" == "true"}
 	{
-		c sickening touch
+		vcast sickening touch
 	}
 }
 {9}
