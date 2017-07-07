@@ -13,7 +13,7 @@
 }
 {9}
 
-#ACTION {^silent_recast_%S_Spell '%2', %3 remaining%*}
+#ACTION {^silent_recast_%S_Spell '%2',%*}
 {
 	recast %1 %2
 }
