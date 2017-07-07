@@ -208,7 +208,12 @@
 		#variable {character.lastHpAlert} {Seventy};
 		synth_play hpSeventy
 	};
-	#elseif {${character.currentHp} <= ${character.maxHp} * 0.55 && ${character.currentHp} > ${character.maxHp} * 0.40 && "${character.lastHpAlert}" != "Forty"}
+	#elseif {${character.currentHp} <= ${character.maxHp} * 0.55 && ${character.currentHp} > ${character.maxHp} * 0.40 && "${character.lastHpAlert}" != "FiftyFive"}
+	{
+		#variable {character.lastHpAlert} {FiftyFive};
+		synth_play hpFiftyFive
+	};
+	#elseif {${character.currentHp} <= ${character.maxHp} * 0.40 && ${character.currentHp} > ${character.maxHp} * 0.25 && "${character.lastHpAlert}" != "Forty"}
 	{
 		#variable {character.lastHpAlert} {Forty};
 		synth_play hpForty
