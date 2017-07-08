@@ -85,7 +85,7 @@
 	};
 	#if {$motdStatus == 200}
 	{
-		#system {play -qV0 -t ogg "$MOTDURL" gain $volume &> /dev/null &}
+		#system {play -qV0 -t opus "$MOTDURL" gain $volume &> /dev/null &}
 	};
 	#else
 	{
