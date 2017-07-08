@@ -167,7 +167,7 @@
 	#nop {Get the last modified date of the news file.};
 	#script {motd} {curl -sI "$MOTDURL"};
 	#regexp {${motd[1]}} {HTTP/1.1 {.*} {.*}} {#variable {motdStatus} {&1}};
-	#regexp {${motd[8]}} {Last-Modified: {.*}} {#variable {motdTime} {News updated &1}};
+	#regexp {${motd[3]}} {Date: {.*}} {#variable {motdTime} {News updated &1}};
 	#nop {Display intro message.};
 	#system {echo "$separator";fold -w $(tput cols) -s MOTD;echo "$separator"};
 	#echo {To get started type login};

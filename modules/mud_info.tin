@@ -1,4 +1,4 @@
-#VARIABLE         {MOTDURL}  {https://stormdragon.tk/scripts/motd.ogg}
+#VARIABLE         {MOTDURL}  {https://stormdragon.tk/scripts/motd.opus}
 #VARIABLE         {mudAddress}  {alteraeon.com}
 #VARIABLE         {mudPort}  {3110}
 #VARIABLE         {mudSessionName}  {Alter Aeon}
