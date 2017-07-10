@@ -231,7 +231,7 @@
 
 #ACTION {^%S has given you a gift!$}
 {
-	#if {"$auto.thank" == "true"}
+	#if {"${auto.thank}" == "true"}
 	{
 		#nop {Randomly generate thank you message.};
 		#math {i} {1d4};
