@@ -373,6 +373,12 @@
 }
 {9}
 
+#ACTION {^You spend %d points and improve at '%2'!$}
+{
+	autobrag %0
+}
+{9}
+
 #ACTION {^You've won %d gold coins!$}
 {
 	notify-send %0 (From the ${client.gambleGame} game.);
@@ -567,8 +573,10 @@
 		#replace {channel.message} {You {have sudden insight, and become|learn from your mistakes, and become|become}} {};
 		#format {channel.message} {%p} {${channel.message}};
 		#format {channel.message} {%n} {${channel.message}};
+		#replace {channel.message} { improve } { improved };
 		#replace {channel.message} {You discover} {I discovered};
 		#replace {channel.message} {You gain} {I gained};
+		#replace {channel.message} {You spend} {I spent};
 		#replace {channel.message} {your} {my};
 		#replace {channel.message} {Your} {My};
 		#replace {channel.message} {You} {I};
