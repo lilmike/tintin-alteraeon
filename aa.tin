@@ -74,6 +74,12 @@
 }
 {9}
 
+#ALIAS {^cmotd$}
+{
+	#system {echo "$separator";fold -w $(tput cols) -s MOTD;echo "$separator"}
+}
+{9}
+
 #ALIAS {^mod{kill|load|reload} %S$}
 {
 	#nop {reload all modules};

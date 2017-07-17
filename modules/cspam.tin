@@ -544,4 +544,4 @@
 	}
 }
 
-#VARIABLE         {cspam}  {{formatString}{}{lastLineOfText}{}{lastLineOfTextCounter}{1}{oldText}{}{textCounterExceptions}{!!SOUND.*|Alas,.*|kxwt.*|\(auction\).*|\*tick\*|finger      - .*|neck        - .*|wrist       - .*|.* growls at you, warning you away\.|.* is mortally wounded, and will die soon if not aided\.|.* someone else beat .*|Mudmail.*|You .*|.* rips a bone .*|.* starts harvesting .*|.* from the corpse.*|Nothing\.|Someone.*|\*interrupt\*|\[new line\]:|.*cannot carry any more weight without sinking\.|In your dreams, or what\?|silent_.*}}
+#VARIABLE         {cspam}  {{formatString}{}{lastLineOfText}{}{lastLineOfTextCounter}{1}{oldText}{}{textCounterExceptions}{!!SOUND.*|Alas,.*|.*empty\.|kxwt.*|\(auction\).*|\*tick\*|finger      - .*|neck        - .*|wrist       - .*|.* growls at you, warning you away\.|.* is mortally wounded, and will die soon if not aided\.|.* someone else beat .*|Mudmail.*|Sorry.*|You .*|.* rips a bone .*|.* starts harvesting .*|.* from the corpse.*|Nothing\.|Someone.*|\*interrupt\*|\[new line\]:|.*cannot carry any more weight without sinking\.|In your dreams, or what\?|silent_.*}}
