@@ -17,7 +17,7 @@
 {
 	#if {"${client.tintinAlterAeonVersionNumber}" != "%3"}
 	{
-		synth_play notificationSound;
+		synth_play outOfDateSound;
 		Add_Event Your version of tintin-alteraeon is out of date. Please update as soon as possible to get the latest features and bug fixes.;
 		lecho Your version of tintin-alteraeon is out of date. Please update as soon as possible to get the latest features and bug fixes.
 	}
