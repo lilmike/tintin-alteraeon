@@ -29,13 +29,17 @@
 
 #FUNCTION {separator}
 {
+	#nop {Takes 1 optional argument, the separator string. The default is -.};
 	#if {"%1" == ""}
 	{
-		#script {result} {i=$(tput cols);for i in $(seq $i) ; do echo -n "-";done}
+		#script {result} {for x in $(seq $(tput cols)) ; do echo -n "-";done}
 	};
 	#else
 	{
-		#script {result} {i=$(tput cols);for i in $(seq $i) ; do echo -n "%1";done}
+		#variable {functionSeparator.length} {@strlen{%1}};
+		#script {functionSeparator.columns} {tput cols};
+		#math {functionSeparator.columns} {${functionSeparator.columns[1]} / ${functionSeparator.length}};
+		#script {result} {for x in $(seq ${functionSeparator.columns}) ; do echo -n "%1";done}
 	};
 	#variable {result} {${result[1]}}
 }
@@ -47,3 +51,4 @@
 }
 
 #VARIABLE         {functionCut}  {}
+#VARIABLE         {functionSeparator}  {}
