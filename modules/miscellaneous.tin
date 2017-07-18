@@ -541,10 +541,9 @@
 }
 {9}
 
-#ALIAS {^noautoregen$}
+#ALIAS {^regen$}
 {
-	#unvariable {autoregen};
-	#showme {You will no longer automatically regen when your group leader does.}
+	show regen | prefix silent_
 }
 {9}
 
