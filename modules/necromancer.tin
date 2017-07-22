@@ -523,6 +523,7 @@
 
 #ACTION {^You {cast the spell to separate soul from body, and|struggle to} pull %2's essence into a %3 soulstone!$}
 {
+	#variable {client.capSound} {true};
 	#if {!&{character.soulstoneContainer}}
 	{
 		#variable {character.soulstoneContainer} {${character.container}}

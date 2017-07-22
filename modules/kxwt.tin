@@ -138,6 +138,7 @@
 #ACTION {^kxwt_mdeath %1}
 {
 	#variable {kxwt.mdeath} {%1};
+	#variable {client.capSound} {true};
 	#if {"%1" != "{$ignoredMobs}"}
 	{
 		#if {"${skillsAndSpells.cry of victory}" == "true"}

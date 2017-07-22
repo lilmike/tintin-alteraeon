@@ -1,18 +1,19 @@
-#ACTION {^{\s+Y|casting.*Y|Y}ou {gain|receive} %d experience{\.|!}$}
+#ACTION {^{\s+Y|vcast.*Y|Y}ou {gain|receive} %d experience{\.|!}$}
 {
 	#if {"${character.cspam}" == "true"}
 	{
 		#showme {%3 exp%4};
 		#line {gag}
 	};
-	#if {%3 > ${kxwt.expcap}}
+	#if {%3 > ${kxwt.expcap} && "${client.capSound}" == "true"}
 	{
 		play overcap
 	};
-	#elseif {%3 == ${kxwt.expcap}}
+	#elseif {%3 == ${kxwt.expcap} && "${client.capSound}" == "true"}
 	{
 		play cap
-	}
+	};
+	#variable {client.capSound} {false}
 }
 {8}
 
