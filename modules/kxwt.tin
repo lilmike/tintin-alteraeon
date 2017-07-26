@@ -290,7 +290,7 @@
 		#delay {3} {#unvariable {auto.refreshed}};
 		#if {"${skillsAndSpells.areaRefresh}" == "true"}
 		{
-			#if {${character.currentMana} >= 28 && ${character.inBattle} != "true"}
+			#if {${character.currentMana} >= 28 && "${character.inBattle}" != "true"}
 			{
 				vcast area
 			}

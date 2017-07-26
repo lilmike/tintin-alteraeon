@@ -5,7 +5,7 @@
 		#regexp {%1} {{.*} {.*}} {c soulsteal &2};
 		#else
 		{
-			c soulsteaal %1
+			c soulsteal %1
 		};
 		#unvariable {lastSoulsteal}
 	}
