@@ -138,6 +138,7 @@
 #ACTION {^kxwt_mdeath %1}
 {
 	#variable {kxwt.mdeath} {%1};
+	#variable {client.capSound} {true};
 	#if {"%1" != "{$ignoredMobs}"}
 	{
 		#if {"${skillsAndSpells.cry of victory}" == "true"}
@@ -152,9 +153,9 @@
 		{
 			#unvariable {lastSoulsteal}
 		};
-		#if {"${pkMode}" != "true" && !&{group.leader}}
+		#if {"${pkMode}" != "true"}
 		{
-			#delay {0.5}{#if {"${auto.consume}" == "true"}{control all consume corpse};#if {"${auto.bloodsacrifice}" == "true" && "${character.inBattle}" != "true"}{bsac corpse};recast;#if {"${skillsAndSpells.corpsecutter}" ==      "true" && "${character.inBattle}" != "true"}{harvest components corpse};#if {"${skillsAndSpells.harvest bone}" ==      "true" && "${character.inBattle}" != "true"}{harvest bone corpse | grep -v has no useful bones remaining};#if {"${skillsAndSpells.salvage equipment}" == "true" || &{battleScroll} && "${character.inBattle}" != "true"}{search corpse | grep -v unique | prefix silent_};#if {"${auto.flesh}" == "true"}{#if                     {"$makeNewFleshBeast" == "true"}{c flesh corpse};#else {lowhp | prefix silent_}};#if {&{lastReceivedExp}}{#unvariable {lastReceivedExp}};#if {&{position}}{$position}}
+			#delay {0.5}{#if {"${auto.consume}" == "true"}{control all consume corpse};#if {"${auto.bloodsacrifice}" == "true" && "${character.inBattle}" != "true"}{bsac corpse};#if {"${skillsAndSpells.corpsecutter}" ==      "true" && "${character.inBattle}" != "true"}{harvest components corpse};#if {"${skillsAndSpells.harvest bone}" ==      "true" && "${character.inBattle}" != "true"}{harvest bone corpse | grep -v has no useful bones remaining};#if {"${skillsAndSpells.salvage equipment}" == "true" || &{battleScroll} && "${character.inBattle}" != "true"}{search corpse | grep -v unique | prefix silent_};#if {"${auto.flesh}" == "true"}{#if                     {"$makeNewFleshBeast" == "true"}{c flesh corpse};#else {lowhp | prefix silent_}};#if {&{lastReceivedExp}}{#unvariable {lastReceivedExp}};#if {&{position}}{$position}}
 		}
 	}
 }
@@ -198,28 +199,35 @@
 	{
 		#variable {character.lastMvAlert} {}
 	};
-	#if {${character.currentHp} <= ${character.maxHp} * 0.75 && ${character.currentHp} > ${character.maxHp} * 0.50 && "${character.lastHpAlert}" != "quiteAFew"}
+	#if {${character.currentHp} <= ${character.maxHp} * 0.85 && ${character.currentHp} > ${character.maxHp} * 0.70 && "${character.lastHpAlert}" != "EightyFive"}
 	{
-		#variable {character.lastHpAlert} {quiteAFew};
-		synth_play hpQuiteAFew;
-		#if {"${auto.heal}" == "true"}
-		{
-			h
-		}
+		#variable {character.lastHpAlert} {EightyFive};
+		synth_play hpEightyFive
 	};
-	#elseif {${character.currentHp} <= ${character.maxHp} * 0.50 && ${character.currentHp} > ${character.maxHp} * 0.25 && "${character.lastHpAlert}" != "bigNasty"}
+	#elseif {${character.currentHp} <= ${character.maxHp} * 0.70 && ${character.currentHp} > ${character.maxHp} * 0.55 && "${character.lastHpAlert}" != "Seventy"}
 	{
-		#variable {character.lastHpAlert} {bigNasty};
-		synth_play hpBigNasty;
-		#if {"${auto.heal}" == "true"}
-		{
-			h
-		}
+		#variable {character.lastHpAlert} {Seventy};
+		synth_play hpSeventy
 	};
-	#elseif {${character.currentHp} <= ${character.maxHp} * 0.25 && ${character.currentHp} > ${character.maxHp} * 0.10 && "${character.lastHpAlert}" != "prettyHurt"}
+	#elseif {${character.currentHp} <= ${character.maxHp} * 0.55 && ${character.currentHp} > ${character.maxHp} * 0.40 && "${character.lastHpAlert}" != "FiftyFive"}
 	{
-		#variable {character.lastHpAlert} {prettyHurt};
-		synth_play hpPrettyHurt;
+		#variable {character.lastHpAlert} {FiftyFive};
+		synth_play hpFiftyFive
+	};
+	#elseif {${character.currentHp} <= ${character.maxHp} * 0.40 && ${character.currentHp} > ${character.maxHp} * 0.25 && "${character.lastHpAlert}" != "Forty"}
+	{
+		#variable {character.lastHpAlert} {Forty};
+		synth_play hpForty
+	};
+	#elseif {${character.currentHp} <= ${character.maxHp} * 0.25 && ${character.currentHp} > ${character.maxHp} * 0.10 && "${character.lastHpAlert}" != "TwentyFive"}
+	{
+		#variable {character.lastHpAlert} {TwentyFive};
+		synth_play hpTwentyFive
+	};
+	#elseif {${character.currentHp} <= ${character.maxHp} * 0.10 && "${character.lastHpAlert}" != "Ten"}
+	{
+		#variable {character.lastHpAlert} {Ten};
+		synth_play hpTen;
 		#if {"${auto.recall}" == "true"}
 		{
 			/
@@ -232,33 +240,7 @@
 				'\cc;
 				c bone prison me
 			}
-		};
-		#if {"${auto.heal}" == "true"}
-		{
-			h
-		}
-	};
-	#elseif {${character.currentHp} <= ${character.maxHp} * 0.10 && "${character.lastHpAlert}" != "Awful"}
-	{
-		#variable {character.lastHpAlert} {Awful};
-		synth_play hpAwful;
-		#if {"${auto.recall}" == "true"}
-		{
-			/
-		};
-		#if {"${auto.boneprison}" == "true" && ${character.currentMana} >= 45}
-		{
-			#if {"${kxwt.terrain}" != "{7|18|19|20|21|23|25|31|32}"}
-			{
-				#nop {Interupt all current actions in game, to do bone prison.};
-				'\cc;
-				c bone prison me
-			}
-		};
-		#if {"${auto.heal}" == "true"}
-		{
-			h
-		}
+	}
 	};
 	#if {${character.currentMana} <= ${character.maxMana} * 0.75 && ${character.currentMana} > ${character.maxMana} * 0.50 && "${character.lastManaAlert}" != "manaExcellent"}
 	{
@@ -308,9 +290,9 @@
 		#delay {3} {#unvariable {auto.refreshed}};
 		#if {"${skillsAndSpells.areaRefresh}" == "true"}
 		{
-			#if {${character.currentMana} >= 28 && ${character.inBattle} != "true"}
+			#if {${character.currentMana} >= 28 && "${character.inBattle}" != "true"}
 			{
-				c area
+				vcast area
 			}
 		};
 		#else
@@ -319,12 +301,12 @@
 			{
 				#if {${character.currentMana} >= 15 && "${character.inBattle}" != "true"}
 				{
-					c refresh
+					vcast refresh
 				}
 			}
 		}
 	};
-	#if {"${skillsAndSpells.secondWind}" == "true" && "${character.exhausted}" != "true" && ${character.currentMv} < ${character.maxMv} / 10}
+	#if {"${skillsAndSpells.second wind}" == "true" && "${character.exhausted}" != "true" && ${character.currentMv} < ${character.maxMv} / 10}
 	{
 		second wind;
 		#variable {character.exhausted} {true}
@@ -413,7 +395,7 @@
 #VARIABLE         {chimeLoop}  {}
 #VARIABLE         {currentMv}  {}
 #VARIABLE         {enemyConditionTone}  {}
-#VARIABLE         {ignoredMobs}  {A blood red winged demon|A clutch of poison ivy vines|.*draconian|.*draconian.*|.*elemental|a fire ant.*|.*fungus.*|A mass of tangling roots|.*shroom.*A number of magical dancing lights|.*moogle|the soul faerie|a .* slime|A slimy fish|.*spore.*|a.*tree|Vampiric vines|a.*zombie|an icebolg}
+#VARIABLE         {ignoredMobs}  {A blood red winged demon|A clutch of poison ivy vines|.*draconian|.*draconian.*|.*elemental|a fire ant.*|.*fungus.*|A mass of tangling roots|.*shroom.*A number of magical dancing lights|.*moogle|the soul faerie|a .* slime|A slimy fish|.*spore.*|a.*tree|Vampiric vines|.*zombie.*|an icebolg}
 #VARIABLE         {kxwt}  {}
 #VARIABLE         {lastPlayedTime}  {0}
 #VARIABLE         {mvRegenTime}  {}

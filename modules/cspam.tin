@@ -1,30 +1,21 @@
-#ACTION {^casting_%1_%S appreciates your sacrifice of %3.$}
-{
-	#if {"${character.cspam}" == "true"}
-	{
-		#echo {%2 appreciates your sacrifice.};
-		#line {gag}
-	}
-}
-{8}
-
-#ACTION {^{\s+Y|casting.*Y|Y}ou {gain|receive} %d experience{\.|!}$}
+#ACTION {^{\s+Y|vcast.*Y|Y}ou {gain|receive} %d experience{\.|!}$}
 {
 	#if {"${character.cspam}" == "true"}
 	{
 		#showme {%3 exp%4};
 		#line {gag}
 	};
-	#if {%3 > ${kxwt.expcap}}
+	#if {%3 > ${kxwt.expcap} && "${client.capSound}" == "true"}
 	{
 		play overcap
 	};
-	#elseif {%3 == ${kxwt.expcap}}
+	#elseif {%3 == ${kxwt.expcap} && "${client.capSound}" == "true"}
 	{
 		play cap
-	}
+	};
+	#variable {client.capSound} {false}
 }
-{8}
+{9}
 
 #ACTION {%1 *** %2 *** %3!$}
 {
@@ -554,4 +545,4 @@
 	}
 }
 
-#VARIABLE         {cspam}  {{formatString}{}{lastLineOfText}{}{lastLineOfTextCounter}{1}{oldText}{}{textCounterExceptions}{!!SOUND.*|Alas,.*|casting_.*|kxwt.*|\(auction\).*|\*tick\*|finger      - .*|neck        - .*|wrist       - .*|.* growls at you, warning you away\.|.* is mortally wounded, and will die soon if not aided\.|.* someone else beat .*|Mudmail.*|You .*|.* rips a bone .*|.* starts harvesting .*|.* from the corpse.*|Nothing\.|Someone.*|\[new line\]:|.*cannot carry any more weight without sinking\.|In your dreams, or what\?|silent_.*}}
+#VARIABLE         {cspam}  {{formatString}{}{lastLineOfText}{}{lastLineOfTextCounter}{1}{oldText}{}{textCounterExceptions}{!!SOUND.*|Alas,.*|.*empty\.|kxwt.*|\(auction\).*|\*tick\*|finger      - .*|neck        - .*|wrist       - .*|.* growls at you, warning you away\.|.* is mortally wounded, and will die soon if not aided\.|.* someone else beat .*|Mudmail.*|Sorry.*|You .*|.* rips a bone .*|.* starts harvesting .*|.* from the corpse.*|Nothing\.|Someone.*|\*interrupt\*|\[new line\]:|.*cannot carry any more weight without sinking\.|In your dreams, or what\?|silent_.*}}

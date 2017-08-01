@@ -9,7 +9,7 @@
 
 #ACTION {^%S stares at a painting of %2 and fades away.$}
 {
-	#if {"$group.leader" == "%1"}
+	#if {"${group.leader}" == "%1"}
 	{
 		#regexp {%2} {{.*} {.*}} {#if {"&0" == "a dark forest"} {l 2.forest};#else {look &2}}
 	}

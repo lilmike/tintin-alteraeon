@@ -6,43 +6,37 @@
 
 #ACTION {^%S appreciates your sacrifice.$}
 {
-	#variable {busy} {false};
-	recast
+	#variable {busy} {false}
 }
 {9}
 
 #ACTION {^The lock yields and opens.$}
 {
-	#variable {busy} {false};
-	recast
+	#variable {busy} {false}
 }
 {9}
 
 #ACTION {^The lock {finally yields|yields quickly} to your skills.$}
 {
-	#variable {busy} {false};
-	recast
+	#variable {busy} {false}
 }
 {9}
 
 #ACTION {^There is no more {hide|meat} left on}
 {
-	#variable {busy} {false};
-	recast
+	#variable {busy} {false}
 }
 {9}
 
 #ACTION {^You are no longer harvesting teeth.$}
 {
-	#variable {busy} {false};
-	recast
+	#variable {busy} {false}
 }
 {9}
 
 #ACTION {^You are too exhausted to continue picking the lock.$}
 {
-	#variable {busy} {false};
-	recast
+	#variable {busy} {false}
 }
 {9}
 
@@ -54,22 +48,19 @@
 
 #ACTION {^You can't safely carry any more teeth, and stop.$}
 {
-	#variable {busy} {false};
-	recast
+	#variable {busy} {false}
 }
 {9}
 
 #ACTION {^You don't see any usable teeth remaining.$}
 {
-	#variable {busy} {false};
-	recast
+	#variable {busy} {false}
 }
 {9}
 
 #ACTION {^You stop trying to pick the lock.$}
 {
-	#variable {busy} {false};
-	recast
+	#variable {busy} {false}
 }
 {9}
 
@@ -87,15 +78,13 @@
 
 #ACTION {^Your collected teeth grow restless.  It would be unwise to collect any more.$}
 {
-	#variable {busy} {false};
-	recast
+	#variable {busy} {false}
 }
 {9}
 
 #ACTION {^Your dragon teeth grow restless.  It would be unwise to collect any more.$}
 {
-	#variable {busy} {false};
-	recast
+	#variable {busy} {false}
 }
 {9}
 

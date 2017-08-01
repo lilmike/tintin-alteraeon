@@ -90,7 +90,7 @@
 
 #ACTION {^You throw %1 at %2{!|\.}$}
 {
-	#regexp {%1} {{.*} {.*}} {#if {"&2" != "{electricity|ice|snowball}"} {get &2}}
+	#regexp {%1} {{.*} {.*}} {#if {"&2" != "{electricity|fire.*|ice|snowball|unfire}"} {get &2}}
 }
 {9}
 

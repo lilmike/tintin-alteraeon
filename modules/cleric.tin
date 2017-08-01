@@ -1,19 +1,10 @@
-#ACTION {^A magical hammer disappears in a blinding flash of light! (worn by you)}
-{
-	#if {"${skillsAndSpells.spirit hammer}" == "true" && "${auto.recast}" == "true"}
-	{
-		c spirit
-	}
-}
-{9}
-
-#ACTION {^casting_%1_You cast a powerful healing spell on yourself.$}
+#ACTION {^You cast a powerful healing spell on yourself.$}
 {
 	FULL_HEAL
 }
 {9}
 
-#ACTION {^casting_%1_You feel {a little better|better}{\.|!}$}
+#ACTION {^You feel {a little better|better}{\.|!}$}
 {
 	FULL_HEAL
 }
