@@ -713,7 +713,7 @@
 	{
 		#variable {auto.defaultSkeletalWarrior} {}
 	};
-	#if {"" == "%*m%*"}
+	#if {"%0" == "%*m%*"}
 	{
 		#send {%0 ${auto.defaultSkeletalMage}}
 	};
