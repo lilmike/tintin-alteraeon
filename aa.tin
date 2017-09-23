@@ -204,7 +204,8 @@
 #EVENT {SESSION DISCONNECTED}
 {
 	qcsave;
-	#unvariable {connected}
+	#unvariable {connected};
+	#system {if [[ -d '.git' ]]; then echo "Checking for updates...";git pull&fi}
 }
 
 #VARIABLE         {loginName}  {FALSE}
