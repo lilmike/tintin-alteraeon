@@ -115,11 +115,32 @@
 	#if {&{position}}
 	{
 		#unvariable {position}
-	}
-	#if {"${skillsAndSpells.withdraw}" == "true"}
+	};
+	#else
 	{
-		withdraw
+		#if {"${skillsAndSpells.withdraw}" == "true"}
+		{
+			withdraw
+		}
 	}
+}
+{9}
+
+#ACTION {^give crystal %1You fail to cast the spel%*.$}
+{
+	c crystal light | prefix give crystal %1
+}
+{9}
+
+#ACTION {^give crystal %1You give a brightly glowing crystal to %2.$}
+{
+	bind %1
+}
+{9}
+
+#ACTION {^give crystal %1You hold your hands a few inches apart and grow a glowing crystal between them.$}
+{
+	give crystal %1 | prefix give crystal %1
 }
 {9}
 
@@ -230,6 +251,19 @@
 }
 {9}
 
+#ALIAS {^{lb|lbi|lbin|lbind|lightb|lightbi|lightbin|lightbind} %1}
+{
+	#if {"${skillsAndSpells.crystal light}" == "true"}
+	{
+		c crystal light | prefix give crystal %1
+	};
+	#else
+	{
+		#echo {You need to learn the spell crystal light to use lightbind.}
+	}
+}
+{9}
+
 #ALIAS {^{noauto|auto}{stop|withdraw}$}
 {
 	#switch {"%0"}
@@ -337,4 +371,35 @@
 }
 {9}
 
+#CONFIG           {256 COLORS}  {OFF}
+#CONFIG           {AUTO TAB}  {5000}
+#CONFIG           {BUFFER SIZE}  {20000}
+#CONFIG           {CHARSET}  {ASCII}
+#CONFIG           {COLOR PATCH}  {OFF}
+#CONFIG           {COMMAND COLOR}  {<078>}
+#CONFIG           {COMMAND ECHO}  {ON}
+#CONFIG           {CONNECT RETRY}  {0}
+#CONFIG           {HISTORY SIZE}  {1000}
+#CONFIG           {LOG}  {RAW}
+#CONFIG           {PACKET PATCH}  {0.00}
+#CONFIG           {REPEAT CHAR}  {!}
+#CONFIG           {REPEAT ENTER}  {OFF}
+#CONFIG           {SCROLL LOCK}  {ON}
+#CONFIG           {SPEEDWALK}  {OFF}
+#CONFIG           {TINTIN CHAR}  {#}
+#CONFIG           {VERBATIM}  {OFF}
+#CONFIG           {VERBATIM CHAR}  {\}
+#CONFIG           {VERBOSE}  {OFF}
+#CONFIG           {WORDWRAP}  {ON}
+#PATHDIR          {d}  {u}  {32}
+#PATHDIR          {e}  {w}  {2}
+#PATHDIR          {n}  {s}  {1}
+#PATHDIR          {ne}  {sw}  {3}
+#PATHDIR          {nw}  {se}  {9}
+#PATHDIR          {s}  {n}  {4}
+#PATHDIR          {se}  {nw}  {6}
+#PATHDIR          {sw}  {ne}  {12}
+#PATHDIR          {u}  {d}  {16}
+#PATHDIR          {w}  {e}  {8}
 #SUBSTITUTE       {^stealing_}  {}  {1}
+#SUBSTITUTE       {^give crystal %1You}  {You}  {9}
