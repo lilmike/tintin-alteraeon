@@ -115,11 +115,38 @@
 	#if {&{position}}
 	{
 		#unvariable {position}
-	}
-	#if {"${skillsAndSpells.withdraw}" == "true"}
+	};
+	#else
 	{
-		withdraw
+		#if {"${skillsAndSpells.withdraw}" == "true"}
+		{
+			withdraw
+		}
 	}
+}
+{9}
+
+#ACTION {^give crystal %1You don't see anyone named '%2' here.$}
+{
+	${auto.junkType} crystal
+}
+{9}
+
+#ACTION {^give crystal %1You fail to cast the spel%*.$}
+{
+	c crystal light | prefix give crystal %1
+}
+{9}
+
+#ACTION {^give crystal %1You give a brightly glowing crystal to %2.$}
+{
+	bind %1
+}
+{9}
+
+#ACTION {^give crystal %1You hold your hands a few inches apart and grow a glowing crystal between them.$}
+{
+	give crystal %1 | prefix give crystal %1
 }
 {9}
 
@@ -227,6 +254,19 @@
 #ALIAS {^strike$}
 {
 	shadow strike
+}
+{9}
+
+#ALIAS {^{lb|lbi|lbin|lbind|lightb|lightbi|lightbin|lightbind} %1}
+{
+	#if {"${skillsAndSpells.crystal light}" == "true"}
+	{
+		c crystal light | prefix give crystal %1
+	};
+	#else
+	{
+		#echo {You need to learn the spell crystal light to use lightbind.}
+	}
 }
 {9}
 
@@ -338,3 +378,4 @@
 {9}
 
 #SUBSTITUTE       {^stealing_}  {}  {1}
+#SUBSTITUTE       {^give crystal %1You}  {You}  {9}

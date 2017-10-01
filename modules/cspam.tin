@@ -1,22 +1,3 @@
-#ACTION {^{\s+Y|vcast.*Y|Y}ou {gain|receive} %d experience{\.|!}$}
-{
-	#if {"${character.cspam}" == "true"}
-	{
-		#showme {%3 exp%4};
-		#line {gag}
-	};
-	#if {%3 > ${kxwt.expcap} && "${client.capSound}" == "true"}
-	{
-		play overcap
-	};
-	#elseif {%3 == ${kxwt.expcap} && "${client.capSound}" == "true"}
-	{
-		play cap
-	};
-	#variable {client.capSound} {false}
-}
-{9}
-
 #ACTION {%1 *** %2 *** %3!$}
 {
 	#if {"${character.cspam}" == "true"}
@@ -460,6 +441,16 @@
 }
 {9}
 
+#ACTION {^You utter a short invocation over a tooth, then roll it out into a bone arrow, then another, and another...$}
+{
+	#if {"${character.cspam}" == "true"}
+	{
+		#showme {You create a brace of bone arrows.};
+		#line {gag}
+	}
+}
+{9}
+
 #ACTION {^\x28%s%d\x29%3}
 {
 	#if {"${character.cspam}" == "true"}
@@ -486,6 +477,25 @@
 	{
 		#line {gag}
 	}
+}
+{9}
+
+#ACTION {^{\s+Y|vcast.*Y|Y}ou {gain|receive} %d experience{\.|!}$}
+{
+	#if {"${character.cspam}" == "true"}
+	{
+		#showme {%3 exp%4};
+		#line {gag}
+	};
+	#if {%3 > ${kxwt.expcap} && "${client.capSound}" == "true"}
+	{
+		play overcap
+	};
+	#elseif {%3 == ${kxwt.expcap} && "${client.capSound}" == "true"}
+	{
+		play cap
+	};
+	#variable {client.capSound} {false}
 }
 {9}
 

@@ -57,12 +57,12 @@
 	{
 		#if {"%2" == "starts"}
 		{
-#variable {castTankMinion} {true}
+			#variable {castTankMinion} {true}
 		};
 		#if {"${auto.clay}" == "true" && "%2" == "stops"}
 		{
 			'\cc;
-#variable {castTankMinion} {%2};
+			#variable {castTankMinion} {%1};
 			cast clay man
 		};
 		#if {"${auto.woad}" == "true" && "%2" == "stops"}
@@ -118,9 +118,30 @@
 			#showme {The corpse is ready to be raised. Enter yes to continue};
 			#variable {yes} {vcast raise corpse}
 		}
-	};
+	}
 }
 {8}
+
+#ACTION {^%sYou add A %1 to your group.$}
+{
+	#if {"%1" == "zombie" || "%1" == "ghoul" || "%1" == "mummy" || "%1" == "vampire"}
+	{
+		variable lastRaisedMinion %1 | prefix silent_
+	};
+	#if {"%1" == "bone guardian"}
+	{
+		look in ${character.tankContainer} ${auto.boneMaterial} | prefix boneguardianCounter_
+	};
+	#if {"%1" == "metal construct"}
+	{
+		look in ${character.tankContainer} ${auto.metalMaterial} | prefix metalcounter_
+	};
+	#if {"%1" == "wood woad"}
+	{
+		look in ${character.tankContainer} ${auto.woadMaterial} | prefix woadcounter_
+	}
+}
+{9}
 
 #ACTION {^A %1 {rips a bone from|claws at and begins eating|rips and tears into} the corpse of %3{!|, devouring it!| as a replacement\.}$}
 {
@@ -204,7 +225,8 @@
 {
 	#if {"${auto.flesh}" == "true" && "$castTankMinion" == "flesh%*"}
 	{
-		c clay
+		#variable {castTankMinion} {clay man};
+		cast clay man
 	}
 }
 {9}
@@ -241,27 +263,6 @@
 	#if {&{position}}
 	{
 		$position
-	}
-}
-{9}
-
-#ACTION {^%sYou add A %1 to your group.$}
-{
-	#if {"%1" == "zombie" || "%1" == "ghoul" || "%1" == "mummy" || "%1" == "vampire"}
-	{
-		variable lastRaisedMinion %1 | prefix silent_
-	};
-	#if {"%1" == "bone guardian"}
-	{
-		look in ${character.tankContainer} ${auto.boneMaterial} | prefix boneguardianCounter_
-	};
-	#if {"%1" == "metal construct"}
-	{
-		look in ${character.tankContainer} ${auto.metalMaterial} | prefix metalcounter_
-	};
-	#if {"%1" == "wood woad"}
-	{
-		look in ${character.tankContainer} ${auto.woadMaterial} | prefix woadcounter_
 	}
 }
 {9}
@@ -306,7 +307,8 @@
 {
 	#if {"${auto.flesh}" == "true" && "$castTankMinion" == "flesh%*"}
 	{
-		c clay
+		#variable {castTankMinion} {clay man};
+		cast clay man
 	}
 }
 {9}
@@ -581,7 +583,7 @@
 
 #ACTION {^silent_A %1 soulstone has an estimated selling price of %d gold coins.$}
 {
-#if {!&{character.soulstoneContainer}}
+	#if {!&{character.soulstoneContainer}}
 	{
 		#variable {character.soulstoneContainer} {${character.container}}
 	};
@@ -703,13 +705,24 @@
 }
 {8}
 
-#ALIAS {^{c|ca|cas|cast} %s{sk|ske|skel|skele|skelet|skeleta|skeletal} %s{m|ma|mag|mage}$}
+#ALIAS {^{c|ca|cas|cast} %s{sk|ske|skel|skele|skelet|skeleta|skeletal} %s{m|ma|mag|mage|w|wa|war|warr|warri|warrio|warrior}$}
 {
 	#if {!&{auto.defaultSkeletalMage}}
 	{
 		#variable {auto.defaultSkeletalMage} {}
 	};
-	#send {%0 ${auto.defaultSkeletalMage}}
+	#if {!&{auto.defaultSkeletalWarrior}}
+	{
+		#variable {auto.defaultSkeletalWarrior} {}
+	};
+	#if {"%0" == "%*m%*"}
+	{
+		#send {%0 ${auto.defaultSkeletalMage}}
+	};
+	#else
+	{
+		#send {%0 ${auto.defaultSkeletalWarrior}}
+	}
 }
 {8}
 
@@ -814,6 +827,13 @@
 }
 {9}
 
+#ALIAS {^dwarrior %s{f|fl|fla|flai|flail|sp|spe|spea|spear|sw|swo|swor|sword}$}
+{
+	#showme {Default skeletal warrior set to %2.};
+	#variable {auto.defaultSkeletalWarrior} {%2}
+}
+{9}
+
 #ALIAS {^metalconstruct$}
 {
 	#nop {Interupt the queue and make a new metal construct instantly};
@@ -829,12 +849,12 @@
 	};
 	#if {${kxwt.terrain} == 33}
 	{
-	#variable {castTankMinion} {metal construct};
+		#variable {castTankMinion} {metal construct};
 		#delay {0.2} {c metal construct}
 	};
 	#else
 	{
-	#variable {castTankMinion} {metal construct ${auto.metalMaterial}};
+		#variable {castTankMinion} {metal construct ${auto.metalMaterial}};
 		#delay {0.2} {c metal construct ${auto.metalMaterial}}
 	}
 }
