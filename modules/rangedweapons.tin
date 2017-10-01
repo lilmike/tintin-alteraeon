@@ -1,3 +1,14 @@
+#action {^{A|An|The} %2 isn't loaded.$}
+{
+#if {"${auto.store}" == "true"}
+{
+get $amo ${character.amoContainer} | grep nospam
+};
+#regexp {%2} {{.*} {.*}} {load &2} {load &0};
+fire
+}
+{9}
+
 #action {^You load %1 with %2.$}
 {
 #regexp {%2} {{.*} {.*}} {#variable {amo} {&2}} {#variable {amo} {&0}}
