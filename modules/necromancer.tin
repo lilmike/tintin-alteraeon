@@ -62,7 +62,7 @@
 		#if {"${auto.clay}" == "true" && "%2" == "stops"}
 		{
 			'\cc;
-			#variable {castTankMinion} {%2};
+			#variable {castTankMinion} {%1};
 			cast clay man
 		};
 		#if {"${auto.woad}" == "true" && "%2" == "stops"}
@@ -225,7 +225,8 @@
 {
 	#if {"${auto.flesh}" == "true" && "$castTankMinion" == "flesh%*"}
 	{
-		c clay
+		#variable {castTankMinion} {clay man};
+		cast clay man
 	}
 }
 {9}
@@ -306,7 +307,8 @@
 {
 	#if {"${auto.flesh}" == "true" && "$castTankMinion" == "flesh%*"}
 	{
-		c clay
+		#variable {castTankMinion} {clay man};
+		cast clay man
 	}
 }
 {9}
