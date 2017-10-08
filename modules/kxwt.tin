@@ -396,7 +396,7 @@
 #VARIABLE         {chimeLoop}  {}
 #VARIABLE         {currentMv}  {}
 #VARIABLE         {enemyConditionTone}  {}
-#VARIABLE         {ignoredMobs}  {A blood red winged demon|A clutch of poison ivy vines|.*draconian|.*draconian.*|.*elemental|a fire ant.*|.*fungus.*|A mass of tangling roots|.*shroom.*A number of magical dancing lights|.*moogle|the soul faerie|a .* slime|A slimy fish|.*spore.*|a.*tree|Vampiric vines|.*zombie.*|an icebolg}
+#VARIABLE         {ignoredMobs}  {A blood red winged demon|A clutch of poison ivy vines|.*draconian|.*draconian.*|.*elemental|a fire ant.*|.*fungus.*|A mass of tangling roots|.*shroom.*A number of magical dancing lights|.*moogle|the soul faerie|a .* slime|A slimy fish|.*spore.*|a.*tree|Vampiric vines|.*zombie.*|an icebolg|.* skelet.*}
 #VARIABLE         {kxwt}  {}
 #VARIABLE         {lastPlayedTime}  {0}
 #VARIABLE         {mvRegenTime}  {}
