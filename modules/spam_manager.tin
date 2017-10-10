@@ -4,7 +4,7 @@
 	#else
 	{
 		#variable {spam.%1} {true};
-		#delay {1} {#variable {spam.%1} {false}}
+		#delay {10} {#variable {spam.%1} {false}}
 	}
 }
 {9}

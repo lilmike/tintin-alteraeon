@@ -159,9 +159,9 @@
 }
 {9}
 
-#ACTION {^The gods penalize you for botting!$}
+#ACTION {^{The gods penalize you for botting|You have been penalized for botting}!$}
 {
-	synth_play attention
+	synth_play botthwack
 }
 {9}
 
