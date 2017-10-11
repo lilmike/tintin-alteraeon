@@ -4,6 +4,22 @@
 }
 {9}
 
+#ACTION {^You feel sick.$}
+{
+	#if {"${auto.removepoison}" == "true"}
+	{
+		#if {"${skillsAndSpells.cure poison}" == "true"}
+		{
+			vcast cure poison
+		};
+		#elseif {"${skillsAndSpells.remove poison}" == "true"}
+		{
+			vcast remove poison
+		}
+	}
+}
+{9}
+
 #ACTION {^You feel {a little better|better}{\.|!}$}
 {
 	FULL_HEAL
@@ -58,13 +74,6 @@
 }
 {9}
 
-#ALIAS {^autorecall$}
-{
-	#variable {autorecall} {true};
-	#showme {You will automatically recall if you are in awful or pretty hurt.}
-}
-{9}
-
 #ALIAS {^fullheal$}
 {
 	#if {"${skillsAndSpells.major heal}" == "true"}
@@ -87,10 +96,18 @@
 }
 {9}
 
-#ALIAS {^noautorecall$}
+#ALIAS {^{auto|noauto}{recall$|removepoison}$}
 {
-	#unvariable {autorecall};
-	#showme {You will no automatically recall.}
+	#if {"%1" == "auto"}
+	{
+		#variable {auto.%2} {true};
+		#echo {Auto %2 enabled.}
+	};
+	#else
+	{
+		#variable {auto.%2} {false};
+		#echo {Auto %2 disabled.}
+	}
 }
 {9}
 
