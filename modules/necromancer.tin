@@ -610,6 +610,15 @@
 }
 {9}
 
+#ACTION {^silent_cast_mend_bonesYou have collected %d normal teeth and %d dragon teeth.$}
+{
+	#if {%2 > ${auto.mendTeeth}}
+	{
+		vcast mend bones
+	}
+}
+{9}
+
 #ACTION {^silent_{sell|nosell}_Color: %S %sbuy price: %s%d%ssell price: %s%d$}
 {
 	#if {"%1" == "sell"}
@@ -921,17 +930,23 @@
 }
 {9}
 
-#ALIAS {^{auto|noauto}mend$}
+#ALIAS {^{auto|noauto}men{d|d\s+\d+}$}
 {
-	#if {"%0" == "automend"}
+	#if {"%0" == "automend%*"}
 	{
 		#showme {automend enabled.};
-		#variable {auto.mend} {true}
+		#variable {auto.mend} {true};
+		#regexp {%0} {{.*} {\d+}} {#variable {auto.mendTeeth} {&2}};
+		#else
+		{
+			#variable {auto.mendTeeth} {6}
+		}
 	};
 	#else
 	{
 		#showme {automend disabled.};
-		#unvariable {auto.mend}
+		#unvariable {auto.mend};
+		#unvariable {auto.mendTeeth}
 	}
 }
 {9}
