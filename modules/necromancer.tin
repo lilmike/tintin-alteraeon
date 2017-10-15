@@ -615,6 +615,11 @@
 	#if {%2 > ${auto.mendTeeth}}
 	{
 		vcast mend bones
+	};
+	#else
+	{
+		synth_play warningSound;
+		#echo {You only have %2 dteeth remaining.}
 	}
 }
 {9}

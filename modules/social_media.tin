@@ -150,7 +150,7 @@
 		{
 			#variable {gnuSocialMudGroup} {muds}
 		};
-		#system {curl -s -u "$gusername:$gpassword" --data-urlencode status="%1 #AlterAeon !$gnuSocialMudGroup" -d source="tintin-alteraeon" $gurl/api/statuses/update.xml &> /dev/null&}
+		#system {curl -s -u "$gusername:$gpassword" --data-binary status="$(echo -e "%1") #AlterAeon !$gnuSocialMudGroup" -d source="tintin-alteraeon" $gurl/api/statuses/update.xml &> /dev/null&}
 	}
 }
 {9}
