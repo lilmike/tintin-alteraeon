@@ -956,7 +956,7 @@
 }
 {9}
 
-#ALIAS {^{forg|forge} %1}
+#ALIAS {^{sf|sfo|sfor|sforg|sforge|soulforg|soulforge} %1}
 {
 	vcast soulforge %1 2.%1
 }
