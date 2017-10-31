@@ -14,14 +14,6 @@
 		{
 			seq_play %1
 		};
-		#case {"skill/animal_call%*"}
-		{
-			play_norandom %1
-		};
-		#case {"skill/throw%*"}
-		{
-			play_norandom skill/throw
-		};
 		#case {"spell/bolt"}
 		{
 			seq_play spell/bolt
@@ -37,10 +29,6 @@
 		#case {"weather/{rainstart|rainstop|rain1|rain2|rain3|rain4|rain5}"}
 		{
 			seq_play %1
-		};
-		#case {"spell/%*"}
-		{
-			play_norandom %1
 		};
 		#default
 		{
@@ -66,15 +54,6 @@
 	}
 }
 {9}
-
-#ALIAS {^play_norandom %S$}
-{
-	#if {"$msp" == "true"}
-	{
-		#system {play -qV0 "$HOME/sounds/%1.opus" gain $volume &> /dev/null &}
-	}
-}
-{8}
 
 #ALIAS {^news$}
 {
@@ -124,7 +103,7 @@
 {
 	#if {"$msp" == "true"}
 	{
-		#system {play -qV0 -mix "$($shuf -n 1 -e $HOME/sounds/%1*opus)" "$($shuf -n 1 -e $HOME/sounds/%2*opus)" gain $volume &> /dev/null &}
+		#system {play -qV0 -mix "$($shuf -n 1 -e $HOME/sounds/%1[^_]*opus)" "$($shuf -n 1 -e $HOME/sounds/%2*opus)" gain $volume &> /dev/null &}
 	}
 }
 {9}
@@ -159,21 +138,21 @@
 		{
 			#variable {lChannel} {v0.9};
 			#variable {rChannel} {v0.4};
-			#system {play -qV0 "$($shuf -n 1 -e $HOME/sounds/%2*opus)" remix $lChannel $rChannel gain $volume &> /dev/null &}
+			#system {play -qV0 "$($shuf -n 1 -e $HOME/sounds/%2[^_]*opus)" remix $lChannel $rChannel gain $volume &> /dev/null &}
 		};
 		#elseif {"%1" == "rplay"}
 		{
 			#variable {lChannel} {v0.4};
 			#variable {rChannel} {v0.9};
-			#system {play -qV0 "$($shuf -n 1 -e $HOME/sounds/%2*opus)" remix $lChannel $rChannel gain $volume &> /dev/null &}
+			#system {play -qV0 "$($shuf -n 1 -e $HOME/sounds/%2[^_]*opus)" remix $lChannel $rChannel gain $volume &> /dev/null &}
 		};
 		#elseif {"%1" == "rev_play"}
 		{
-			#system {play -qV0 "$($shuf -n 1 -e $HOME/sounds/%2*opus)" reverse gain $volume &> /dev/null &}
+			#system {play -qV0 "$($shuf -n 1 -e $HOME/sounds/%2[^_]*opus)" reverse gain $volume &> /dev/null &}
 		};
 		#else
 		{
-			#system {play -qV0 "$($shuf -n 1 -e $HOME/sounds/%2*opus)" gain $volume &> /dev/null &}
+			#system {play -qV0 "$($shuf -n 1 -e $HOME/sounds/%2[^_]*opus)" gain $volume &> /dev/null &}
 		}
 	}
 }
