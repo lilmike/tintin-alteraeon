@@ -34,6 +34,8 @@
 
 #ACTION {^You are now a group member.$}
 {
+	#variable {auto.donateunique} {false};
+	#variable {auto.getunique} {false};
 	#variable {groupRating.index} {1};
 	#delay {autoGroupRating} {#echo {To give the group leader the recommend rank of ${groupRating[${groupRating.index}]}, type rate.};synth_play notificationSound} {1200}
 }

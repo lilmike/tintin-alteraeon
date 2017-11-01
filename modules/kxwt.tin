@@ -55,9 +55,10 @@
 			#delay {levelTimer} {#variable {justLeveled} {false}} {90}
 		}
 	};
-	#if {"${auto.buypractice}" == "true" && %1 >= ${auto.buyPracticeExperience}}
+	#if {"${auto.buypractice}" == "true" && "${spam.practice}" != "true" && %1 >= ${auto.buyPracticeExperience}}
 	{
-		train practice
+		train practice;
+		spamset practice
 	}
 }
 {8}
@@ -284,7 +285,7 @@
 	{
 		#unvariable {character.regenAlert}
 	};
-	#if {"${auto.refresh}" == "true" && "${auto.refreshed}" != "true" && ${character.currentMv} < ${character.maxMv} / 5 && "$busy" != "true"}
+	#if {"${auto.refresh}" == "true" && "${auto.refreshed}" != "true" && ${character.currentMv} < ${character.maxMv} / 5 && ${kxwt.action} == 0}
 	{
 		#variable {auto.refreshed} {true};
 		#delay {3} {#unvariable {auto.refreshed}};
@@ -395,7 +396,7 @@
 #VARIABLE         {chimeLoop}  {}
 #VARIABLE         {currentMv}  {}
 #VARIABLE         {enemyConditionTone}  {}
-#VARIABLE         {ignoredMobs}  {A blood red winged demon|A clutch of poison ivy vines|.*draconian|.*draconian.*|.*elemental|a fire ant.*|.*fungus.*|A mass of tangling roots|.*shroom.*A number of magical dancing lights|.*moogle|the soul faerie|a .* slime|A slimy fish|.*spore.*|a.*tree|Vampiric vines|.*zombie.*|an icebolg}
+#VARIABLE         {ignoredMobs}  {A blood red winged demon|A clutch of poison ivy vines|.*draconian|.*draconian.*|.*elemental|a fire ant.*|.*fungus.*|A mass of tangling roots|.*shroom.*A number of magical dancing lights|.*moogle|the soul faerie|a .* slime|A slimy fish|.*spore.*|a.*tree|Vampiric vines|.*zombie.*|an icebolg|.* skelet.*}
 #VARIABLE         {kxwt}  {}
 #VARIABLE         {lastPlayedTime}  {0}
 #VARIABLE         {mvRegenTime}  {}

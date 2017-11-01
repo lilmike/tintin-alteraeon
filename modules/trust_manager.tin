@@ -89,4 +89,4 @@
 {9}
 
 #VARIABLE         {trust}  {{index}{0}{name}{0}}
-#VARIABLE         {trustedCommands}  {fame|pick .*|recall|rest|sit|sleep|talk .*|target .*}
+#VARIABLE         {trustedCommands}  {fame|pick .*|recall|rest|sit|sleep|talk .*|target .*|quest .*|open .*|lock .*|unlock .*|use .*}

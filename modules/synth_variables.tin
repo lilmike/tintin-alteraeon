@@ -1,5 +1,6 @@
 #VARIABLE         {auctionReceiveSound}  {"|sox -np synth .2 tri F2 tri C3" "|sox -np synth .55 tri F3 tri C4" remix - phaser}
 #VARIABLE         {auctionSendSound}  {"|sox -np synth .2 tri C4 tri F3" "|sox -np synth .55 tri C3 tri F2" remix - phaser}
+#VARIABLE         {botthwack}  {"|sox -np synth 2 sine 700:1000 sine 900:1200 fade 0 2 0 remix - norm -12 repeat 3 overdrive reverb speed 4"}
 #VARIABLE         {bovineChannelSound}  {"|sox -np synth .35 pl E2 pl G2" remix - flanger reverse gain -8}
 #VARIABLE         {broadcastSound}  {"|sox -np synth .2 pl A2 pl D2" "|sox -np synth .55 pl A2 pl D2" remix - phaser}
 #VARIABLE         {chatReceiveSound}  {"|sox -np synth .1 white" vol 0.5}
@@ -39,7 +40,6 @@
 #VARIABLE         {mvLow}  {"|sox -np synth pl E2 sq B2 tri E3 pl G3 sq B3 tri E4 delay 0 .05 .1 .15 .2 .25 remix - fade 0 0.55" remix v0.4 v0.9}
 #VARIABLE         {newVolumeSound}  {"|sox -np synth .05 sq B5" gain -5}
 #VARIABLE         {notificationSound}  {"|sox -np synth sin 900 sin 1100 delay 0 .1 fade h 0 .25 .2"}
-#VARIABLE         {outOfDateSound}  {"|sox -np synth 2 sine 700:1000 sine 900:1200 fade 0 2 0 remix - norm -25 repeat 2 overdrive reverb speed 4"}
 #VARIABLE         {sayReceiveSound}  {"|sox -np synth pl E1 pl B1 remix - gain -6 fade 0 0.2 0.5"}
 #VARIABLE         {saySendSound}  {"|sox -np synth pl E1 sq B1 remix - gain -6 fade 0 0.2 0.5"}
 #VARIABLE         {tellReceiveSound}  {"|sox -np synth pl G2 pl G3 pl D3 pl D4 pl E3 pl E4 delay 0 .05 .25 .3 .5 .55 remix - fade p 0 .74 .75 flanger norm -10 tempo 1.8"}
