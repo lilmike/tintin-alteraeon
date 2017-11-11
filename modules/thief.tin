@@ -72,15 +72,6 @@
 }
 {9}
 
-#ACTION {^You attempt to pin %1's shadow to the ground, but miss!$}
-{
-	#if {"${skillsAndSpells.shadow bind}" == "true" && !&{inBattle}}
-	{
-		#regexp {%1} {{.*} {.*}} {bind &2}
-	}
-}
-{9}
-
 #ACTION {^You slip%*hiding spot.$}
 {
 	#variable {busy} {true};
