@@ -218,14 +218,14 @@
 
 #ALIAS {^{bin|bind}$}
 {
-	shadow bind %1;
+	shadow bind;
 	#variable {client.bindName} {}
 }
 {9}
 
-#ALIAS {^{strik|strike}}
+#ALIAS {^{strik|strike}%*}
 {
-	shadow strike
+	#regexp {%0} {{.*} {.*}} {shadow strike &2} {shadow strike}
 }
 {9}
 
