@@ -205,7 +205,8 @@
 {
 	qcsave;
 	#unvariable {connected};
-	#system {if [[ -d '.git' ]]; then echo "Checking for updates...";git fetch --all&git reset --hard origin/$(git branch | grep '\* ' | cut -d ' ' -f2-)&fi}
+	#system {if [[ -d '.git' ]]; then echo "Checking for updates...";git fetch --all&git reset --hard origin/$(git branch | grep '\* ' | cut -d ' ' -f2-)&fi};
+	#end
 }
 
 #VARIABLE         {loginName}  {FALSE}
