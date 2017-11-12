@@ -72,6 +72,15 @@
 }
 {9}
 
+#ACTION {^You attempt to pin %1's shadow to the ground, but miss!$}
+{
+	#if {"${skillsAndSpells.shadow bind}" == "true" && !&{inBattle} && &{client.bindName}}
+	{
+		shadow bind ${client.bindName}
+	}
+}
+{9}
+
 #ACTION {^You slip%*hiding spot.$}
 {
 	#variable {busy} {true};
@@ -200,49 +209,21 @@
 }
 {8}
 
-#ALIAS {^strik %1}
+#ALIAS {^{bin|bind} %1}
 {
-	shadow strike %1
-}
-{8}
-
-#ALIAS {^bin %1}
-{
-	shadow bind %1
+	shadow bind %1;
+	#variable {client.bindName} {%1}
 }
 {9}
 
-#ALIAS {^bin$}
+#ALIAS {^{bin|bind}$}
 {
-	shadow bind
+	shadow bind %1;
+	#variable {client.bindName} {}
 }
 {9}
 
-#ALIAS {^bind %1}
-{
-	shadow bind %1
-}
-{9}
-
-#ALIAS {^bind$}
-{
-	shadow bind
-}
-{9}
-
-#ALIAS {^strik$}
-{
-	shadow strike
-}
-{9}
-
-#ALIAS {^strike %1}
-{
-	shadow strike %1
-}
-{9}
-
-#ALIAS {^strike$}
+#ALIAS {^{strik|strike}}
 {
 	shadow strike
 }
