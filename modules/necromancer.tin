@@ -905,7 +905,7 @@
 {
 	#variable {client.makeUndead} {%1};
 	#variable {client.needsMoreSoulstones} {true};
-	cast preservation corpse
+	vcast preservation corpse
 }
 {9}
 
