@@ -6,8 +6,10 @@ lyricsPath="${XDG_DATA_HOME:-$HOME/.local/share}/fortune"
 mkdir -p "$lyricsPath"
 
 # Get the song and artist info
-artist="$(echo "$2" | cut -d '-' -f1)"
-song="$(echo "$2" | cut -d '-' -f2 | cut -d '(' -f1)"
+artist="$(echo "$2" | cut -d '-' -f1 | tr -s '[:space:]')"
+artist="${artist%[[:space:]]}"
+song="$(echo "$2" | cut -d '-' -f2 | cut -d '(' -f1 | tr -s '[:space:]')"
+song="${song%[[:space:]]}"
 song="$(echo "$2" | sed 's/.* - \(.*\)/\1/')"
 lyricsFile="${song// /-}.${artist// /-}"
 
@@ -21,11 +23,13 @@ fi
 
 # Sometimes the file is created, but it's one long string
 # Try to protect against that since the one string will most likely be too long for the 400 character limit
+if [[ -s "$lyricsPath/$lyricsFile" ]]; then
 if ! grep '%' "$lyricsPath/$lyricsFile" &> /dev/null ; then 
 rm "$lyricsPath/$lyricsFile.dat"
 tmp="$(fold -s "$lyricsPath/$lyricsFile" | sed '0~4 s/$/\n%/g')"
 echo "$tmp" > "$lyricsPath/$lyricsFile"
  strfile "$lyricsPath/$lyricsFile" &> /dev/null
+fi
 fi
 
 # Display the lyrics or an error if nothing is found
