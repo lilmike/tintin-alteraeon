@@ -34,7 +34,7 @@ fi
 
 # Display the lyrics or an error if nothing is found
 if [[ -e "$lyricsPath/$lyricsFile" ]]; then
-  echo "$1 $(fortune -n400 -s -- "$lyricsPath/$lyricsFile" | tr '[:space:]' ' ') -- it's $song by $artist"
+  echo "$1 $(fortune -n400 -s -- "$lyricsPath/$lyricsFile" | tr '[:space:]' ' ') -- it's \${music.oldAutoTitleString}\."
 else
   echo "#echo {No lyrics found for $song by $artist.}"
 fi
