@@ -171,7 +171,7 @@
 	#nop {This is the only time we need the date number, so may as well clear it.};
 	#unvariable {introDate};
 	#nop {Get the last modified date of the news file.};
-	#script {motd} {curl -sI "$MOTDURL"};
+	#script {motd} {curl -sI --connect-timeout 5 "$MOTDURL"};
 	#regexp {${motd[1]}} {HTTP/1.1 {.*} {.*}} {#variable {motdStatus} {&1}};
 	#regexp {${motd[3]}} {Date: {.*}} {#variable {motdTime} {News updated &1}};
 	#nop {Display intro message.};
@@ -205,7 +205,8 @@
 {
 	qcsave;
 	#unvariable {connected};
-	#system {if [[ -d '.git' ]]; then echo "Checking for updates...";git fetch --all&git reset --hard origin/$(git branch | grep '\* ' | cut -d ' ' -f2-)&fi}
+	#system {if [[ -d '.git' ]]; then echo "Checking for updates...";git fetch --all&git reset --hard origin/$(git branch | grep '\* ' | cut -d ' ' -f2-)&fi};
+	#end
 }
 
 #VARIABLE         {loginName}  {FALSE}

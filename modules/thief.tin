@@ -74,9 +74,9 @@
 
 #ACTION {^You attempt to pin %1's shadow to the ground, but miss!$}
 {
-	#if {"${skillsAndSpells.shadow bind}" == "true" && !&{inBattle}}
+	#if {"${skillsAndSpells.shadow bind}" == "true" && !&{inBattle} && &{client.bindName}}
 	{
-		#regexp {%1} {{.*} {.*}} {bind &2}
+		shadow bind ${client.bindName}
 	}
 }
 {9}
@@ -209,51 +209,23 @@
 }
 {8}
 
-#ALIAS {^strik %1}
+#ALIAS {^{bin|bind} %1}
 {
-	shadow strike %1
-}
-{8}
-
-#ALIAS {^bin %1}
-{
-	shadow bind %1
+	shadow bind %1;
+	#variable {client.bindName} {%1}
 }
 {9}
 
-#ALIAS {^bin$}
+#ALIAS {^{bin|bind}$}
 {
-	shadow bind
+	shadow bind;
+	#variable {client.bindName} {}
 }
 {9}
 
-#ALIAS {^bind %1}
+#ALIAS {^{strik|strike}%*}
 {
-	shadow bind %1
-}
-{9}
-
-#ALIAS {^bind$}
-{
-	shadow bind
-}
-{9}
-
-#ALIAS {^strik$}
-{
-	shadow strike
-}
-{9}
-
-#ALIAS {^strike %1}
-{
-	shadow strike %1
-}
-{9}
-
-#ALIAS {^strike$}
-{
-	shadow strike
+	#regexp {%0} {{.*} {.*}} {shadow strike &2} {shadow strike}
 }
 {9}
 

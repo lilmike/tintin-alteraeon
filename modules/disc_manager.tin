@@ -4,7 +4,7 @@
 	#list {discList} {size} {discLoopCounter};
 	#if {$discLoopCounter > 0 && "$discSpamCatcher" != "true"}
 	{
-		add_spell tensors floating disc;
+		vcast tensors floating disc;
 #variable {discSpamCatcher} {true}
 	}
 }
@@ -21,7 +21,7 @@
 	#if {"$discSpamCatcher" == "false" && $discLoopCounter > 0}
 	{
 		#variable {discSpamCatcher} {true};
-		add_spell tensors floating disc
+		vcast tensors floating disc
 	}
 }
 {9}
