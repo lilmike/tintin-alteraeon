@@ -1,5 +1,13 @@
 #!/bin/bash
 
+# Dependancy check 
+for i in clyrics fortune ; do
+if ! command -v $i &> /dev/null ; then
+    echo "{#echo Please install $i before using this script.}"
+  exit 1
+  fi
+done
+
 # Path where lyrics are stored
 # Most likely ~/.local/share/fortunes
 lyricsPath="${XDG_DATA_HOME:-$HOME/.local/share}/fortune"
