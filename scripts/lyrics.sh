@@ -8,7 +8,7 @@ mkdir -p "$lyricsPath"
 # Get the song and artist info
 artist="$(echo "$2" | cut -d '-' -f1)"
 song="$(echo "$2" | cut -d '-' -f2 | cut -d '(' -f1)"
-song=dd"$(echo "$2" | sed 's/.* - \(.*\)/\1/')"
+song="$(echo "$2" | sed 's/.* - \(.*\)/\1/')"
 lyricsFile="${song// /-}.${artist// /-}"
 
 if ! [[ -f "$lyricsPath/$lyricsFile" ]]; then
