@@ -267,7 +267,7 @@
 }
 {9}
 
-#ACTION {^You cast a powerful spell on the corpse of %1, slowing its decay.$}
+#ACTION {^vcast_preservation corpse_You cast a powerful spell on the corpse of %1, slowing its decay.$}
 {
 	#if {&{client.makeUndead}}
 	{
