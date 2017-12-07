@@ -55,24 +55,6 @@
 }
 {9}
 
-#ALIAS {^news$}
-{
-	#if {$motdStatus != 200 && $motdStatus != 404}
-	{
-		#script {motd} {curl -I "$MOTDURL"};
-		#regexp {${motd[1]}} {HTTP/1.1 {.*} {.*}} {#variable {motdStatus} {&1}}
-	};
-	#if {$motdStatus == 200}
-	{
-		#system {play -qV0 -t opus "$MOTDURL" gain $volume &> /dev/null &}
-	};
-	#else
-	{
-		#echo {There is no news currently.}
-	}
-}
-{9}
-
 #ALIAS {^synth_play %1}
 {
 	#if {"$msp" == "true" && &{%1}}
