@@ -1,6 +1,6 @@
 #ALIAS {^CHECK_NEWS$}
 {
-	#script {client.tmp} {cat "$HOME/news.txt 2> /dev/null"};
+	#script {client.tmp} {cat "$HOME/news.txt" 2> /dev/null};
 	#variable {news.old} {${client.tmp[1]}};
 	#script {client.tmp} {soxi "${client.newsURL}/${client.newsFile}" | grep '^md5sum=' | cut -d= -f2};
 	#variable {news.current} {${client.tmp[1]}};
