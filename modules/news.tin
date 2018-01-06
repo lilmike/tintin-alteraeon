@@ -1,0 +1,28 @@
+#ALIAS {^CHECK_NEWS$}
+{
+	#script {client.tmp} {cat "$HOME/news.txt" 2> /dev/null};
+	#variable {news.old} {${client.tmp[1]}};
+	#script {client.tmp} {soxi "${client.newsURL}/${client.newsFile}" | grep '^md5sum=' | cut -d= -f2};
+	#variable {news.current} {${client.tmp[1]}};
+	#if {"${news.current}" != "${news.old}"}
+	{
+		#echo {There is a news update available. Please type news to listen to it when you are in a safe place such as recall.};
+		Add_Event {There is a news update available. Please type news to listen to it when you are in a safe place such as recall.};
+		notify-send {There is a news update available. Please type news to listen to it when you are in a safe place such as recall.};
+		synth_play notificationSound
+	}
+}
+{9}
+
+#ALIAS {^news$}
+{
+	#system {play -qV0 -t opus "${client.newsURL}/${client.newsFile}" gain $volume &> /dev/null& echo "${news.current}" > "$HOME/news.txt"}
+}
+{9}
+
+#EVENT {HOUR}
+{
+	CHECK_NEWS
+}
+
+#VARIABLE         {client}  {{newsFile}{aa.opus}{newsURL}{https://stormdragon.tk/MUDs}}
