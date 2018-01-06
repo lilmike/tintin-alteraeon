@@ -16,8 +16,8 @@
 #VARIABLE         {exitFindSound}  {"|sox -np synth sine 480 sine 660 remix - fade 0 0.1 delay 0.1"}
 #VARIABLE         {giftExp}  {"|sox -np synth 0.2 pl E2" "| sox -np synth 0.2 pl E3" "| sox -np synth 0.2 pl G3" "| sox -np synth 0.2 pl A#2" "| sox -np synth 0.2 pl A2" gain -9}
 #VARIABLE         {giftGold}  {"|sox -np synth pl A2 fade 0 0.3 0.05" "|sox -np synth pl A3 fade 0 0.25 0.05" "|sox -np synth 0.095 pl E3" "|sox -np synth pl A2 fade 0 0.3 0.09" "|sox -np synth pl E2 fade 0 0.3 0.05" "|sox -np synth pl G2 fade 0 0.3 0.05" "|sox -np synth pl A2 fade 0 0.3 0.05" "|sox -np synth pl C3 fade 0 0.3 0.05" gain -7}
-#VARIABLE         {gossipReceiveSound}  {"|sox -np synth .1 pink pl G3 pl A3" remix - reverse}
-#VARIABLE         {gossipSendSound}  {"|sox -np synth .1 pink pl G3 pl A3" remix -}
+#VARIABLE         {gossipReceiveSound}  {"|sox -np synth .25 sin 440:480 sin 480:520 remix - reverse norm -8 pitch -1000"}
+#VARIABLE         {gossipSendSound}  {"|sox -np synth .25 sin 440:480 sin 480:520 remix - reverse norm -8"}
 #VARIABLE         {groupWarnSound}  {"|sox -np synth .15 sq E2:E5" "|sox -np synth .15 sq E5:E2" gain -20}
 #VARIABLE         {grouptellReceiveSound}   {"|sox -np synth .2 sq E2 tri B2" "|sox -np synth .55 tri E3 sq B3" remix - phaser gain -3}
 #VARIABLE         {grouptellSendSound}  {"|sox -np synth .2 sq B3 tri E3" "|sox -np synth .55 tri B2 sq E2" remix - phaser gain -3}
