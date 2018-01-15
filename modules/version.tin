@@ -49,4 +49,4 @@
 #VARIABLE         {client.release}  {stable}
 #VARIABLE         {client.lastPingName}  {}
 #VARIABLE         {client.tintinAlterAeonUUID}  {}
-#VARIABLE         {client.tintinAlterAeonVersionNumber}          {2017.04.20-01}
+#VARIABLE         {client.tintinAlterAeonVersionNumber}          {2018.01}
