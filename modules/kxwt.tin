@@ -166,14 +166,11 @@
 {
 	#variable {kxwt.myname} {%1};
 	#variable {gameDataPath} {${HOME}/%1};
+	#variable {characterModulePath} {${HOME}/%1.modules};
 	#format {name} {%n} {%1};
 	#variable {historyPath} {${HOME}/%1.history};
 	#script {if [ -f "$gameDataPath" ]; then echo "#class {gameData} {read} {$gameDataPath}";fi;if [ -f "$historyPath" ] ; then echo "#history {read} {$historyPath}";fi};
-	#if {&{personalFile}}
-	{
-		#class {personal} {read} {$personalFile};
-		#echo {Loading $personalFile}
-	};
+	#script {if [[ -d "$characterModulePath" ]]; then for module in $characterModulePath/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
 	#class {gameData} {open};
 	#ticker {saver} {qcsave} {30}
 }
@@ -241,7 +238,7 @@
 				'\cc;
 				c bone prison me
 			}
-	}
+		}
 	};
 	#if {${character.currentMana} <= ${character.maxMana} * 0.75 && ${character.currentMana} > ${character.maxMana} * 0.50 && "${character.lastManaAlert}" != "manaExcellent"}
 	{
@@ -385,6 +382,33 @@
 	set telnetga off | prefix silent_;
 	SHOW_VERSION;
 	%connect cowsay | prefix silent_
+}
+{9}
+
+#ALIAS {^cmod{kill|load|reload} %S$}
+{
+	#nop {reload all modules};
+	#if {"%0" == "cmodreload all"}
+	{
+		#script {for module in $characterModulePath/*.tin ; do echo "#class {$(basename "$module" .tin)} {kill};#class {character_$(basename "$module" .tin)} {read} {$module}";done};
+		#echo {All character modules reloaded}
+	};
+	#else
+	{
+		#nop {Kill, load, or reload a specified module.};
+		#if {"%1" == "{kill|reload}"}
+		{
+			#class {character_%2} {kill};
+			#showme {Character module %2 has been killed.}
+		};
+		#if {"%1" == "{load|reload}"}
+		{
+			#showme {Loading character module %2.tin};
+			#class {character_%2} {read} {$characterModulePath/%2.tin};
+			#class {$MSDP_CHARACTER_NAME} {open}
+		}
+	};
+	#unvariable {modpath}
 }
 {9}
 
