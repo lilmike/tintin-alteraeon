@@ -16,7 +16,7 @@
 
 #ALIAS {^news$}
 {
-	#system {play -qV0 -t opus "${client.newsURL}/${client.newsFile}" gain $volume &> /dev/null& echo "${news.current}" > "$HOME/news.txt"}
+	#system {play -qV0 -t ogg "${client.newsURL}/${client.newsFile}" gain $volume &> /dev/null& echo "${news.current}" > "$HOME/news.txt"}
 }
 {9}
 
@@ -25,4 +25,4 @@
 	CHECK_NEWS
 }
 
-#VARIABLE         {client}  {{newsFile}{aa.opus}{newsURL}{https://stormdragon.tk/MUDs}}
+#VARIABLE         {client}  {{newsFile}{aa.ogg}{newsURL}{https://stormdragon.tk/MUDs}}
