@@ -10,7 +10,6 @@
 #VARIABLE         {connectedSound}  {"|sox -np synth tri C6 fade 0 0.02 0.01" repeat 6}
 #VARIABLE         {cowsayReceiveSound}  {"|sox -np synth .2 pl C2 pl C3" "|sox -np synth .55 pl E2 pl G2" remix - flanger gain -7}
 #VARIABLE         {cowsaySendSound}  {"|sox -np synth .2 pl E2 pl G2" "|sox -np synth .55 pl C2 pl C3" remix - flanger gain -7}
-#VARIABLE         {dailyGift}  {"|sox -np synth 0.2 pl E3" "| sox -np synth 0.2 pl B3" "| sox -np synth 0.2 pl E4" "| sox -np synth 0.2 pl B3" "| sox -np synth 0.2 pl E4" gain -11}
 #VARIABLE         {defaultReceiveSound}  {"|sox -np synth .2 pl D2 pl A2" "|sox -np synth .55 pl D3 pl A3" remix - phaser}
 #VARIABLE         {defaultSendSound}  {"|sox -np synth .2 pl A3 pl D3" "|sox -np synth .55 pl A2 pl D2" remix - phaser}
 #VARIABLE         {exitFindSound}  {"|sox -np synth sine 480 sine 660 remix - fade 0 0.1 delay 0.1"}

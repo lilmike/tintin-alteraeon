@@ -355,8 +355,7 @@
 
 #ACTION {^Welcome back! Thanks for playing Alter Aeon!$}
 {
-	gift | tail -n 1 | prefix silent_;
-	synth_play dailyGift
+	gift | tail -n 1 | prefix silent_
 }
 {9}
 
