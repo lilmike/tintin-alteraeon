@@ -64,32 +64,6 @@
 }
 {9}
 
-#ALIAS {pan_play %S}
-{
-	#if {!&{play_%1} && "$msp" == "true"}
-	{
-		#variable {play_%1} {false};
-		#script {soundFileName} {$shuf -n 1 -e sounds/%1*wav};
-		#math {lChannel} {1d5+4};
-		#math {rChannel} {1d5+4};
-		#variable {soundFileName} {${soundFileName[1]}};
-		#system {play -qV0 "$HOME/$soundFileName" gain $volume remix - v0.$lChannel v0.$rChannel &> /dev/null &};
-		#script {i} {soxi "$HOME/$soundFileName" | grep Duration | cut -d ':' -f2- | cut -d '=' -f1 | tr -d "[:space:]"};
-		#variable {i} {${i[1]}};
-		#delay {$i}  {#unvariable {play_%1}}
-	}
-}
-{9}
-
-#ALIAS {play %1 %2}
-{
-	#if {"$msp" == "true"}
-	{
-		#system {play -qV0 -mix "$($shuf -n 1 -e $HOME/sounds/%1[^_]*wav)" "$($shuf -n 1 -e $HOME/sounds/%2*wav)" gain $volume &> /dev/null &}
-	}
-}
-{9}
-
 #ALIAS {seq_{play|play_norandom} %S}
 {
 	#if {!&{play_%1} && "$msp" == "true"}
@@ -112,30 +86,11 @@
 }
 {9}
 
-#ALIAS {{lplay|rplay|play|rev_play} %S}
+#ALIAS {play %S}
 {
 	#if {"$msp" == "true"}
 	{
-		#if {"%1" == "lplay"}
-		{
-			#variable {lChannel} {v0.9};
-			#variable {rChannel} {v0.4};
-			#system {play -qV0 "$($shuf -n 1 -e $HOME/sounds/%2[^_]*wav)" remix $lChannel $rChannel gain $volume &> /dev/null &}
-		};
-		#elseif {"%1" == "rplay"}
-		{
-			#variable {lChannel} {v0.4};
-			#variable {rChannel} {v0.9};
-			#system {play -qV0 "$($shuf -n 1 -e $HOME/sounds/%2[^_]*wav)" remix $lChannel $rChannel gain $volume &> /dev/null &}
-		};
-		#elseif {"%1" == "rev_play"}
-		{
-			#system {play -qV0 "$($shuf -n 1 -e $HOME/sounds/%2[^_]*wav)" reverse gain $volume &> /dev/null &}
-		};
-		#else
-		{
-			#system {play -qV0 "$($shuf -n 1 -e $HOME/sounds/%2[^_]*wav)" gain $volume &> /dev/null &}
-		}
+			#system {play -qV0 "$($shuf -n 1 -e $HOME/sounds/%1[^_]*wav)" gain $volume &> /dev/null &}
 	}
 }
 {9}
