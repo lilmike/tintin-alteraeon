@@ -1,28 +1,11 @@
 #ACTION {^[Exits: %*}
 {
-	#if {"$topExits" == "true"}
-	{
-		#variable {exitString} {%0};
-		#line {gag}
-	};
 	#regexp {%0} {{.*} [Doors: {.*}} {play door};
 	#script {exits} {echo "%1" | tr -d "[:punct:]"};
 	#replace {exits[1]} { } {;};
 	#list {exits} {create} {$exits[1]};
 	#list {exits} {size} {exitCount};
 	#forall {$exits}{#if {"$exitfind" == "&0"}{synth_play exitFindSound}};
-	#if {&{tracking}}
-	{
-		nearby | grep -i $tracking | prefix tracking_
-	};
-	#if {&{automap}}
-	{
-		map
-	};
-	#if {"$autoscent" == "true"}
-	{
-		scent of death
-	}
 }
 {1}
 
@@ -200,21 +183,6 @@
 }
 {9}
 
-#ALIAS {^{not|t}opexi{t|ts}$}
-{
-	#if {"%0" == "topexi{t|ts}"}
-	{
-		#showme {Exits will now be displayed before room information.};
-		#variable {topExits} {true}
-	};
-	#else
-	{
-		#showme {Exits will now be displayed normally.};
-		#unvariable {topExits}
-	}
-}
-{9}
-
 #ALIAS {^{op|ope|open|pi|pic|pick} %*}
 {
 	#variable {doorName} {%2};
@@ -329,7 +297,6 @@
 #PATHDIR          {u}  {d}  {16}
 #PATHDIR          {w}  {e}  {8}
 #VARIABLE         {exitCount}  {}
-#VARIABLE         {exitString}  {}
 #VARIABLE         {exitfind}  {false}
 #VARIABLE         {exits}  {}
 #VARIABLE         {lastDirection}  {}
