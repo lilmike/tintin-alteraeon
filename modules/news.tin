@@ -14,7 +14,7 @@
 }
 {9}
 
-#ALIAS {^news$}
+#ALIAS {^cnews$}
 {
 	#system {play -qV0 -t ogg "${client.newsURL}/${client.newsFile}" gain $volume &> /dev/null& echo "${news.current}" > "$HOME/news.txt"}
 }
