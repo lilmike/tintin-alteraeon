@@ -6,9 +6,9 @@
 	#variable {news.current} {${client.tmp[1]}};
 	#if {"${news.current}" != "${news.old}"}
 	{
-		#echo {There is a news update available. Please type news to listen to it when you are in a safe place such as recall.};
-		Add_Event {There is a news update available. Please type news to listen to it when you are in a safe place such as recall.};
-		notify-send {There is a news update available. Please type news to listen to it when you are in a safe place such as recall.};
+		#echo {There is a news update available. Please type cnews to listen to it when you are in a safe place such as recall.};
+		Add_Event {There is a news update available. Please type cnews to listen to it when you are in a safe place such as recall.};
+		notify-send {There is a news update available. Please type cnews to listen to it when you are in a safe place such as recall.};
 		synth_play notificationSound
 	}
 }
