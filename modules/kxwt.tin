@@ -320,7 +320,8 @@
 		{
 			#variable {busy} {false}
 		};
-		#variable {oldVnum} {%1}
+		#variable {oldVnum} {%1};
+		#variable {mineCounter} {0}
 	};
 	#variable {kxwt.rvnum} {%1};
 	#variable {vnum} {%1};
