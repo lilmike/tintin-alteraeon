@@ -1,3 +1,4 @@
+#nop {Commented due to tintin issues.
 #ACTION {%1 *** %2 *** %3!$}
 {
 	#if {"${character.cspam}" == "true"}
@@ -9,6 +10,7 @@
 	}
 }
 {9}
+}
 
 #ACTION {%1 kicks at %2 but barely makes contact.$}
 {
