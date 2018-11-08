@@ -94,7 +94,7 @@
 }
 {9}
 
-#ACTION {^You throw caution to the wind and engage %2 in melee combat!$}
+#ACTION {^You throw caution to the wind and engage %1 in melee combat!$}
 {
 	#if {"${auto.stop}" == "true"}
 	{

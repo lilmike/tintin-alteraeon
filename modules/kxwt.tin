@@ -314,7 +314,7 @@
 
 #ACTION {^kxwt_rvnum %d$}
 {
-	#if {$vnum != $oldVnum}
+	#if {%1 != $oldVnum}
 	{
 		#if {"$busy" == "true"}
 		{
