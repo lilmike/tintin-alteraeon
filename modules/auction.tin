@@ -1,6 +1,6 @@
 #ACTION {^(auction) %1 sold for %d gold coins.$}
 {
-	#if {"${character.cspam}" == "true"}
+	#if {"${character[cspam]}" == "true"}
 	{
 		#line {gag};
 		#echo {%1 sold for %2 gold.}
@@ -12,7 +12,7 @@
 
 #ACTION {^(auction) '%1', going %S for %d gold coins.$}
 {
-	#if {"${character.cspam}" == "true"}
+	#if {"${character[cspam]}" == "true"}
 	{
 		#echo {'%1', going %2 for %3 gold.}
 	};
@@ -27,7 +27,7 @@
 
 #ACTION {^(auction) Auction failed, item returned to seller.$}
 {
-	#if {"${character.cspam}" == "true"}
+	#if {"${character[cspam]}" == "true"}
 	{
 		#echo {Auction failed.};
 		#line {gag}
@@ -39,7 +39,7 @@
 
 #ACTION {^(auction) Current bid is %d gold coins for '%2'.$}
 {
-	#if {"${character.cspam}" == "true"}
+	#if {"${character[cspam]}" == "true"}
 	{
 		#line {gag}
 	}
@@ -49,7 +49,7 @@
 #ACTION {^(auction) New bid: %d gold coins for '%2'.$}
 {
 	#line {gag};
-	#if {"${character.cspam}" == "true"}
+	#if {"${character[cspam]}" == "true"}
 	{
 		#echo {Bid: %1 gold.}
 	};
@@ -70,7 +70,7 @@
 {
 	#variable {auction.minimumBid} {%2};
 	#line {gag};
-	#if {"${character.cspam}" != "true"}
+	#if {"${character[cspam]}" != "true"}
 	{
 		#showme {%0 To bid the minimum amount of ${auction.minimumBid} gold, type 'bid +'.}
 	}
@@ -81,7 +81,7 @@
 {
 	#variable {auction.minimumBid} {%2};
 	#line {gag};
-	#if {"${character.cspam}" == "true"}
+	#if {"${character[cspam]}" == "true"}
 	{
 		#showme {Starting bid: '%1' %d gold.}
 	};
@@ -102,7 +102,7 @@
 #ACTION {^(auction) {First|Second|Last} call for '%2', at %d gold coins.$}
 {
 	#variable {auction.minimumBid} {%3};
-	#if {"${character.cspam}" == "true"}
+	#if {"${character[cspam]}" == "true"}
 	{
 		#echo {%1: %2 %3 gold.}
 	};
@@ -125,7 +125,7 @@
 #ACTION {^You must bid at least %d, or %2 higher than the current bid.$}
 {
 	#line {gag};
-	#if {"${character.cspam}" != "true"}
+	#if {"${character[cspam]}" != "true"}
 	{
 		#showme {%0 To bid this amount type 'bid +'.}
 	};

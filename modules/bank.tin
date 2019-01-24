@@ -1,7 +1,7 @@
 #ACTION {kxwt_gold %d}
 {
 	#variable {kxwt.gold} {%1};
-	#if {${auto.depositgold} > 0 && %1 > ${auto.depositgold} && "$busy" != "true"}
+	#if {${auto[depositgold]} > 0 && %1 > ${auto[depositgold]} && "$busy" != "true"}
 	{
 		bank deposit %1
 	}
@@ -57,12 +57,12 @@
 {
 	#if {"%1" == "auto"}
 	{
-		#regexp {%2} {{.*} {\d+}} {#echo {You will automatically deposit gold when you have more than &2 coins. (Note, this requires private banking)};#variable {auto.depositgold} {&2}}
+		#regexp {%2} {{.*} {\d+}} {#echo {You will automatically deposit gold when you have more than &2 coins. (Note, this requires private banking)};#variable {auto[depositgold]} {&2}}
 	};
 	#else
 	{
 		#echo {You will no longer automatically deposit gold.};
-		#variable {auto.depositgold} {0}
+		#variable {auto[depositgold]} {0}
 	}
 }
 {9}

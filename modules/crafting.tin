@@ -21,13 +21,13 @@
 #ACTION {^{You uncover a deposit of .+ and stake it out\.|.+ discovers a deposit of .+\.}$}
 {
 	#math {mineCounter} {$mineCounter+1};
-	#if {!&{auto.stopMining}}
+	#if {!&{auto[stopMining]}}
 	{
 		#variable {auto[stopMining]} {0}
 	};
 	#if {$mineCounter >= ${minedTerrainList[${kxwt.terrain}]}}
 	{
-		#if {${auto.stopMining} && &{minedTerrainList[${kxwt.terrain}]} && ${isProspecting}}
+		#if {${auto[stopMining]} && &{minedTerrainList[${kxwt.terrain}]} && ${isProspecting}}
 		{
 			stop
 		};

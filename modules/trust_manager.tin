@@ -73,7 +73,11 @@
 	#list {trustedList} {size} {trust.index};
 	#if {${trust.index} > 0}
 	{
-		#forall {${trustedList[]}} {#showme {${trustedList[&0]}}}
+		#local {i} {};
+		#foreach {${trustedList[]}} {i}
+		{
+			#showme {${trustedList[$i]}}
+		}
 	};
 	#else
 	{

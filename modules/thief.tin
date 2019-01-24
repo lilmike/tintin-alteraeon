@@ -17,7 +17,7 @@
 
 #ACTION {^Yo{u|ur} {lock picking skills failed you during that try|try another go at picking the lock|continue to manipulate the lock|attempt to pick the lock|thief abilities were insufficient for that attempt}{\.|\.\.\.}$}
 {
-	#if {"${character.cspam}" == "true"}
+	#if {"${character[cspam]}" == "true"}
 	{
 		#line {gag}
 	}
@@ -31,21 +31,21 @@
 	{
 		#case {1}
 		{
-			#variable {channel.message} {honest! I was only trying to tickle your balls!}
+			#variable {channel[message]} {honest! I was only trying to tickle your balls!}
 		};
 		#case {2}
 		{
-			#variable {channel.message} {Sorry, I had a terrible itch and must have gotten the wrong pocket!}
+			#variable {channel[message]} {Sorry, I had a terrible itch and must have gotten the wrong pocket!}
 		};
 		#default
 		{
-			#variable {channel.message} {I just wanted to scratch and sniff! Is that really so bad?}
+			#variable {channel[message]} {I just wanted to scratch and sniff! Is that really so bad?}
 		}
 	};
-	#regexp {%2} {{.*} {.*}} {talk &2 ${channel.message}};
+	#regexp {%2} {{.*} {.*}} {talk &2 ${channel[message]}};
 	#else
 	{
-		talk %2 ${channel.message}
+		talk %2 ${channel[message]}
 	}
 }
 {5}
@@ -65,7 +65,7 @@
 
 #ACTION {^You are forced to defend yourself against %2!$}
 {
-	#if {"${auto.withdraw}" == "true"}
+	#if {"${auto[withdraw]}" == "true"}
 	{
 		withdraw
 	}
@@ -74,9 +74,9 @@
 
 #ACTION {^You attempt to pin %1's shadow to the ground, but miss!$}
 {
-	#if {"${skillsAndSpells.shadow bind}" == "true" && !&{inBattle} && &{client.bindName}}
+	#if {"${skillsAndSpells.shadow bind}" == "true" && !&{inBattle} && &{client[bindName]}}
 	{
-		shadow bind ${client.bindName}
+		shadow bind ${client[bindName]}
 	}
 }
 {9}
@@ -96,7 +96,7 @@
 
 #ACTION {^You throw caution to the wind and engage %1 in melee combat!$}
 {
-	#if {"${auto.stop}" == "true"}
+	#if {"${auto[stop]}" == "true"}
 	{
 		stop
 	}
@@ -128,7 +128,7 @@
 
 #ACTION {^give crystal %1You don't see anyone named '%2' here.$}
 {
-	${auto.junkType} crystal
+	${auto[junkType]} crystal
 }
 {9}
 
@@ -153,23 +153,23 @@
 #ACTION {^silent_You {carefully, carefully|carefully|disconnect|drain|scoop|scrape|unmount}%*.}
 {
 	#showme {You %1%2.};
-	#if {"${auto.junk}" == "true"}
+	#if {"${auto[junk]}" == "true"}
 	{
 		#if {"%1" == "carefully, carefully"}
 		{
-			${auto.junkType} lightning
+			${auto[junkType]} lightning
 		};
 		#elseif {"%1" == "disconnect"}
 		{
-			${auto.junkType} voltaic
+			${auto[junkType]} voltaic
 		};
 		#elseif {"%1" == "drain"}
 		{
-			${auto.junkType} vial
+			${auto[junkType]} vial
 		};
 		#else
 		{
-			#regexp {%2} {{.*} {.*}} {${auto.junkType} &2}
+			#regexp {%2} {{.*} {.*}} {${auto[junkType]} &2}
 		}
 	}
 }
@@ -178,12 +178,12 @@
 #ACTION {^stealing_%1 seems to have dropped %2!%sYou'll surely return it later.$}
 {
 	play pickpocket;
-	#if {"${auto.junk}" == "true"}
+	#if {"${auto[junk]}" == "true"}
 	{
-		#regexp {%2} {{.*} {.*}} {#if {"&2" == "envelope"} {${auto.junkType} donation};#elseif {"&2" == "'2"} {${auto.junkType} paper};#else {${auto.junkType} &2}};
+		#regexp {%2} {{.*} {.*}} {#if {"&2" == "envelope"} {${auto[junkType]} donation};#elseif {"&2" == "'2"} {${auto[junkType]} paper};#else {${auto[junkType]} &2}};
 		#else
 		{
-			${auto.junkType} %2
+			${auto[junkType]} %2
 		}
 	}
 }
@@ -212,14 +212,14 @@
 #ALIAS {^{bin|bind} %1}
 {
 	shadow bind %1;
-	#variable {client.bindName} {%1}
+	#variable {client[bindName]} {%1}
 }
 {9}
 
 #ALIAS {^{bin|bind}$}
 {
 	shadow bind;
-	#variable {client.bindName} {}
+	#variable {client[bindName]} {}
 }
 {9}
 
@@ -248,17 +248,17 @@
 	{
 		#case {"autowithdraw"}
 		{
-			#variable {auto.withdraw} {true};
+			#variable {auto[withdraw]} {true};
 			#showme {autowithdraw enabled.}
 		};
 		#case {"autostop"}
 		{
-			#variable {auto.stop} {true};
+			#variable {auto[stop]} {true};
 			#showme {autostop enabled.}
 		};
 		#default
 		{
-			#unvariable {auto.%2};
+			#unvariable {auto[%2]};
 			#showme {auto%2 disabled.}
 		}
 	}

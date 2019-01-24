@@ -15,9 +15,9 @@
 	{
 		#variable {castTankMinion} {true}
 	};
-	#if {"${client.releasing}" != "true"}
+	#if {"${client[releasing]}" != "true"}
 	{
-		#if {"${auto.iceElemental}" == "true" && ${character.currentMana} > 200}
+		#if {"${auto[iceElemental]}" == "true" && ${character[currentMana]} > 200}
 		{
 			#if {"%3" == "stops"}
 			{
@@ -33,14 +33,14 @@
 				}
 			}
 		};
-		#elseif {"${auto.iceElemental}" == "true" && ${character.currentMana} < 200}
+		#elseif {"${auto[iceElemental]}" == "true" && ${character[currentMana]} < 200}
 		{
 			synth_play warningSound
 		}
 	};
 	#else
 	{
-		#variable {client.releasing} {false}
+		#variable {client[releasing]} {false}
 	}
 }
 {9}
@@ -49,12 +49,12 @@
 {
 	#if {"%1" == "auto"}
 	{
-		#variable {auto.iceElemental} {true};
+		#variable {auto[iceElemental]} {true};
 		#echo {auto ice elemental enabled}
 	};
 	#else
 	{
-		#variable {auto.iceElemental} {false};
+		#variable {auto[iceElemental]} {false};
 		#echo {auto ice elemental disabled}
 	}
 }

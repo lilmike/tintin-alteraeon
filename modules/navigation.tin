@@ -5,7 +5,14 @@
 	#replace {exits[1]} { } {;};
 	#list {exits} {create} {$exits[1]};
 	#list {exits} {size} {exitCount};
-	#forall {$exits}{#if {"$exitfind" == "&0"}{synth_play exitFindSound}};
+	#local {i} {};
+	#foreach {$exits} {i}
+	{
+		#if {"$exitfind" == "$i"}
+		{
+			synth_play exitFindSound
+		}
+	}
 }
 {1}
 
@@ -29,12 +36,6 @@
 }
 {5}
 
-#ACTION {%1 arrives from%2portal%3}
-{
-	seq_play portal
-}
-{9}
-
 #ACTION {%1 begins {her|his|its} climb %2ward.}
 {
 	#if {"%1" == "${group.leader}"}
@@ -45,6 +46,12 @@
 }
 {8}
 
+#ACTION {%1 arrives from%2portal%3}
+{
+	seq_play portal
+}
+{9}
+
 #ACTION {%1 {are|is} closed.$}
 {
 	#regexp {%1} {{.*} {.*}} {#variable {doorName} {&2}}
@@ -53,7 +60,7 @@
 
 #ACTION {^(You {may be able to|can} use waypoint %1 {to|to more easily} bridge the distance.)$}
 {
-	#if {"${auto.waypoint}" == "true"}
+	#if {"${auto[waypoint]}" == "true"}
 	{
 		#send {waypoint %1};
 		waypoint $waypoint
@@ -114,21 +121,6 @@
 }
 {9}
 
-#ALIAS {^{noauto|auto}{stealth}$}
-{
-	#if {"%1" == "auto"}
-	{
-		#variable {auto.%2} {true};
-		#echo {auto%2 enabled.};
-	};
-	#else
-	{
-		#variable {auto.%2} {false};
-		#echo {auto%2 disabled.}
-	}
-}
-{9}
-
 #ALIAS {^te{r|rr|rra|rrai|rrain}$}
 {
 	help kxwt terrain | grep " ${kxwt.terrain}" | head -n 1
@@ -155,12 +147,12 @@
 	#if {"%0" == "autowaypoint"}
 	{
 		#showme {You will now try to bridge waypoints automatically.};
-		#variable {auto.waypoint} {true}
+		#variable {auto[waypoint]} {true}
 	};
 	#else
 	{
 		#showme {You will no longer try to bridge waypoints automatically.};
-		#unvariable {auto.waypoint}
+		#unvariable {auto[waypoint]}
 	}
 }
 {9}
@@ -172,13 +164,28 @@
 	{
 		retreat $lastDirection
 	};
-	#elseif {"${auto.stealth}" == "true"}
+	#elseif {"${auto[stealth]}" == "true"}
 	{
 		#send {sneak %0}
 	};
 	#else
 	{
 		#send {%0}
+	}
+}
+{9}
+
+#ALIAS {^{noauto|auto}{stealth}$}
+{
+	#if {"%1" == "auto"}
+	{
+		#variable {auto[%2]} {true};
+		#echo {auto%2 enabled.}
+	};
+	#else
+	{
+		#variable {auto[%2]} {false};
+		#echo {auto%2 disabled.}
 	}
 }
 {9}
@@ -286,16 +293,6 @@
 	northwest
 }
 
-#PATHDIR          {d}  {u}  {32}
-#PATHDIR          {e}  {w}  {2}
-#PATHDIR          {n}  {s}  {1}
-#PATHDIR          {ne}  {sw}  {3}
-#PATHDIR          {nw}  {se}  {9}
-#PATHDIR          {s}  {n}  {4}
-#PATHDIR          {se}  {nw}  {6}
-#PATHDIR          {sw}  {ne}  {12}
-#PATHDIR          {u}  {d}  {16}
-#PATHDIR          {w}  {e}  {8}
 #VARIABLE         {exitCount}  {}
 #VARIABLE         {exitfind}  {false}
 #VARIABLE         {exits}  {}

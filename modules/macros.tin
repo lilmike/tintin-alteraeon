@@ -70,13 +70,13 @@
 {
 	#if {"%0" == "autokeyprofile"}
 	{
-		#variable {auto.keyprofile} {true};
+		#variable {auto[keyprofile]} {true};
 		#showme {Auto keyprofile enabled.}
 	};
 	#else
 	{
 		#showme {Auto keyprofile enabled.};
-		#variable {auto.keyprofile} {true}
+		#variable {auto[keyprofile]} {true}
 	}
 }
 {9}

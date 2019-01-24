@@ -30,7 +30,7 @@
 
 #ACTION {%1 is mortally wounded, and will die soon if not aided.$}
 {
-	#if {"${skillsAndSpells.soulsteal}" == "true" && ${character.currentMana} >= 15}
+	#if {"${skillsAndSpells.soulsteal}" == "true" && ${character[currentMana]} >= 15}
 	{
 		#if {"$lastSoulsteal" != "%1"}
 		{
@@ -43,7 +43,7 @@
 		#variable {lastSoulsteal} {%1}
 	};
 	seq_play mortally-wounded;
-	#if {"${character.cspam}" == "true"}
+	#if {"${character[cspam]}" == "true"}
 	{
 		#showme {%1 is morted.};
 		#line {gag}
@@ -53,32 +53,32 @@
 
 #ACTION {^A {clay man|bone guardian|flesh beast|metal construct|wood woad} {starts|stops} following you.$}
 {
-	#if {"${client.releasing}" != "true"}
+	#if {"${client[releasing]}" != "true"}
 	{
 		#if {"%2" == "starts"}
 		{
 			#variable {castTankMinion} {true}
 		};
-		#if {"${auto.clay}" == "true" && "%2" == "stops"}
+		#if {"${auto[clay]}" == "true" && "%2" == "stops"}
 		{
 			'\cc;
 			#variable {castTankMinion} {%1};
 			cast clay man
 		};
-		#if {"${auto.woad}" == "true" && "%2" == "stops"}
+		#if {"${auto[woad]}" == "true" && "%2" == "stops"}
 		{
 			woad
 		};
-		#if {"${auto.bone}" == "true" && "%2" == "stops"}
+		#if {"${auto[bone]}" == "true" && "%2" == "stops"}
 		{
 			guardian
 		};
-		#if {"${auto.flesh}" == "true" && "%2" == "stops"}
+		#if {"${auto[flesh]}" == "true" && "%2" == "stops"}
 		{
 			#variable {castTankMinion} {flesh beast corpse};
 			release corpse
 		};
-		#if {"${auto.metal}" == "true" && "$%2" == "stops"}
+		#if {"${auto[metal]}" == "true" && "$%2" == "stops"}
 		{
 			#if {${kxwt.terrain} == 33}
 			{
@@ -93,22 +93,22 @@
 	};
 	#else
 	{
-		#variable {client.releasing} {false}
+		#variable {client[releasing]} {false}
 	}
 }
 {4}
 
 #ACTION {^With the last soulstone, A prepared %1 corpse is fully prepared.$}
 {
-	#if {"${character.cspam}" == "true"}
+	#if {"${character[cspam]}" == "true"}
 	{
 		#line {gag};
 		#showme {A %1 corpse is fully prepared.}
 	};
-	#unvariable {client.needsMoreSoulstones};
-	#if {&{client.makeUndead}}
+	#unvariable {client[needsMoreSoulstones]};
+	#if {&{client[makeUndead]}}
 	{
-		#unvariable {client.makeUndead};
+		#unvariable {client[makeUndead]};
 		#if {"${skillsAndSpells.infuse element}" != "true"}
 		{
 			vcast raise undead corpse
@@ -130,22 +130,22 @@
 	};
 	#if {"%1" == "bone guardian"}
 	{
-		look in ${character.tankContainer} ${auto.boneMaterial} | prefix boneguardianCounter_
+		look in ${character[tankContainer]} ${auto[boneMaterial]} | prefix boneguardianCounter_
 	};
 	#if {"%1" == "metal construct"}
 	{
-		look in ${character.tankContainer} ${auto.metalMaterial} | prefix metalcounter_
+		look in ${character[tankContainer]} ${auto[metalMaterial]} | prefix metalcounter_
 	};
 	#if {"%1" == "wood woad"}
 	{
-		look in ${character.tankContainer} ${auto.woadMaterial} | prefix woadcounter_
+		look in ${character[tankContainer]} ${auto[woadMaterial]} | prefix woadcounter_
 	}
 }
 {9}
 
 #ACTION {^A %1 {rips a bone from|claws at and begins eating|rips and tears into} the corpse of %3{!|, devouring it!| as a replacement\.}$}
 {
-	#if {"${character.cspam}" == "true"}
+	#if {"${character[cspam]}" == "true"}
 	{
 		#if {"%2" == "rips a bone from"}
 		{
@@ -168,7 +168,7 @@
 
 #ACTION {^A shadow fiend stops following you.$}
 {
-	#if {"${auto.fiend}" == "true"}
+	#if {"${auto[fiend]}" == "true"}
 	{
 		shadowfiend
 	}
@@ -179,18 +179,18 @@
 {
 	#if {"%2" == "starts"}
 	{
-		#if {!&{auto.skeletonStone}}
+		#if {!&{auto[skeletonStone]}}
 		{
-			#variable {auto.skeletonStone} {deep blue soulstone}
+			#variable {auto[skeletonStone]} {deep blue soulstone}
 		};
 		#if {"%1" == "skeleton" && "${skillsAndSpells.skeletal knight}" == "true"}
 		{
-			get ${auto.skeletonStone} ${character.container} | grep nospam;
+			get ${auto[skeletonStone]} ${character[container]} | grep nospam;
 			vcast skeletal knight
 		};
 		#if {"%1" == "skeletal mage" && "${skillsAndSpells.skeletal lich}" == "true"}
 		{
-			get ${auto.skeletonStone} ${character.container} | grep nospam;
+			get ${auto[skeletonStone]} ${character[container]} | grep nospam;
 			vcast skeletal lich
 		}
 	}
@@ -199,7 +199,7 @@
 
 #ACTION {^An animated corpse stops following you.$}
 {
-	#if {"${auto.flesh}" == "true" && "$castTankMinion" == "flesh%*"}
+	#if {"${auto[flesh]}" == "true" && "$castTankMinion" == "flesh%*"}
 	{
 		c flesh corpse
 	}
@@ -223,7 +223,7 @@
 
 #ACTION {^Sorry, that's too small.$}
 {
-	#if {"${auto.flesh}" == "true" && "$castTankMinion" == "flesh%*"}
+	#if {"${auto[flesh]}" == "true" && "$castTankMinion" == "flesh%*"}
 	{
 		#variable {castTankMinion} {clay man};
 		cast clay man
@@ -233,13 +233,13 @@
 
 #ACTION {^Sorry, there are no buyers for a %1 soulstone at this time.$}
 {
-	#if {!&{character.soulstoneContainer}}
+	#if {!&{character[soulstoneContainer]}}
 	{
-		#variable {character.soulstoneContainer} {${character.container}}
+		#variable {character[soulstoneContainer]} {${character[container]}}
 	};
-	#if {"${auto.store}" == "true"}
+	#if {"${auto[store]}" == "true"}
 	{
-		put %1 soulstone ${character.soulstoneContainer}
+		put %1 soulstone ${character[soulstoneContainer]}
 	}
 }
 {9}
@@ -248,13 +248,13 @@
 {
 	#if {"${skillsAndSpells.soulbind}" == "true"}
 	{
-		#if {&{character.soulstoneContainer}}
+		#if {&{character[soulstoneContainer]}}
 		{
-			#send {stand;get ${character.defaultSoulstone} from ${character.soulstoneContainer}}
+			#send {stand;get ${character[defaultSoulstone]} from ${character[soulstoneContainer]}}
 		};
 		#else
 		{
-			#send {stand;get ${character.defaultSoulstone} from ${character.container}}
+			#send {stand;get ${character[defaultSoulstone]} from ${character[container]}}
 		};
 		remove shield;
 		soulbind shield;
@@ -269,21 +269,21 @@
 
 #ACTION {^vcast_preservation corpse_You cast a powerful spell on the corpse of %1, slowing its decay.$}
 {
-	#if {&{client.makeUndead}}
+	#if {&{client[makeUndead]}}
 	{
-		prepare corpse ${client.makeUndead}
+		prepare corpse ${client[makeUndead]}
 	}
 }
 {9}
 
 #ACTION {^You chant a spell to magically bind a %1 soulstone to A prepared %2 corpse.$}
 {
-	#if {"${character.cspam}" == "true"}
+	#if {"${character[cspam]}" == "true"}
 	{
 		#line {gag};
 		#showme {You bind a %1 soulstone to a %2.}
 	};
-	#delay {0.5}{#if {"${client.needsMoreSoulstones}" == "true" && &{client.makeUndead}}{#if {&{character.soulstoneContainer}} {get ${character.defaultSoulstone} from ${character.soulstoneContainer}};#else {get ${character.defaultSoulstone} from ${character.container}};prepare corpse soulstone}}
+	#delay {0.5}{#if {"${client[needsMoreSoulstones]}" == "true" && &{client[makeUndead]}}{#if {&{character[soulstoneContainer]}} {get ${character[defaultSoulstone]} from ${character[soulstoneContainer]}};#else {get ${character[defaultSoulstone]} from ${character[container]}};prepare corpse soulstone}}
 }
 {9}
 
@@ -295,9 +295,9 @@
 
 #ACTION {^You cut deep into the {corpse|gutted carcass} of%2 and harvest %3 {bone|bone shard|longbone}.$}
 {
-	#if {"${auto.junk}" == "true"}
+	#if {"${auto[junk]}" == "true"}
 	{
-		${auto.junkType} harvested
+		${auto[junkType]} harvested
 	};
 	harvest bone corpse | grep -v has no useful bones remaining
 }
@@ -305,7 +305,7 @@
 
 #ACTION {^You don't have any minions by that name.$}
 {
-	#if {"${auto.flesh}" == "true" && "$castTankMinion" == "flesh%*"}
+	#if {"${auto[flesh]}" == "true" && "$castTankMinion" == "flesh%*"}
 	{
 		#variable {castTankMinion} {clay man};
 		cast clay man
@@ -317,11 +317,11 @@
 {
 	#if {"${skillsAndSpells.giscos giblet grenade}" == "true"}
 	{
-		put cutfromcorpse ${character.container}
+		put cutfromcorpse ${character[container]}
 	};
-	#elseif {"${auto.junk}" == "true"}
+	#elseif {"${auto[junk]}" == "true"}
 	{
-		${auto.junkType} cutfromcorpse
+		${auto[junkType]} cutfromcorpse
 	}
 }
 {9}
@@ -330,13 +330,13 @@
 {
 	#if {"${skillsAndSpells.soulbind}" == "true"}
 	{
-		#if {&{character.soulstoneContainer}}
+		#if {&{character[soulstoneContainer]}}
 		{
-			#send {stand;get ${character.defaultSoulstone} from ${character.soulstoneContainer}}
+			#send {stand;get ${character[defaultSoulstone]} from ${character[soulstoneContainer]}}
 		};
 		#else
 		{
-			#send {stand;get ${character.defaultSoulstone} from ${character.container}}
+			#send {stand;get ${character[defaultSoulstone]} from ${character[container]}}
 		};
 		soulbind armor
 	};
@@ -351,11 +351,11 @@
 {
 	#if {"${skillsAndSpells.giscos giblet grenade}" == "true"}
 	{
-		put cutfromcorpse ${character.container}
+		put cutfromcorpse ${character[container]}
 	};
-	#elseif {"${auto.junk}" == "true"}
+	#elseif {"${auto[junk]}" == "true"}
 	{
-		${auto.junkType} cutfromcorpse
+		${auto[junkType]} cutfromcorpse
 	}
 }
 {9}
@@ -364,35 +364,35 @@
 {
 	#if {"${skillsAndSpells.giscos giblet grenade}" == "true"}
 	{
-		put cutfromcorpse ${character.container}
+		put cutfromcorpse ${character[container]}
 	};
-	#elseif {"${auto.junk}" == "true"}
+	#elseif {"${auto[junk]}" == "true"}
 	{
-		${auto.junkType} cutfromcorpse
+		${auto[junkType]} cutfromcorpse
 	}
 }
 {9}
 
 #ACTION {^You harvest some bone marrow from the shattered bone.$}
 {
-	#if {"${auto.junk}" == "true"}
+	#if {"${auto[junk]}" == "true"}
 	{
-		${auto.junkType} bone marrow slime
+		${auto[junkType]} bone marrow slime
 	}
 }
 {9}
 
 #ACTION {^You make a mistake, the preparation fails, and a %1 soulstone is lost.$}
 {
-	#if {&{client.makeUndead}}
+	#if {&{client[makeUndead]}}
 	{
-		#if {&{character.soulstoneContainer}}
+		#if {&{character[soulstoneContainer]}}
 		{
-			#send {stand;get %1 soulstone from ${character.soulstoneContainer}}
+			#send {stand;get %1 soulstone from ${character[soulstoneContainer]}}
 		};
 		#else
 		{
-			#send {stand;get %1 soulstone from ${character.container}}
+			#send {stand;get %1 soulstone from ${character[container]}}
 		};
 		prepare corpse %1 soulstone
 	}
@@ -403,11 +403,11 @@
 {
 	#if {"${skillsAndSpells.giscos giblet grenade}" == "true"}
 	{
-		put cutfromcorpse ${character.container}
+		put cutfromcorpse ${character[container]}
 	};
-	#elseif {"${auto.junk}" == "true"}
+	#elseif {"${auto[junk]}" == "true"}
 	{
-		${auto.junkType} cutfromcorpse
+		${auto[junkType]} cutfromcorpse
 	}
 }
 {9}
@@ -420,16 +420,16 @@
 
 #ACTION {^You realize that you have made a mistake, and the preparation fails.$}
 {
-	#if {&{client.makeUndead}}
+	#if {&{client[makeUndead]}}
 	{
-		prepare corpse ${client.makeUndead}
+		prepare corpse ${client[makeUndead]}
 	}
 }
 {9}
 
 #ACTION {^You release %1 from your control. $}
 {
-	#variable {client.releasing} {true}
+	#variable {client[releasing]} {true}
 }
 {9}
 
@@ -437,18 +437,18 @@
 {
 	#if {"${skillsAndSpells.giscos giblet grenade}" == "true"}
 	{
-		put cutfromcorpse ${character.container}
+		put cutfromcorpse ${character[container]}
 	};
-	#elseif {"${auto.junk}" == "true"}
+	#elseif {"${auto[junk]}" == "true"}
 	{
-		${auto.junkType} cutfromcorpse
+		${auto[junkType]} cutfromcorpse
 	}
 }
 {9}
 
 #ACTION {^You sacrifice blood from the corpse %1, drawing power from it!$}
 {
-	#if {"${character.cspam}" == "true"}
+	#if {"${character[cspam]}" == "true"}
 	{
 		#showme {You sacrifice blood from the corpse.};
 		#line {gag}
@@ -458,9 +458,9 @@
 
 #ACTION {^You start the life tap and begin diverting the blood into a prepared bottle.$}
 {
-	#if {"${auto.store}" == "true"}
+	#if {"${auto[store]}" == "true"}
 	{
-		put blood vial bottle bvial preserved ${character.container}
+		put blood vial bottle bvial preserved ${character[container]}
 	}
 }
 {9}
@@ -469,13 +469,13 @@
 {
 	#if {"${skillsAndSpells.soulbind}" == "true"}
 	{
-		#if {&{character.soulstoneContainer}}
+		#if {&{character[soulstoneContainer]}}
 		{
-			#send {stand;get ${character.defaultSoulstone} from ${character.soulstoneContainer}}
+			#send {stand;get ${character[defaultSoulstone]} from ${character[soulstoneContainer]}}
 		};
 		#else
 		{
-			#send {stand;get ${character.defaultSoulstone} from ${character.container}}
+			#send {stand;get ${character[defaultSoulstone]} from ${character[container]}}
 		};
 		remove blade;
 		soulbind blade;
@@ -508,15 +508,15 @@
 
 #ACTION {^You {carefully wrap and prepare|drain the blood from|prepare} the corpse of %1{ and prepare it| }to become %*}
 {
-	#if {&{client.makeUndead}}
+	#if {&{client[makeUndead]}}
 	{
-		#if {&{character.soulstoneContainer}}
+		#if {&{character[soulstoneContainer]}}
 		{
-			get ${character.defaultSoulstone} from ${character.soulstoneContainer}
+			get ${character[defaultSoulstone]} from ${character[soulstoneContainer]}
 		};
 		#else
 		{
-			get ${character.defaultSoulstone} from ${characte.rcontainer}
+			get ${character[defaultSoulstone]} from ${characte.rcontainer}
 		};
 		prepare corpse soulstone
 	}
@@ -525,10 +525,10 @@
 
 #ACTION {^You {cast the spell to separate soul from body, and|struggle to} pull %2's essence into a %3 soulstone!$}
 {
-	#variable {client.capSound} {true};
-	#if {!&{character.soulstoneContainer}}
+	#variable {client[capSound]} {true};
+	#if {!&{character[soulstoneContainer]}}
 	{
-		#variable {character.soulstoneContainer} {${character.container}}
+		#variable {character[soulstoneContainer]} {${character[container]}}
 	};
 	#variable {i} {%3};
 	#replace {i} { } {};
@@ -538,9 +538,9 @@
 	};
 	#else
 	{
-		#if {"${auto.store}" == "true"}
+		#if {"${auto[store]}" == "true"}
 		{
-			put soulstone ${character.soulstoneContainer}
+			put soulstone ${character[soulstoneContainer]}
 		}
 	}
 }
@@ -548,23 +548,23 @@
 
 #ACTION {^boneguardianCounter_%d items total.$}
 {
-	#if {"${auto.bone}" == "true"}
+	#if {"${auto[bone]}" == "true"}
 	{
 		#if {%1 > 1}
 		{
-			#echo {%1 ${auto.boneMaterial}s remaining.};
-			Add_Event %1 ${auto.boneMaterial}s remaining.
+			#echo {%1 ${auto[boneMaterial]}s remaining.};
+			Add_Event %1 ${auto[boneMaterial]}s remaining.
 		};
 		#if {%1 == 1}
 		{
-			#echo {1 ${auto.boneMaterial} remaining.};
-			Add_Event 1 ${auto.boneMaterial} remaining.;
+			#echo {1 ${auto[boneMaterial]} remaining.};
+			Add_Event 1 ${auto[boneMaterial]} remaining.;
 			synth_play warningSound
 		};
 		#if {%1 == 0}
 		{
-			Add_Event You have used your last ${auto.boneMaterial}\.;
-			#echo {This is your last ${auto.boneMaterial}\.};
+			Add_Event You have used your last ${auto[boneMaterial]}\.;
+			#echo {This is your last ${auto[boneMaterial]}\.};
 			synth_play warningSound
 		}
 	}
@@ -574,7 +574,7 @@
 #ACTION {^large chunks. (worn by you)$}
 {
 	play drop/bone-armor;
-	#if {"${auto.bonearmor}" == "true"}
+	#if {"${auto[bonearmor]}" == "true"}
 	{
 		vcast bone armor $name
 	}
@@ -583,9 +583,9 @@
 
 #ACTION {^silent_A %1 soulstone has an estimated selling price of %d gold coins.$}
 {
-	#if {!&{character.soulstoneContainer}}
+	#if {!&{character[soulstoneContainer]}}
 	{
-		#variable {character.soulstoneContainer} {${character.container}}
+		#variable {character[soulstoneContainer]} {${character[container]}}
 	};
 	#variable {i} {%1};
 	#replace {i} { } {};
@@ -595,24 +595,24 @@
 	};
 	#else
 	{
-		put soulstone ${character.soulstoneContainer}
+		put soulstone ${character[soulstoneContainer]}
 	}
 }
 {9}
 
 #ACTION {^silent_Sorry, there are no buyers for a %1 soulstone at this time.$}
 {
-	#if {!&{character.soulstoneContainer}}
+	#if {!&{character[soulstoneContainer]}}
 	{
-		#variable {character.soulstoneContainer} {${character.container}}
+		#variable {character[soulstoneContainer]} {${character[container]}}
 	};
-	put soulstone ${character.soulstoneContainer}
+	put soulstone ${character[soulstoneContainer]}
 }
 {9}
 
 #ACTION {^silent_cast_mend_bonesYou have collected %d normal teeth and %d dragon teeth.$}
 {
-	#if {%2 > ${auto.mendTeeth}}
+	#if {%2 > ${auto[mendTeeth]}}
 	{
 		vcast mend bones
 	};
@@ -647,23 +647,23 @@
 
 #ACTION {^{metal|woad}counter_%d items total.$}
 {
-	#if {"${auto.woad}" == "true" || "${auto.metal}" == "true"}
+	#if {"${auto[woad]}" == "true" || "${auto[metal]}" == "true"}
 	{
 		#if {%2 > 1}
 		{
-			#echo {%2 ${auto.%1Material}s remaining.};
-			Add_Event %2 ${auto.%1Material}s remaining.
+			#echo {%2 ${auto[%1Material]}s remaining.};
+			Add_Event %2 ${auto[%1Material]}s remaining.
 		};
 		#if {%2 == 1}
 		{
-			#echo {1 ${auto.%1Material} remaining.};
-			Add_Event 1 ${auto.%1Material} remaining.;
+			#echo {1 ${auto[%1Material]} remaining.};
+			Add_Event 1 ${auto[%1Material]} remaining.;
 			synth_play warningSound
 		};
 		#if {%2 == 0}
 		{
-			Add_Event You have used your last ${auto.%1Material}\.;
-			#echo {This is your last ${auto.%1Material}\.};
+			Add_Event You have used your last ${auto[%1Material]}\.;
+			#echo {This is your last ${auto[%1Material]}\.};
 			synth_play warningSound
 		}
 	}
@@ -672,8 +672,8 @@
 
 #ACTION {^{woad|metal}counter_Nothing.$}
 {
-	Add_Event You have used your last ${auto.%1Material}\.;
-	#echo {This is your last ${auto.%1Material}\.};
+	Add_Event You have used your last ${auto[%1Material]}\.;
+	#echo {This is your last ${auto[%1Material]}\.};
 	synth_play warningSound
 }
 {9}
@@ -682,13 +682,13 @@
 {
 	#nop {Interupt the queue and make a new bone guardian instantly};
 	'\cc;
-	#if {!&{character.tankContainer}}
+	#if {!&{character[tankContainer]}}
 	{
-		#variable {character.tankContainer} {${character.container}}
+		#variable {character[tankContainer]} {${character[container]}}
 	};
-	get ${auto.boneMaterial} from ${character.tankContainer};
-	#variable {castTankMinion} {bone guardian ${auto.boneMaterial}};
-	c bone guardian ${auto.boneMaterial}
+	get ${auto[boneMaterial]} from ${character[tankContainer]};
+	#variable {castTankMinion} {bone guardian ${auto[boneMaterial]}};
+	c bone guardian ${auto[boneMaterial]}
 }
 {5}
 
@@ -708,54 +708,54 @@
 {
 	#nop {Interupt the queue and make a new woad instantly};
 	'\cc;
-	#if {!&{character.tankContainer}}
+	#if {!&{character[tankContainer]}}
 	{
-		#variable {character.tankContainer} {${character.container}}
+		#variable {character[tankContainer]} {${character[container]}}
 	};
-	get ${auto.woadMaterial} from ${character.tankContainer};
-	drop ${auto.woadMaterial};
-	c wood ${auto.woadMaterial};
-	#variable {castTankMinion} {wood woad ${auto.woadMaterial}}
+	get ${auto[woadMaterial]} from ${character[tankContainer]};
+	drop ${auto[woadMaterial]};
+	c wood ${auto[woadMaterial]};
+	#variable {castTankMinion} {wood woad ${auto[woadMaterial]}}
 }
 {8}
 
 #ALIAS {^{c|ca|cas|cast} %s{sk|ske|skel|skele|skelet|skeleta|skeletal} %s{m|ma|mag|mage|w|wa|war|warr|warri|warrio|warrior}$}
 {
-	#if {!&{auto.defaultSkeletalMage}}
+	#if {!&{auto[defaultSkeletalMage]}}
 	{
-		#variable {auto.defaultSkeletalMage} {}
+		#variable {auto[defaultSkeletalMage]} {}
 	};
-	#if {!&{auto.defaultSkeletalWarrior}}
+	#if {!&{auto[defaultSkeletalWarrior]}}
 	{
-		#variable {auto.defaultSkeletalWarrior} {}
+		#variable {auto[defaultSkeletalWarrior]} {}
 	};
 	#if {"%0" == "%*m%*"}
 	{
-		#send {%0 ${auto.defaultSkeletalMage}}
+		#send {%0 ${auto[defaultSkeletalMage]}}
 	};
 	#else
 	{
-		#send {%0 ${auto.defaultSkeletalWarrior}}
+		#send {%0 ${auto[defaultSkeletalWarrior]}}
 	}
 }
 {8}
 
 #ALIAS {^autojunk %s{donate|drop|isacrifice}$}
 {
-	#variable {auto.junkType} {%2};
-	#variable {auto.junk} {true};
-	#echo {You will now automatically ${auto.junkType} spell components harvested from corpses, unuseful foraged items, and caught fish.}
+	#variable {auto[junkType]} {%2};
+	#variable {auto[junk]} {true};
+	#echo {You will now automatically ${auto[junkType]} spell components harvested from corpses, unuseful foraged items, and caught fish.}
 }
 {9}
 
 #ALIAS {^autojunk$}
 {
-	#if {!&{auto.junkType}}
+	#if {!&{auto[junkType]}}
 	{
-		#variable {auto.junkType} {drop}
+		#variable {auto[junkType]} {drop}
 	};
-	#variable {auto.junk} {true};
-	#echo {You will now automatically ${auto.junkType} spell components harvested from corpses, unuseful foraged items, and caught fish.}
+	#variable {auto[junk]} {true};
+	#echo {You will now automatically ${auto[junkType]} spell components harvested from corpses, unuseful foraged items, and caught fish.}
 }
 {9}
 
@@ -767,46 +767,46 @@
 
 #ALIAS {^auto{bone|metal|woad} %2}
 {
-	#variable {auto.%1Material} {%2};
-	#if {!&{auto.boneMaterial}}
+	#variable {auto[%1Material]} {%2};
+	#if {!&{auto[boneMaterial]}}
 	{
-		#variable {auto.boneMaterial} {boneguardian}
+		#variable {auto[boneMaterial]} {boneguardian}
 	};
-	#if {!&{auto.metalMaterial}}
+	#if {!&{auto[metalMaterial]}}
 	{
-		#variable {auto.metalMaterial} {metalconstruct}
+		#variable {auto[metalMaterial]} {metalconstruct}
 	};
-	#if {!&{auto.woadMaterial}}
+	#if {!&{auto[woadMaterial]}}
 	{
-		#variable {auto.woadMaterial} {deanimate}
+		#variable {auto[woadMaterial]} {deanimate}
 	};
 	#switch {"%1"}
 	{
 		#case {"bone"}
 		{
-			#variable {auto.bone} {true};
-			#variable {auto.clay} {false};
-			#variable {auto.flesh} {false};
-			#variable {auto.metal} {false};
-			#variable {auto.woad} {false};
+			#variable {auto[bone]} {true};
+			#variable {auto[clay]} {false};
+			#variable {auto[flesh]} {false};
+			#variable {auto[metal]} {false};
+			#variable {auto[woad]} {false};
 			#variable {castTankMinion} {true}
 		};
 		#case {"metal"}
 		{
-			#variable {auto.bone} {false};
-			#variable {auto.clay} {false};
-			#variable {auto.flesh} {false};
-			#variable {auto.metal} {true};
-			#variable {auto.woad} {false};
+			#variable {auto[bone]} {false};
+			#variable {auto[clay]} {false};
+			#variable {auto[flesh]} {false};
+			#variable {auto[metal]} {true};
+			#variable {auto[woad]} {false};
 			#variable {castTankMinion} {true}
 		};
 		#case {"woad"}
 		{
-			#variable {auto.bone} {false};
-			#variable {auto.clay} {false};
-			#variable {auto.flesh} {false};
-			#variable {auto.metal} {false};
-			#variable {auto.woad} {true};
+			#variable {auto[bone]} {false};
+			#variable {auto[clay]} {false};
+			#variable {auto[flesh]} {false};
+			#variable {auto[metal]} {false};
+			#variable {auto[woad]} {true};
 			#variable {castTankMinion} {true}
 		}
 	};
@@ -816,7 +816,7 @@
 
 #ALIAS {^blood{m|mi|mis|mist}$}
 {
-	get blood vial bottle bvial preserved ${character.container} | grep nospam;
+	get blood vial bottle bvial preserved ${character[container]} | grep nospam;
 	@command{vcast bloodm;vcast bloodmist}
 }
 {9}
@@ -824,27 +824,27 @@
 #ALIAS {^dmage %s{f|fi|fir|fire|i|ic|ice|l|li|lig|ligh|light|lightn|lightni|lightnin|lightning}$}
 {
 	#showme {Default skeletal mage set to %2.};
-	#variable {auto.defaultSkeletalMage} {%2}
+	#variable {auto[defaultSkeletalMage]} {%2}
 }
 {9}
 
 #ALIAS {^dstone %1}
 {
-	#variable {character.defaultSoulstone} {%1 soulstone};
+	#variable {character[defaultSoulstone]} {%1 soulstone};
 	dstone
 }
 {9}
 
 #ALIAS {^dstone$}
 {
-	#variable {character.defaultSoulstone}
+	#variable {character[defaultSoulstone]}
 }
 {9}
 
 #ALIAS {^dwarrior %s{f|fl|fla|flai|flail|sp|spe|spea|spear|sw|swo|swor|sword}$}
 {
 	#showme {Default skeletal warrior set to %2.};
-	#variable {auto.defaultSkeletalWarrior} {%2}
+	#variable {auto[defaultSkeletalWarrior]} {%2}
 }
 {9}
 
@@ -852,14 +852,14 @@
 {
 	#nop {Interupt the queue and make a new metal construct instantly};
 	'\cc;
-	#if {!&{character.tankcontainer}}
+	#if {!&{character[tankcontainer]}}
 	{
-		#variable {character.tankContainer} {${character.container}}
+		#variable {character[tankContainer]} {${character[container]}}
 	};
 	#if {${kxwt.terrain} != 33}
 	{
-		get ${auto.metalMaterial} ${character.container};
-		drop ${auto.metalMaterial}
+		get ${auto[metalMaterial]} ${character[container]};
+		drop ${auto[metalMaterial]}
 	};
 	#if {${kxwt.terrain} == 33}
 	{
@@ -868,15 +868,15 @@
 	};
 	#else
 	{
-		#variable {castTankMinion} {metal construct ${auto.metalMaterial}};
-		#delay {0.2} {c metal construct ${auto.metalMaterial}}
+		#variable {castTankMinion} {metal construct ${auto[metalMaterial]}};
+		#delay {0.2} {c metal construct ${auto[metalMaterial]}}
 	}
 }
 {9}
 
 #ALIAS {^noautojunk$}
 {
-	#unvariable {auto.junk};
+	#unvariable {auto[junk]};
 	#showme {You will no longer automatically discard anything.}
 }
 {9}
@@ -889,13 +889,13 @@
 
 #ALIAS {^shadowfiend$}
 {
-	#if {&{character.soulstoneContainer}}
+	#if {&{character[soulstoneContainer]}}
 	{
-		get deep blue soulstone ${character.soulstoneContainer}
+		get deep blue soulstone ${character[soulstoneContainer]}
 	};
 	#else
 	{
-		get deep blue soulstone from ${character.container}
+		get deep blue soulstone from ${character[container]}
 	};
 	summon demon fiend soulstone
 }
@@ -903,35 +903,35 @@
 
 #ALIAS {^sire {ghoul|mummy|vampire|zombie}$}
 {
-	#variable {client.makeUndead} {%1};
-	#variable {client.needsMoreSoulstones} {true};
+	#variable {client[makeUndead]} {%1};
+	#variable {client[needsMoreSoulstones]} {true};
 	vcast preservation corpse
 }
 {9}
 
 #ALIAS {^skele{tal|ton}stone %1}
 {
-	#variable {auto.skeletonStone} {%1 soulstone};
-	#variable {auto.skeletonStone}
+	#variable {auto[skeletonStone]} {%1 soulstone};
+	#variable {auto[skeletonStone]}
 }
 {9}
 
 #ALIAS {^woad%s%S$}
 {
-	#if {!&{character.tankContainer}}
+	#if {!&{character[tankContainer]}}
 	{
-		#variable {character.tankContainer} {${character.container}}
+		#variable {character[tankContainer]} {${character[container]}}
 	};
-	#variable {auto.woadMaterial} {%2};
+	#variable {auto[woadMaterial]} {%2};
 	#showme {You will now use %2 to make wood woads.};
-	get ${auto.woadMaterial} from $tankContainer;
-	drop ${auto.woadMaterial};
+	get ${auto[woadMaterial]} from $tankContainer;
+	drop ${auto[woadMaterial]};
 	#if {&{autowoad}}
 	{
 		#variable {$castTankMinion} {false};
 		#delay {10} {#variable {castTankMinion} {true}}
 	};
-	#delay {0.2} {c wood ${auto.woadMaterial}}
+	#delay {0.2} {c wood ${auto[woadMaterial]}}
 }
 {9}
 
@@ -940,18 +940,18 @@
 	#if {"%0" == "automend%*"}
 	{
 		#showme {automend enabled.};
-		#variable {auto.mend} {true};
-		#regexp {%0} {{.*} {\d+}} {#variable {auto.mendTeeth} {&2}};
+		#variable {auto[mend]} {true};
+		#regexp {%0} {{.*} {\d+}} {#variable {auto[mendTeeth]} {&2}};
 		#else
 		{
-			#variable {auto.mendTeeth} {6}
+			#variable {auto[mendTeeth]} {6}
 		}
 	};
 	#else
 	{
 		#showme {automend disabled.};
-		#unvariable {auto.mend};
-		#unvariable {auto.mendTeeth}
+		#unvariable {auto[mend]};
+		#unvariable {auto[mendTeeth]}
 	}
 }
 {9}
@@ -967,29 +967,29 @@
 	#if {"%1" == "auto"}
 	{
 		#showme {auto%2 enabled.};
-		#variable {auto.%2} {true}
+		#variable {auto[%2]} {true}
 	};
 	#else
 	{
 		#showme {Auto%2 disabled};
-		#variable {auto.%2} {false}
+		#variable {auto[%2]} {false}
 	}
 }
 {9}
 
 #ALIAS {^{noauto|auto}{bone|clay|flesh|metal|woad}$}
 {
-	#if {!&{auto.boneMaterial}}
+	#if {!&{auto[boneMaterial]}}
 	{
-		#variable {auto.boneMaterial} {boneguardian}
+		#variable {auto[boneMaterial]} {boneguardian}
 	};
-	#if {!&{auto.metalMaterial}}
+	#if {!&{auto[metalMaterial]}}
 	{
-		#variable {auto.metalMaterial} {metalconstruct}
+		#variable {auto[metalMaterial]} {metalconstruct}
 	};
-	#if {!&{auto.woadMaterial}}
+	#if {!&{auto[woadMaterial]}}
 	{
-		#variable {auto.woadMaterial} {deanimate}
+		#variable {auto[woadMaterial]} {deanimate}
 	};
 	#if {"%1" == "auto"}
 	{
@@ -997,47 +997,47 @@
 		{
 			#case {"bone"}
 			{
-				#variable {auto.bone} {true};
-				#variable {auto.clay} {false};
-				#variable {auto.flesh} {false};
-				#variable {auto.metal} {false};
-				#variable {auto.woad} {false};
+				#variable {auto[bone]} {true};
+				#variable {auto[clay]} {false};
+				#variable {auto[flesh]} {false};
+				#variable {auto[metal]} {false};
+				#variable {auto[woad]} {false};
 				#variable {castTankMinion} {bone guardian}
 			};
 			#case {"clay"}
 			{
-				#variable {auto.bone} {false};
-				#variable {auto.clay} {true};
-				#variable {auto.flesh} {false};
-				#variable {auto.metal} {false};
-				#variable {auto.woad} {false};
+				#variable {auto[bone]} {false};
+				#variable {auto[clay]} {true};
+				#variable {auto[flesh]} {false};
+				#variable {auto[metal]} {false};
+				#variable {auto[woad]} {false};
 				#variable {castTankMinion} {clay man}
 			};
 			#case {"flesh"}
 			{
-				#variable {auto.bone} {false};
-				#variable {auto.clay} {false};
-				#variable {auto.flesh} {true};
-				#variable {auto.metal} {false};
-				#variable {auto.woad} {false};
+				#variable {auto[bone]} {false};
+				#variable {auto[clay]} {false};
+				#variable {auto[flesh]} {true};
+				#variable {auto[metal]} {false};
+				#variable {auto[woad]} {false};
 				#variable {castTankMinion} {flesh beast}
 			};
 			#case {"metal"}
 			{
-				#variable {auto.bone} {false};
-				#variable {auto.clay} {false};
-				#variable {auto.flesh} {false};
-				#variable {auto.metal} {true};
-				#variable {auto.woad} {false};
+				#variable {auto[bone]} {false};
+				#variable {auto[clay]} {false};
+				#variable {auto[flesh]} {false};
+				#variable {auto[metal]} {true};
+				#variable {auto[woad]} {false};
 				#variable {castTankMinion} {metal construct}
 			};
 			#case {"woad"}
 			{
-				#variable {auto.bone} {false};
-				#variable {auto.clay} {false};
-				#variable {auto.flesh} {false};
-				#variable {auto.metal} {false};
-				#variable {auto.woad} {true};
+				#variable {auto[bone]} {false};
+				#variable {auto[clay]} {false};
+				#variable {auto[flesh]} {false};
+				#variable {auto[metal]} {false};
+				#variable {auto[woad]} {true};
 				#variable {castTankMinion} {wood woad}
 			}
 		};
@@ -1045,7 +1045,7 @@
 	};
 	#else
 	{
-		#variable {auto.%2} {false};
+		#variable {auto[%2]} {false};
 		#echo {auto%2 disabled.}
 	}
 }
@@ -1060,7 +1060,7 @@
 #ALIAS {^{t|ta|tan|tank}container %w$}
 {
 	#showme {You will now get tank minion materials from %2.};
-	#variable {character.tankContainer} {%2}
+	#variable {character[tankContainer]} {%2}
 }
 {9}
 
@@ -1068,13 +1068,13 @@
 {
 	#if {"${skillsAndSpells.demonfire}" == "true"}
 	{
-		#if {&{character.soulstoneContainer}}
+		#if {&{character[soulstoneContainer]}}
 		{
-			get ${character.defaultSoulstone} ${character.soulstoneContainer}
+			get ${character[defaultSoulstone]} ${character[soulstoneContainer]}
 		};
 		#else
 		{
-			get ${character.defaultSoulstone} ${character.container}
+			get ${character[defaultSoulstone]} ${character[container]}
 		};
 		c demonfire %1
 	};
@@ -1087,7 +1087,7 @@
 
 #ALIAS {{ggg|gis|gisc|gisco|giscos|giscos g|giscos gi|giscos gib|giscos gibl|giscos gibl|giscos gible|giscos giblet|giscos giblet g|giscos giblet gr|giscos giblet gre|giscos giblet gren|giscos giblet grena|giscos giblet grenad|giscos giblet grenade}}
 {
-	get cutfromcorpse ${character.container} | grep nospam;
+	get cutfromcorpse ${character[container]} | grep nospam;
 	@command{vcast gi;vcast giscos giblet grenade}
 }
 {9}

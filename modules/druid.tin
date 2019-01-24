@@ -1,6 +1,6 @@
 #ACTION {^You add A liveoak to your group.$}
 {
-	#if {"${character.cspam}" == "true"}
+	#if {"${character[cspam]}" == "true"}
 	{
 		#line {gag}
 	}
@@ -16,7 +16,7 @@
 
 #ACTION {^A shambling mound {begins to fall apart and lose cohesion|stops following you}.}
 {
-	#if {"${auto.mound}" == "true"}
+	#if {"${auto[mound]}" == "true"}
 	{
 		c shambling mound
 	}
@@ -82,9 +82,9 @@
 
 #ACTION {^You find and gather up {a|some} {handful of different fruits|handful of local vegetables|large, edible roots|large greenish yellow squash|small, soft potato|stale bread crust}.}
 {
-	#if {"${auto.junk}" == "true"}
+	#if {"${auto[junk]}" == "true"}
 	{
-		#regexp {%2} {{.*} {.*}} {${auto.junkType} &2}
+		#regexp {%2} {{.*} {.*}} {${auto[junkType]} &2}
 	}
 }
 {9}
@@ -98,7 +98,7 @@
 
 #ACTION {^You have collected %d acorns.$}
 {
-	#if {"${character.cspam}" == "true"}
+	#if {"${character[cspam]}" == "true"}
 	{
 		#showme {%1 acorns.};
 		#line {gag}
@@ -108,21 +108,21 @@
 
 #ACTION {^You throw a short spell to the wind and call for squirrels!$}
 {
-	#variable {auto.lastCalledAnimal} {squirrel}
+	#variable {auto[lastCalledAnimal]} {squirrel}
 }
 {9}
 
 #ACTION {^You throw your magic to the wind and call {A|A blue|A mantis|A massive|A swarm of|A tall|An|An electric} %2 to this place!$}
 {
-	#variable {auto.lastCalledAnimal} {%2}
+	#variable {auto[lastCalledAnimal]} {%2}
 }
 {9}
 
 #ACTION {^Your call goes unanswered.$}
 {
-	#if {"${auto.call}" == "true"}
+	#if {"${auto[call]}" == "true"}
 	{
-		call ${auto.lastCalledAnimal}
+		call ${auto[lastCalledAnimal]}
 	}
 }
 {9}
@@ -136,7 +136,7 @@
 
 #ACTION {^A shambling mound starts following you.$}
 {
-	#if {!&{auto.mound}}
+	#if {!&{auto[mound]}}
 	{
 		#line {gag};
 		#echo {A shambling mound starts following you. You can automatically make replacements with automound.}
@@ -146,7 +146,7 @@
 
 #ACTION {^An earth wall starts following you.$}
 {
-	#if {!&{auto.earthwall}}
+	#if {!&{auto[earthwall]}}
 	{
 		#line {gag};
 		#echo {An earth wall starts following you. You can automatically make replacements with autoearthwall.}
@@ -156,7 +156,7 @@
 
 #ACTION {^There's not enough light left in a suncatcher bottle to create a liveoak.$}
 {
-	#if {"${auto.liveoak}" == "true"}
+	#if {"${auto[liveoak]}" == "true"}
 	{
 		#if {"${skillsAndSpells.shambling mound}" == "true" && $currentMana >= 30}
 		{
@@ -197,11 +197,11 @@
 
 #ACTION {^A liveoak {starts|stops} following you.$}
 {
-	#if {"${auto.liveoak}" == "true"}
+	#if {"${auto[liveoak]}" == "true"}
 	{
 		#if {"%1" == "stops"}
 		{
-			#if {"${character.inBattle}" != "true"}
+			#if {"${character[inBattle]}" != "true"}
 			{
 				#if {${kxwt.terrain} >= 4 && ${kxwt.terrain} <= 6 || ${kxwt.terrain} == 17}
 				{
@@ -338,11 +338,11 @@
 
 #ALIAS {^DRUID_SUN{RISE|SET}$}
 {
-	#if {!&{auto.suncatcherRoom}}
+	#if {!&{auto[suncatcherRoom]}}
 	{
-		#variable {auto.suncatcherRoom} {0}
+		#variable {auto[suncatcherRoom]} {0}
 	};
-	#if {"${auto.suncatcher}" == "true" && ${auto.suncatcherRoom} == $kxwt.rvnum}
+	#if {"${auto[suncatcher]}" == "true" && ${auto[suncatcherRoom]} == $kxwt.rvnum}
 	{
 		#if {&{position}}
 		{
@@ -382,12 +382,12 @@
 {
 	#if {"%1" == "auto"}
 	{
-		#variable {auto.%2} {true};
+		#variable {auto[%2]} {true};
 		#showme {auto%2 enabled.}
 	};
 	#else
 	{
-		#variable {auto.%2} {false};
+		#variable {auto[%2]} {false};
 		#showme {auto%2 disabled.}
 	}
 }
@@ -397,18 +397,18 @@
 {
 	#if {"%0" == "autosuncatcher"}
 	{
-		#variable {auto.suncatcherRoom} {$kxwt.rvnum};
-		#variable {auto.suncatcher} {true};
-		#showme {You will now automatically hide and retrieve suncatcher that need filling in room ${auto.suncatcherRoom}\.}
+		#variable {auto[suncatcherRoom]} {$kxwt.rvnum};
+		#variable {auto[suncatcher]} {true};
+		#showme {You will now automatically hide and retrieve suncatcher that need filling in room ${auto[suncatcherRoom]}\.}
 	};
 	#else
 	{
-		#unvariable {auto.suncatcherRoom};
-		#variable {auto.suncatcher} {false};
+		#unvariable {auto[suncatcherRoom]};
+		#variable {auto[suncatcher]} {false};
 		#showme {Autosuncatcher disabled.}
 	}
 }
 {9}
 
-#TICKER           {lightcatcher}  {#if {"${auto.suncatcher}" == "true" && "${character.inBattle}" == "false"}{gather lightcatcher list | prefix silent_}}                                                                 {300.00}
+#TICKER           {lightcatcher}  {#if {"${auto[suncatcher]}" == "true" && "${character[inBattle]}" == "false"}{gather lightcatcher list | prefix silent_}}                                                                 {300.00}
 #VARIABLE         {runeCarveMessage}  {}

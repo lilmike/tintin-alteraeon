@@ -1,10 +1,10 @@
 #ALIAS {^CHECK_NEWS$}
 {
-	#script {client.tmp} {cat "$HOME/news.txt" 2> /dev/null};
-	#variable {news.old} {${client.tmp[1]}};
-	#script {client.tmp} {soxi "${client.newsURL}/${client.newsFile}" | grep '^md5sum=' | cut -d= -f2};
-	#variable {news.current} {${client.tmp[1]}};
-	#if {"${news.current}" != "${news.old}"}
+	#script {client[tmp]} {cat "$HOME/news.txt" 2> /dev/null};
+	#variable {news[old]} {${client[tmp[1]]}};
+	#script {client[tmp]} {soxi "${client[newsURL]}/${client[newsFile]}" | grep '^md5sum=' | cut -d= -f2};
+	#variable {news[current]} {${client[tmp[1]]}};
+	#if {"${news[current]}" != "${news[old]}"}
 	{
 		#echo {There is a news update available. Please type cnews to listen to it when you are in a safe place such as recall.};
 		Add_Event {There is a news update available. Please type cnews to listen to it when you are in a safe place such as recall.};
@@ -16,7 +16,7 @@
 
 #ALIAS {^cnews$}
 {
-	#system {play -qV0 -t ogg "${client.newsURL}/${client.newsFile}" gain $volume &> /dev/null& echo "${news.current}" > "$HOME/news.txt"}
+	#system {play -qV0 -t ogg "${client[newsURL]}/${client[newsFile]}" gain $volume &> /dev/null& echo "${news[current]}" > "$HOME/news.txt"}
 }
 {9}
 
