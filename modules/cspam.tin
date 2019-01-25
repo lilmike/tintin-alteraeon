@@ -3,9 +3,9 @@
 {
 	#if {"${character[cspam]}" == "true"}
 	{
-		#variable {cspam.formatString} {%0};
-		#replace {cspam.formatString} {***} {*};
-		#showme {${cspam.formatString}};
+		#variable {cspam[formatString]} {%0};
+		#replace {cspam[formatString]} {***} {*};
+		#showme {${cspam[formatString]}};
 		#line {gag}
 	}
 }
@@ -539,20 +539,20 @@
 {
 	#if {"${character[cspam]}" == "true"}
 	{
-		#if {"${cspam.lastLineOfText}" == "%0" && "%0" != "{${cspam.textCounterExceptions}}" && "%0" != ""}
+		#if {"${cspam[lastLineOfText]}" == "%0" && "%0" != "{${cspam[textCounterExceptions]}}" && "%0" != ""}
 		{
-			#math {cspam.lastLineOfTextCounter} {${cspam.lastLineOfTextCounter} + 1};
+			#math {cspam[lastLineOfTextCounter]} {${cspam[lastLineOfTextCounter]} + 1};
 			#line {gag}
 		};
 		#else
 		{
-			#if {${cspam.lastLineOfTextCounter} > 1}
+			#if {${cspam[lastLineOfTextCounter]} > 1}
 			{
-				#echo {(X${cspam.lastLineOfTextCounter})};
-				#variable {cspam.oldText} {${cspam.lastLineOfText}}
+				#echo {(X${cspam[lastLineOfTextCounter]})};
+				#variable {cspam[oldText]} {${cspam[lastLineOfText]}}
 			};
-			#variable {cspam.lastLineOfText} {%0};
-			#variable {cspam.lastLineOfTextCounter} {1}
+			#variable {cspam[lastLineOfText]} {%0};
+			#variable {cspam[lastLineOfTextCounter]} {1}
 		}
 	}
 }
