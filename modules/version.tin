@@ -49,4 +49,4 @@
 #VARIABLE         {client[release]}  {beta}
 #VARIABLE         {client[lastPingName]}  {}
 #VARIABLE         {client[tintinAlterAeonUUID]}  {}
-#VARIABLE         {client[tintinAlterAeonVersionNumber]}          {2019.01.25}
+#VARIABLE         {client[tintinAlterAeonVersionNumber]}          {2019.01.27}
