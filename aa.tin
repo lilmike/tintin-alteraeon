@@ -176,7 +176,8 @@
 	#echo {@separator{}};
 	#echo {To get started type login};
 	#nop {Check for news.};
-	CHECK_NEWS
+#nop removing this check until I can figure out how to give soxi a timeout.;
+	#nop CHECK_NEWS
 }
 
 #EVENT {SESSION CONNECTED}

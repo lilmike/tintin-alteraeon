@@ -20,9 +20,11 @@
 }
 {9}
 
+#nop until I can figure out how to give soxi a timeout we're removing this periodic check
 #EVENT {HOUR}
 {
 	CHECK_NEWS
+}
 }
 
 #VARIABLE         {client}  {{newsFile}{aa.ogg}{newsURL}{https://stormdragon.tk/MUDs}}
