@@ -20,7 +20,7 @@
 }
 {9}
 
-#nop until I can figure out how to give soxi a timeout we're removing this periodic check
+#nop {until I can figure out how to give soxi a timeout we're removing this periodic check
 #EVENT {HOUR}
 {
 	CHECK_NEWS
