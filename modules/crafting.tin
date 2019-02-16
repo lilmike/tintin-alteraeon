@@ -25,9 +25,9 @@
 	{
 		#variable {auto[stopMining]} {0}
 	};
-	#if {$mineCounter >= ${minedTerrainList[${kxwt.terrain}]}}
+	#if {$mineCounter >= ${minedTerrainList[${kxwt[terrain}]}]}
 	{
-		#if {${auto[stopMining]} && &{minedTerrainList[${kxwt.terrain}]} && ${isProspecting}}
+		#if {${auto[stopMining]} && &{minedTerrainList[${kxwt[terrain}]} && ${isProspecting}]}
 		{
 			stop
 		};
