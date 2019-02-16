@@ -1,6 +1,6 @@
 #ACTION {kxwt_gold %d}
 {
-	#variable {kxwt[gold} {%1]};
+	#variable {kxwt[gold]} {%1};
 	#if {${auto[depositgold]} > 0 && %1 > ${auto[depositgold]} && "$busy" != "true"}
 	{
 		bank deposit %1

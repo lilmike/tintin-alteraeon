@@ -1,6 +1,6 @@
 #ACTION {^kxwt_area -1}
 {
-	#variable {kxwt[area} {-1]};
+	#variable {kxwt[area]} {-1};
 	#variable {areaNumber} {-1};
 	#variable {areaName} {default};
 	#if {$oldAreaNumber != $areaNumber}
@@ -13,7 +13,7 @@
 
 #ACTION {^kxwt_area %d %2}
 {
-	#variable {kxwt[area} {%1 %2]};
+	#variable {kxwt[area]} {%1 %2};
 	#variable {areaNumber} {%1};
 	#variable {areaName} {%2};
 	#if {$oldAreaNumber != $areaNumber}
@@ -27,14 +27,14 @@
 
 #ACTION {^kxwt_event quest %1}
 {
-	#variable {kxwt[event} {quest %1]};
+	#variable {kxwt[event]} {quest %1};
 	post $name completed quest: %1
 }
 {8}
 
 #ACTION {^kxwt_exp %d}
 {
-	#variable {kxwt[exp} {%1]};
+	#variable {kxwt[exp]} {%1};
 	#variable {lastReceivedExp} {%1};
 	#if {!&{oldExp} || $oldExp > %1}
 	{
@@ -65,7 +65,7 @@
 
 #ACTION {^kxwt_fighting %1 %2 %3}
 {
-	#variable {kxwt[fighting} {%1 %2 %3]};
+	#variable {kxwt[fighting]} {%1 %2 %3};
 	#variable {busy} {false};
 	#variable {character[inBattle]} {true};
 	#variable {awayMessage} {false};
@@ -122,7 +122,7 @@
 
 #ACTION {^kxwt_fighting -1$}
 {
-	#variable {kxwt[fighting} {-1]};
+	#variable {kxwt[fighting]} {-1};
 	#variable {character[inBattle]} {false}
 }
 {8}
@@ -138,7 +138,7 @@
 
 #ACTION {^kxwt_mdeath %1}
 {
-	#variable {kxwt[mdeath} {%1]};
+	#variable {kxwt[mdeath]} {%1};
 	#variable {client[capSound]} {true};
 	#if {"%1" != "{$ignoredMobs}"}
 	{
@@ -164,7 +164,7 @@
 
 #ACTION {^kxwt_myname %S}
 {
-	#variable {kxwt[myname} {%1]};
+	#variable {kxwt[myname]} {%1};
 	#variable {gameDataPath} {${HOME}/%1};
 	#variable {characterModulePath} {${HOME}/%1.modules};
 	#format {name} {%n} {%1};
@@ -178,7 +178,7 @@
 
 #ACTION {^kxwt_prompt %1 %2 %3 %4 %5 %6}
 {
-	#variable {kxwt[prompt} {%1 %2 %3 %4 %5 %6]};
+	#variable {kxwt[prompt]} {%1 %2 %3 %4 %5 %6};
 	#variable {character[currentHp]} {%1};
 	#variable {character[maxHp]} {%2};
 	#variable {character[currentMana]} {%3};
@@ -323,7 +323,7 @@
 		#variable {oldVnum} {%1};
 		#variable {mineCounter} {0}
 	};
-	#variable {kxwt[rvnum} {%1]};
+	#variable {kxwt[rvnum]} {%1};
 	#variable {vnum} {%1};
 	#if {!&{roomVnumList}}
 	{
@@ -344,21 +344,21 @@
 
 #ACTION {^kxwt_terrain %d}
 {
-	#variable {kxwt[terrain} {%1]};
+	#variable {kxwt[terrain]} {%1};
 	#variable {terrainNumber} {%1}
 }
 {8}
 
 #ACTION {^kxwt_time %1}
 {
-	#variable {kxwt[time} {%1]};
+	#variable {kxwt[time]} {%1};
 	#regexp {%1} {{.*} {.*}:{.*} {.*}} {#if {$lastPlayedTime != &2} {#if {"$editorMode" != "true"}{#delay {0.5}{#if {!&{repop[mob]}}{#variable {repop[mob]} {false}};#if {"${repop[mob]}" != "false"}{where ${repop[mob]} | prefix mobrepop_};#if {"${repop[instance]}" == "true"}{instance | prefix instancerepop_}};#delay {1} {leaderboard_update}};#if {"&4" == "am" && &2 == 6 && &3 == 00} {DRUID_SUNRISE};#if {"&4" == "am" && &2 == 7 && &3 == 00} {play sunrise};#elseif {"&4" == "pm" && &2 == 7 && &3 == 00} {DRUID_SUNSET;play sunset};#if {"$clock" == "true"} {#variable {chimeCounter} {1};#variable {chimeLoop} {};#while {$chimeCounter <= &2}{#variable {chimeLoop} {$chimeLoop $HOME/sounds/clock.opus};#math {chimeCounter} {$chimeCounter + 1}};#echo {&2 O'clock &4};#if {"$msp" == "true"} {#system {play -q $chimeLoop gain $volume &}}}};#variable {lastPlayedTime} {&2}}
 }
 {8}
 
 #ACTION {^kxwt_walkdir %d$}
 {
-	#variable {kxwt[walkdir} {%1]}
+	#variable {kxwt[walkdir]} {%1}
 }
 {8}
 
@@ -370,7 +370,7 @@
 
 #ACTION {^kxwt_%1 %2}
 {
-	#variable {kxwt[%1} {%2]}
+	#variable {kxwt[%1]} {%2}
 }
 {9}
 
