@@ -569,7 +569,7 @@
 #ALIAS {^{c|qc}save$}
 {
 	#unvariable {play_%*};
-	#if {"$gameDataPath" != ""}
+	#if {&{gameDataPath}}
 	{
 		#class {gameData} {write} {$gameDataPath}
 	};
