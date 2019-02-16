@@ -142,7 +142,7 @@
 	#variable {client[capSound]} {true};
 	#if {"%1" != "{$ignoredMobs}"}
 	{
-		#if {"${skillsAndSpells[cry of victory}" == "true"]}
+		#if {"${skillsAndSpells[cry of victory]}" == "true"}
 		{
 			victory | grep -v You haven't had a recent victory worth shouting about.
 		};
@@ -156,7 +156,7 @@
 		};
 		#if {"${pkMode}" != "true"}
 		{
-			#delay {0.5}{#if {"${auto[consume]}" == "true"}{control all consume corpse};#if {"${auto[bloodsacrifice]}" == "true" && "${character[inBattle]}" != "true"}{bsac corpse};#if {"${skillsAndSpells[corpsecutter}" ==      "true" && "${character[inBattle]}" != "true"}{harvest components corpse};#if {"${skillsAndSpells[harvest bone}" ==      "true" && "${character[inBattle]}" != "true"}{harvest bone corpse | grep -v has no useful bones remaining};#if {"${skillsAndSpells[salvage equipment}" == "true" || &{battleScroll} && "${character[inBattle]}" != "true"}{search corpse | grep -v unique | prefix silent_};#if {"${auto[flesh]}" == "true"}{#if                     {"$makeNewFleshBeast" == "true"}{c flesh corpse};#else {lowhp | prefix silent_}};#if {&{lastReceivedExp}}{#unvariable {lastReceivedExp}};#if {&{position}}{$position}]]]}
+			#delay {0.5}{#if {"${auto[consume]}" == "true"}{control all consume corpse};#if {"${auto[bloodsacrifice]}" == "true" && "${character[inBattle]}" != "true"}{bsac corpse};#if {"${skillsAndSpells[corpsecutter]}" ==      "true" && "${character[inBattle]}" != "true"}{harvest components corpse};#if {"${skillsAndSpells[harvest bone]}" ==      "true" && "${character[inBattle]}" != "true"}{harvest bone corpse | grep -v has no useful bones remaining};#if {"${skillsAndSpells[salvage equipment]}" == "true" || &{battleScroll} && "${character[inBattle]}" != "true"}{search corpse | grep -v unique | prefix silent_};#if {"${auto[flesh]}" == "true"}{#if                     {"$makeNewFleshBeast" == "true"}{c flesh corpse};#else {lowhp | prefix silent_}};#if {&{lastReceivedExp}}{#unvariable {lastReceivedExp}};#if {&{position}}{$position}}
 		}
 	}
 }
@@ -286,7 +286,7 @@
 	{
 		#variable {auto[refreshed]} {true};
 		#delay {3} {#unvariable {auto[refreshed]}};
-		#if {"${skillsAndSpells[areaRefresh}" == "true"]}
+		#if {"${skillsAndSpells[areaRefresh]}" == "true"}
 		{
 			#if {${character[currentMana]} >= 28 && "${character[inBattle]}" != "true"}
 			{
@@ -295,7 +295,7 @@
 		};
 		#else
 		{
-			#if {"${skillsAndSpells[refresh}" == "true"]}
+			#if {"${skillsAndSpells[refresh]}" == "true"}
 			{
 				#if {${character[currentMana]} >= 15 && "${character[inBattle]}" != "true"}
 				{
@@ -304,7 +304,7 @@
 			}
 		}
 	};
-	#if {"${skillsAndSpells[second wind}" == "true" && "${character[exhausted]}" != "true" && ${character[currentMv]} < ${character[maxMv]} / 10]}
+	#if {"${skillsAndSpells[second wind]}" == "true" && "${character[exhausted]}" != "true" && ${character[currentMv]} < ${character[maxMv]} / 10}
 	{
 		second wind;
 		#variable {character[exhausted]} {true}

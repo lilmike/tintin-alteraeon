@@ -74,7 +74,7 @@
 
 #ACTION {^You attempt to pin %1's shadow to the ground, but miss!$}
 {
-	#if {"${skillsAndSpells[shadow bind}" == "true" && !&{inBattle} && &{client[bindName]}]}
+	#if {"${skillsAndSpells[shadow bind]}" == "true" && !&{inBattle} && &{client[bindName]}}
 	{
 		shadow bind ${client[bindName]}
 	}
@@ -118,7 +118,7 @@
 	};
 	#else
 	{
-		#if {"${skillsAndSpells[withdraw}" == "true"]}
+		#if {"${skillsAndSpells[withdraw]}" == "true"}
 		{
 			withdraw
 		}
@@ -198,7 +198,7 @@
 
 #ALIAS {^get %S %S$}
 {
-	#if {"${skillsAndSpells[palm}" == "true" && "$inBattle" != "true" && "%1" != "all" && "$position" != "sleep"]}
+	#if {"${skillsAndSpells[palm]}" == "true" && "$inBattle" != "true" && "%1" != "all" && "$position" != "sleep"}
 	{
 		palm %1 %2
 	};
@@ -231,7 +231,7 @@
 
 #ALIAS {^{lb|lbi|lbin|lbind|lightb|lightbi|lightbin|lightbind} %1}
 {
-	#if {"${skillsAndSpells[crystal light}" == "true"]}
+	#if {"${skillsAndSpells[crystal light]}" == "true"}
 	{
 		c crystal light | prefix give crystal %1
 	};

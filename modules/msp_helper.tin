@@ -62,7 +62,7 @@
 	};
 	#if {"${auto[mend]}" == "true" && "${character[inBattle]}" != "true"}
 	{
-		#if {"${skillsAndSpells[mend bones}" == "true" && ${character[currentMana]} > ${character[maxMana]} / 2]}
+		#if {"${skillsAndSpells[mend bones]}" == "true" && ${character[currentMana]} > ${character[maxMana]} / 2}
 		{
 			#if {"$doAutoMend" == "true" && ${kxwt[action} == 0]}
 			{

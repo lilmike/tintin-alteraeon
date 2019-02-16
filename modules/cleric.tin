@@ -8,11 +8,11 @@
 {
 	#if {"${auto[removepoison]}" == "true"}
 	{
-		#if {"${skillsAndSpells[cure poison}" == "true"]}
+		#if {"${skillsAndSpells[cure poison]}" == "true"}
 		{
 			vcast cure poison
 		};
-		#elseif {"${skillsAndSpells[remove poison}" == "true"]}
+		#elseif {"${skillsAndSpells[remove poison]}" == "true"}
 		{
 			vcast remove poison
 		}
@@ -34,7 +34,7 @@
 
 #ALIAS {^/$}
 {
-	#if {${character[currentMana]} >= 17 && "${skillsAndSpells[word of recall}" == "true"]}
+	#if {${character[currentMana]} >= 17 && "${skillsAndSpells[word of recall]}" == "true"}
 	{
 		c word of recall
 	};
@@ -76,15 +76,15 @@
 
 #ALIAS {^fullheal$}
 {
-	#if {"${skillsAndSpells[major heal}" == "true"]}
+	#if {"${skillsAndSpells[major heal]}" == "true"}
 	{
 		#variable {character[fullHeal]} {major heal}
 	};
-	#elseif {"${skillsAndSpells[heal}" == "true"]}
+	#elseif {"${skillsAndSpells[heal]}" == "true"}
 	{
 		#variable {character[fullHeal]} {heal}
 	};
-	#elseif {"${skillsAndSpells[bolster}" == "true"]}
+	#elseif {"${skillsAndSpells[bolster]}" == "true"}
 	{
 		#variable {character[fullHeal]} {bolster}
 	};
@@ -119,15 +119,15 @@
 
 #FUNCTION {harm}
 {
-	#if {"${skillsAndSpells[harm}" == "true"]}
+	#if {"${skillsAndSpells[harm]}" == "true"}
 	{
 		#variable {character[harmSpell]} {harm}
 	};
-	#elseif {"${skillsAndSpells[inflict suffering}" == "true"]}
+	#elseif {"${skillsAndSpells[inflict suffering]}" == "true"}
 	{
 		#variable {character[harmSpell]} {inflict suffering}
 	};
-	#elseif {"${skillsAndSpells[chasten}" == "true"]}
+	#elseif {"${skillsAndSpells[chasten]}" == "true"}
 	{
 		#variable {character[harmSpell]} {chasten}
 	};
@@ -146,19 +146,19 @@
 	};
 	#else
 	{
-		#if {"${skillsAndSpells[breath of life}" == "true"]}
+		#if {"${skillsAndSpells[breath of life]}" == "true"}
 		{
 			#variable {character[healSpell]} {breath of life}
 		};
-		#elseif {"${skillsAndSpells[major heal}" == "true"]}
+		#elseif {"${skillsAndSpells[major heal]}" == "true"}
 		{
 			#variable {character[healSpell]} {major heal}
 		};
-		#elseif {"${skillsAndSpells[heal}" == "true"]}
+		#elseif {"${skillsAndSpells[heal]}" == "true"}
 		{
 			#variable {character[healSpell]} {heal}
 		};
-		#elseif {"${skillsAndSpells[bolster}" == "true"]}
+		#elseif {"${skillsAndSpells[bolster]}" == "true"}
 		{
 			#variable {character[healSpell]} {bolster}
 		};
