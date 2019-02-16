@@ -187,31 +187,31 @@
 {
 	#if {!&{character[strBonus]}}
 	{
-			#variable {character[strBonus]} {0}
+		#variable {character[strBonus]} {0}
 	};
 	#if {!&{character[intBonus]}}
 	{
-			#variable {character[intBonus]} {0}
+		#variable {character[intBonus]} {0}
 	};
 	#if {!&{character[wisBonus]}}
 	{
-			#variable {character[wisBonus]} {0}
+		#variable {character[wisBonus]} {0}
 	};
 	#if {!&{character[dexBonus]}}
 	{
-			#variable {character[dexBonus]} {0}
+		#variable {character[dexBonus]} {0}
 	};
 	#if {!&{character[conBonus]}}
 	{
-			#variable {character[conBonus]} {0}
+		#variable {character[conBonus]} {0}
 	};
 	#if {!&{character[chrBonus]}}
 	{
-			#variable {character[chrBonus]} {0}
+		#variable {character[chrBonus]} {0}
 	};
 	#if {${character[strBonus]} != %1}
 	{
-			#showme {You now have %1 of %2 strength.}
+		#showme {You now have %1 of %2 strength.}
 	};
 	#if {${character[intBonus]} != %3}
 	{
@@ -223,7 +223,7 @@
 	};
 	#if {${character[dexBonus]} != %7}
 	{
-			#showme {You now have %7 of %8 dexterity.}
+		#showme {You now have %7 of %8 dexterity.}
 	};
 	#if {${character[conBonus]} != %9}
 	{
@@ -288,23 +288,23 @@
 
 #ALIAS {^hands %1}
 {
-	#if {"${skillsAndSpells.burning hands}" == "true"}
+	#if {"${skillsAndSpells[burning hands}" == "true"]}
 	{
 		vcast burning hands %1
 	};
-	#if {"${skillsAndSpells.clasp of corruption}" == "true"}
+	#if {"${skillsAndSpells[clasp of corruption}" == "true"]}
 	{
 		vcast clasp of corruption %1
 	};
-	#if {"${skillsAndSpells.shocking grasp}" == "true"}
+	#if {"${skillsAndSpells[shocking grasp}" == "true"]}
 	{
 		vcast shocking grasp %1
 	};
-	#if {"${skillsAndSpells.sacred touch}" == "true"}
+	#if {"${skillsAndSpells[sacred touch}" == "true"]}
 	{
 		vcast sacred touch %1
 	};
-	#if {"${skillsAndSpells.sickening touch}" == "true"}
+	#if {"${skillsAndSpells[sickening touch}" == "true"]}
 	{
 		vcast sickening touch %1
 	}
@@ -396,23 +396,23 @@
 
 #ALIAS {^hands$}
 {
-	#if {"${skillsAndSpells.burning hands}" == "true"}
+	#if {"${skillsAndSpells[burning hands}" == "true"]}
 	{
 		vcast burning hands
 	};
-	#if {"${skillsAndSpells.clasp of corruption}" == "true"}
+	#if {"${skillsAndSpells[clasp of corruption}" == "true"]}
 	{
 		vcast clasp of corruption
 	};
-	#if {"${skillsAndSpells.shocking grasp}" == "true"}
+	#if {"${skillsAndSpells[shocking grasp}" == "true"]}
 	{
 		vcast shocking grasp
 	};
-	#if {"${skillsAndSpells.sacred touch}" == "true"}
+	#if {"${skillsAndSpells[sacred touch}" == "true"]}
 	{
 		vcast sacred touch
 	};
-	#if {"${skillsAndSpells.sickening touch}" == "true"}
+	#if {"${skillsAndSpells[sickening touch}" == "true"]}
 	{
 		vcast sickening touch
 	}
@@ -430,12 +430,6 @@
 {
 	#unvariable {auto[gamble]};
 	#showme {automatic gambling gold gambling disabled.}
-}
-{9}
-
-#ALIAS {^regen$}
-{
-	show regen | prefix silent_
 }
 {9}
 
@@ -458,6 +452,13 @@
 {
 	#unvariable {pkMode};
 	#showme {PK mode disabled.}
+}
+{9}
+
+#ALIAS {^notrack$}
+{
+	#unvariable {tracking};
+	#showme {You are no longer tracking.}
 }
 {9}
 
@@ -484,17 +485,16 @@
 }
 {9}
 
+#ALIAS {^regen$}
+{
+	show regen | prefix silent_
+}
+{9}
+
 #ALIAS {^track %1}
 {
 	#variable {tracking} {%1};
 	#showme {You are now tracking.}
-}
-{9}
-
-#ALIAS {^notrack$}
-{
-	#unvariable {tracking};
-	#showme {You are no longer tracking.}
 }
 {9}
 
@@ -569,7 +569,10 @@
 #ALIAS {^{c|qc}save$}
 {
 	#unvariable {play_%*};
-	#class {gameData} {write} {$gameDataPath};
+	#if {"$gameDataPath" != ""}
+	{
+		#class {gameData} {write} {$gameDataPath}
+	};
 	#if {"%0" == "csave"}
 	{
 		#showme {saving game data for $name\.}
@@ -702,7 +705,7 @@
 #SUBSTITUTE       {^%sjunk_%2}  { %2}  {5}
 #SUBSTITUTE       {^junk_%1}  {%1}  {5}
 #SUBSTITUTE       {tracking_[%1] }  {}  {5}
-#TICKER           {historyWriter}  {#if {&{name}} {#history {write} {$historyPath}}}                                                          {5.00}
+#TICKER           {historyWriter}  {#if {&{name}} {#history {write} {$historyPath}}}                        {5.00}
 #VARIABLE         {bufferLock}  {off}
 #VARIABLE         {castTankMinion}  {true}
 #VARIABLE         {lastHpAlert}  {}

@@ -30,9 +30,9 @@
 
 #ALIAS {^unset %1}
 {
-	#if {"${skillsAndSpells.%1}" == "true"}
+	#if {"${skillsAndSpells[%1}" == "true"]}
 	{
-		#unvariable {skillsAndSpells.%1};
+		#unvariable {skillsAndSpells[%1]};
 		#showme {%1 unset}
 	};
 	#else

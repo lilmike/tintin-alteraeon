@@ -38,7 +38,7 @@
 
 #ACTION {%1 begins {her|his|its} climb %2ward.}
 {
-	#if {"%1" == "${group.leader}"}
+	#if {"%1" == "${group[leader}"]}
 	{
 		climb %2;
 		Add_Direction %2
@@ -87,7 +87,7 @@
 
 #ACTION {^It seems to be locked.$}
 {
-	#if {&{doorName} && "${skillsAndSpells.pick locks}" == "true"}
+	#if {&{doorName} && "${skillsAndSpells[pick locks}" == "true"]}
 	{
 		pick $doorName $lastDirection
 	}
@@ -123,7 +123,7 @@
 
 #ALIAS {^te{r|rr|rra|rrai|rrain}$}
 {
-	help kxwt terrain | grep " ${kxwt.terrain}" | head -n 1
+	help kxwt terrain | grep " ${kxwt[terrain]}" | head -n 1
 }
 {9}
 

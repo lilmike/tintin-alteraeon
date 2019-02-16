@@ -1,6 +1,6 @@
 #ACTION {^You {are drowning|struggle for air but find none|struggle desperately for air to breathe}!$}
 {
-	#if {"${skillsAndSpells.water breathing}" == "true" && "$castingWaterBreathing" == "false"}
+	#if {"${skillsAndSpells[water breathing}" == "true" && "$castingWaterBreathing" == "false"]}
 	{
 		c water breathing;
 		#variable {castingWaterBreathing} {true};

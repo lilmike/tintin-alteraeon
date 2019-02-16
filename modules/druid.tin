@@ -158,11 +158,11 @@
 {
 	#if {"${auto[liveoak]}" == "true"}
 	{
-		#if {"${skillsAndSpells.shambling mound}" == "true" && $currentMana >= 30}
+		#if {"${skillsAndSpells[shambling mound}" == "true" && $currentMana >= 30]}
 		{
 			c shambling mound
 		};
-		#elseif {"${skillsAndSpells.earth wall}" == "true" && $currentMana >= 25}
+		#elseif {"${skillsAndSpells[earth wall}" == "true" && $currentMana >= 25]}
 		{
 			c earth wall
 		}
@@ -203,7 +203,7 @@
 		{
 			#if {"${character[inBattle]}" != "true"}
 			{
-				#if {${kxwt.terrain} >= 4 && ${kxwt.terrain} <= 6 || ${kxwt.terrain} == 17}
+				#if {${kxwt[terrain} >= 4 && ${kxwt[terrain} <= 6 || ${kxwt[terrain} == 17]]]}
 				{
 					cast liveoak
 				};
@@ -214,11 +214,11 @@
 			};
 			#else
 			{
-				#if {"${skillsAndSpells.shambling mound}" == "true" && $currentMana >= 30}
+				#if {"${skillsAndSpells[shambling mound}" == "true" && $currentMana >= 30]}
 				{
 					c shambling mound
 				};
-				#elseif {"${skillsAndSpells.earth wall}" == "true" && $currentMana >= 25}
+				#elseif {"${skillsAndSpells[earth wall}" == "true" && $currentMana >= 25]}
 				{
 					c earth wall
 				}

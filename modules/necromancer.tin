@@ -30,7 +30,7 @@
 
 #ACTION {%1 is mortally wounded, and will die soon if not aided.$}
 {
-	#if {"${skillsAndSpells.soulsteal}" == "true" && ${character[currentMana]} >= 15}
+	#if {"${skillsAndSpells[soulsteal}" == "true" && ${character[currentMana]} >= 15]}
 	{
 		#if {"$lastSoulsteal" != "%1"}
 		{
@@ -80,7 +80,7 @@
 		};
 		#if {"${auto[metal]}" == "true" && "$%2" == "stops"}
 		{
-			#if {${kxwt.terrain} == 33}
+			#if {${kxwt[terrain} == 33]}
 			{
 				#variable {castTankMinion} {%2};
 				cast metal
@@ -109,7 +109,7 @@
 	#if {&{client[makeUndead]}}
 	{
 		#unvariable {client[makeUndead]};
-		#if {"${skillsAndSpells.infuse element}" != "true"}
+		#if {"${skillsAndSpells[infuse element}" != "true"]}
 		{
 			vcast raise undead corpse
 		};
@@ -183,12 +183,12 @@
 		{
 			#variable {auto[skeletonStone]} {deep blue soulstone}
 		};
-		#if {"%1" == "skeleton" && "${skillsAndSpells.skeletal knight}" == "true"}
+		#if {"%1" == "skeleton" && "${skillsAndSpells[skeletal knight}" == "true"]}
 		{
 			get ${auto[skeletonStone]} ${character[container]} | grep nospam;
 			vcast skeletal knight
 		};
-		#if {"%1" == "skeletal mage" && "${skillsAndSpells.skeletal lich}" == "true"}
+		#if {"%1" == "skeletal mage" && "${skillsAndSpells[skeletal lich}" == "true"]}
 		{
 			get ${auto[skeletonStone]} ${character[container]} | grep nospam;
 			vcast skeletal lich
@@ -246,7 +246,7 @@
 
 #ACTION {^The tooth melts and forms a pinkish mass, which you quickly pull and shape into a bone shield.$}
 {
-	#if {"${skillsAndSpells.soulbind}" == "true"}
+	#if {"${skillsAndSpells[soulbind}" == "true"]}
 	{
 		#if {&{character[soulstoneContainer]}}
 		{
@@ -315,7 +315,7 @@
 
 #ACTION {^You feel a lump, so you cut open an organ and retrieve a jagged yellow stone.$}
 {
-	#if {"${skillsAndSpells.giscos giblet grenade}" == "true"}
+	#if {"${skillsAndSpells[giscos giblet grenade}" == "true"]}
 	{
 		put cutfromcorpse ${character[container]}
 	};
@@ -328,7 +328,7 @@
 
 #ACTION {^You feel new bones and flesh forming a protective armor plate over your body.$}
 {
-	#if {"${skillsAndSpells.soulbind}" == "true"}
+	#if {"${skillsAndSpells[soulbind}" == "true"]}
 	{
 		#if {&{character[soulstoneContainer]}}
 		{
@@ -349,7 +349,7 @@
 
 #ACTION {^You find a small bladder of green fluid, and carefully tie off the ends before removing it.$}
 {
-	#if {"${skillsAndSpells.giscos giblet grenade}" == "true"}
+	#if {"${skillsAndSpells[giscos giblet grenade}" == "true"]}
 	{
 		put cutfromcorpse ${character[container]}
 	};
@@ -362,7 +362,7 @@
 
 #ACTION {^You find an out-of-place dark mass, and carefully cut it from its surroundings.$}
 {
-	#if {"${skillsAndSpells.giscos giblet grenade}" == "true"}
+	#if {"${skillsAndSpells[giscos giblet grenade}" == "true"]}
 	{
 		put cutfromcorpse ${character[container]}
 	};
@@ -401,7 +401,7 @@
 
 #ACTION {^You make a small incision and drain some fluid into a vial of bile.$}
 {
-	#if {"${skillsAndSpells.giscos giblet grenade}" == "true"}
+	#if {"${skillsAndSpells[giscos giblet grenade}" == "true"]}
 	{
 		put cutfromcorpse ${character[container]}
 	};
@@ -435,7 +435,7 @@
 
 #ACTION {^You roughly hack out a small bladder of black fluid and tie off the ends with string.$}
 {
-	#if {"${skillsAndSpells.giscos giblet grenade}" == "true"}
+	#if {"${skillsAndSpells[giscos giblet grenade}" == "true"]}
 	{
 		put cutfromcorpse ${character[container]}
 	};
@@ -467,7 +467,7 @@
 
 #ACTION {^You utter a short invocation over a tooth and pull it like taffy into a long bone blade.$}
 {
-	#if {"${skillsAndSpells.soulbind}" == "true"}
+	#if {"${skillsAndSpells[soulbind}" == "true"]}
 	{
 		#if {&{character[soulstoneContainer]}}
 		{
@@ -856,12 +856,12 @@
 	{
 		#variable {character[tankContainer]} {${character[container]}}
 	};
-	#if {${kxwt.terrain} != 33}
+	#if {${kxwt[terrain} != 33]}
 	{
 		get ${auto[metalMaterial]} ${character[container]};
 		drop ${auto[metalMaterial]}
 	};
-	#if {${kxwt.terrain} == 33}
+	#if {${kxwt[terrain} == 33]}
 	{
 		#variable {castTankMinion} {metal construct};
 		#delay {0.2} {c metal construct}
@@ -1066,7 +1066,7 @@
 
 #ALIAS {demonfire}
 {
-	#if {"${skillsAndSpells.demonfire}" == "true"}
+	#if {"${skillsAndSpells[demonfire}" == "true"]}
 	{
 		#if {&{character[soulstoneContainer]}}
 		{

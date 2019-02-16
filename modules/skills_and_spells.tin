@@ -8,7 +8,7 @@
 #ACTION {^  %s  %2  %s{$skillAndSpellLevels}}
 {
 	#format {i} {%p} {%2};
-	#variable {skillsAndSpells.$i} {true}
+	#variable {skillsAndSpells[$i} {true]}
 }
 {9}
 

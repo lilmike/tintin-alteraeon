@@ -9,7 +9,7 @@
 
 #ACTION {^%S stares at a painting of %2 and fades away.$}
 {
-	#if {"${group.leader}" == "%1"}
+	#if {"${group[leader}" == "%1"]}
 	{
 		#regexp {%2} {{.*} {.*}} {#if {"&0" == "a dark forest"} {l 2.forest};#else {look &2}}
 	}
@@ -36,8 +36,8 @@
 {
 	#variable {auto[donateunique]} {false};
 	#variable {auto[getunique]} {false};
-	#variable {groupRating.index} {1};
-	#delay {autoGroupRating} {#echo {To give the group leader the recommend rank of ${groupRating[${groupRating.index}]}, type rate.};synth_play notificationSound} {1200}
+	#variable {groupRating[index} {1]};
+	#delay {autoGroupRating} {#echo {To give the group leader the recommend rank of ${groupRating[${groupRating[index}]}, type rate.};synth_play notificationSound} {1200]}
 }
 {9}
 
@@ -65,7 +65,7 @@
 
 #ACTION {^You {are already|start} following %1.$}
 {
-	#variable {group.leader} {%1}
+	#variable {group[leader} {%1]}
 }
 {9}
 
@@ -108,8 +108,8 @@
 
 #ALIAS {^group{t|ta|tan|tank} %s%S$}
 {
-	#format {group.tank} {%n} {%3};
-	#echo {${group.tank} is now set as tank.}
+	#format {group[tank} {%n} {%3]};
+	#echo {${group[tank} is now set as tank.]}
 }
 {9}
 
@@ -144,7 +144,7 @@
 
 #ALIAS {^rating$}
 {
-	#echo {The suggested rating for ${group.leader}'s group is ${group.rating[${group.ratingIndex}]}\.}
+	#echo {The suggested rating for ${group[leader}'s group is ${group[rating[${group[ratingIndex}]}\.]]]}
 }
 {9}
 
@@ -165,14 +165,14 @@
 
 #ALIAS {^{rat|rate}$}
 {
-	#echo {Rating group as ${groupRating[${groupRating.index}]}\.};
-	group rate ${groupRating[${groupRating.index}]}
+	#echo {Rating group as ${groupRating[${groupRating[index}]}\.]};
+	group rate ${groupRating[${groupRating[index}]]}
 }
 {9}
 
 #ALIAS {^{rat|rate}%s%d$}
 {
-	#echo {Rating ${group.leader}'s group as ${groupRating[%3]}\. The suggested rating is ${groupRating[${groupRating.index}]}\.};
+	#echo {Rating ${group[leader}'s group as ${groupRating[%3]}\. The suggested rating is ${groupRating[${groupRating[index}]}\.]]};
 	group rate ${groupRating[%3]}
 }
 {9}
