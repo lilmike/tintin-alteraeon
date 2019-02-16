@@ -288,23 +288,23 @@
 
 #ALIAS {^hands %1}
 {
-	#if {"${skillsAndSpells[burning hands}" == "true"]}
+	#if {"${skillsAndSpells[burning hands]}" == "true"}
 	{
 		vcast burning hands %1
 	};
-	#if {"${skillsAndSpells[clasp of corruption}" == "true"]}
+	#if {"${skillsAndSpells[clasp of corruption]}" == "true"}
 	{
 		vcast clasp of corruption %1
 	};
-	#if {"${skillsAndSpells[shocking grasp}" == "true"]}
+	#if {"${skillsAndSpells[shocking grasp]}" == "true"}
 	{
 		vcast shocking grasp %1
 	};
-	#if {"${skillsAndSpells[sacred touch}" == "true"]}
+	#if {"${skillsAndSpells[sacred touch]}" == "true"}
 	{
 		vcast sacred touch %1
 	};
-	#if {"${skillsAndSpells[sickening touch}" == "true"]}
+	#if {"${skillsAndSpells[sickening touch]}" == "true"}
 	{
 		vcast sickening touch %1
 	}
@@ -396,23 +396,23 @@
 
 #ALIAS {^hands$}
 {
-	#if {"${skillsAndSpells[burning hands}" == "true"]}
+	#if {"${skillsAndSpells[burning hands]}" == "true"}
 	{
 		vcast burning hands
 	};
-	#if {"${skillsAndSpells[clasp of corruption}" == "true"]}
+	#if {"${skillsAndSpells[clasp of corruption]}" == "true"}
 	{
 		vcast clasp of corruption
 	};
-	#if {"${skillsAndSpells[shocking grasp}" == "true"]}
+	#if {"${skillsAndSpells[shocking grasp]}" == "true"}
 	{
 		vcast shocking grasp
 	};
-	#if {"${skillsAndSpells[sacred touch}" == "true"]}
+	#if {"${skillsAndSpells[sacred touch]}" == "true"}
 	{
 		vcast sacred touch
 	};
-	#if {"${skillsAndSpells[sickening touch}" == "true"]}
+	#if {"${skillsAndSpells[sickening touch]}" == "true"}
 	{
 		vcast sickening touch
 	}

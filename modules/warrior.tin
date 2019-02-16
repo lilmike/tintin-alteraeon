@@ -102,7 +102,7 @@
 
 #ACTION {^{You give up waiting, and shift out of your riposte stance|Your riposte .*|.* notices your riposte and moves quickly to block it}{\.|!}$}
 {
-	#if {"${skillsAndSpells[riposte}" == "true" && "${auto[riposte]}" == "true" && "${character[inBattle]}" == "true"]}
+	#if {"${skillsAndSpells[riposte]}" == "true" && "${auto[riposte]}" == "true" && "${character[inBattle]}" == "true"}
 	{
 		riposte
 	}
@@ -204,98 +204,98 @@
 #ALIAS {^get_random_attack$}
 {
 	#list {randomAttack} {clear};
-	#if {"${skillsAndSpells[bash}" == "true"]}
+	#if {"${skillsAndSpells[bash]}" == "true"}
 	{
 		#list {randomAttack} {add} {bash}
 	};
-	#if {"${skillsAndSpells[berserking}" == "true" && "${skillsAndSpells[advanced tactics}" == "true" && "${auto[berserk]}" == "true" && "${character[inBattle]}" == "true"]]}
+	#if {"${skillsAndSpells[berserking]}" == "true" && "${skillsAndSpells[advanced tactics]}" == "true" && "${auto[berserk]}" == "true" && "${character[inBattle]}" == "true"}
 	{
 		#if {${character[currentHp]} >= ${character[maxHp]} / 2 && ${character[currentMv]} >= ${character[maxMv]} / 2}
 		{
 			#list {randomAttack} {add} {berserk}
 		}
 	};
-	#if {"${skillsAndSpells[bloodletting stab}" == "true" && "${skillsAndSpells[cross class tactics}" == "true" && "${character[inBattle]}" == "true"]]}
+	#if {"${skillsAndSpells[bloodletting stab]}" == "true" && "${skillsAndSpells[cross class tactics]}" == "true" && "${character[inBattle]}" == "true"}
 	{
 		#list {randomAttack} {add} {stab}
 	};
-	#if {"${skillsAndSpells[charge}" == "true" && "${character[inBattle]}" != "true"]}
+	#if {"${skillsAndSpells[charge]}" == "true" && "${character[inBattle]}" != "true"}
 	{
 		#list {randomAttack} {add} {charge}
 	};
-	#if {"${skillsAndSpells[cleave}" == "true" && "${skillsAndSpells[advanced tactics}" == "true"]]}
+	#if {"${skillsAndSpells[cleave]}" == "true" && "${skillsAndSpells[advanced tactics]}" == "true"}
 	{
 		#list {randomAttack} {add} {cleave}
 	};
-	#if {"${skillsAndSpells[disarm}" == "true" && "${skillsAndSpells[advanced tactics}" == "true" && "${auto[disarm]}" == "true"]]}
+	#if {"${skillsAndSpells[disarm]}" == "true" && "${skillsAndSpells[advanced tactics]}" == "true" && "${auto[disarm]}" == "true"}
 	{
 		#list {randomAttack} {add} {disarm}
 	};
-	#if {"${skillsAndSpells[feint}" == "true" && "${skillsAndSpells[cross class tactics}" == "true" && "${character[inBattle]}" == "true"]]}
+	#if {"${skillsAndSpells[feint]}" == "true" && "${skillsAndSpells[cross class tactics]}" == "true" && "${character[inBattle]}" == "true"}
 	{
 		#list {randomAttack} {add} {feint}
 	};
-	#if {"${skillsAndSpells[ground strike}" == "true" && "${skillsAndSpells[advanced tactics}" == "true" && "${kxwt[terrain}" != "{7|18|19|20|21|23|25|29|31|32}"]]]}
+	#if {"${skillsAndSpells[ground strike]}" == "true" && "${skillsAndSpells[advanced tactics]}" == "true" && "${kxwt[terrain}" != "{7|18|19|20|21|23|25|29|31|32}"]}
 	{
 		#list {randomAttack} {add} {gstrike}
 	};
-	#if {"${skillsAndSpells[flourish}" == "true" && "${character[inBattle]}" == "true"]}
+	#if {"${skillsAndSpells[flourish]}" == "true" && "${character[inBattle]}" == "true"}
 	{
 		#list {randomAttack} {add} {flourish}
 	};
-	#if {"${skillsAndSpells[intimidate}" == "true" && "${skillsAndSpells[advanced tactics}" == "true"]]}
+	#if {"${skillsAndSpells[intimidate]}" == "true" && "${skillsAndSpells[advanced tactics]}" == "true"}
 	{
 		#list {randomAttack} {add} {intimidate}
 	};
-	#if {"${skillsAndSpells[jab}" == "true"]}
+	#if {"${skillsAndSpells[jab]}" == "true"}
 	{
 		#list {randomAttack} {add} {jab}
 	};
-	#if {"${skillsAndSpells[kick}" == "true"]}
+	#if {"${skillsAndSpells[kick]}" == "true"}
 	{
 		#list {randomAttack} {add} {kick}
 	};
-	#if {"${skillsAndSpells[knockback}" == "true"]}
+	#if {"${skillsAndSpells[knockback]}" == "true"}
 	{
 		#list {randomAttack} {add} {knockback}
 	};
-	#if {"${skillsAndSpells[leap attack}" == "true"]}
+	#if {"${skillsAndSpells[leap attack]}" == "true"}
 	{
 		#list {randomAttack} {add} {leap}
 	};
-	#if {"${skillsAndSpells[lunge}" == "true"]}
+	#if {"${skillsAndSpells[lunge]}" == "true"}
 	{
 		#list {randomAttack} {add} {lunge}
 	};
-	#if {"${skillsAndSpells[pommel strike}" == "true"]}
+	#if {"${skillsAndSpells[pommel strike]}" == "true"}
 	{
 		#list {randomAttack} {add} {pommel}
 	};
-	#if {"${skillsAndSpells[riposte}" == "true" && "${character[inBattle]}" == "true"]}
+	#if {"${skillsAndSpells[riposte]}" == "true" && "${character[inBattle]}" == "true"}
 	{
 		#list {randomAttack} {add} {riposte}
 	};
-	#if {"${skillsAndSpells[shield slam}" == "true" && "${skillsAndSpells[advanced tactics}" == "true" && "${auto[slam]}" == "true"]]}
+	#if {"${skillsAndSpells[shield slam]}" == "true" && "${skillsAndSpells[advanced tactics]}" == "true" && "${auto[slam]}" == "true"}
 	{
 		#list {randomAttack} {add} {slam}
 	};
-	#if {"${skillsAndSpells[stomp}" == "true"]}
+	#if {"${skillsAndSpells[stomp]}" == "true"}
 	{
 		#list {randomAttack} {add} {stomp}
 	};
-	#if {"${skillsAndSpells[taunt}" == "true"]}
+	#if {"${skillsAndSpells[taunt]}" == "true"}
 	{
 		#list {randomAttack} {add} {taunt}
 	};
-	#if {"${skillsAndSpells[thrust}" == "true"]}
+	#if {"${skillsAndSpells[thrust]}" == "true"}
 	{
 		#list {randomAttack} {add} {thrust}
 	};
-	#if {"${skillsAndSpells[trip}" == "true" && "${skillsAndSpells[cross class tactics}" == "true"]]}
+	#if {"${skillsAndSpells[trip]}" == "true" && "${skillsAndSpells[cross class tactics]}" == "true"}
 	{
 		#list {randomAttack} {add} {trip}
 	};
-	#if {"${skillsAndSpells[whirlwind}" == "true" && "${skillsAndSpells[advanced tactics}" == "true"]]}
+	#if {"${skillsAndSpells[whirlwind]}" == "true" && "${skillsAndSpells[advanced tactics]}" == "true"}
 	{
 		#list {randomAttack} {add} {whirlwind}
 	};
@@ -365,7 +365,7 @@
 
 #ALIAS {^{a|as|ass|assi|assis|assist}$}
 {
-	#if {"${skillsAndSpells[charge}" == "true" && "${auto[charge]}" == "true" && ${character[currentMv]} > 20]}
+	#if {"${skillsAndSpells[charge]}" == "true" && "${auto[charge]}" == "true" && ${character[currentMv]} > 20}
 	{
 		charge
 	};

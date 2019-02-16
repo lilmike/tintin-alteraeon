@@ -87,7 +87,7 @@
 
 #ACTION {^It seems to be locked.$}
 {
-	#if {&{doorName} && "${skillsAndSpells[pick locks}" == "true"]}
+	#if {&{doorName} && "${skillsAndSpells[pick locks]}" == "true"}
 	{
 		pick $doorName $lastDirection
 	}
