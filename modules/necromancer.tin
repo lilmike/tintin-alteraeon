@@ -516,7 +516,7 @@
 		};
 		#else
 		{
-			get ${character[defaultSoulstone]} from ${characte.rcontainer}
+			get ${character[defaultSoulstone]} from ${character[container]}
 		};
 		prepare corpse soulstone
 	}

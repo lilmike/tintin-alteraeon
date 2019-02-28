@@ -69,11 +69,11 @@
 
 #ACTION {^You need %d experience to level {Cleric|Druid|Mage|Necromancer|Thief|Warrior} to %d and have %d experience. (%s%d%)$}
 {
-	#variable {showCost.cost} {%1};
-	#variable {showCost.class} {%2};
-	#variable {showCost.level} {%3};
-	#variable {showCost.experience} {%4};
-	#variable {showCost.percent} {%6};
+	#variable {showCost[cost]} {%1};
+	#variable {showCost[class]} {%2};
+	#variable {showCost[level]} {%3};
+	#variable {showCost[experience]} {%4};
+	#variable {showCost[percent]} {%6};
 	#line {gag};
 	level | grep %2 | prefix silent_
 }
@@ -136,19 +136,19 @@
 #ACTION {^silent_{Cleric|Druid|Mage|Necromancer|Thief|Warrior} %s%d %s%d/%s%d %s%d%s(%12}
 {
 	#math {i} {%5+1};
-	#showme {You need ${showCost.cost} experience to microlevel ${showCost.class} to $i of %7 toward level ${showCost.level} and have ${showCost.experience} experience.%11 (%12}
+	#showme {You need ${showCost[cost]} experience to microlevel ${showCost[class]} to $i of %7 toward level ${showCost[level]} and have ${showCost[experience]} experience.%11 (%12}
 }
 {9}
 
 #ACTION {^silent_{Cleric|Druid|Mage|Necromancer|Thief|Warrior}%s %d%s %d$}
 {
-	#showme {You need ${showCost.cost} experience to level ${showCost.class} to ${showCost.level} and have ${showCost.experience} experience.}
+	#showme {You need ${showCost[cost]} experience to level ${showCost[class]} to ${showCost[level]} and have ${showCost[experience]} experience.}
 }
 {9}
 
 #ACTION {^silent_{Cleric|Druid|Mage|Necromancer|Thief|Warrior}%s %d%s %d%s(%7}
 {
-	#showme {You need ${showCost.cost} experience to level ${showCost.class} to ${showCost.level} and have ${showCost.experience} experience.%6(%7}
+	#showme {You need ${showCost[cost]} experience to level ${showCost[class]} to ${showCost[level]} and have ${showCost[experience]} experience.%6(%7}
 }
 {9}
 

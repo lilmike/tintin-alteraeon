@@ -25,7 +25,7 @@
 
 #ACTION {^A wall of earth crumbles and collapses, returning to mother earth.$}
 {
-	#if {"$auto.earthwall" == "true"}
+	#if {"${auto[earthwall]}" == "true"}
 	{
 		c earth wall
 	}
@@ -342,7 +342,7 @@
 	{
 		#variable {auto[suncatcherRoom]} {0}
 	};
-	#if {"${auto[suncatcher]}" == "true" && ${auto[suncatcherRoom]} == $kxwt.rvnum}
+	#if {"${auto[suncatcher]}" == "true" && ${auto[suncatcherRoom]} == ${kxwt[rvnum]}}
 	{
 		#if {&{position}}
 		{
@@ -397,7 +397,7 @@
 {
 	#if {"%0" == "autosuncatcher"}
 	{
-		#variable {auto[suncatcherRoom]} {$kxwt.rvnum};
+		#variable {auto[suncatcherRoom]} {${kxwt[rvnum]}};
 		#variable {auto[suncatcher]} {true};
 		#showme {You will now automatically hide and retrieve suncatcher that need filling in room ${auto[suncatcherRoom]}\.}
 	};
