@@ -6,7 +6,7 @@
 		#echo {%1 sold for %2 gold.}
 	};
 	play auction-sold;
-	#variable {auction.bidAmount} {0}
+	#variable {auction[bidAmount]} {0}
 }
 {9}
 
@@ -18,7 +18,7 @@
 	};
 	#else
 	{
-		#showme {%0 To bid the minimum amount of ${auction.minimumBid} gold coins, type 'bid +'.}
+		#showme {%0 To bid the minimum amount of ${auction[minimumBid]} gold coins, type 'bid +'.}
 	};
 	#line {gag};
 	play auction-going-%2
@@ -33,7 +33,7 @@
 		#line {gag}
 	};
 	play auction-return;
-	#variable {auction.bidAmount} {0}
+	#variable {auction[bidAmount]} {0}
 }
 {9}
 
@@ -55,31 +55,31 @@
 	};
 	#else
 	{
-		#echo {%0 To bid the minimum amount of ${auction.minimumBid} gold, type 'bid +'.}
+		#echo {%0 To bid the minimum amount of ${auction[minimumBid]} gold, type 'bid +'.}
 	};
-	#if {"${auction.myBid}" != "true" && ${auction.bidAmount} > %1}
+	#if {"${auction[myBid]}" != "true" && ${auction[bidAmount]} > %1}
 	{
 		bid +
 	};
-	#delay {0.25} {#variable {auction.myBid} {false}};
+	#delay {0.25} {#variable {auction[myBid]} {false}};
 	play auction-bid
 }
 {9}
 
 #ACTION {^(auction) Now accepting bids for '%1', minimum bid is %d gold coins.$}
 {
-	#variable {auction.minimumBid} {%2};
+	#variable {auction[minimumBid]} {%2};
 	#line {gag};
 	#if {"${character[cspam]}" != "true"}
 	{
-		#showme {%0 To bid the minimum amount of ${auction.minimumBid} gold, type 'bid +'.}
+		#showme {%0 To bid the minimum amount of ${auction[minimumBid]} gold, type 'bid +'.}
 	}
 }
 {9}
 
 #ACTION {^(auction) Starting bid on '%1' at %d gold.$}
 {
-	#variable {auction.minimumBid} {%2};
+	#variable {auction[minimumBid]} {%2};
 	#line {gag};
 	#if {"${character[cspam]}" == "true"}
 	{
@@ -87,7 +87,7 @@
 	};
 	#else
 	{
-		#showme {%0 To bid the minimum amount of ${auction.minimumBid} gold coins, type 'bid +'.}
+		#showme {%0 To bid the minimum amount of ${auction[minimumBid]} gold coins, type 'bid +'.}
 	};
 	play auction-start;
 }
@@ -95,30 +95,30 @@
 
 #ACTION {^(auction) The item of interest appears to have vanished.  Terminating auction.$}
 {
-	#variable {auction.bidAmount} {0}
+	#variable {auction[bidAmount]} {0}
 }
 {9}
 
 #ACTION {^(auction) {First|Second|Last} call for '%2', at %d gold coins.$}
 {
-	#variable {auction.minimumBid} {%3};
+	#variable {auction[minimumBid]} {%3};
 	#if {"${character[cspam]}" == "true"}
 	{
 		#echo {%1: %2 %3 gold.}
 	};
 	#else
 	{
-		#showme {%0 To bid the minimum amount of ${auction.minimumBid} gold coins, type 'bid +'.}
+		#showme {%0 To bid the minimum amount of ${auction[minimumBid]} gold coins, type 'bid +'.}
 	};
 	#line {gag};
-	#format {auction.callSound} {%l} {%1};
-	play auction-call-${auction.callSound}
+	#format {auction[callSound]} {%l} {%1};
+	play auction-call-${auction[callSound]}
 }
 {9}
 
 #ACTION {^You already have the highest bid.$}
 {
-	#variable {auction.myBid} {false}
+	#variable {auction[myBid]} {false}
 }
 {9}
 
@@ -129,7 +129,7 @@
 	{
 		#showme {%0 To bid this amount type 'bid +'.}
 	};
-	#variable {auction.myBid} {true}
+	#variable {auction[myBid]} {true}
 }
 {9}
 
@@ -147,14 +147,14 @@
 
 #ACTION {^silent_You must bid at least the minimum.$}
 {
-	bid ${auction.minimumBid} -f
+	bid ${auction[minimumBid]} -f
 }
 {9}
 
 #ALIAS {^{bi|bid}%s+$}
 {
 	bid 1 -f | prefix silent_;
-	#variable {auction.myBid}  {true}
+	#variable {auction[myBid]}  {true}
 }
 {8}
 
@@ -164,8 +164,8 @@
 	{
 		bid +
 	};
-	#variable {auction.myBid}  {true};
-	#variable {auction.bidAmount}  {%3};
+	#variable {auction[myBid]}  {true};
+	#variable {auction[bidAmount]}  {%3};
 	#showme {You will now bit up to $autoBidAmount gold on the current auction.}
 }
 {9}
@@ -173,10 +173,10 @@
 #ALIAS {^{bi|bid}%2$}
 {
 	#send {%0};
-	#variable {auction.myBid} {true}
+	#variable {auction[myBid]} {true}
 }
 {9}
 
-#VARIABLE         {auction.bidAmount}  {0}
-#VARIABLE         {auction.minimumBid}  {0}
-#VARIABLE         {auction.myBid}  {false}
+#VARIABLE         {auction[bidAmount]}  {0}
+#VARIABLE         {auction[minimumBid]}  {0}
+#VARIABLE         {auction[myBid]}  {false}

@@ -272,7 +272,7 @@
 	};
 	#if {%1 == %2 && %3 >= %4 - 3 && %5 == %6 && "${character[regenAlert]}" != "true"}
 	{
-		#if {"${kxwt[position}" == "{sitt|sleep}ing"]}
+		#if {"${kxwt[position]}" == "{sitt|sleep}ing"}
 		{
 			play regen-complete
 		};

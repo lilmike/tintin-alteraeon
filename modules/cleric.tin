@@ -36,7 +36,7 @@
 {
 	#if {${character[currentMana]} >= 17 && "${skillsAndSpells[word of recall]}" == "true"}
 	{
-		c word of recall
+		vcast word of recall
 	};
 	#else
 	{
