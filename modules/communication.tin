@@ -17,7 +17,7 @@
 
 #ACTION {^You %w: %3}
 {
-	#if {"%2" != "friend" && "${channel.sounds}" != "false"}
+	#if {"%2" != "friend" && "${channel[sounds]}" != "false"}
 	{
 		#switch {"%2"}
 		{
@@ -50,7 +50,7 @@
 {
 	#showme {Go %1!};
 	#line {gag};
-	#if {"${channel.sounds}" != "false"}
+	#if {"${channel[sounds]}" != "false"}
 	{
 		seq_play i-scored
 	}
@@ -71,7 +71,7 @@
 	#script {unencryptedMessage} {echo "%2" | rev | scripts/msgcrypt.sh | $sed "s/^'//"};
 	#variable {unencryptedMessage} {${unencryptedMessage[1]}};
 	#echo {%1${unencryptedMessage}'};
-	#if {"${channel.sounds}" != "false"}
+	#if {"${channel[sounds]}" != "false"}
 	{
 		play cryptmsg
 	};
@@ -81,7 +81,7 @@
 
 #ACTION {^You %1, '%2'$}
 {
-	#if {"%1" != "{ct|yell}" && "${channel.sounds}" != "false"}
+	#if {"%1" != "{ct|yell}" && "${channel[sounds]}" != "false"}
 	{
 		#switch {"%1"}
 		{
@@ -115,7 +115,7 @@
 			};
 			#case {"tell the clan"}
 			{
-				#if {"${character.cspam}" == "true"}
+				#if {"${character[cspam]}" == "true"}
 				{
 					#showme {You ct, '%2'};
 					#line {gag}
@@ -125,7 +125,7 @@
 			};
 			#case {"tell the group"}
 			{
-				#if {"${character.cspam}" == "true"}
+				#if {"${character[cspam]}" == "true"}
 				{
 					#line {ignore} {#showme {You gt, '%2'}};
 					#line {gag}
@@ -147,7 +147,7 @@
 
 #ACTION {^{>|> }***END_REPLAY****<$}
 {
-	#variable {channel.sounds} {true};
+	#variable {channel[sounds]} {true};
 	#line {gag}
 }
 {8}
@@ -160,7 +160,7 @@
 
 #ACTION {^%S %2{n|p|s|u}, '%3'$}
 {
-	#if {"%1" != "{A|An|The|You}" && "%2" != "yell" && "%2" != "{.*}utters the word" && "${channel.sounds}" != "false"}
+	#if {"%1" != "{A|An|The|You}" && "%2" != "yell" && "%2" != "{.*}utters the word" && "${channel[sounds]}" != "false"}
 	{
 		notify-send %0;
 		#switch {"%2"}
@@ -195,7 +195,7 @@
 			};
 			#case {"tells the cla"}
 			{
-				#if {"${character.cspam}" == "true"}
+				#if {"${character[cspam]}" == "true"}
 				{
 					#showme {%1 ct, '%3'};
 					#line {gag}
@@ -205,7 +205,7 @@
 			};
 			#case {"tells the grou"}
 			{
-				#if {"${character.cspam}" == "true"}
+				#if {"${character[cspam]}" == "true"}
 				{
 					#line {ignore} {#showme {%1 gt, '%3'}};
 					#line {gag}
@@ -231,7 +231,7 @@
 
 #ACTION {^%S has given you a gift!$}
 {
-	#if {"${auto.thank}" == "true"}
+	#if {"${auto[thank]}" == "true"}
 	{
 		#nop {Randomly generate thank you message.};
 		#math {i} {1d4};
@@ -264,7 +264,7 @@
 
 #ACTION {^%w {imm|imms}: %*}
 {
-	#if {"${channel.sounds}" != "false"}
+	#if {"${channel[sounds]}" != "false"}
 	{
 		#if {"%1" == "You"}
 		{
@@ -277,7 +277,7 @@
 	};
 	notify-send %0
 }
-{9}
+{4}
 
 #ACTION {^(Log in tomorrow for another december advent calendar gift!)$}
 {
@@ -287,7 +287,7 @@
 
 #ACTION {^(friend) %1 has entered the game.$}
 {
-	#if {"${channel.sounds}" != "false"}
+	#if {"${channel[sounds]}" != "false"}
 	{
 		#variable {friendNameEnter} {%1};
 		play friend-enter
@@ -302,7 +302,7 @@
 	{
 		#unvariable {friendNameEnter}
 	};
-	#if {"${channel.sounds}" != "false"}
+	#if {"${channel[sounds]}" != "false"}
 	{
 		play friend-leave
 	};
@@ -312,7 +312,7 @@
 
 #ACTION {^(friend) %S was kille%*}
 {
-	#if {"${channel.sounds}" != "false"}
+	#if {"${channel[sounds]}" != "false"}
 	{
 		play friend-death
 	};
@@ -338,11 +338,11 @@
 	#nop {We use a client.variable here because they always reset, and this is just temp info we don't need to save across sessions.};
 	#if {"%1" == "spinning"}
 	{
-		#variable {client.gambleGame} {slots}
+		#variable {client[gambleGame]} {slots}
 	};
 	#else
 	{
-		#variable {client.gambleGame} {merchant}
+		#variable {client[gambleGame]} {merchant}
 	}
 }
 {9}
@@ -380,10 +380,10 @@
 
 #ACTION {^You've won %d gold coins!$}
 {
-	notify-send %0 (From the ${client.gambleGame} game.);
+	notify-send %0 (From the ${client[gambleGame]} game.);
 	#if {%1 >= 1000}
 	{
-		autobrag %0 (From the ${client.gambleGame} game.)
+		autobrag %0 (From the ${client[gambleGame]} game.)
 	}
 }
 {9}
@@ -415,7 +415,7 @@
 
 #ACTION {^{\(|\[}%S{\)|\]} %S: %5}
 {
-	#if {"%2" != "friend" && "${channel.sounds}" == "true"}
+	#if {"%2" != "friend" && "${channel[sounds]}" == "true"}
 	{
 		#switch {"%2"}
 		{
@@ -461,7 +461,7 @@
 
 #ALIAS {^repla%*}
 {
-	#variable {channel.sounds} {false};
+	#variable {channel[sounds]} {false};
 	#send {%0};
 	lecho >***END_REPLAY****<
 }
@@ -505,9 +505,9 @@
 
 #ALIAS {^autobrag %s%S$}
 {
-	#variable {channel.brag} {%2};
+	#variable {channel[brag]} {%2};
 	#echo {Brag channel set to %2};
-	#variable {auto.brag} {true};
+	#variable {auto[brag]} {true};
 	AUTOMESSAGE autobrag
 }
 {8}
@@ -530,16 +530,16 @@
 
 #ALIAS {^AUTOMESSAGE %S$}
 {
-	#variable {auto.message} {%1};
-	#replace {auto.message} {noauto} {auto};
-	#format {auto.message} {%n} {$auto.message};
+	#variable {auto[message]} {%1};
+	#replace {auto[message]} {noauto} {auto};
+	#format {auto[message]} {%n} {$auto.message};
 	#if {"%1" == "auto%*"}
 	{
-		#echo {${auto.message} enabled.}
+		#echo {${auto[message]} enabled.}
 	};
 	#else
 	{
-		#echo {${auto.message} disabled.}
+		#echo {${auto[message]} disabled.}
 	}
 }
 {9}
@@ -558,28 +558,28 @@
 
 #ALIAS {^autobrag %1}
 {
-	#if {"${auto.brag}" == "true" && "${channel.sounds}" != "false"}
+	#if {"${auto[brag]}" == "true" && "${channel[sounds]}" != "false"}
 	{
-		#if {!&{channel.brag}}
+		#if {!&{channel[brag]}}
 		{
-			#variable {channel.brag} {xp}
+			#variable {channel[brag]} {xp}
 		};
-		#regexp {%1} {vcast_{.*}_{.*}} {#variable {channel.message} {&2}};
+		#regexp {%1} {vcast_{.*}_{.*}} {#variable {channel[message]} {&2}};
 		#else
 		{
-			#variable {channel.message} {%1}
+			#variable {channel[message]} {%1}
 		};
-		#replace {channel.message} {You {have sudden insight, and become|learn from your mistakes, and become|become}} {};
-		#format {channel.message} {%p} {${channel.message}};
-		#format {channel.message} {%n} {${channel.message}};
-		#replace {channel.message} { improve } { improved };
-		#replace {channel.message} {You discover} {I discovered};
-		#replace {channel.message} {You gain} {I gained};
-		#replace {channel.message} {You spend} {I spent};
-		#replace {channel.message} {your} {my};
-		#replace {channel.message} {Your} {My};
-		#replace {channel.message} {You} {I};
-		${channel.brag}  ${channel.message}
+		#replace {channel[message]} {You {have sudden insight, and become|learn from your mistakes, and become|become}} {};
+		#format {channel[message]} {%p} {${channel[message]}};
+		#format {channel[message]} {%n} {${channel[message]}};
+		#replace {channel[message]} { improve } { improved };
+		#replace {channel[message]} {You discover} {I discovered};
+		#replace {channel[message]} {You gain} {I gained};
+		#replace {channel[message]} {You spend} {I spent};
+		#replace {channel[message]} {your} {my};
+		#replace {channel[message]} {Your} {My};
+		#replace {channel[message]} {You} {I};
+		${channel[brag]}  ${channel[message]}
 	}
 }
 {9}
@@ -645,11 +645,11 @@
 {
 	#if {"%0" == "autobrag"}
 	{
-		#variable {auto.brag} {true}
+		#variable {auto[brag]} {true}
 	};
 	#else
 	{
-		#variable {auto.brag} {false}
+		#variable {auto[brag]} {false}
 	};
 	AUTOMESSAGE %0
 }

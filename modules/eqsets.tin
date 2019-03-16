@@ -2,11 +2,11 @@
 {
 	show stats | prefix silent_;
 	show clev | prefix silent_;
-	#if {"${auto.keyprofile}" == "true"}
+	#if {"${auto[keyprofile]}" == "true"}
 	{
 		keyprofile %1
 	};
-	#if {"${character.cspam}" == "true"}
+	#if {"${character[cspam]}" == "true"}
 	{
 		#showme {You are now wearing '%1'.};
 		#line {gag}
@@ -96,9 +96,9 @@
 
 #ALIAS {^wearset %S$}
 {
-	#if {!&{character.equipmentContainer}}
+	#if {!&{character[equipmentContainer]}}
 	{
-		#variable {character.equipmentContainer} {${character.container}}
+		#variable {character[equipmentContainer]} {${character[container]}}
 	};
 	#list {eq_%1} {size} {eqTotalItems};
 	#if {$eqTotalItems == 0}
@@ -109,13 +109,13 @@
 	{
 		set msp off | prefix silent_;
 		remove all | grep nospam;
-		put all in ${character.equipmentContainer} | grep nospam;
+		put all in ${character[equipmentContainer]} | grep nospam;
 		#variable {eqLoopCounter} {1};
 		#while {$eqLoopCounter <= $eqTotalItems}
 		{
 			#if {$eqLoopCounter % 2 == 0}
 			{
-				get ${eq_%1[$eqLoopCounter]} from ${character.equipmentContainer} | grep nospam;
+				get ${eq_%1[$eqLoopCounter]} from ${character[equipmentContainer]} | grep nospam;
 				$eqWearCommand ${eq_%1[$eqLoopCounter]} | grep nospam;
 				#variable {lastEq} {${eq_%1[$eqLoopCounter]}}
 			};
@@ -133,8 +133,8 @@
 
 #ALIAS {^{eqco|eqcon|eqcont|eqconta|eqcontai|eqcontain|eqcontaine|eqcontainer} %2}
 {
-	#variable {character.equipmentContainer} {%2};
-	#showme {Equipment container set to ${character.equipmentContainer}\.}
+	#variable {character[equipmentContainer]} {%2};
+	#showme {Equipment container set to ${character[equipmentContainer]}\.}
 }
 {9}
 

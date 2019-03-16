@@ -9,7 +9,7 @@
 
 #ACTION {^%S stares at a painting of %2 and fades away.$}
 {
-	#if {"${group.leader}" == "%1"}
+	#if {"${group[leader]}" == "%1"}
 	{
 		#regexp {%2} {{.*} {.*}} {#if {"&0" == "a dark forest"} {l 2.forest};#else {look &2}}
 	}
@@ -25,7 +25,7 @@
 
 #ACTION {^%w beckons for you to follow.$}
 {
-	#if {"${auto.follow}" == "true"}
+	#if {"${auto[follow]}" == "true"}
 	{
 		friends find | grep -i %1 | prefix silent_follow
 	}
@@ -34,10 +34,10 @@
 
 #ACTION {^You are now a group member.$}
 {
-	#variable {auto.donateunique} {false};
-	#variable {auto.getunique} {false};
-	#variable {groupRating.index} {1};
-	#delay {autoGroupRating} {#echo {To give the group leader the recommend rank of ${groupRating[${groupRating.index}]}, type rate.};synth_play notificationSound} {1200}
+	#variable {auto[donateunique]} {false};
+	#variable {auto[getunique]} {false};
+	#variable {groupRating[index]} {1};
+	#delay {autoGroupRating} {#echo {To give the group leader the recommend rank of ${groupRating[${groupRating[index]}]}, type rate.};synth_play notificationSound} {1200}
 }
 {9}
 
@@ -65,25 +65,25 @@
 
 #ACTION {^You {are already|start} following %1.$}
 {
-	#variable {group.leader} {%1}
+	#variable {group[leader]} {%1}
 }
 {9}
 
 #ACTION {^Your blood curdles as you hear 's dying scream!$}
 {
-	#if {"${auto.earthwall}" == "true"}
+	#if {"${auto[earthwall]}" == "true"}
 	{
 		c earth wall
 	};
-	#elseif {"${auto.bone}" == "true"}
+	#elseif {"${auto[bone]}" == "true"}
 	{
 		boneguardian
 	};
-	#elseif {"${auto.mound}" == "true"}
+	#elseif {"${auto[mound]}" == "true"}
 	{
 		c shambling mound
 	};
-	#elseif {"${auto.woad}" == "true"}
+	#elseif {"${auto[woad]}" == "true"}
 	{
 		woad
 	};
@@ -99,7 +99,7 @@
 
 #ACTION {^silent_follow %s(mutual)%s%w$}
 {
-	#if {"${auto.follow}" == "true"}
+	#if {"${auto[follow]}" == "true"}
 	{
 		follow %3
 	}
@@ -108,43 +108,43 @@
 
 #ALIAS {^group{t|ta|tan|tank} %s%S$}
 {
-	#format {group.tank} {%n} {%3};
-	#echo {${group.tank} is now set as tank.}
+	#format {group[tank} {%n} {%3]};
+	#echo {${group[tank]} is now set as tank.}
 }
 {9}
 
 #ALIAS {^oom$}
 {
-	#variable {channel.message} {};
-	#if {${character.currentMana} < ${character.maxMana} / 3}
+	#variable {channel[message]} {};
+	#if {${character[currentMana]} < ${character[maxMana]} / 3}
 	{
-		#math {groupI} {${character.currentMana} / ${character.maxMana} * 100.0};
-		#variable {channel.message} {mana, $groupI%. }
+		#math {groupI} {${character[currentMana]} / ${character[maxMana]} * 100.0};
+		#variable {channel[message]} {mana, $groupI%. }
 	};
-	#if {${character.currentMv} < ${character.maxMv} / 3}
+	#if {${character[currentMv]} < ${character[maxMv]} / 3}
 	{
-		#math {groupI} {${character.currentMv} / ${character.maxMv} * 100.0};
-		#variable {channel.message} {${channel.message}movement $groupI%. }
+		#math {groupI} {${character[currentMv]} / ${character[maxMv]} * 100.0};
+		#variable {channel[message]} {${channel[message]}movement $groupI%. }
 	};
-	#if {${character.currentHp} < ${character.maxHp} / 2}
+	#if {${character[currentHp]} < ${character[maxHp]} / 2}
 	{
-		#math {groupI} {${character.currentHp} / ${character.maxHp} * 100.0};
-		#variable {channel.message} {${channel.message}health $groupI%.}
+		#math {groupI} {${character[currentHp]} / ${character[maxHp]} * 100.0};
+		#variable {channel[message]} {${channel[message]}health $groupI%.}
 	};
-	#if {"${channel.message}" == ""}
+	#if {"${channel[message]}" == ""}
 	{
 		#echo {I'm not sure what to warn the group  about, better do it manually.}
 	};
 	#else
 	{
-		warn ${channel.message}
+		warn ${channel[message]}
 	}
 }
 {9}
 
 #ALIAS {^rating$}
 {
-	#echo {The suggested rating for ${group.leader}'s group is ${group.rating[${group.ratingIndex}]}\.}
+	#echo {The suggested rating for ${group[leader]}'s group is ${groupRating[${groupRating[index]}]}\.}
 }
 {9}
 
@@ -153,26 +153,26 @@
 	#if {"%0" == "autofollow"}
 	{
 		#showme {You will now automatically follow people from your friends list.};
-		#variable {auto.follow} {true}
+		#variable {auto[follow]} {true}
 	};
 	#else
 	{
 		#showme {You will no longer automatically follow anyone.};
-		#variable {auto.follow} {false}
+		#variable {auto[follow]} {false}
 	}
 }
 {9}
 
 #ALIAS {^{rat|rate}$}
 {
-	#echo {Rating group as ${groupRating[${groupRating.index}]}\.};
-	group rate ${groupRating[${groupRating.index}]}
+	#echo {Rating group as ${groupRating[${groupRating[index]}]}\.};
+	group rate ${groupRating[${groupRating[index]}]}
 }
 {9}
 
 #ALIAS {^{rat|rate}%s%d$}
 {
-	#echo {Rating ${group.leader}'s group as ${groupRating[%3]}\. The suggested rating is ${groupRating[${groupRating.index}]}\.};
+	#echo {Rating ${group[leader]}'s group as ${groupRating[%3]}\. The suggested rating is ${groupRating[${groupRating[index]}]}\.};
 	group rate ${groupRating[%3]}
 }
 {9}

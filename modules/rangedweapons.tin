@@ -1,8 +1,8 @@
 #action {^{A|An|The} %2 isn't loaded.$}
 {
-#if {"${auto.store}" == "true"}
+#if {"${auto[store]}" == "true"}
 {
-get $amo ${character.amoContainer} | grep nospam
+get $amo ${character[amoContainer]} | grep nospam
 };
 #regexp {%2} {{.*} {.*}} {load &2} {load &0};
 fire
@@ -24,20 +24,20 @@ get $amo | prefix amo
 #action {^amoYou get %*${amo}\.$}
 {
 #line {gag};
-#if {"${auto.store}" == "true"}
+#if {"${auto[store]}" == "true"}
 {
-#if {!&{character.amoContainer}}
+#if {!&{character[amoContainer]}}
 {
-#variable {character.amoContainer} {${character.container}}
+#variable {character[amoContainer]} {${character[container]}}
 };
-put $amo ${character.amoContainer} | grep -v You put
+put $amo ${character[amoContainer]} | grep -v You put
 }
 }
 {8}
 
 #alias {^amocontainer %S$}
 {
-#variable {character.amoContainer} {%1};
+#variable {character[amoContainer]} {%1};
 #echo {Amo will now be stored in %1.}
 }
 {9}

@@ -56,7 +56,7 @@
 
 #ACTION {^You are %1, and currently %2 tall.$}
 {
-	#variable {character.sex} {%1}
+	#variable {character[sex]} {%1}
 }
 {5}
 
@@ -129,18 +129,18 @@
 
 #ACTION {^You receive %d gambling gold!$}
 {
-	#if {!&{auto.gamble}}
+	#if {!&{auto[gamble]}}
 	{
-		#variable {auto.gamble} {false}
+		#variable {auto[gamble]} {false}
 	};
-	#if {"${auto.gamble}" == "false"}
+	#if {"${auto[gamble]}" == "false"}
 	{
 		#line {gag};
 		#echo {%0 (You can automatically spend gambling gold by typing autogamble gametype where gametype is merchant or slots.)}
 	};
 	#else
 	{
-		gamble ${auto.gamble} %1;
+		gamble ${auto[gamble]} %1;
 		Add_Event You spent %1 gambling gold.
 	}
 }
@@ -176,75 +176,75 @@
 
 #ACTION {^silent_You currently gain %1 hitpoints, %2 mana, and %3 movement while {standing|sleeping|sitting}.$}
 {
-	#math {character.hpRegenTime} {(${character.maxHp} - ${character.currentHp}) / %1};
-	#math {character.mnRegenTime} {(${character.maxMana} - ${character.currentMana}) / %2};
-	#math {character.mvRegenTime} {(${character.maxMv} - ${character.currentMv}) / %3};
-	#delay {0.1} {#variable {character.regenTime} {${character.hpRegenTime}};#if {${character.mnRegenTime} > ${character.regenTime}}{#variable {character.regenTime} {${character.mnRegenTime}}}; #if {${character.mvRegenTime} > ${character.regenTime}}{#variable {character.regenTime} {${character.mvRegenTime}}};#if {${character.regenTime} > 0}{#showme {Approximately ${character.regenTime} ticks until regeneration is complete.}}}
+	#math {character[hpRegenTime]} {(${character[maxHp]} - ${character[currentHp]}) / %1};
+	#math {character[mnRegenTime]} {(${character[maxMana]} - ${character[currentMana]}) / %2};
+	#math {character[mvRegenTime]} {(${character[maxMv]} - ${character[currentMv]}) / %3};
+	#delay {0.1} {#variable {character[regenTime]} {${character[hpRegenTime]}};#if {${character[mnRegenTime]} > ${character[regenTime]}}{#variable {character[regenTime]} {${character[mnRegenTime]}}}; #if {${character[mvRegenTime]} > ${character[regenTime]}}{#variable {character[regenTime]} {${character[mvRegenTime]}}};#if {${character[regenTime]} > 0}{#showme {Approximately ${character[regenTime]} ticks until regeneration is complete.}}}
 }
 {9}
 
 #ACTION {^silent_You have %1/%2 str, %3/%4 int, %5/%6 wis, %7/%8 dex, %9/%10 con, and %11/%12 chr.$}
 {
-	#if {!&{character.strBonus}}
+	#if {!&{character[strBonus]}}
 	{
-			#variable {character.strBonus} {0}
+		#variable {character[strBonus]} {0}
 	};
-	#if {!&{character.intBonus}}
+	#if {!&{character[intBonus]}}
 	{
-			#variable {character.intBonus} {0}
+		#variable {character[intBonus]} {0}
 	};
-	#if {!&{character.wisBonus}}
+	#if {!&{character[wisBonus]}}
 	{
-			#variable {character.wisBonus} {0}
+		#variable {character[wisBonus]} {0}
 	};
-	#if {!&{character.dexBonus}}
+	#if {!&{character[dexBonus]}}
 	{
-			#variable {character.dexBonus} {0}
+		#variable {character[dexBonus]} {0}
 	};
-	#if {!&{character.conBonus}}
+	#if {!&{character[conBonus]}}
 	{
-			#variable {character.conBonus} {0}
+		#variable {character[conBonus]} {0}
 	};
-	#if {!&{character.chrBonus}}
+	#if {!&{character[chrBonus]}}
 	{
-			#variable {character.chrBonus} {0}
+		#variable {character[chrBonus]} {0}
 	};
-	#if {${character.strBonus} != %1}
+	#if {${character[strBonus]} != %1}
 	{
-			#showme {You now have %1 of %2 strength.}
+		#showme {You now have %1 of %2 strength.}
 	};
-	#if {${character.intBonus} != %3}
+	#if {${character[intBonus]} != %3}
 	{
 		#showme {You now have %3 of %4 intelligence.}
 	};
-	#if {${character.wisBonus} != %5}
+	#if {${character[wisBonus]} != %5}
 	{
 		#showme {You now have %5 of %6 wisdom.}
 	};
-	#if {${character.dexBonus} != %7}
+	#if {${character[dexBonus]} != %7}
 	{
-			#showme {You now have %7 of %8 dexterity.}
+		#showme {You now have %7 of %8 dexterity.}
 	};
-	#if {${character.conBonus} != %9}
+	#if {${character[conBonus]} != %9}
 	{
 		#showme {You now have %9 of %10 constitution.}
 	};
-	#if {${character.chrBonus} != %11}
+	#if {${character[chrBonus]} != %11}
 	{
 		#showme {You now have %11 of %12 charisma.}
 	};
-	#variable {character.strBonus} {%1};
-	#variable {character.str} {%2};
-	#variable {character.intBonus} {%3};
-	#variable {character.int} {%4};
-	#variable {character.wisBonus} {%5};
-	#variable {character.wis} {%6};
-	#variable {character.dexBonus} {%7};
-	#variable {character.dex} {%8};
-	#variable {character.conBonus} {%9};
-	#variable {character.con} {%10};
-	#variable {character.chrBonus} {%11};
-	#variable {character.chr} {%12}
+	#variable {character[strBonus]} {%1};
+	#variable {character[str]} {%2};
+	#variable {character[intBonus]} {%3};
+	#variable {character[int]} {%4};
+	#variable {character[wisBonus]} {%5};
+	#variable {character[wis]} {%6};
+	#variable {character[dexBonus]} {%7};
+	#variable {character[dex]} {%8};
+	#variable {character[conBonus]} {%9};
+	#variable {character[con]} {%10};
+	#variable {character[chrBonus]} {%11};
+	#variable {character[chr]} {%12}
 }
 {9}
 
@@ -268,7 +268,7 @@
 
 #ACTION {^{silent_You|You} can train to get a practice, at a cost of %d experience each.$}
 {
-	#variable {auto.buyPracticeExperience} {%2}
+	#variable {auto[buyPracticeExperience]} {%2}
 }
 {9}
 
@@ -288,23 +288,23 @@
 
 #ALIAS {^hands %1}
 {
-	#if {"${skillsAndSpells.burning hands}" == "true"}
+	#if {"${skillsAndSpells[burning hands]}" == "true"}
 	{
 		vcast burning hands %1
 	};
-	#if {"${skillsAndSpells.clasp of corruption}" == "true"}
+	#if {"${skillsAndSpells[clasp of corruption]}" == "true"}
 	{
 		vcast clasp of corruption %1
 	};
-	#if {"${skillsAndSpells.shocking grasp}" == "true"}
+	#if {"${skillsAndSpells[shocking grasp]}" == "true"}
 	{
 		vcast shocking grasp %1
 	};
-	#if {"${skillsAndSpells.sacred touch}" == "true"}
+	#if {"${skillsAndSpells[sacred touch]}" == "true"}
 	{
 		vcast sacred touch %1
 	};
-	#if {"${skillsAndSpells.sickening touch}" == "true"}
+	#if {"${skillsAndSpells[sickening touch]}" == "true"}
 	{
 		vcast sickening touch %1
 	}
@@ -344,7 +344,7 @@
 {
 	#showme {You will now automatically spend experience to buy practices.};
 	train | grep -i You can train to get a practice | prefix silent_;
-	#variable {auto.buypractice} {true}
+	#variable {auto[buypractice]} {true}
 }
 {9}
 
@@ -358,7 +358,7 @@
 {
 	#if {"%1" == "{merchant|slots}"}
 	{
-		#variable {auto.gamble} {%1};
+		#variable {auto[gamble]} {%1};
 		#showme {You will now automatically spend gambling gold on the %1 game. Good luck!}
 	};
 	#else
@@ -370,9 +370,9 @@
 
 #ALIAS {^autogamble$}
 {
-	#if {&{auto.gamble}}
+	#if {&{auto[gamble]}}
 	{
-		#showme {You are betting your gold on the ${auto.gamble} game automatically.}
+		#showme {You are betting your gold on the ${auto[gamble]} game automatically.}
 	};
 	#else
 	{
@@ -383,7 +383,7 @@
 
 #ALIAS {^autothank$}
 {
-	#variable {auto.thank} {true};
+	#variable {auto[thank]} {true};
 	#showme {You will now thank people for newbie gifts automatically.}
 }
 {9}
@@ -396,23 +396,23 @@
 
 #ALIAS {^hands$}
 {
-	#if {"${skillsAndSpells.burning hands}" == "true"}
+	#if {"${skillsAndSpells[burning hands]}" == "true"}
 	{
 		vcast burning hands
 	};
-	#if {"${skillsAndSpells.clasp of corruption}" == "true"}
+	#if {"${skillsAndSpells[clasp of corruption]}" == "true"}
 	{
 		vcast clasp of corruption
 	};
-	#if {"${skillsAndSpells.shocking grasp}" == "true"}
+	#if {"${skillsAndSpells[shocking grasp]}" == "true"}
 	{
 		vcast shocking grasp
 	};
-	#if {"${skillsAndSpells.sacred touch}" == "true"}
+	#if {"${skillsAndSpells[sacred touch]}" == "true"}
 	{
 		vcast sacred touch
 	};
-	#if {"${skillsAndSpells.sickening touch}" == "true"}
+	#if {"${skillsAndSpells[sickening touch]}" == "true"}
 	{
 		vcast sickening touch
 	}
@@ -422,26 +422,20 @@
 #ALIAS {^noautobuypractice$}
 {
 	#showme {You will no longer automatically buy practices.};
-	#unvariable {auto.buypractice}
+	#unvariable {auto[buypractice]}
 }
 {9}
 
 #ALIAS {^noautogamble$}
 {
-	#unvariable {auto.gamble};
+	#unvariable {auto[gamble]};
 	#showme {automatic gambling gold gambling disabled.}
-}
-{9}
-
-#ALIAS {^regen$}
-{
-	show regen | prefix silent_
 }
 {9}
 
 #ALIAS {^noautothank$}
 {
-	#unvariable {auto.thank};
+	#unvariable {auto[thank]};
 	#showme {You will no longer thank people for newbie gifts automatically.}
 }
 {9}
@@ -458,6 +452,13 @@
 {
 	#unvariable {pkMode};
 	#showme {PK mode disabled.}
+}
+{9}
+
+#ALIAS {^notrack$}
+{
+	#unvariable {tracking};
+	#showme {You are no longer tracking.}
 }
 {9}
 
@@ -484,17 +485,16 @@
 }
 {9}
 
+#ALIAS {^regen$}
+{
+	show regen | prefix silent_
+}
+{9}
+
 #ALIAS {^track %1}
 {
 	#variable {tracking} {%1};
 	#showme {You are now tracking.}
-}
-{9}
-
-#ALIAS {^notrack$}
-{
-	#unvariable {tracking};
-	#showme {You are no longer tracking.}
 }
 {9}
 
@@ -569,7 +569,10 @@
 #ALIAS {^{c|qc}save$}
 {
 	#unvariable {play_%*};
-	#class {gameData} {write} {$gameDataPath};
+	#if {&{gameDataPath}}
+	{
+		#class {gameData} {write} {$gameDataPath}
+	};
 	#if {"%0" == "csave"}
 	{
 		#showme {saving game data for $name\.}
@@ -648,7 +651,7 @@
 
 #ALIAS {autorefresh}
 {
-	#variable {auto.refresh} {true};
+	#variable {auto[refresh]} {true};
 	#showme {You will automaticaly cast refresh spells if your MV is low.}
 }
 {9}
@@ -668,7 +671,7 @@
 
 #ALIAS {noautorefresh}
 {
-	#variable {auto.refresh} {false};
+	#variable {auto[refresh]} {false};
 	#showme {You will no longer automaticaly cast refresh spells.}
 }
 {9}
@@ -702,7 +705,7 @@
 #SUBSTITUTE       {^%sjunk_%2}  { %2}  {5}
 #SUBSTITUTE       {^junk_%1}  {%1}  {5}
 #SUBSTITUTE       {tracking_[%1] }  {}  {5}
-#TICKER           {historyWriter}  {#if {&{name}} {#history {write} {$historyPath}}}                                                          {5.00}
+#TICKER           {historyWriter}  {#if {&{name}} {#history {write} {$historyPath}}}                        {5.00}
 #VARIABLE         {bufferLock}  {off}
 #VARIABLE         {castTankMinion}  {true}
 #VARIABLE         {lastHpAlert}  {}

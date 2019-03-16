@@ -26,7 +26,7 @@
 }
 {9}
 
-#ACTION {^A floating blue-tinted disc slowly solidifies and hovers before you.$}
+#ACTION {^vcast_%*_A floating blue-tinted disc slowly solidifies and hovers before you.$}
 {
 	#list {discList} {find} {all} {discIndex};
 	#if {$discIndex != 0}

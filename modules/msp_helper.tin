@@ -60,13 +60,13 @@
 	{
 		#line {gag}
 	};
-	#if {"${auto.mend}" == "true" && "${character.inBattle}" != "true"}
+	#if {"${auto[mend]}" == "true" && "${character[inBattle]}" != "true"}
 	{
-		#if {"${skillsAndSpells.mend bones}" == "true" && ${character.currentMana} > ${character.maxMana} / 2}
+		#if {"${skillsAndSpells[mend bones]}" == "true" && ${character[currentMana]} > ${character[maxMana]} / 2}
 		{
-			#if {"$doAutoMend" == "true" && ${kxwt.action} == 0}
+			#if {"$doAutoMend" == "true" && ${kxwt[action} == 0]}
 			{
-				#delay {3d3} {#if {"${kxwt.position}" != "{sitt|sleep}ing"}{show teeth | prefix silent_cast_mend_bones}};
+				#delay {3d3} {#if {"${kxwt[position}" != "{sitt|sleep}ing"}{show teeth | prefix silent_cast_mend_bones}]};
 				#unvariable {doAutoMend}
 			}
 		}

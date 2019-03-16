@@ -1,6 +1,6 @@
 #ACTION {^kxwt_area -1}
 {
-	#variable {kxwt.area} {-1};
+	#variable {kxwt[area]} {-1};
 	#variable {areaNumber} {-1};
 	#variable {areaName} {default};
 	#if {$oldAreaNumber != $areaNumber}
@@ -13,7 +13,7 @@
 
 #ACTION {^kxwt_area %d %2}
 {
-	#variable {kxwt.area} {%1 %2};
+	#variable {kxwt[area]} {%1 %2};
 	#variable {areaNumber} {%1};
 	#variable {areaName} {%2};
 	#if {$oldAreaNumber != $areaNumber}
@@ -27,14 +27,14 @@
 
 #ACTION {^kxwt_event quest %1}
 {
-	#variable {kxwt.event} {quest %1};
+	#variable {kxwt[event]} {quest %1};
 	post $name completed quest: %1
 }
 {8}
 
 #ACTION {^kxwt_exp %d}
 {
-	#variable {kxwt.exp} {%1};
+	#variable {kxwt[exp]} {%1};
 	#variable {lastReceivedExp} {%1};
 	#if {!&{oldExp} || $oldExp > %1}
 	{
@@ -55,7 +55,7 @@
 			#delay {levelTimer} {#variable {justLeveled} {false}} {90}
 		}
 	};
-	#if {"${auto.buypractice}" == "true" && "${spam.practice}" != "true" && %1 >= ${auto.buyPracticeExperience}}
+	#if {"${auto[buypractice]}" == "true" && "${spam[practice}" != "true" && %1 >= ${auto[buyPracticeExperience]}]}
 	{
 		train practice;
 		spamset practice
@@ -65,9 +65,9 @@
 
 #ACTION {^kxwt_fighting %1 %2 %3}
 {
-	#variable {kxwt.fighting} {%1 %2 %3};
+	#variable {kxwt[fighting]} {%1 %2 %3};
 	#variable {busy} {false};
-	#variable {character.inBattle} {true};
+	#variable {character[inBattle]} {true};
 	#variable {awayMessage} {false};
 	#if {!&{beeps}}
 	{
@@ -122,8 +122,8 @@
 
 #ACTION {^kxwt_fighting -1$}
 {
-	#variable {kxwt.fighting} {-1};
-	#variable {character.inBattle} {false}
+	#variable {kxwt[fighting]} {-1};
+	#variable {character[inBattle]} {false}
 }
 {8}
 
@@ -138,11 +138,11 @@
 
 #ACTION {^kxwt_mdeath %1}
 {
-	#variable {kxwt.mdeath} {%1};
-	#variable {client.capSound} {true};
+	#variable {kxwt[mdeath]} {%1};
+	#variable {client[capSound]} {true};
 	#if {"%1" != "{$ignoredMobs}"}
 	{
-		#if {"${skillsAndSpells.cry of victory}" == "true"}
+		#if {"${skillsAndSpells[cry of victory]}" == "true"}
 		{
 			victory | grep -v You haven't had a recent victory worth shouting about.
 		};
@@ -156,7 +156,7 @@
 		};
 		#if {"${pkMode}" != "true"}
 		{
-			#delay {0.5}{#if {"${auto.consume}" == "true"}{control all consume corpse};#if {"${auto.bloodsacrifice}" == "true" && "${character.inBattle}" != "true"}{bsac corpse};#if {"${skillsAndSpells.corpsecutter}" ==      "true" && "${character.inBattle}" != "true"}{harvest components corpse};#if {"${skillsAndSpells.harvest bone}" ==      "true" && "${character.inBattle}" != "true"}{harvest bone corpse | grep -v has no useful bones remaining};#if {"${skillsAndSpells.salvage equipment}" == "true" || &{battleScroll} && "${character.inBattle}" != "true"}{search corpse | grep -v unique | prefix silent_};#if {"${auto.flesh}" == "true"}{#if                     {"$makeNewFleshBeast" == "true"}{c flesh corpse};#else {lowhp | prefix silent_}};#if {&{lastReceivedExp}}{#unvariable {lastReceivedExp}};#if {&{position}}{$position}}
+			#delay {0.5}{#if {"${auto[consume]}" == "true"}{control all consume corpse};#if {"${auto[bloodsacrifice]}" == "true" && "${character[inBattle]}" != "true"}{bsac corpse};#if {"${skillsAndSpells[corpsecutter]}" ==      "true" && "${character[inBattle]}" != "true"}{harvest components corpse};#if {"${skillsAndSpells[harvest bone]}" ==      "true" && "${character[inBattle]}" != "true"}{harvest bone corpse | grep -v has no useful bones remaining};#if {"${skillsAndSpells[salvage equipment]}" == "true" || &{battleScroll} && "${character[inBattle]}" != "true"}{search corpse | grep -v unique | prefix silent_};#if {"${auto[flesh]}" == "true"}{#if                     {"$makeNewFleshBeast" == "true"}{c flesh corpse};#else {lowhp | prefix silent_}};#if {&{lastReceivedExp}}{#unvariable {lastReceivedExp}};#if {&{position}}{$position}}
 		}
 	}
 }
@@ -164,7 +164,7 @@
 
 #ACTION {^kxwt_myname %S}
 {
-	#variable {kxwt.myname} {%1};
+	#variable {kxwt[myname]} {%1};
 	#variable {gameDataPath} {${HOME}/%1};
 	#variable {characterModulePath} {${HOME}/%1.modules};
 	#format {name} {%n} {%1};
@@ -178,61 +178,61 @@
 
 #ACTION {^kxwt_prompt %1 %2 %3 %4 %5 %6}
 {
-	#variable {kxwt.prompt} {%1 %2 %3 %4 %5 %6};
-	#variable {character.currentHp} {%1};
-	#variable {character.maxHp} {%2};
-	#variable {character.currentMana} {%3};
-	#variable {character.maxMana} {%4};
-	#variable {character.currentMv} {%5};
-	#variable {character.maxMv} {%6};
-	#if {${character.currentHp} >= ${character.maxHp} - 5}
+	#variable {kxwt[prompt]} {%1 %2 %3 %4 %5 %6};
+	#variable {character[currentHp]} {%1};
+	#variable {character[maxHp]} {%2};
+	#variable {character[currentMana]} {%3};
+	#variable {character[maxMana]} {%4};
+	#variable {character[currentMv]} {%5};
+	#variable {character[maxMv]} {%6};
+	#if {${character[currentHp]} >= ${character[maxHp]} - 5}
 	{
-		#variable {character.lastHpAlert} {}
+		#variable {character[lastHpAlert]} {}
 	};
-	#if {${character.currentMana} >= ${character.maxMana} - 5}
+	#if {${character[currentMana]} >= ${character[maxMana]} - 5}
 	{
-		#variable {character.lastManaAlert} {}
+		#variable {character[lastManaAlert]} {}
 	};
-	#if {${character.currentMv} >= ${character.maxMv} - 5}
+	#if {${character[currentMv]} >= ${character[maxMv]} - 5}
 	{
-		#variable {character.lastMvAlert} {}
+		#variable {character[lastMvAlert]} {}
 	};
-	#if {${character.currentHp} <= ${character.maxHp} * 0.85 && ${character.currentHp} > ${character.maxHp} * 0.70 && "${character.lastHpAlert}" != "EightyFive"}
+	#if {${character[currentHp]} <= ${character[maxHp]} * 0.85 && ${character[currentHp]} > ${character[maxHp]} * 0.70 && "${character[lastHpAlert]}" != "EightyFive"}
 	{
-		#variable {character.lastHpAlert} {EightyFive};
+		#variable {character[lastHpAlert]} {EightyFive};
 		synth_play hpEightyFive
 	};
-	#elseif {${character.currentHp} <= ${character.maxHp} * 0.70 && ${character.currentHp} > ${character.maxHp} * 0.55 && "${character.lastHpAlert}" != "Seventy"}
+	#elseif {${character[currentHp]} <= ${character[maxHp]} * 0.70 && ${character[currentHp]} > ${character[maxHp]} * 0.55 && "${character[lastHpAlert]}" != "Seventy"}
 	{
-		#variable {character.lastHpAlert} {Seventy};
+		#variable {character[lastHpAlert]} {Seventy};
 		synth_play hpSeventy
 	};
-	#elseif {${character.currentHp} <= ${character.maxHp} * 0.55 && ${character.currentHp} > ${character.maxHp} * 0.40 && "${character.lastHpAlert}" != "FiftyFive"}
+	#elseif {${character[currentHp]} <= ${character[maxHp]} * 0.55 && ${character[currentHp]} > ${character[maxHp]} * 0.40 && "${character[lastHpAlert]}" != "FiftyFive"}
 	{
-		#variable {character.lastHpAlert} {FiftyFive};
+		#variable {character[lastHpAlert]} {FiftyFive};
 		synth_play hpFiftyFive
 	};
-	#elseif {${character.currentHp} <= ${character.maxHp} * 0.40 && ${character.currentHp} > ${character.maxHp} * 0.25 && "${character.lastHpAlert}" != "Forty"}
+	#elseif {${character[currentHp]} <= ${character[maxHp]} * 0.40 && ${character[currentHp]} > ${character[maxHp]} * 0.25 && "${character[lastHpAlert]}" != "Forty"}
 	{
-		#variable {character.lastHpAlert} {Forty};
+		#variable {character[lastHpAlert]} {Forty};
 		synth_play hpForty
 	};
-	#elseif {${character.currentHp} <= ${character.maxHp} * 0.25 && ${character.currentHp} > ${character.maxHp} * 0.10 && "${character.lastHpAlert}" != "TwentyFive"}
+	#elseif {${character[currentHp]} <= ${character[maxHp]} * 0.25 && ${character[currentHp]} > ${character[maxHp]} * 0.10 && "${character[lastHpAlert]}" != "TwentyFive"}
 	{
-		#variable {character.lastHpAlert} {TwentyFive};
+		#variable {character[lastHpAlert]} {TwentyFive};
 		synth_play hpTwentyFive
 	};
-	#elseif {${character.currentHp} <= ${character.maxHp} * 0.10 && "${character.lastHpAlert}" != "Ten"}
+	#elseif {${character[currentHp]} <= ${character[maxHp]} * 0.10 && "${character[lastHpAlert]}" != "Ten"}
 	{
-		#variable {character.lastHpAlert} {Ten};
+		#variable {character[lastHpAlert]} {Ten};
 		synth_play hpTen;
-		#if {"${auto.recall}" == "true"}
+		#if {"${auto[recall]}" == "true"}
 		{
 			/
 		};
-		#if {"${auto.boneprison}" == "true" && ${character.currentMana} >= 45}
+		#if {"${auto[boneprison]}" == "true" && ${character[currentMana]} >= 45}
 		{
-			#if {"${kxwt.terrain}" != "{7|18|19|20|21|23|25|31|32}"}
+			#if {"${kxwt[terrain}" != "{7|18|19|20|21|23|25|31|32}"]}
 			{
 				#nop {Interupt all current actions in game, to do bone prison.};
 				'\cc;
@@ -240,89 +240,90 @@
 			}
 		}
 	};
-	#if {${character.currentMana} <= ${character.maxMana} * 0.75 && ${character.currentMana} > ${character.maxMana} * 0.50 && "${character.lastManaAlert}" != "manaExcellent"}
+	#if {${character[currentMana]} <= ${character[maxMana]} * 0.75 && ${character[currentMana]} > ${character[maxMana]} * 0.50 && "${character[lastManaAlert]}" != "manaExcellent"}
 	{
-		#variable {character.lastManaAlert} {manaExcellent};
+		#variable {character[lastManaAlert]} {manaExcellent};
 		synth_play manaExcellent
 	};
-	#elseif {${character.currentMana} <= ${character.maxMana} * 0.50 && ${character.currentMana} > ${character.maxMana} * 0.25 && "${character.lastManaAlert}" != "manaGood"}
+	#elseif {${character[currentMana]} <= ${character[maxMana]} * 0.50 && ${character[currentMana]} > ${character[maxMana]} * 0.25 && "${character[lastManaAlert]}" != "manaGood"}
 	{
-		#variable {character.lastManaAlert} {manaGood};
+		#variable {character[lastManaAlert]} {manaGood};
 		synth_play manaGood
 	};
-	#elseif {${character.currentMana} <= ${character.maxMana} * 0.15 && "${character.lastManaAlert}" != "manaLow"}
+	#elseif {${character[currentMana]} <= ${character[maxMana]} * 0.15 && "${character[lastManaAlert]}" != "manaLow"}
 	{
-		#variable {character.lastManaAlert} {manaLow};
+		#variable {character[lastManaAlert]} {manaLow};
 		synth_play manaLow
 	};
-	#if {${character.currentMv} <= ${character.maxMv} * 0.75 && ${character.currentMv} > ${character.maxMv} * 0.50 && "${character.lastMvAlert}" != "mvExcellent"}
+	#if {${character[currentMv]} <= ${character[maxMv]} * 0.75 && ${character[currentMv]} > ${character[maxMv]} * 0.50 && "${character[lastMvAlert]}" != "mvExcellent"}
 	{
-		#variable {character.lastMvAlert} {mvExcellent};
+		#variable {character[lastMvAlert]} {mvExcellent};
 		synth_play mvExcellent
 	};
-	#elseif {${character.currentMv} <= ${character.maxMv} * 0.50 && ${character.currentMv} > ${character.maxMv} * 0.25 && "${character.lastMvAlert}" != "mvGood"}
+	#elseif {${character[currentMv]} <= ${character[maxMv]} * 0.50 && ${character[currentMv]} > ${character[maxMv]} * 0.25 && "${character[lastMvAlert]}" != "mvGood"}
 	{
-		#variable {character.lastMvAlert} {mvGood};
+		#variable {character[lastMvAlert]} {mvGood};
 		synth_play mvGood
 	};
-	#elseif {${character.currentMv} <= ${character.maxMv} * 0.15 && "${character.lastMvAlert}" != "mvLow"}
+	#elseif {${character[currentMv]} <= ${character[maxMv]} * 0.15 && "${character[lastMvAlert]}" != "mvLow"}
 	{
-		#variable {character.lastMvAlert} {mvLow};
+		#variable {character[lastMvAlert]} {mvLow};
 		synth_play mvLow
 	};
-	#if {%1 == %2 && %3 >= %4 - 3 && %5 == %6 && "${character.regenAlert}" != "true"}
+	#if {%1 == %2 && %3 >= %4 - 3 && %5 == %6 && "${character[regenAlert]}" != "true"}
 	{
-		#if {"${kxwt.position}" == "{sitt|sleep}ing"}
+		#if {"${kxwt[position]}" == "{sitt|sleep}ing"}
 		{
 			play regen-complete
 		};
-		#variable {character.regenAlert} {true}
+		#variable {character[regenAlert]} {true}
 	};
 	#if {%1 < %2 - 10 || %3 < %4 - 10 || %5 < %6 - 10}
 	{
-		#unvariable {character.regenAlert}
+		#unvariable {character[regenAlert]}
 	};
-	#if {"${auto.refresh}" == "true" && "${auto.refreshed}" != "true" && ${character.currentMv} < ${character.maxMv} / 5 && ${kxwt.action} == 0}
+	#if {"${auto[refresh]}" == "true" && "${auto[refreshed]}" != "true" && ${character[currentMv]} < ${character[maxMv]} / 5 && ${kxwt[action} == 0]}
 	{
-		#variable {auto.refreshed} {true};
-		#delay {3} {#unvariable {auto.refreshed}};
-		#if {"${skillsAndSpells.areaRefresh}" == "true"}
+		#variable {auto[refreshed]} {true};
+		#delay {3} {#unvariable {auto[refreshed]}};
+		#if {"${skillsAndSpells[areaRefresh]}" == "true"}
 		{
-			#if {${character.currentMana} >= 28 && "${character.inBattle}" != "true"}
+			#if {${character[currentMana]} >= 28 && "${character[inBattle]}" != "true"}
 			{
 				vcast area
 			}
 		};
 		#else
 		{
-			#if {"${skillsAndSpells.refresh}" == "true"}
+			#if {"${skillsAndSpells[refresh]}" == "true"}
 			{
-				#if {${character.currentMana} >= 15 && "${character.inBattle}" != "true"}
+				#if {${character[currentMana]} >= 15 && "${character[inBattle]}" != "true"}
 				{
 					vcast refresh
 				}
 			}
 		}
 	};
-	#if {"${skillsAndSpells.second wind}" == "true" && "${character.exhausted}" != "true" && ${character.currentMv} < ${character.maxMv} / 10}
+	#if {"${skillsAndSpells[second wind]}" == "true" && "${character[exhausted]}" != "true" && ${character[currentMv]} < ${character[maxMv]} / 10}
 	{
 		second wind;
-		#variable {character.exhausted} {true}
+		#variable {character[exhausted]} {true}
 	}
 }
 {8}
 
 #ACTION {^kxwt_rvnum %d$}
 {
-	#if {$vnum != $oldVnum}
+	#if {%1 != $oldVnum}
 	{
 		#if {"$busy" == "true"}
 		{
 			#variable {busy} {false}
 		};
-		#variable {oldVnum} {%1}
+		#variable {oldVnum} {%1};
+		#variable {mineCounter} {0}
 	};
-	#variable {kxwt.rvnum} {%1};
+	#variable {kxwt[rvnum]} {%1};
 	#variable {vnum} {%1};
 	#if {!&{roomVnumList}}
 	{
@@ -343,21 +344,21 @@
 
 #ACTION {^kxwt_terrain %d}
 {
-	#variable {kxwt.terrain} {%1};
+	#variable {kxwt[terrain]} {%1};
 	#variable {terrainNumber} {%1}
 }
 {8}
 
 #ACTION {^kxwt_time %1}
 {
-	#variable {kxwt.time} {%1};
-	#regexp {%1} {{.*} {.*}:{.*} {.*}} {#if {$lastPlayedTime != &2} {#if {"$editorMode" != "true"}{#delay {0.5}{#if {!&{repop.mob}}{#variable {repop.mob} {false}};#if {"${repop.mob}" != "false"}{where ${repop.mob} | prefix mobrepop_};#if {"${repop.instance}" == "true"}{instance | prefix instancerepop_}};#delay {1} {leaderboard_update}};#if {"&4" == "am" && &2 == 6 && &3 == 00} {DRUID_SUNRISE};#if {"&4" == "am" && &2 == 7 && &3 == 00} {play sunrise};#elseif {"&4" == "pm" && &2 == 7 && &3 == 00} {DRUID_SUNSET;play sunset};#if {"$clock" == "true"} {#variable {chimeCounter} {1};#variable {chimeLoop} {};#while {$chimeCounter <= &2}{#variable {chimeLoop} {$chimeLoop $HOME/sounds/clock.opus};#math {chimeCounter} {$chimeCounter + 1}};#echo {&2 O'clock &4};#if {"$msp" == "true"} {#system {play -q $chimeLoop gain $volume &}}}};#variable {lastPlayedTime} {&2}}
+	#variable {kxwt[time]} {%1};
+	#regexp {%1} {{.*} {.*}:{.*} {.*}} {#if {$lastPlayedTime != &2} {#if {"$editorMode" != "true"}{#delay {0.5}{#if {!&{repop[mob]}}{#variable {repop[mob]} {false}};#if {"${repop[mob]}" != "false"}{where ${repop[mob]} | prefix mobrepop_};#if {"${repop[instance]}" == "true"}{instance | prefix instancerepop_}};#delay {1} {leaderboard_update}};#if {"&4" == "am" && &2 == 6 && &3 == 00} {DRUID_SUNRISE};#if {"&4" == "am" && &2 == 7 && &3 == 00} {play sunrise};#elseif {"&4" == "pm" && &2 == 7 && &3 == 00} {DRUID_SUNSET;play sunset};#if {"$clock" == "true"} {#variable {chimeCounter} {1};#variable {chimeLoop} {};#while {$chimeCounter <= &2}{#variable {chimeLoop} {$chimeLoop $HOME/sounds/clock.opus};#math {chimeCounter} {$chimeCounter + 1}};#echo {&2 O'clock &4};#if {"$msp" == "true"} {#system {play -q $chimeLoop gain $volume &}}}};#variable {lastPlayedTime} {&2}}
 }
 {8}
 
 #ACTION {^kxwt_walkdir %d$}
 {
-	#variable {kxwt.walkdir} {%1}
+	#variable {kxwt[walkdir]} {%1}
 }
 {8}
 
@@ -369,14 +370,14 @@
 
 #ACTION {^kxwt_%1 %2}
 {
-	#variable {kxwt.%1} {%2}
+	#variable {kxwt[%1]} {%2}
 }
 {9}
 
 #ACTION {^kxwt_supported$}
 {
 	#cursor {echo} {on};
-	#variable {client.gagPing} {true};
+	#variable {client[gagPing]} {true};
 	ping;
 	set ctrigger on | prefix silent_;
 	set telnetga off | prefix silent_;
