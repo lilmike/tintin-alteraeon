@@ -46,18 +46,7 @@
 
 #TICKER           {versionChecker}  {#if {"$busy" != "true" && "${character[inBattle]}" != "true"}{version | grep Version Tag gtt-${client[release]} | prefix silent_}}                                                     {3600}
 
-<<<<<<< HEAD
-#VARIABLE         {client.release}  {stable}
-#VARIABLE         {client.lastPingName}  {}
-#VARIABLE         {client.tintinAlterAeonUUID}  {}
-#VARIABLE         {client.tintinAlterAeonVersionNumber}          {2018.03}
-=======
 #VARIABLE         {client[release]}  {beta}
 #VARIABLE         {client[lastPingName]}  {}
 #VARIABLE         {client[tintinAlterAeonUUID]}  {}
-<<<<<<< HEAD
 #VARIABLE         {client[tintinAlterAeonVersionNumber]}          {2019.03.21}
-=======
-#VARIABLE         {client[tintinAlterAeonVersionNumber]}          {2019.03.04}
->>>>>>> devel
->>>>>>> master
