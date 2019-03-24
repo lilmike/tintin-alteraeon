@@ -55,5 +55,9 @@
 #VARIABLE         {client[release]}  {beta}
 #VARIABLE         {client[lastPingName]}  {}
 #VARIABLE         {client[tintinAlterAeonUUID]}  {}
+<<<<<<< HEAD
+#VARIABLE         {client[tintinAlterAeonVersionNumber]}          {2019.03.21}
+=======
 #VARIABLE         {client[tintinAlterAeonVersionNumber]}          {2019.03.04}
 >>>>>>> devel
+>>>>>>> master
