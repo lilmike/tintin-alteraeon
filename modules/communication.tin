@@ -3,10 +3,33 @@
 	#replace {pasteText} {silent_%*_} {};
 	#replace {pasteText} {_vcast_%*   } {};
 	#replace {pasteText} { %s} { };
-	#format {pasteText} {%.500s} {$pasteText};
-	$pasteChannel $pasteText
+	#local {tmp} {};
+	#script {IFS=$'\n';for xline in $(fold -s -w 480 <<< "{$pasteText}");do echo "${pasteChannel} $xline";done}
 }
 {2}
+
+#ACTION {^silent_paste_%*}
+{
+	#variable {pasteText} {$pasteText %1}
+}
+{3}
+
+#ACTION {^%w {imm|imms}: %*}
+{
+	#if {"${channel[sounds]}" != "false"}
+	{
+		#if {"%1" == "You"}
+		{
+			synth_play immSendSound
+		};
+		#else
+		{
+			synth_play immReceiveSound
+		}
+	};
+	notify-send %0
+}
+{4}
 
 #ACTION {^%S has restored you to full health!$}
 {
@@ -262,23 +285,6 @@
 }
 {9}
 
-#ACTION {^%w {imm|imms}: %*}
-{
-	#if {"${channel[sounds]}" != "false"}
-	{
-		#if {"%1" == "You"}
-		{
-			synth_play immSendSound
-		};
-		#else
-		{
-			synth_play immReceiveSound
-		}
-	};
-	notify-send %0
-}
-{4}
-
 #ACTION {^(Log in tomorrow for another december advent calendar gift!)$}
 {
 	gift | tail -n 1 | prefix silent_
@@ -406,12 +412,6 @@
 	autobrag I spent %1 experience to buy a practice!
 }
 {9}
-
-#ACTION {^silent_paste_%*}
-{
-	#variable {pasteText} {$pasteText %1}
-}
-{2}
 
 #ACTION {^{\(|\[}%S{\)|\]} %S: %5}
 {
