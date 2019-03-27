@@ -267,11 +267,11 @@
 }
 {9}
 
-#ACTION {^vcast_preservation corpse_You cast a powerful spell on the corpse of %1, slowing its decay.$}
+#ACTION {^You carefully scrape out some of the larger bones to get bonemeal.$}
 {
-	#if {&{client[makeUndead]}}
+	#if {"${auto[junk]}" == "true"}
 	{
-		prepare corpse ${client[makeUndead]}
+		${auto[junkType]} bonemeal
 	}
 }
 {9}
@@ -300,6 +300,15 @@
 		${auto[junkType]} harvested
 	};
 	harvest bone corpse | grep -v has no useful bones remaining
+}
+{9}
+
+#ACTION {^You cut into some necrotic tissue to harvest gravedust.$}
+{
+	#if {"${auto[junk]}" == "true"}
+	{
+		${auto[junkType]} gravedust
+	}
 }
 {9}
 
@@ -645,6 +654,15 @@
 }
 {9}
 
+#ACTION {^vcast_preservation corpse_You cast a powerful spell on the corpse of %1, slowing its decay.$}
+{
+	#if {&{client[makeUndead]}}
+	{
+		prepare corpse ${client[makeUndead]}
+	}
+}
+{9}
+
 #ACTION {^{metal|woad}counter_%d items total.$}
 {
 	#if {"${auto[woad]}" == "true" || "${auto[metal]}" == "true"}
@@ -956,12 +974,6 @@
 }
 {9}
 
-#ALIAS {^{sf|sfo|sfor|sforg|sforge|soulforg|soulforge} %1}
-{
-	vcast soulforge %1 2.%1
-}
-{9}
-
 #ALIAS {^{noauto|auto}{bloodsacrifice|bonearmor|boneprison|consume|fiend}$}
 {
 	#if {"%1" == "auto"}
@@ -1048,6 +1060,12 @@
 		#variable {auto[%2]} {false};
 		#echo {auto%2 disabled.}
 	}
+}
+{9}
+
+#ALIAS {^{sf|sfo|sfor|sforg|sforge|soulforg|soulforge} %1}
+{
+	vcast soulforge %1 2.%1
 }
 {9}
 
