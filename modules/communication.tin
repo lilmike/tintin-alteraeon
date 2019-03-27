@@ -411,7 +411,7 @@
 {
 	#variable {pasteText} {$pasteText %1}
 }
-{9}
+{2}
 
 #ACTION {^{\(|\[}%S{\)|\]} %S: %5}
 {
