@@ -235,7 +235,7 @@
 			#if {"${kxwt[terrain}" != "{7|18|19|20|21|23|25|31|32}"]}
 			{
 				#nop {Interupt all current actions in game, to do bone prison.};
-				'\cc;
+				#send {\cc};
 				c bone prison me
 			}
 		}

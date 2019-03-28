@@ -83,7 +83,7 @@
 
 #MACRO {\cc}
 {
-	'\cc
+	#send {\cc}
 }
 
 #MACRO {\eOR}
