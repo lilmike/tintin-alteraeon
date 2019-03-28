@@ -25,19 +25,11 @@
 }
 {9}
 
-#ACTION {^scrollcounter_(%s%d)%*}
+#ACTION {^scrollcounter_Found %d items matching the criteria: %*}
 {
-	#if {%2 != 1}
-	{
-		#variable {msg} {%2 ${battleScroll}s remaining.}
-	};
-	#else
-	{
-		#variable {msg} {%2 ${battleScroll} remaining.}
-	};
+	#variable {msg} {%1 scrolls remaining.};
 	Add_Event $msg;
-	#showme {$msg};
-	#unvariable {result}
+	#showme {$msg}
 }
 {9}
 
@@ -221,12 +213,12 @@
 #GAG              {^scrollcounter_%*}
 #MACRO {\e\}
 {
-	#regexp {$battleScroll} {{.*} {.*}} {get $battleScroll ${character[container]};use &2;l in ${character[container]} &2 | prefix scrollcounter_};
+	#regexp {$battleScroll} {{.*} {.*}} {get $battleScroll ${character[container]};use &2;l in ${character[container]} &2 +count | prefix scrollcounter_};
 	#else
 	{
 		get $battleScroll ${character[container]};
 		use $battleScroll;
-		l in ${character[container]} $battleScroll | prefix scrollcounter_
+		l in ${character[container]} $battleScroll +count | prefix scrollcounter_
 	}
 }
 
