@@ -29,7 +29,11 @@
 {
 	#variable {msg} {%1 scrolls remaining.};
 	Add_Event $msg;
-	#showme {$msg}
+	#showme {$msg};
+	#if {%1 <= 20}
+	{
+		synth_play warningSound
+	}
 }
 {9}
 
