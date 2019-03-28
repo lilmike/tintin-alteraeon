@@ -14,7 +14,7 @@
 
 #ACTION {^A deadly mist begins rising from %* body...$}
 {
-	say \cc;
+	#send {\cc};
 	play dying-breath-release
 }
 {1}
@@ -61,7 +61,7 @@
 		};
 		#if {"${auto[clay]}" == "true" && "%2" == "stops"}
 		{
-			'\cc;
+			#send {\cc};
 			#variable {castTankMinion} {%1};
 			cast clay man
 		};
@@ -699,7 +699,7 @@
 #ALIAS {^guardian$}
 {
 	#nop {Interupt the queue and make a new bone guardian instantly};
-	'\cc;
+	#send {\cc};
 	#if {!&{character[tankContainer]}}
 	{
 		#variable {character[tankContainer]} {${character[container]}}
@@ -725,7 +725,7 @@
 #ALIAS {^woad$}
 {
 	#nop {Interupt the queue and make a new woad instantly};
-	'\cc;
+	#send {\cc};
 	#if {!&{character[tankContainer]}}
 	{
 		#variable {character[tankContainer]} {${character[container]}}
@@ -869,7 +869,7 @@
 #ALIAS {^metalconstruct$}
 {
 	#nop {Interupt the queue and make a new metal construct instantly};
-	'\cc;
+	#send {\cc};
 	#if {!&{character[tankcontainer]}}
 	{
 		#variable {character[tankContainer]} {${character[container]}}
