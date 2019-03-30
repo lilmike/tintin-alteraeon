@@ -489,11 +489,11 @@
 		#showme {%3 exp%4};
 		#line {gag}
 	};
-	#if {%3 > ${kxwt[expcap} && "${client[capSound]}" == "true"]}
+	#if {%3 > ${kxwt[expcap]} && "${client[capSound]}" == "true"}
 	{
 		play overcap
 	};
-	#elseif {%3 == ${kxwt[expcap} && "${client[capSound]}" == "true"]}
+	#elseif {%3 == ${kxwt[expcap]} && "${client[capSound]}" == "true"}
 	{
 		play cap
 	};
