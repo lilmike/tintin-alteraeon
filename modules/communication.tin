@@ -4,7 +4,7 @@
 	#replace {pasteText} {_vcast_%*   } {};
 	#replace {pasteText} { %s} { };
 	#local {tmp} {};
-	#script {IFS=$'\n';for xline in $(fold -s -w 480 <<< "{$pasteText}");do echo "${pasteChannel} $xline";done}
+	#script {IFS=$'\n';for xline in $(fold -s -w 480 <<< "${pasteText}");do echo "${pasteChannel} $xline";done}
 }
 {2}
 
