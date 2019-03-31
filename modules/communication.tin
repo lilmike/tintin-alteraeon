@@ -1,16 +1,16 @@
 #ACTION {^silent_paste_END_OF_PASTE_TEXT$}
 {
-	#replace {pasteText} {silent_%*_} {};
-	#replace {pasteText} {_vcast_%*   } {};
 	#replace {pasteText} { %s} { };
-	#local {tmp} {};
 	#script {IFS=$'\n';for xline in $(fold -s -w 480 <<< "${pasteText}");do echo "${pasteChannel} $xline";done}
 }
 {2}
 
 #ACTION {^silent_paste_%*}
 {
-	#variable {pasteText} {$pasteText %1}
+	#local {tmp} {%1};
+	#replace {tmp} {vcast_%*_} {};
+	#replace {tmp} {silent_%*_} {};
+	#variable {pasteText} {$pasteText $tmp}
 }
 {3}
 
