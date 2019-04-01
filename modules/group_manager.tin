@@ -1,6 +1,6 @@
 #ACTION {^%S quickly climbs up the side and boards the ship.$}
 {
-	#if {"$group.leader" == "%1"}
+	#if {"${group[leader]}" == "%1"}
 	{
 		enter ship
 	}
@@ -12,6 +12,15 @@
 	#if {"${group[leader]}" == "%1"}
 	{
 		#regexp {%2} {{.*} {.*}} {#if {"&0" == "a dark forest"} {l 2.forest};#else {look &2}}
+	}
+}
+{9}
+
+#ACTION {^%S touches the orb and disappears in a blinding flash of light.$}
+{
+	#if {"${group[leader]}" == "%1"}
+	{
+		touch pillar
 	}
 }
 {9}
