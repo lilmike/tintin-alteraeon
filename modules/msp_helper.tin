@@ -1,14 +1,20 @@
 #ACTION {^(friend) %S completed custom job %*}
 {
-	play friend-complete-quest;
-	notify-send %0
+	#if {"${channel[sounds]}" == "true"}
+	{
+		play friend-complete-quest;
+		notify-send %0
+	}
 }
 {4}
 
 #ACTION {^(friend) %S completed quest %*}
 {
-	play friend-complete-quest;
-	notify-send %0
+	#if {"${channel[sounds]}" == "true"}
+	{
+		play friend-complete-quest;
+		notify-send %0
+	}
 }
 {4}
 
@@ -117,12 +123,6 @@
 }
 {9}
 
-#ACTION {^{\(.*\)A|A} pile of gold coins.$}
-{
-	seq_play gold-coins
-}
-{9}
-
 #ACTION {^A shadow fiend has left the group.$}
 {
 	play shadow-fiend-leave
@@ -156,12 +156,6 @@
 #ACTION {^The corpse of %* is lying here.$}
 {
 	seq_play corpse
-}
-{9}
-
-#ACTION {^{The gods penalize you for botting|You have been penalized for botting}!$}
-{
-	synth_play botthwack
 }
 {9}
 
@@ -285,6 +279,18 @@
 	#variable {mspHelperFormatString} {%1};
 	#replace {mspHelperFormatString} { } {-};
 	play animal_calls/$mspHelperFormatString
+}
+{9}
+
+#ACTION {^{The gods penalize you for botting|You have been penalized for botting}!$}
+{
+	synth_play botthwack
+}
+{9}
+
+#ACTION {^{\(.*\)A|A} pile of gold coins.$}
+{
+	seq_play gold-coins
 }
 {9}
 
