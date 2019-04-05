@@ -483,11 +483,11 @@
 	};
 	#elseif {%2 == 6}
 	{
-		replay | grep -i (friend) | tail %3 | head -1
+		replay 100 | grep -i (friend) | tail %3 | head -1
 	};
 	#else
 	{
-		replay | grep -i the group, ' | tail %3 | head -1
+		replay 100 | grep -i the group, ' | tail %3 | head -1
 	};
 	#variable {replaying} {true};
 	#delay {2} {#unvariable {replaying}}
