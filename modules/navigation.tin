@@ -62,8 +62,9 @@
 {
 	#if {"${auto[waypoint]}" == "true"}
 	{
+		#undelay {waypoint};
 		#send {waypoint %1};
-		waypoint $waypoint
+		#delay {waypoint} {waypoint $waypoint} {3}
 	}
 }
 {9}
