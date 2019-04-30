@@ -248,7 +248,8 @@
 				synth_play defaultReceiveSound
 			}
 		}
-	}
+	};
+	@extract_link{%3}
 }
 {9}
 
@@ -437,7 +438,8 @@
 			}
 		}
 	};
-	notify-send %0
+	notify-send %0;
+@extract_link{%3}
 }
 {9}
 

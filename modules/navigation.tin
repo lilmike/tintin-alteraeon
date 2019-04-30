@@ -218,33 +218,9 @@
 	up
 }
 
-#MACRO {\eJ}
-{
-	#if {"$pathLoaded" == "true"}
-	{
-		#path {walk} {backward}
-	};
-	#else
-	{
-		#showme {Path not loaded.}
-	}
-}
-
 #MACRO {\eK}
 {
 	enter portal
-}
-
-#MACRO {\eL}
-{
-	#if {"$pathLoaded" == "true"}
-	{
-		#path {walk} {forward}
-	};
-	#else
-	{
-		#showme {Path not loaded.}
-	}
 }
 
 #MACRO {\eO}
