@@ -202,7 +202,7 @@
 
 #ACTION {^Your total fame is now %d.$}
 {
-	autobrag %0
+	Channel_Event all %0 autobrag %0
 }
 {9}
 
@@ -299,7 +299,11 @@
 	};
 	#else
 	{
-		synth_play broadcastChannel
+		#nop {Play default channel sounds for channels that aren't ignored.};
+		#if {"%1" != "friend"}
+		{
+			synth_play broadcastChannel
+		}
 	};
 	#list {channel[all]} {insert} {1} {%2};
 	#list {channel[%1]} {insert} {1} {%2};
