@@ -562,17 +562,17 @@
 		#if {%1 > 1}
 		{
 			#echo {%1 ${auto[boneMaterial]}s remaining.};
-			Add_Event %1 ${auto[boneMaterial]}s remaining.
+			Channel_Event all %1 ${auto[boneMaterial]}s remaining.
 		};
 		#if {%1 == 1}
 		{
 			#echo {1 ${auto[boneMaterial]} remaining.};
-			Add_Event 1 ${auto[boneMaterial]} remaining.;
+			Channel_Event all 1 ${auto[boneMaterial]} remaining.;
 			synth_play warningSound
 		};
 		#if {%1 == 0}
 		{
-			Add_Event You have used your last ${auto[boneMaterial]}\.;
+			Channel_Event all You have used your last ${auto[boneMaterial]}\.;
 			#echo {This is your last ${auto[boneMaterial]}\.};
 			synth_play warningSound
 		}
@@ -670,17 +670,17 @@
 		#if {%2 > 1}
 		{
 			#echo {%2 ${auto[%1Material]}s remaining.};
-			Add_Event %2 ${auto[%1Material]}s remaining.
+			Channel_Event all %2 ${auto[%1Material]}s remaining.
 		};
 		#if {%2 == 1}
 		{
 			#echo {1 ${auto[%1Material]} remaining.};
-			Add_Event 1 ${auto[%1Material]} remaining.;
+			Channel_Event all 1 ${auto[%1Material]} remaining.;
 			synth_play warningSound
 		};
 		#if {%2 == 0}
 		{
-			Add_Event You have used your last ${auto[%1Material]}\.;
+			Channel_Event all You have used your last ${auto[%1Material]}\.;
 			#echo {This is your last ${auto[%1Material]}\.};
 			synth_play warningSound
 		}
@@ -690,7 +690,7 @@
 
 #ACTION {^{woad|metal}counter_Nothing.$}
 {
-	Add_Event You have used your last ${auto[%1Material]}\.;
+	Channel_Event all You have used your last ${auto[%1Material]}\.;
 	#echo {This is your last ${auto[%1Material]}\.};
 	synth_play warningSound
 }

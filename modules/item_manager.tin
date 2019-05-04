@@ -28,7 +28,7 @@
 #ACTION {^scrollcounter_Found %d items matching the criteria: %*}
 {
 	#variable {msg} {%1 scrolls remaining.};
-	Add_Event $msg;
+	Channel_Event all $msg;
 	#showme {$msg};
 	#if {%1 <= 20}
 	{
