@@ -275,6 +275,22 @@
 }
 {8}
 
+#ALIAS {^AUTOMESSAGE %S$}
+{
+	#variable {auto[message]} {%1};
+	#replace {auto[message]} {noauto} {auto};
+	#format {auto[message]} {%n} {$auto.message};
+	#if {"%1" == "auto%*"}
+	{
+		#echo {${auto[message]} enabled.}
+	};
+	#else
+	{
+		#echo {${auto[message]} disabled.}
+	}
+}
+{9}
+
 #ALIAS {^Channel_Event %S %2}
 {
 	#if {&{%1Channel}}
