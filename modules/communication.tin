@@ -279,7 +279,7 @@
 {
 	#variable {auto[message]} {%1};
 	#replace {auto[message]} {noauto} {auto};
-	#format {auto[message]} {%n} {$auto.message};
+	#format {auto[message]} {%n} {$auto[message]};
 	#if {"%1" == "auto%*"}
 	{
 		#echo {${auto[message]} enabled.}
