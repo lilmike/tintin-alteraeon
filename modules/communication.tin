@@ -147,7 +147,7 @@
 
 #ACTION {^Three {more spinning|spinning} wheels appear in the air before you!$}
 {
-	#nop {We use a client.variable here because they always reset, and this is just temp info we don't need to save across sessions.};
+	#nop {We use a client[variable] here because they always reset, and this is just temp info we don't need to save across sessions.};
 	#if {"%1" == "spinning"}
 	{
 		#variable {client[gambleGame]} {slots}
@@ -319,7 +319,7 @@
 
 #ALIAS {^autobrag %1}
 {
-	#if {"${auto[brag]}" == "true" && "${channel[sounds]}" != "false"}
+	#if {"${auto[brag]}" == "true"}
 	{
 		#if {!&{channel[brag]}}
 		{
