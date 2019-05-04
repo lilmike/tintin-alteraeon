@@ -262,7 +262,7 @@
 
 #ALIAS {^autobrag %s%S$}
 {
-	#variable {channel[brag]} {%2};
+	#variable {character[bragChannel]} {%2};
 	#echo {Brag channel set to %2};
 	#variable {auto[brag]} {true};
 	AUTOMESSAGE autobrag
@@ -321,9 +321,9 @@
 {
 	#if {"${auto[brag]}" == "true"}
 	{
-		#if {!&{channel[brag]}}
+		#if {!&{character[bragChannel]}}
 		{
-			#variable {channel[brag]} {xp}
+			#variable {character[bragChannel]} {xp}
 		};
 		#regexp {%1} {vcast_{.*}_{.*}} {#variable {channel[message]} {&2}};
 		#else
@@ -340,7 +340,7 @@
 		#replace {channel[message]} {your} {my};
 		#replace {channel[message]} {Your} {My};
 		#replace {channel[message]} {You} {I};
-		${channel[brag]}  ${channel[message]}
+		${character[bragChannel]}  ${channel[message]}
 	}
 }
 {9}
