@@ -208,7 +208,7 @@
 
 #ACTION {^[%S] %w: %3}
 {
-	#local {channelName} {%2};
+	#local {channelName} {%1};
 	#nop {Hook name is channel name non-plural.};
 	#nop {Hook args %1 Name.};
 	#nop {Hook args %3 message to channel.};
