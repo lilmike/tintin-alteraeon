@@ -274,7 +274,14 @@
 
 #ALIAS {^Channel_Event %S %2}
 {
+<<<<<<< HEAD
 	#if {&{%1Channel}}
+=======
+	#variable {auto[message]} {%1};
+	#replace {auto[message]} {noauto} {auto};
+	#format {auto[message]} {%n} {${auto[message]}};
+	#if {"%1" == "auto%*"}
+>>>>>>> 675efcfa52f47a77406a93a001d65884b4ec8e50
 	{
 		synth_play %1Channel
 	};
