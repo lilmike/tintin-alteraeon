@@ -1,3 +1,10 @@
+#substitute {^~} {} {9}
+#alias {^repla%*}
+{
+#send {%0 | prefix ~}
+}
+{9}
+
 #ACTION {^silent_paste_END_OF_PASTE_TEXT$}
 {
 	#replace {pasteText} { %s} { };
@@ -51,7 +58,7 @@
 }
 {9}
 
-#ACTION {^%S %w, '%3'$}
+#ACTION {^%w %w, '%3'$}
 {
 	#local {channelName} {};
 	#list {i} {tokenize} {%2};
