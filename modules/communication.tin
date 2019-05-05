@@ -30,6 +30,7 @@
 
 #ACTION {^%S has restored you to full health!$}
 {
+	#variable {channelSilence} {true};
 	Channel_Event all %0;
 	notify-send %0
 }
@@ -38,6 +39,7 @@
 #ACTION {^{The|Double} {experience|mob|monster death exp cap}%*{\.|!}$}
 {
 	synth_play notificationSound;
+	#variable {channelSilence} {true};
 	Channel_Event all %0;
 	notify-send %0
 }
@@ -140,6 +142,7 @@
 #ACTION {^THE SERVER HAS DETECTED FILESYSTEM CORRUPTION.}
 {
 	synth_play attention;
+	#variable {channelSilence} {true};
 	Channel_Event all %0;
 	notify-send %0
 }
@@ -173,6 +176,7 @@
 
 #ACTION {^You can now learn the {skill|spell} '%2'!$}
 {
+	#variable {channelSilence} {true};
 	Channel_Event all %0
 }
 {9}
@@ -202,7 +206,9 @@
 
 #ACTION {^Your total fame is now %d.$}
 {
-	Channel_Event all %0 autobrag %0
+	#variable {channelSilence} {true};
+	Channel_Event all %0;
+	autobrag %0
 }
 {9}
 
@@ -222,8 +228,10 @@
 
 #ACTION {^silent_Your gift was:%1}
 {
+	#variable {channelSilence} {true};
 	Channel_Event all Your daily gift was:%1;
-	notify-send Your daily gift was %1 autobrag My daily gift was %1
+	notify-send Your daily gift was %1;
+	autobrag My daily gift was %1
 }
 {9}
 
@@ -235,6 +243,7 @@
 
 #ACTION {^{casting.*_You|You} gain favor in the eyes of %S!$}
 {
+	#variable {channelSilence} {true};
 	Channel_Event all You gained favor in the eyes of %2!;
 	play favor;
 	notify-send you gained favor in the eyes of %2!;
@@ -299,10 +308,18 @@
 	};
 	#else
 	{
-		#nop {Play default channel sounds for channels that aren't ignored.};
-		#if {"%1" != "{friend|gain}"}
+		#nop {Only play sounds if silent flag is not true.};
+		#if {"${channelSilence}" == "false"}
 		{
-			synth_play broadcastChannel
+			#nop {Play default channel sounds for channels that aren't ignored.};
+			#if {"%1" != "{friend|gain}"}
+			{
+				synth_play broadcastChannel
+			}
+		};
+		#else
+		{
+			#variable {channelSilence} {false}
 		}
 	};
 	#list {channel[all]} {insert} {1} {%2};
@@ -637,3 +654,4 @@
 #VARIABLE         {channel}  {}
 #VARIABLE         {channelBuffer}  {{1}{all}{2}{auction}{3}{bovine}{4}{cowsay}{5}{clantell}{6}{event}{7}{friend}{8}{gossip}{9}{grouptell}{10}{music}{11}{tell}{12}{say}{13}{chat}{14}{imm}}
 #VARIABLE         {channelBufferIndex}  {1}
+#VARIABLE         {channelSilence}  {false}
