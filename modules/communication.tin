@@ -1,10 +1,3 @@
-#substitute {^~} {} {9}
-#alias {^repla%*}
-{
-#send {%0 | prefix ~}
-}
-{9}
-
 #ACTION {^silent_paste_END_OF_PASTE_TEXT$}
 {
 	#replace {pasteText} { %s} { };
@@ -219,20 +212,6 @@
 }
 {9}
 
-#ACTION {^{\(|\[}%S{\)|\]} %4{:|\s*posted:} %6}
-{
-	#local {channelName} {%2};
-	#nop {Hook name is channel name non-plural.};
-	#nop {Hook args %4 Name.};
-	#nop {Hook args %6 message to channel.};
-	Channel_Event $channelName %0;
-	#if {"%1" != "You"}
-	{
-		@do_hook{$channelName;%2;%6}
-	}
-}
-{9}
-
 #ACTION {^silent_Your gift was:%1}
 {
 	#variable {channelSilence} {true};
@@ -245,6 +224,20 @@
 #ACTION {^silent_autobrag_You can train to get a practice, at a cost of %d experience each.$}
 {
 	autobrag I spent %1 experience to buy a practice!
+}
+{9}
+
+#ACTION {^{\(|\[}%S{\)|\]} %4{:|\s*posted:} %6}
+{
+	#local {channelName} {%2};
+	#nop {Hook name is channel name non-plural.};
+	#nop {Hook args %4 Name.};
+	#nop {Hook args %6 message to channel.};
+	Channel_Event $channelName %0;
+	#if {"%1" != "You"}
+	{
+		@do_hook{$channelName;%2;%6}
+	}
 }
 {9}
 
@@ -393,6 +386,12 @@
 #ALIAS {^pimp%+ %2}
 {
 	%1 @pimp{%2}
+}
+{9}
+
+#ALIAS {^repla%*}
+{
+	#send {%0 | prefix ^}
 }
 {9}
 
@@ -658,6 +657,7 @@
 	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
 }
 
+#SUBSTITUTE       {^\^}  {}  {9}
 #VARIABLE         {channel}  {}
 #VARIABLE         {channelBuffer}  {{1}{all}{2}{auction}{3}{bovine}{4}{cowsay}{5}{clantell}{6}{event}{7}{friend}{8}{gossip}{9}{grouptell}{10}{music}{11}{tell}{12}{say}{13}{chat}{14}{imm}}
 #VARIABLE         {channelBufferIndex}  {1}
