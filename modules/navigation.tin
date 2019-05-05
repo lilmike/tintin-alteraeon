@@ -220,11 +220,6 @@
 
 #MACRO {\eK}
 {
-	enter portal
-}
-
-#MACRO {\eO}
-{
 	#if {&{doorName}}
 	{
 		open $doorName $lastDirection

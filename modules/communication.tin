@@ -300,7 +300,7 @@
 	#else
 	{
 		#nop {Play default channel sounds for channels that aren't ignored.};
-		#if {"%1" != "friend"}
+		#if {"%1" != "{friend|gain}"}
 		{
 			synth_play broadcastChannel
 		}
@@ -374,7 +374,7 @@
 
 #ALIAS {^view %s%w$}
 {
-	#format {i} {%n} {%2};
+	#format {i} {%l} {%2};
 	#replace {i} {Repl{y|ies}} {Tell};
 	#if {&{channel[$i]}}
 	{
