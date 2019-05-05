@@ -561,11 +561,13 @@
 	{
 		#if {%1 > 1}
 		{
+			#variable {channelSilence} {true};
 			#echo {%1 ${auto[boneMaterial]}s remaining.};
 			Channel_Event all %1 ${auto[boneMaterial]}s remaining.
 		};
 		#if {%1 == 1}
 		{
+			#variable {channelSilence} {true};
 			#echo {1 ${auto[boneMaterial]} remaining.};
 			Channel_Event all 1 ${auto[boneMaterial]} remaining.;
 			synth_play warningSound
@@ -669,17 +671,20 @@
 	{
 		#if {%2 > 1}
 		{
+			#variable {channelSilence} {true};
 			#echo {%2 ${auto[%1Material]}s remaining.};
 			Channel_Event all %2 ${auto[%1Material]}s remaining.
 		};
 		#if {%2 == 1}
 		{
+			#variable {channelSilence} {true};
 			#echo {1 ${auto[%1Material]} remaining.};
 			Channel_Event all 1 ${auto[%1Material]} remaining.;
 			synth_play warningSound
 		};
 		#if {%2 == 0}
 		{
+			#variable {channelSilence} {true};
 			Channel_Event all You have used your last ${auto[%1Material]}\.;
 			#echo {This is your last ${auto[%1Material]}\.};
 			synth_play warningSound

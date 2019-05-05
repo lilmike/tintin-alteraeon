@@ -27,6 +27,7 @@
 
 #ACTION {^scrollcounter_Found %d items matching the criteria: %*}
 {
+	#variable {channelSilence} {true};
 	#variable {msg} {%1 scrolls remaining.};
 	Channel_Event all $msg;
 	#showme {$msg};
