@@ -212,16 +212,16 @@
 }
 {9}
 
-#ACTION {^[%S] %w: %3}
+#ACTION {^{\(|\[}%S{\(|\]} %4{:|\s*posted:} %6}
 {
-	#local {channelName} {%1};
+	#local {channelName} {%2};
 	#nop {Hook name is channel name non-plural.};
-	#nop {Hook args %1 Name.};
-	#nop {Hook args %3 message to channel.};
+	#nop {Hook args %4 Name.};
+	#nop {Hook args %6 message to channel.};
 	Channel_Event $channelName %0;
 	#if {"%1" != "You"}
 	{
-		@do_hook{$channelName;%1;%3}
+		@do_hook{$channelName;%2;%6}
 	}
 }
 {9}
