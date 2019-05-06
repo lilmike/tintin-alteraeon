@@ -127,7 +127,7 @@
 
 #ALIAS {^{musicc|musicch|musiccha|musicchan|musicchann|musicchanne|musicchannel} %s%S$}
 {
-	#variable {channel[music]} {%3};
+	#variable {character[musicChannel]} {%3};
 	#echo {Music channel set to %3.}
 }
 {9}
@@ -255,11 +255,11 @@
 
 #MACRO {\eM}
 {
-	#if {!&{channel[music]}}
+	#if {!&{character[musicChannel]}}
 	{
-		#variable {channel[music]} {music}
+		#variable {character[musicChannel]} {music}
 	};
-	mpost ${channel[music]}
+	mpost ${character[musicChannel]}
 }
 
 #MACRO {\eR}
