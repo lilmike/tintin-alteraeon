@@ -104,6 +104,13 @@
 }
 {9}
 
+#ACTION {^(Notify)%*}
+{
+	#variable {channelSilence} {true};
+	Channel_Event all %0
+}
+{8}
+
 #ACTION {^(friend) %1 has entered the game.$}
 {
 	#variable {friendNameEnter} {%1};
@@ -227,7 +234,7 @@
 }
 {9}
 
-#ACTION {^{\(|\[}%S{\)|\]} %4{:|\s*posted:} %6}
+#ACTION {^{\(|\[}%s{\)|\]} %4{:|\s*posted:} %6}
 {
 	#local {channelName} {%2};
 	#nop {Hook name is channel name non-plural.};

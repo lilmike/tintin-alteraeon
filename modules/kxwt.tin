@@ -282,7 +282,7 @@
 	{
 		#unvariable {character[regenAlert]}
 	};
-	#if {"${auto[refresh]}" == "true" && "${auto[refreshed]}" != "true" && ${character[currentMv]} < ${character[maxMv]} / 5 && ${kxwt[action} == 0]}
+	#if {"${auto[refresh]}" == "true" && "${auto[refreshed]}" != "true" && ${character[currentMv]} < ${character[maxMv]} / 4 && ${kxwt[action} == 0]}
 	{
 		#variable {auto[refreshed]} {true};
 		#delay {3} {#unvariable {auto[refreshed]}};

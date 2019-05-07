@@ -1,5 +1,6 @@
 #ACTION {^(auction) %1 sold for %d gold coins.$}
 {
+	Channel_Event auction %0;
 	#if {"${character[cspam]}" == "true"}
 	{
 		#line {gag};
@@ -11,6 +12,7 @@
 
 #ACTION {^(auction) '%1', going %S for %d gold coins.$}
 {
+	Channel_Event auction %0;
 	#if {"${character[cspam]}" == "true"}
 	{
 		#echo {'%1', going %2 for %3 gold.}
@@ -25,6 +27,7 @@
 
 #ACTION {^(auction) Auction failed, item returned to seller.$}
 {
+	Channel_Event auction %0;
 	#if {"${character[cspam]}" == "true"}
 	{
 		#echo {Auction failed.};
@@ -36,6 +39,7 @@
 
 #ACTION {^(auction) Current bid is %d gold coins for '%2'.$}
 {
+	Channel_Event auction %0;
 	#if {"${character[cspam]}" == "true"}
 	{
 		#line {gag}
@@ -45,6 +49,7 @@
 
 #ACTION {^(auction) New bid: %d gold coins for '%2'.$}
 {
+	Channel_Event auction %0;
 	#line {gag};
 	#if {"${character[cspam]}" == "true"}
 	{
@@ -75,6 +80,7 @@
 
 #ACTION {^(auction) Starting bid on '%1' at %d gold.$}
 {
+	Channel_Event auction %0;
 	#variable {auction[minimumBid]} {%2};
 	#line {gag};
 	#if {"${character[cspam]}" == "true"}
@@ -90,12 +96,14 @@
 
 #ACTION {^(auction) The item of interest appears to have vanished.  Terminating auction.$}
 {
+	Channel_Event auction %0;
 	#variable {auction[bidAmount]} {0}
 }
 {9}
 
 #ACTION {^(auction) {First|Second|Last} call for '%2', at %d gold coins.$}
 {
+	Channel_Event auction %0;
 	#variable {auction[minimumBid]} {%3};
 	#if {"${character[cspam]}" == "true"}
 	{
