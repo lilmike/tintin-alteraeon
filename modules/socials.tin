@@ -1,5 +1,6 @@
 #ACTION {^%S yel{ls|l}, '{W|w}azzup!'$}
 {
+	Channel_Event all %0;
 	#if {"$channelSounds" == "true"}
 	{
 		seq_play socials/wazzup
