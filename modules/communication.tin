@@ -234,7 +234,7 @@
 }
 {9}
 
-#ACTION {^{\(|\[}%s{\)|\]} %4{:|\s*posted:} %6}
+#ACTION {^{\(|\[}%w{\)|\]} %4{:|\s+posted:} %6}
 {
 	#local {channelName} {%2};
 	#nop {Hook name is channel name non-plural.};
