@@ -45,6 +45,13 @@
 }
 {7}
 
+#ACTION {^(Notify)%*}
+{
+	#variable {channelSilence} {true};
+	Channel_Event all %0
+}
+{8}
+
 #ACTION {^ %sYou now have %d explorer points.$}
 {
 	autobrag %0
@@ -104,13 +111,6 @@
 }
 {9}
 
-#ACTION {^(Notify)%*}
-{
-	#variable {channelSilence} {true};
-	Channel_Event all %0
-}
-{8}
-
 #ACTION {^(friend) %1 has entered the game.$}
 {
 	#variable {friendNameEnter} {%1};
@@ -137,6 +137,12 @@
 	play friend-death;
 	Channel_Event friend %0;
 	notify-send %0
+}
+{9}
+
+#ACTION {^*** YOU RECEIVE %d BONUS CAMEL EXPERIENCE. HAPPY HUMP DAY! ***$}
+{
+	autobrag You RECEIVED %1 BONUS CAMEL EXPERIENCE. HAPPY HUMP DAY!
 }
 {9}
 
