@@ -142,7 +142,7 @@
 
 #ACTION {^*** YOU RECEIVE %d BONUS CAMEL EXPERIENCE. HAPPY HUMP DAY! ***$}
 {
-	autobrag You RECEIVED %1 BONUS CAMEL EXPERIENCE. HAPPY HUMP DAY!
+	autobrag You received %1 bonus camel experience. HAPPY HUMP DAY!
 }
 {9}
 
