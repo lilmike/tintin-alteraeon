@@ -45,12 +45,12 @@
 }
 {7}
 
-#ACTION {^(Notify)%*}
+#ACTION {^(notify)%*}
 {
 	#variable {channelSilence} {true};
 	Channel_Event all %0
 }
-{8}
+{9}
 
 #ACTION {^ %sYou now have %d explorer points.$}
 {

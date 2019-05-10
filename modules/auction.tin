@@ -39,7 +39,6 @@
 
 #ACTION {^(auction) Current bid is %d gold coins for '%2'.$}
 {
-	Channel_Event auction %0;
 	#if {"${character[cspam]}" == "true"}
 	{
 		#line {gag}
