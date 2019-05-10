@@ -325,7 +325,7 @@
 		#if {"${channelSilence}" == "false"}
 		{
 			#nop {Play default channel sounds for channels that aren't ignored.};
-			#if {"%1" != "{friend|gain}"}
+			#if {"%1" != "{example|friend|gain}"}
 			{
 				synth_play broadcastChannel
 			}
