@@ -45,13 +45,6 @@
 }
 {7}
 
-#ACTION {^(notify)%*}
-{
-	#variable {channelSilence} {true};
-	Channel_Event all %0
-}
-{9}
-
 #ACTION {^ %sYou now have %d explorer points.$}
 {
 	autobrag %0
@@ -137,6 +130,13 @@
 	play friend-death;
 	Channel_Event friend %0;
 	notify-send %0
+}
+{9}
+
+#ACTION {^(notify)%*}
+{
+	#variable {channelSilence} {true};
+	Channel_Event all %0
 }
 {9}
 
@@ -315,6 +315,11 @@
 
 #ALIAS {^Channel_Event %S %2}
 {
+	#nop {Return for things that do not need any processing at all.};
+	#if {"%1" == "{example|gain}"}
+	{
+		#return
+	};
 	#if {&{%1Channel}}
 	{
 		synth_play %1Channel
@@ -324,7 +329,7 @@
 		#nop {Only play sounds if silent flag is not true.};
 		#if {"${channelSilence}" == "false"}
 		{
-			#nop {Play default channel sounds for channels that aren't ignored.};
+			#nop {Play default channel sounds for channels that don't have their own sounds.};
 			#if {"%1" != "{example|friend|gain}"}
 			{
 				synth_play broadcastChannel
