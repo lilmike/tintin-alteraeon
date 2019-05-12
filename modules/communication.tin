@@ -133,10 +133,14 @@
 }
 {9}
 
-#ACTION {^(notify)%*}
+#ACTION {^(notify) %w %2}
 {
+	#nop {Hook name: notify};
+	#nop {Hook arg: %1 name of person in the notification.};
+	#nop {Hook arg: %2 contents of the notification.};
 	#variable {channelSilence} {true};
-	Channel_Event all %0
+	Channel_Event all %0;
+	@do_hook{notify;%1;%2}
 }
 {9}
 
@@ -201,7 +205,7 @@
 }
 {9}
 
-#ACTION {^You spend %d points and improve at '%2'!$}
+#ACTION {^You spend %d %2 points and improve at '%3'!$}
 {
 	autobrag %0
 }
