@@ -1,10 +1,12 @@
-#ACTION {^%S %2, ':{$trustedCommands}%s'$}
+#ACTION {^%S %2, '{,|:}{$trustedCommands}%s'$}
 {
+	#variable {channelSilence} {true};
+	Channel_Event grouptell %0;
 	#list {trustedList} {find} {%1} {trust[index]};
 	synth_play trustedCommandSound;
 	#if {${trust[index]} > 0}
 	{
-		#switch {"%3"}
+		#switch {"%4"}
 		{
 			#case {"fame"}
 			{
@@ -38,14 +40,14 @@
 
 #ACTION {^silent_{trust|untrust}_Name: '%S'$}
 {
-	#format {trust[name} {%n} {%2]};
+	#format {trust[name]} {%n} {%2};
 	#list {trustedList} {find} {${trust[name]}} {trust[index]};
 	#if {"%1" == "trust"}
 	{
 		#if {${trust[index]} == 0}
 		{
 			#list {trustedList} {add} {${trust[name]}};
-			#showme {You have granted trust to ${trust[name]}\.}
+			#showme {You have granted trust to ${trust[name]}.}
 		};
 		#else
 		{
@@ -56,7 +58,7 @@
 	{
 		#if {${trust[index]} > 0}
 		{
-			#showme {Removing trust for ${trustedList[${trust[index]}]}\.};
+			#showme {Removing trust for ${trustedList[${trust[index]}]}.};
 			#list {trustedList} {delete} {${trust[index]}}
 		};
 		#else
@@ -93,4 +95,4 @@
 {9}
 
 #VARIABLE         {trust}  {{index}{0}{name}{0}}
-#VARIABLE         {trustedCommands}  {fame|pick .*|recall|rest|sit|sleep|talk .*|target .*|quest .*|open .*|lock .*|unlock .*|use .*}
+#VARIABLE         {trustedCommands}  {fame|pick .*|recall|rest|sit|sleep|talk .*|target .*|quest .*|open .*|lock .*|unlock .*|use .*|way .*}
