@@ -218,12 +218,12 @@
 #GAG              {^scrollcounter_%*}
 #MACRO {\e\}
 {
-	#regexp {$battleScroll} {{.*} {.*}} {get $battleScroll ${character[container]};use &2;l in ${character[container]} &2 +count | prefix scrollcounter_};
+	#regexp {$battleScroll} {{.*} {.*}} {get $battleScroll ${character[container]};use &2;l in ${character[container]} +ncount &2 +count | prefix scrollcounter_};
 	#else
 	{
 		get $battleScroll ${character[container]};
 		use $battleScroll;
-		l in ${character[container]} $battleScroll +count | prefix scrollcounter_
+		l in ${character[container]} +ncount $battleScroll +count | prefix scrollcounter_
 	}
 }
 
