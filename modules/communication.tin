@@ -133,14 +133,14 @@
 }
 {9}
 
-#ACTION {^(notify) %w %2}
+#ACTION {^({friend|notify}) %w %2}
 {
 	#nop {Hook name: notify};
 	#nop {Hook arg: %1 name of person in the notification.};
 	#nop {Hook arg: %2 contents of the notification.};
 	#variable {channelSilence} {true};
 	Channel_Event all %0;
-	@do_hook{notify;%1;%2}
+	@do_hook{notify;%2;%3}
 }
 {9}
 
@@ -345,7 +345,18 @@
 		}
 	};
 	#list {channel[all]} {insert} {1} {%2};
-	#list {channel[%1]} {insert} {1} {%2};
+	#if {"%1" != "all"}
+	{
+		#list {channel[%1]} {insert} {1} {%2}
+	};
+	#else
+	{
+		#list {channel[all]} {size} {i}
+	};
+	#if {$i >= 101}
+	{
+		#list {channel[all]} {delete} {101}
+	};
 	#list {channel[%1]} {size} {i};
 	#if {$i >= 101}
 	{

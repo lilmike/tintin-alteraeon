@@ -10,22 +10,22 @@
 		{
 			#case {"fame"}
 			{
-				brag gt areafame
+				#delay {1d3} {brag gt areafame}
 			};
 			#case {"target%*"}
 			{
-				#if {"$rally" == "true"}
+				#if {"${skillsAndSpells[rally]}" == "true"}
 				{
-					#regexp {%3} {{.*} {.*}} {rally &2}
+					#delay {1d3} {#regexp {%3} {{.*} {.*}} {rally &2}}
 				};
 				#else
 				{
-					#regexp {%3} {{.*} {.*}} {target &2}
+					#delay {1d3} {#regexp {%3} {{.*} {.*}} {target &2}}
 				}
 			};
 			#default
 			{
-				%4
+				#delay {1d3} {%4}
 			}
 		}
 	}
@@ -95,4 +95,4 @@
 {9}
 
 #VARIABLE         {trust}  {{index}{0}{name}{0}}
-#VARIABLE         {trustedCommands}  {fame|pick .*|recall|rest|sit|sleep|talk .*|target .*|quest .*|open .*|lock .*|unlock .*|use .*|way .*}
+#VARIABLE         {trustedCommands}  {fame|get .*|pick .*|recall|rest|sit|sleep|talk .*|target .*|quest .*|open .*|lock .*|unlock .*|use .*|way .*}
