@@ -27,7 +27,7 @@
 #VARIABLE         {hpTwentyFive}  {"|sox -np synth sq C#5 sq D#5 sq F#5 sq A5 sq C#6 remix - fade p 0 .7 .4" remix v0.9 v0.4}
 #VARIABLE         {immReceiveSound}  {"|sox -np synth pl E2 pl B2 pl E3 delay 0 .1 .2 remix - bend .2,800,.2 fade 0 .75 flanger" gain -3}
 #VARIABLE         {immChannel}  {"|sox -np synth pl E2 pl B2 pl E3 delay 0 .1 .2 remix - bend .2,800,.2 fade 0 .75 flanger reverse" gain -3}
-#VARIABLE         {kelnaleChannelSound}  {"|sox -np synth sine 480 sine 660 sine 550 sine 770 sine 990 sine 1200 delay 0 0 .1 .1 .2 .2 remix - fade 0 0.35"}
+#VARIABLE         {rittykatChannel}  {"|sox -np synth sine 480 sine 660 sine 550 sine 770 sine 990 sine 1200 delay 0 0 .1 .1 .2 .2 remix - fade 0 0.35"}
 #VARIABLE         {manaExcellent}  {"|sox -np synth pl D2 pl A3 pl D3 pl F#3 delay 0 .05 .1 .15 remix - fade 0 0.55"}
 #VARIABLE         {manaGood}  {"|sox -np synth pl C3 pl E3 pl G3 pl C4 pl E4 delay 0 .05 .1 .15 .2 remix - fade 0 0.55"}
 #VARIABLE         {manaLow}  {"|sox -np synth pl G2 pl B2 pl D3 pl G3 pl D4 pl F4 delay 0 .05 .1 .15 .2 .25 remix - fade 0 0.55"}
