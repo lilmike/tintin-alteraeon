@@ -11,6 +11,13 @@
 }
 {8}
 
+#ACTION {^Your hook gets stuck on something, and you have to break the line and stop fishing.$}
+{
+	play stop-fishing;
+	#delay {1d4} {#if {1d2 == 1} {fish};#else {fis}}
+}
+{8}
+
 #ACTION {%1 hook gets caught, forcing {him|her|it} to break the line.$}
 {
 	play fish-line-break
