@@ -81,7 +81,7 @@
 
 #FUNCTION {percent}
 {
-	#math {result} {(%1 / %2}) * 100.0};
+	#math {result} {(%1 / %2) * 100.0};
 	#format {result} {%d} {$result}
 }
 
