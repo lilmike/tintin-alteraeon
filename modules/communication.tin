@@ -140,7 +140,8 @@
 	#nop {Hook arg: %2 contents of the notification.};
 	#variable {channelSilence} {true};
 	Channel_Event all %0;
-	@do_hook{notify;%2;%3}
+	@do_hook{notify;%2;%3};
+	notify-send %0
 }
 {9}
 
