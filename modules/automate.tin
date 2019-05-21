@@ -1,0 +1,34 @@
+#FUNCTION {autorefresh}
+{
+	#if {&{client[exhausted]} && "$inBattle" == "true"}
+	{
+		#return #nop
+	};
+	#if {"${skillsAndSpells[second wind]}" == "true" && "$inBattle" == "true"}
+	{
+		#if {${character[hpPercent]} <= 10}
+		{
+			@command{sec;second wind}
+		}
+	};
+	#if {"$inBattle" == "true"}
+	{
+		#return #nop
+	};
+	#if {"${skillsAndSpells[refresh]}" == "true" && "$inBattle" != "true"}
+	{
+		#if {${character[hpPercent]} <= 15 && ${character[currentMana]} >= 15}
+		{
+			@command{c ref;cast refresh}
+		}
+	};
+	#if {"${skillsAndSpells[area refresh]}" == "true" && "$inBattle" != "true"}
+	{
+		#if {${character[hpPercent]} <= 15 && ${character[currentMana]} >= 28}
+		{
+			@command{c area;cast area refresh}
+		}
+	};
+	#return #nop
+}
+

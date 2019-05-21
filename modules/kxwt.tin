@@ -201,7 +201,7 @@
 	{
 		#variable {character[lastMvAlert]} {0}
 	};
-	#nop {Sounds, hooks, and autocode for health, mana, and movement.};
+	#nop {Audio prompts.};
 	#if {${character[hpPercent]} / 10 != ${character[lastHpAlert]}}
 	{
 		#math {character[lastHpAlert]} {${character[hpPercent]} / 10};
@@ -225,6 +225,11 @@
 	#if {${character[hpPercent]} < 95 || ${character[manaPercent]} < 95 || ${character[mvPercent]} < 95}
 	{
 		#unvariable {character[regenAlert]}
+	};
+	#nop {automation};
+	#if {"${auto[refresh]}" == "true"}
+	{
+		@autorefresh{}
 	}
 }
 {8}

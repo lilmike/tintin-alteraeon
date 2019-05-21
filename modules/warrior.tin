@@ -25,7 +25,8 @@
 
 #ACTION {^The physical reserve deep within you feels replenished.$}
 {
-	#unvariable {character[exhausted]};
+	#nop {client variables are always temperary.};
+	#unvariable {client[exhausted]};
 	play reserve-replenish
 }
 {9}
@@ -53,6 +54,13 @@
 #ACTION {^You successfully finished a full %d attack combo!}
 {
 	play combo-full-%1
+}
+{9}
+
+#ACTION {^You suddenly feel less tired and more refreshed!$}
+{
+	#nop {client variables are always temperary.};
+	#variable {client[exhausted] {true}}
 }
 {9}
 
@@ -409,6 +417,5 @@
 {9}
 
 #VARIABLE         {combo}  {{setKey}{false}}
-#VARIABLE         {exhausted}  {}
 #VARIABLE         {lastRandomAttack}  {{1}{0}{2}{0}}
 #VARIABLE         {lastRescued}  {}
