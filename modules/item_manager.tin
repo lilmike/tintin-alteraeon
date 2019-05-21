@@ -49,7 +49,7 @@
 {
 	#variable {corpseVnum} {%2};
 	#send {get coins $corpseVnum | grep -v There's nothing left};
-	#if {"${skillsAndSpells[corpsecutter]}" == "true" && !&{inBattle}}
+	#if {"${skillsAndSpells[corpsecutter]}" == "true" && !&{character[inBattle]}}
 	{
 		harvest components $corpseVnum | grep -v Looks like someone else beat you to it
 	};

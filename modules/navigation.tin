@@ -161,7 +161,7 @@
 #ALIAS {^{d|do|dow|down|e|ea|eas|east|n|ne|nea|neas|neast|no|nor|nort|north|northe|northea|northeas|northeast|northw|northwe|northwes|northwest|nw|nwe|nwes|nwest|s|se|sea|seas|seast|so|sou|sout|south|southe|southea|southeas|southeast|southw|southwe|southwes|southwest|sw|swe|swes|swest|u|up|w|we|wes|west}$}
 {
 	#variable {lastDirection} {%0};
-	#if {"$retreat" == "true" && "$autoretreat" == "true" && "$inBattle" == "true"}
+	#if {"$retreat" == "true" && "$autoretreat" == "true" && "${character[inBattle]}" == "true"}
 	{
 		retreat $lastDirection
 	};
