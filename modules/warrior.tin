@@ -77,6 +77,13 @@
 }
 {9}
 
+#ACTION {^Your body is still too exhausted from last time.$}
+{
+	#nop {client variables are always temperary.};
+	#variable {client[exhausted] {true}}
+}
+{9}
+
 #ACTION {^silent_ Length %d \x7c %2}
 {
 	#variable {combo[attack]} {%2};
