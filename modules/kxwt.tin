@@ -188,6 +188,20 @@
 	#variable {character[currentMv]} {%5};
 	#variable {character[maxMv]} {%6};
 	#variable {character[mvPercent]} {@percent{${character[currentMv]};${character[maxMv]}}};
+	#nop {Make sure alert variables are the correct type or sounds will not play.};
+	#if {!&{character[lastHpAlert]} || "${character[lastHpAlert]}" == ""}
+	{
+		#variable {character[lastHpAlert]} {0}
+	};
+	#if {!&{character[lastManaAlert]} || "${character[lastManaAlert]}" == ""}
+	{
+		#variable {character[lastManaAlert]} {0}
+	};
+	#if {!&{character[lastMvAlert]} || "${character[lastMvAlert]}" == ""}
+	{
+		#variable {character[lastMvAlert]} {0}
+	};
+	#nop {Sounds, hooks, and autocode for health, mana, and movement.};
 	#if {${character[hpPercent]} / 10 != ${character[lastHpAlert]}}
 	{
 		#math {character[lastHpAlert]} {${character[hpPercent]} / 10};
@@ -205,7 +219,7 @@
 	};
 	#if {%1 == %2 && %3 >= %4 - 3 && %5 == %6 && "${character[regenAlert]}" != "true"}
 	{
-			play regen-complete;
+		play regen-complete;
 		#variable {character[regenAlert]} {true}
 	};
 	#if {${character[hpPercent]} < 95 || ${character[manaPercent]} < 95 || ${character[mvPercent]} < 95}
