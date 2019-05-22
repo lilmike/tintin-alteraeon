@@ -537,10 +537,20 @@
 {
 	#if {"${character[cspam]}" == "true"}
 	{
-		#if {"${cspam[lastLineOfText]}" == "%0" && "%0" != "{${cspam[textCounterExceptions]}}" && "%0" != ""}
+		#regexp {%0} {^{${cspam[textCounterExceptions]}|}$} {#nop {Matched an exception or an empty string, don't do anything.}};
+		#else
 		{
-			#math {cspam[lastLineOfTextCounter]} {${cspam[lastLineOfTextCounter]} + 1};
-			#line {gag}
+			#regexp {%0} {^${cspam[lastLineOfText]}$} {#math {cspam[lastLineOfTextCounter]} {${cspam[lastLineOfTextCounter]} + 1};#line {gag}};
+			#else
+			{
+				#if {${cspam[lastLineOfTextCounter]} > 1}
+				{
+					#echo {(X${cspam[lastLineOfTextCounter]})};
+					#variable {cspam[oldText]} {${cspam[lastLineOfText]}}
+				};
+				#variable {cspam[lastLineOfText]} {%0};
+				#variable {cspam[lastLineOfTextCounter]} {1}
+			}
 		};
 		#else
 		{
