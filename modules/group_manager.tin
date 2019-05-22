@@ -106,7 +106,7 @@
 }
 {9}
 
-#ACTION {^silent_follow %s(mutual)%s%w$}
+#ACTION {^silent_follow %s(mutual)%s%w}
 {
 	#if {"${auto[follow]}" == "true"}
 	{
