@@ -217,7 +217,7 @@
 		#math {character[lastMvAlert]} {${character[mvPercent]} / 10};
 		synth_play mv${character[lastMvAlert]}
 	};
-	#if {%1 == %2 && %3 >= %4 - 3 && %5 == %6 && "${character[regenAlert]}" != "true"}
+	#if {%1 == %2 && %3 >= %4 - 3 && %5 == %6 && "${character[regenAlert]}" != "true" && "${kxwt[position]}" != "standing"}
 	{
 		play regen-complete;
 		#variable {character[regenAlert]} {true}
