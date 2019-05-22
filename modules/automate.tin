@@ -6,7 +6,7 @@
 	};
 	#if {"${skillsAndSpells[second wind]}" == "true" && "${character[inBattle]}" == "true"}
 	{
-		#if {${character[mvPercent]} <= 10 && "${client[exhausted]}" != "tue"}
+		#if {${character[mvPercent]} <= 10 && "${client[exhausted]}" != "true"}
 		{
 			@command{sec;second wind}
 		}
