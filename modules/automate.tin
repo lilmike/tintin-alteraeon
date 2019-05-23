@@ -1,3 +1,27 @@
+#ACTION {^{A|An} {wood woad|greater ice elemental|ice elemental|lesser ice elemental|greater crystal elemental|crystal elemental|lesser crystal elemental|greater fire elemental|fire pillar elemental|lesser fire elemental|bone guardian|flesh beast|metal construct|clay man|liveoak|ancient oak tree} heroically rescues %*!$}
+{
+	#if {&{auto[cassist]}}
+	{
+		@command{a;assist}
+	}
+}
+{9}
+
+#ALIAS {^{noc|c}autoassist$}
+{
+	#if {"%1" == "noc"}
+	{
+		#unvariable {auto[cassist]};
+		#showme {Client side autoassist disabled.}
+	};
+	#else
+	{
+		#variable {auto[cassist]} {1};
+		#showme {Client side autoassist enabled.}
+	}
+}
+{9}
+
 #FUNCTION {autorefresh}
 {
 	#if {&{client[exhausted]} && "${character[inBattle]}" == "true"}
