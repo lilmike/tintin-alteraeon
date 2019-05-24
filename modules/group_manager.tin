@@ -1,3 +1,12 @@
+#ACTION {^silent_follow %s(mutual)%s %w %4)$}
+{
+	#if {"${auto[follow]}" == "true"}
+	{
+		follow %3
+	}
+}
+{8}
+
 #ACTION {^%S quickly climbs up the side and boards the ship.$}
 {
 	#if {"${group[leader]}" == "%1"}
@@ -106,7 +115,7 @@
 }
 {9}
 
-#ACTION {^silent_follow %s(mutual)%s%w}
+#ACTION {^silent_follow %s(mutual)%s %w$}
 {
 	#if {"${auto[follow]}" == "true"}
 	{

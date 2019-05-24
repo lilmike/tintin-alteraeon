@@ -53,7 +53,8 @@
 
 #ACTION {^You successfully finished a full %d attack combo!}
 {
-	play combo-full-%1
+	play combo-full-%1;
+	@do_hook{comboFinish}
 }
 {9}
 
