@@ -8,7 +8,7 @@
 	};
 	#if {&{auto[cassist]}}
 	{
-		#if {!^&{hook[assist]}}
+		#if {!&{hook[assist]}}
 		{
 			@command{a;assist}
 		};
