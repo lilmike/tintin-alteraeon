@@ -1,3 +1,11 @@
+#ACTION {^A deposit of %1 is depleted.$}
+{
+	#nop {Hook Name: mineDepleted};
+	#nop {Hook Args: mined material.};
+	@do_hook{mineDepleted;%1}
+}
+{9}
+
 #ACTION {^You begin prospecting.$}
 {
 	#variable {isProspecting} {1}

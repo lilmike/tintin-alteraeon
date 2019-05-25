@@ -48,7 +48,7 @@
 			@command{sec;second wind}
 		}
 	};
-	#if {"${character[inBattle]}" == "true"}
+	#if {${kxwt[action]} != 0}
 	{
 		#return #nop
 	};
