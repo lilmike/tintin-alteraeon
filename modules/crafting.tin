@@ -17,14 +17,14 @@
 	synth_play notificationSound;
 	#variable {mineCounter} {0};
 	#variable {isProspecting} {0};
-	do_hook{prospectFinish}
+	@do_hook{prospectFinish}
 }
 {9}
 
 #ACTION {^You give up on prospecting anymore.$}
 {
 	#variable {isProspecting} {0};
-	do_hook{prospectFinish}
+	@do_hook{prospectFinish}
 }
 {9}
 
