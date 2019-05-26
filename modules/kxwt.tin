@@ -236,6 +236,9 @@
 
 #ACTION {^kxwt_rvnum %d$}
 {
+	#nop {Hook name: rvnum};
+	#nop {Hook args: %1 new room number};
+	#nop {Hook args: %2 old room number};
 	#if {%1 != $oldVnum}
 	{
 		#if {"$busy" == "true"}
@@ -260,7 +263,8 @@
 	{
 		#list {roomVnumList} {sort} {%1};
 		#variable {exploredRoomString} {}
-	}
+	};
+	@do_hook{rvnum}
 }
 {8}
 
