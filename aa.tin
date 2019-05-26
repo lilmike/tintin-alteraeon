@@ -56,21 +56,33 @@
 }
 {8}
 
-#ALIAS {^bot{kill|load|reload} %S$}
+#ALIAS {^bot{kill|load} %S$}
 {
-	#nop {Kill, load, or reload a specified bot.};
-	#if {"%1" == "{kill|reload}"}
-	{
-		#class {%2} {kill};
-		#unticker {bot%*};
-		#showme {Bot %2 has been killed.}
-	};
-	#if {"%1" == "{load|reload}"}
-	{
-		#showme {Loading bot %2.tin};
-		#class {%2} {read} {modules/bots/%2.tin};
-		#class {gameData} {open}
-	}
+    #nop {Kill, load, or reload a specified bot.};
+    #if {"%1" == "kill"}
+    {
+        #local {exists} {@bot_%1{}};
+        #variable {exists} {$exists};
+        #if {"$exists" != "@%*"}
+        {
+            $exists
+        };
+        #class {bot_%2} {kill};
+        #class {gameData} {open};
+        #showme {bot %2 has been killed.}
+    };
+    #if {"%1" == "load"}
+    {
+        #showme {Loading bot %2.tin};
+        #class {gameData} {close};
+        #class {bot_%2} {read} {modules/bots/%2.tin};
+        #local {exists} {@bot_%1{}};
+        #variable {exists} {$exists};
+        #if {"$exists" != "@%*"}
+        {
+            $exists
+        }
+    }
 }
 {9}
 

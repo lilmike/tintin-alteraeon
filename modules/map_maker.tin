@@ -124,7 +124,8 @@
 
 #EVENT {END OF PATH}
 {
-	#unvariable {pathLoaded}
+	#unvariable {pathLoaded};
+	@do_hook{endOfPath}
 }
 
 #VARIABLE         {pathName}  {}
