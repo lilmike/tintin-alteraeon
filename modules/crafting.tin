@@ -8,7 +8,8 @@
 
 #ACTION {^You begin prospecting.$}
 {
-	#variable {isProspecting} {1}
+	#variable {isProspecting} {1};
+	@do_hook{prospectStart}
 }
 {9}
 
