@@ -239,6 +239,7 @@
 	#nop {Hook name: rvnum};
 	#nop {Hook args: %1 new room number};
 	#nop {Hook args: %2 old room number};
+	@do_hook{rvnum;%1;$oldVnum};
 	#if {%1 != $oldVnum}
 	{
 		#if {"$busy" == "true"}
@@ -263,8 +264,7 @@
 	{
 		#list {roomVnumList} {sort} {%1};
 		#variable {exploredRoomString} {}
-	};
-	@do_hook{rvnum;%1;$oldVnum}
+	}
 }
 {8}
 
