@@ -37,6 +37,13 @@
 }
 {9}
 
+#ACTION {^You stop prospecting}
+{
+	#variable {isProspecting} {0};
+	@do_hook{prospectFinish}
+}
+{9}
+
 #ACTION {^{You uncover a deposit of .+ and stake it out\.|.+ discovers a deposit of .+\.}$}
 {
 	#math {mineCounter} {$mineCounter+1};
