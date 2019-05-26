@@ -10,7 +10,7 @@
 {
 	#nop {Hook name: mineStart};
 	#nop {Hook args: %1 material being mined};
-	do_hook{mineStart;%1}
+	@do_hook{mineStart;%1}
 }
 {9}
 
