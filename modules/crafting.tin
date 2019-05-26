@@ -1,8 +1,16 @@
 #ACTION {^A deposit of %1 is depleted.$}
 {
-	#nop {Hook Name: mineDepleted};
+	#nop {Hook Name: mineFinish};
 	#nop {Hook Args: mined material.};
-	@do_hook{mineDepleted;%1}
+	@do_hook{mineFinish;%1}
+}
+{9}
+
+#ACTION {^You begin excavating a deposit of %1.$}
+{
+	#nop {Hook name: mineStart};
+	#nop {Hook args: %1 material being mined};
+	do_hook{mineStart;%1}
 }
 {9}
 
