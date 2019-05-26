@@ -234,7 +234,7 @@
 }
 {8}
 
-#ACTION {^kxwt_rvnum %d$}
+#ACTION {^kxwt_rvnum {\d*}}
 {
 	#nop {Hook name: rvnum};
 	#nop {Hook args: %1 new room number};
@@ -264,7 +264,7 @@
 		#list {roomVnumList} {sort} {%1};
 		#variable {exploredRoomString} {}
 	};
-	@do_hook{rvnum}
+	@do_hook{rvnum;%1;$oldVnum}
 }
 {8}
 
