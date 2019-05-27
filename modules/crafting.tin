@@ -37,7 +37,7 @@
 }
 {9}
 
-#ACTION {^You stop prospecting}
+#ACTION {^You {are too tired to continue|stop} prospecting}
 {
 	#variable {isProspecting} {0};
 	@do_hook{prospectFinish}
