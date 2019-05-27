@@ -74,7 +74,7 @@
 
 #ACTION {^You attempt to pin %1's shadow to the ground, but miss!$}
 {
-	#if {"${skillsAndSpells[shadow bind]}" == "true" && !&{chharacter[inBattle]} && &{client[bindName]}}
+	#if {"${skillsAndSpells[shadow bind]}" == "true" && "${character[inBattle]}" == "false" && &{client[bindName]}}
 	{
 		shadow bind ${client[bindName]}
 	}
