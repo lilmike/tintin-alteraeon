@@ -147,7 +147,8 @@
 
 #ACTION {^*** YOU RECEIVE %d BONUS CAMEL EXPERIENCE. HAPPY HUMP DAY! ***$}
 {
-	autobrag You received %1 bonus camel experience. HAPPY HUMP DAY!
+	autobrag You received %1 bonus camel experience. HAPPY HUMP DAY!;
+	#format {character[lastCamel]} {%T}
 }
 {9}
 
