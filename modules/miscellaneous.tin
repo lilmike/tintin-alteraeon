@@ -437,7 +437,7 @@
 	{
 		#local {dayOfWeek} {};
 		#script {dayOfWeek} {date +%w};
-		#if {${dayOfWeek[1]} != 3}
+		#if {"${dayOfWeek[1]}" != "3"}
 		{
 			#showme {It doesn't appear to be hump day right now, but in case it is in server time...}
 		};
