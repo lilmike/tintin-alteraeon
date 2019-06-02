@@ -1,6 +1,6 @@
 #ACTION {%1 begins trying to pick %2...$}
 {
-	#if {"%1" == "${group[leader}"]}
+	#if {"%1" == "${group[leader]}"]}
 	{
 		#regexp {%2} {{doors|door|gates|gate|portcullis|trapdoor}} {pick &1};
 		#else
