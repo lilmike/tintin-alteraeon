@@ -509,4 +509,4 @@
 	}
 }
 
-#TICKER           {autotitle}  {#if {"${auto[title]}" == "true" && "$editorMode" != "true"}{Get_Music_Message_String;#if {"${music[newAutoTitleString]}" != "${music[oldAutoTitleString]}"}{#variable {music[oldAutoTitleString]} {${music[newAutoTitleString]}};title ${music[newAutoTitleString]} | prefix silent_}}}                                                                                                                                                                                                                                                         {1.50}
+#TICKER           {autotitle}  {#if {"${auto[title]}" == "true" && "${kxwt[context]}" == "{(none)?}"}{Get_Music_Message_String;#if {"${music[newAutoTitleString]}" != "${music[oldAutoTitleString]}"}{#variable {music[oldAutoTitleString]} {${music[newAutoTitleString]}};title ${music[newAutoTitleString]} | prefix silent_}}}                                                                                                                                                                                                                                                         {1.50}
