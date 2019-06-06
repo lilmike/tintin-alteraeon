@@ -29,8 +29,12 @@
 }
 {5}
 
-#ACTION {^You weep as you think of the %1 experience that you lost.$}
+#ACTION {^You weep as you think of the %d experience that you lost.$}
 {
+	#if {${character[currentHp]} >= 1}
+	{
+		#return #nop
+	};
 	experience lost | grep -i you have lost | prefix silent_;
 	#if {&{groupExperience}}
 	{
