@@ -255,7 +255,7 @@
 	{
 		#list {randomAttack} {add} {gstrike}
 	};
-	#if {"${skillsAndSpells[flourish]}" == "true" && "${character[inBattle]}" == "true"}
+	#if {"${skillsAndSpells[flourish]}" == "true" && "${skillsAndSpells[cross class tactics]}" == "true"}
 	{
 		#list {randomAttack} {add} {flourish}
 	};
@@ -291,7 +291,7 @@
 	{
 		#list {randomAttack} {add} {riposte}
 	};
-	#if {"${skillsAndSpells[shield slam]}" == "true" && "${skillsAndSpells[advanced tactics]}" == "true" && "${auto[slam]}" == "true"}
+	#if {"${skillsAndSpells[shadow bind]}" == "true" && "${skillsAndSpells[cross class tactics]}" == "true"}
 	{
 		#list {randomAttack} {add} {slam}
 	};
