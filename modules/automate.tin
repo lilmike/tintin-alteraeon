@@ -37,6 +37,10 @@
 
 #FUNCTION {autorefresh}
 {
+	#if {"${kxwt[context]}" != "none" && "${kxwt[context]}" != ""}
+	{
+		#return #nop
+	};
 	#if {&{client[exhausted]} && "${character[inBattle]}" == "true"}
 	{
 		#return #nop
@@ -48,7 +52,7 @@
 			@command{sec;second wind}
 		}
 	};
-	#if {${kxwt[action]} != 0}
+	#if {${kxwt[action]} > 50}
 	{
 		#return #nop
 	};
