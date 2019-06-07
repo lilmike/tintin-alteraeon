@@ -37,7 +37,7 @@
 }
 {9}
 
-#ACTION {^%w %w{[,:]} {'?}%5{'?}$}
+#ACTION {^%w %w{, '|: }%4{'?}$}
 {
 	#local {channelName} {};
 	#list {i} {tokenize} {%2};
@@ -53,7 +53,7 @@
 	Channel_Event $channelName %0;
 	#if {"%1" != "You"}
 	{
-		@do_hook{$channelName;%1;%5}
+		@do_hook{$channelName;%1;%4}
 	}
 }
 {9}
@@ -308,7 +308,7 @@
 #ALIAS {^Channel_Event %S %2}
 {
 	#nop {Return for things that do not need any processing at all.};
-	#if {"%1" == "{example|gain}"}
+	#if {"%1" == "{example|gain|are}"}
 	{
 		#return
 	};
