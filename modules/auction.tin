@@ -84,7 +84,7 @@
 	#line {gag};
 	#if {"${character[cspam]}" == "true"}
 	{
-		#showme {Starting bid: '%1' %d gold.}
+		#showme {Starting bid: '%1' %2 gold.}
 	};
 	#else
 	{
