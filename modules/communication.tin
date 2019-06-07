@@ -14,20 +14,6 @@
 }
 {3}
 
-#ACTION {^%w {imm|imms}: %*}
-{
-	#if {"%1" == "You"}
-	{
-		synth_play immSendSound
-	};
-	#else
-	{
-		synth_play immReceiveSound
-	};
-	notify-send %0
-}
-{4}
-
 #ACTION {^%S has restored you to full health!$}
 {
 	#variable {channelSilence} {true};
@@ -51,7 +37,7 @@
 }
 {9}
 
-#ACTION {^%w %w, '%3'$}
+#ACTION {^%w %w{[,:]} {'?}%5{'?}$}
 {
 	#local {channelName} {};
 	#list {i} {tokenize} {%2};
@@ -67,7 +53,7 @@
 	Channel_Event $channelName %0;
 	#if {"%1" != "You"}
 	{
-		@do_hook{$channelName;%1;%3}
+		@do_hook{$channelName;%1;%5}
 	}
 }
 {9}
