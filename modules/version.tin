@@ -3,7 +3,7 @@
 	#if {"${client[lastPingName]}" != "%1"}
 	{
 		#line {gag};
-		tell %1 tintin-alteraeon V${client[tintinAlterAeonVersionNumber]} by Storm Dragon and contributers: http://github.com/stormdragon2976/tintin-alteraeon (This is the ${client[release]} version);
+		tell %1 tintin-alteraeon V${client[tintinAlterAeonVersionNumber]} by Storm Dragon and contributers: https://gitlab.com/stormdragon2976/tintin-alteraeon (This is the ${client[release]} version);
 		#variable {client[lastPingName]} {%1}
 	};
 	#else
@@ -35,7 +35,7 @@
 {
 	GET_UUID;
 	lecho _gtt++ ${client[tintinAlterAeonVersionNumber]} ${client[tintinAlterAeonUUID]};
-	lecho tintin-alteraeon V${client[tintinAlterAeonVersionNumber]} by Storm Dragon and contributers: https://github.com/stormdragon2976/tintin-alteraeon;
+	lecho tintin-alteraeon V${client[tintinAlterAeonVersionNumber]} by Storm Dragon and contributers: https://gitlab.com/stormdragon2976/tintin-alteraeon;
 	#if {"${client[release]}" == "beta"}
 	{
 		lecho Thanks for testing the beta code. If you find bugs please tell us about them on the cowsay channel.
