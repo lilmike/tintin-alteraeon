@@ -271,6 +271,10 @@
 	{
 		#list {randomAttack} {add} {kick}
 	};
+	#if {"${skillsAndSpells[knife throwing]}" == "true" && "${skillsAndSpells[cross class tactics]}" == "true"}
+	{
+		#list {randomAttack} {add} {slam}
+	};
 	#if {"${skillsAndSpells[knockback]}" == "true"}
 	{
 		#list {randomAttack} {add} {knockback}
