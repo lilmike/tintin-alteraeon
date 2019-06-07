@@ -19,6 +19,16 @@
 }
 {9}
 
+#ACTION {%1 notices and ignores your feigned attack.$}
+{
+	#if {"${character[cspam]}" == "true"}
+	{
+		#showme {%1 ignores your feignt.};
+		#line {gag}
+	}
+}
+{9}
+
 #ACTION {A ball of light flies idly in circles around your head.}
 {
 	#if {"${character[cspam]}" == "true"}

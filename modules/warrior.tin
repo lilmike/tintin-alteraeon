@@ -90,12 +90,13 @@
 	#variable {combo[attack]} {%2};
 	#replace {combo[attack]} {\x7c} { ${combo[target]};};
 	#replace {combo[attack]} {berserking} {berserk};
+	#replace {combo[attack]} {bloodlet} {};
 	#replace {combo[attack]} {cleave {\s.\w};} {cleave;};
 	#replace {combo[attack]} {ground strike} {gstrike};
 	#replace {combo[attack]} {leap attack} {leap};
 	#replace {combo[attack]} {pommel strike} {pommel};
+	#replace {combo[attack]} {knife throwing} {throw shadow};
 	#replace {combo[attack]} {x} {randomattack};
-	#replace {combo[attack]} {shield slam} {slam};
 	#if {"${combo[setKey]}" != "false"}
 	{
 		set${combo[setKey]} ${combo[attack]}
@@ -273,7 +274,7 @@
 	};
 	#if {"${skillsAndSpells[knife throwing]}" == "true" && "${skillsAndSpells[cross class tactics]}" == "true"}
 	{
-		#list {randomAttack} {add} {slam}
+		#list {randomAttack} {add} {throw shadow}
 	};
 	#if {"${skillsAndSpells[knockback]}" == "true"}
 	{
