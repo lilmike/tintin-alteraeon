@@ -303,7 +303,7 @@
 	};
 	#if {"${skillsAndSpells[shadow bind]}" == "true" && "${skillsAndSpells[cross class tactics]}" == "true"}
 	{
-		#list {randomAttack} {add} {slam}
+		#list {randomAttack} {add} {shadow bind}
 	};
 	#if {"${skillsAndSpells[stomp]}" == "true"}
 	{
@@ -374,7 +374,7 @@
 }
 {9}
 
-#ALIAS {^{auto|noauto}{berserk|charge|disarm|retreat|riposte|slam|valor}$}
+#ALIAS {^{auto|noauto}{berserk|charge|disarm|retreat|riposte|valor}$}
 {
 	#if {"%1" == "auto"}
 	{
