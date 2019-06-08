@@ -92,6 +92,7 @@
 	#replace {combo[attack]} {berserking} {berserk};
 	#replace {combo[attack]} {bloodlet} {};
 	#replace {combo[attack]} {cleave {\s.\w};} {cleave;};
+	#replace {combo[attack]} {crippling strike} {cripple};
 	#replace {combo[attack]} {ground strike} {gstrike};
 	#replace {combo[attack]} {leap attack} {leap};
 	#replace {combo[attack]} {pommel strike} {pommel};
@@ -243,6 +244,10 @@
 	#if {"${skillsAndSpells[cleave]}" == "true" && "${skillsAndSpells[advanced tactics]}" == "true"}
 	{
 		#list {randomAttack} {add} {cleave}
+	};
+	#if {"${skillsAndSpells[crippling strike]}" == "true" && "${skillsAndSpells[cross class tactics]}" == "true"}
+	{
+		#list {randomAttack} {add} {cripple}
 	};
 	#if {"${skillsAndSpells[disarm]}" == "true" && "${skillsAndSpells[advanced tactics]}" == "true" && "${auto[disarm]}" == "true"}
 	{
