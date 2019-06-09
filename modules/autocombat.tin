@@ -19,7 +19,7 @@
 	autocombat;
 	#echo {Will execute every %2 seconds.};
 	@createAutocombatTicker{%2};
-	CSAVE
+	qcsave
 }
 {8}
 
@@ -45,7 +45,7 @@
 	autocombat;
 	#echo {Will execute every 3 seconds.};
 	@createAutocombatTicker{3};
-	CSAVE
+	qcsave
 }
 {9}
 
@@ -69,7 +69,7 @@
 	#list {autocombatList} {clear};
 	#echo {automatic combat disabled.};
 	#unticker {auto_combat};
-	CSAVE
+	qcsave
 }
 {9}
 
