@@ -23,6 +23,21 @@
 }
 {8}
 
+#ALIAS {^autocombat {pause|resume}$}
+{
+	#if {"%1" == "pause"}
+	{
+		#variable {autocombatPaused} {1};
+		#showme {Autocombat paused.}
+	};
+	#else
+	{
+		#unvariable {autocombatPaused};
+		#showme {Autocombat resumed.}
+	}
+}
+{8}
+
 #ALIAS {^autocombat %1}
 {
 	#list {autocombatList} {clear};
