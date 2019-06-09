@@ -1,4 +1,4 @@
-#ACTION {^You jump to assist %*!$}
+#ACTION {^You jump to {assist|attack} %*!$}
 {
 	#undelay {autocombatDelay};
 	#unvariable {autocombatPaused};
