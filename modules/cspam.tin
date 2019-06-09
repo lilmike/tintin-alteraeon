@@ -402,6 +402,15 @@
 }
 {9}
 
+#ACTION {^You quickly evaluate %1 armor and anatomy...$}
+{
+	#if {"${character[cspam]}" == "true"}
+	{
+		#line {gag}
+	}
+}
+{9}
+
 #ACTION {^You reanimate and unpack a ball of twisted bones, forming it into A bone guardian.$}
 {
 	#if {"${character[cspam]}" == "true"}
