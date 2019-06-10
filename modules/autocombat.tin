@@ -75,7 +75,7 @@
 
 #FUNCTION {createAutocombatTicker}
 {
-	#ticker {auto_combat}  {#if {"${autocombatList}" != "" && !&{autocombatPaused}}{#var {autocombatAttack} {${autocombatList[@list_rand{autocombatList}]}};#if {"$autocombatAttack" != "{c|ca|cas|cast|vc|vca|vcas|vcast}%*" && "${kxwt[fighting]}" == "-1"} {#var {autocombatPaused} {1};#unvar {autocombatAttack}};#else {$autocombatAttack;#unvar {autocombatAttack}}}}                                                                                            {%1};
+	#ticker {auto_combat}  {#if {"${autocombatList}" != "" && !&{autocombatPaused}}{#var {autocombatAttack} {${autocombatList[@list_rand{autocombatList}]}};#if {"$autocombatAttack" != "{c|ca|cas|cast|vc|vca|vcas|vcast} %*" && "${kxwt[fighting]}" == "-1"} {#var {autocombatPaused} {1};#unvar {autocombatAttack}};#else {$autocombatAttack;#unvar {autocombatAttack}}}}                                                                                            {%1};
 	#return #nop
 }
 
