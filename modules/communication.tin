@@ -308,7 +308,7 @@
 #ALIAS {^Channel_Event %S %2}
 {
 	#nop {Return for things that do not need any processing at all.};
-	#if {"%1" == "{example|gain|are|i|Number|cost|damage|Type|bid|Flag|Balance|Email|Account|difficulty|string|Weapon|Comp}"}
+	#if {"%1" == "{example|gain|are|i|Number|cost|damage|Type|bid|Flag|Balance|Email|Account|difficulty|string|Weapon|Comp|name|character|date}"}
 	{
 		#return
 	};
