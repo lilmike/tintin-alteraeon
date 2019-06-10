@@ -22,7 +22,7 @@
 }
 {5}
 
-#ACTION {^{The|Double} {experience|mob|monster death exp cap}%*{\.|!}$}
+#ACTION {^Double {mob experience|experience caps for mob kills} {is|are} now enabled!$}
 {
 	synth_play notificationSound;
 	#variable {channelSilence} {true};
