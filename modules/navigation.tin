@@ -63,8 +63,8 @@
 	#if {"${auto[waypoint]}" == "true"}
 	{
 		#undelay {waypoint};
-		#send {waypoint %1};
-		#delay {waypoint} {waypoint $waypoint} {3}
+		#send {$waypointType %1};
+		#delay {waypoint} {$waypointType $waypoint} {3}
 	}
 }
 {9}
@@ -101,8 +101,17 @@
 }
 {9}
 
+#ALIAS {^{c|ca|cas|cast} {gr|gro|grou|group} {w|wa|way|wayp|waypo|waypoi|waypoin|waypoint} %4}
+{
+	#variable {waypointType} {cast group waypoint};
+	#variable {waypoint} {%4};
+	\cast group waypoint %4
+}
+{8}
+
 #ALIAS {^{way|wayp|waypo|waypoi|waypoin|waypoint} %1}
 {
+	#variable {waypointType} {waypoint};
 	#variable {waypoint} {%1};
 	\waypoint %1
 }
@@ -270,3 +279,4 @@
 #VARIABLE         {exits}  {}
 #VARIABLE         {lastDirection}  {}
 #VARIABLE         {waypoint}  {}
+#VARIABLE         {waypointType}  {}
