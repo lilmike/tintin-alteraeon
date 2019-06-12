@@ -39,22 +39,7 @@
 
 #ACTION {^%w %w{, '|: }%4{'?}$}
 {
-	#local {channelName} {};
-	#list {i} {tokenize} {%2};
-	#if {"${i[-1]}" == "s"}
-	{
-		#list {i} {delete} {-1}
-	};
-	#list {i} {simplify} {channelName};
-	#replace {channelName} {;} {};
-	#nop {Hook name is channel name non-plural.};
-	#nop {Hook args %1 Name.};
-	#nop {Hook args %3 message to channel.};
-	Channel_Event $channelName %0;
-	#if {"%1" != "You"}
-	{
-		@do_hook{$channelName;%1;%4}
-	}
+	#regexp {%1} {{[A-Z].+}} {#local {channelName} {};#list {i} {tokenize} {%2};#if {"${i[-1]}" == "s"}{#list {i} {delete} {-1}};#list {i} {simplify} {channelName};#replace {channelName} {;} {};#nop {Hook name is channel name non-plural.};#nop {Hook args %1 Name.};#nop {Hook args %3 message to channel.};Channel_Event $channelName %0;#if {"%1" != "You"}{@do_hook{$channelName;%1;%4}}}
 }
 {9}
 
