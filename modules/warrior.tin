@@ -96,7 +96,14 @@
 	#replace {combo[attack]} {ground strike} {gstrike};
 	#replace {combo[attack]} {leap attack} {leap};
 	#replace {combo[attack]} {pommel strike} {pommel};
-	#replace {combo[attack]} {knife throwing} {throw shadow};
+#if {"${auto[weapon]}" == "true"}
+{	
+#replace {combo[attack]} {knife throwing} {remove $weapon;throw shadow;wield $weapon}
+};
+#else
+{
+#replace {combo[attack]} {knife throwing} {throw shadow}
+};
 	#replace {combo[attack]} {x} {randomattack};
 	#if {"${combo[setKey]}" != "false"}
 	{
@@ -374,7 +381,7 @@
 }
 {9}
 
-#ALIAS {^{auto|noauto}{berserk|charge|disarm|retreat|riposte|valor}$}
+#ALIAS {^{auto|noauto}{berserk|charge|disarm|retreat|riposte|weapon|valor}$}
 {
 	#if {"%1" == "auto"}
 	{
