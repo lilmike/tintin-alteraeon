@@ -209,6 +209,7 @@
 
 #ACTION {^You have toiled long enough. You now follow %S!$}
 {
+	autobrag I now follow the teachings of %1!;
 	play convert-to-god-complete
 }
 {9}

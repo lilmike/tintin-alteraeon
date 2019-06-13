@@ -75,6 +75,29 @@
 }
 {8}
 
+#ACTION {^%w has given you a gift!$}
+{
+	#if {"${auto[thank]}" == "true"}
+	{
+		#local {thankTimer} {0};
+		#local {thankMessage} {};
+		#math {thankTimer} {3d5 * 0.1};
+		#switch {1d2}
+		{
+			#case {1}
+			{
+				#variable {thankMessage} {Thank you.}
+			};
+			#default
+			{
+				#variable {thankMessage} {Thanks.}
+			};
+			#delay {autothank} {tell %1 ${thankMessage}} {${thankTimer}}
+		}
+	}
+}
+{9}
+
 #ACTION {^Press <return> or 'cont' to continue, anything else to quit...$}
 {
 	#history {insert} {#cr}
@@ -775,7 +798,7 @@
 #SUBSTITUTE       {^%sjunk_%2}  { %2}  {5}
 #SUBSTITUTE       {^junk_%1}  {%1}  {5}
 #SUBSTITUTE       {tracking_[%1] }  {}  {5}
-#TICKER           {historyWriter}  {#if {&{name}} {#history {write} {$historyPath}}}                        {5.00}
+#TICKER           {historyWriter}  {#if {&{name}} {#history {write} {$historyPath}}}                        {5}
 #VARIABLE         {bufferLock}  {off}
 #VARIABLE         {castTankMinion}  {true}
 #VARIABLE         {lastHpAlert}  {}
