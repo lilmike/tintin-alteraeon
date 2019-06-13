@@ -229,13 +229,27 @@
 
 #MACRO {\eK}
 {
-	#if {&{doorName}}
+	#switch {${kxwt[rvnum]}}
 	{
-		open $doorName $lastDirection
-	};
-	#else
-	{
-		#showme {Nothing to open.}
+		#case {53106}
+		{
+			enter portal
+		};
+		#case {53269}
+		{
+			enter portal
+		};
+		#default
+		{
+			#if {&{doorName}}
+			{
+				open $doorName $lastDirection
+			};
+			#else
+			{
+				#echo {Nothing to open.}
+			}
+		}
 	}
 }
 
