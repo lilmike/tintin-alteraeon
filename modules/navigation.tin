@@ -1,6 +1,10 @@
 #ACTION {^[Exits: %*}
 {
-	#regexp {%0} {{.*} [Doors: {.*}} {play door};
+	#regexp {%0} {{.*} [Doors: {.*}} {play door;#var {doorFound} {1}};
+	#else
+	{
+		#unvariable {doorFound}
+	};
 	#script {exits} {echo "%1" | tr -d "[:punct:]"};
 	#replace {exits[1]} { } {;};
 	#list {exits} {create} {$exits[1]};
@@ -229,27 +233,20 @@
 
 #MACRO {\eK}
 {
-	#switch {${kxwt[rvnum]}}
+	#if {&{doorFound}}
 	{
-		#case {53106}
+		#if {&{doorName}}
 		{
-			enter portal
+			open $doorName $lastDirection
 		};
-		#case {53269}
+		#else
 		{
-			enter portal
-		};
-		#default
-		{
-			#if {&{doorName}}
-			{
-				open $doorName $lastDirection
-			};
-			#else
-			{
-				#echo {Nothing to open.}
-			}
+			#echo {Nothing to open.}
 		}
+	};
+	#else
+	{
+		enter portal
 	}
 }
 
