@@ -1,20 +1,16 @@
 #ACTION {^(friend) %S completed custom job %*}
 {
-	#if {"${channel[sounds]}" == "true"}
-	{
 		play friend-complete-quest;
-		notify-send %0
-	}
+		notify-send %0;
+		Channel_Event friend %0
 }
 {4}
 
 #ACTION {^(friend) %S completed quest %*}
 {
-	#if {"${channel[sounds]}" == "true"}
-	{
 		play friend-complete-quest;
-		notify-send %0
-	}
+		notify-send %0;
+		Channel_Event friend %0
 }
 {4}
 
