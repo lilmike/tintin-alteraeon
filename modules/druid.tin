@@ -7,7 +7,7 @@
 }
 {8}
 
-#ACTION {^%s'{Arim|Ber|Freth|Ganta|Gesu|Gesu-Char|Gesu-Ciru|Gesu-Faru|Gesu-Fell|Gesu-Ilnak|Gesu-Nar|Hett|Ilnak|Ilnak-Xix|Kenn|Oshi|Shul|Stis|Tal|Vin}'.}
+#ACTION {^%s'{Arim|Ber|Freth|Ganta|Gesu|Gesu-Char|Gesu-Ciru|Gesu-Faru|Gesu-Fell|Gesu-Ilnak|Gesu-Nar|Hett|Ilnak|Ilnak-Xix|Kenn|Oshi|Shul|Stis|Tal|Vin|Kama|Khil}'.}
 {
 	#variable {runeCarveMessage} {%0};
 	SHOW_CARVING %1
@@ -344,6 +344,16 @@
 		#case {"Shul"}
 		{
 			#showme {$runeCarveMessage (hitpoints or constitution)};
+			#line {gag}
+		};
+		#case {"Khil"}
+		{
+			#showme {$runeCarveMessage (hitroll)};
+			#line {gag}
+		};
+		#case {"Kama"}
+		{
+			#showme {$runeCarveMessage (attack speed)};
 			#line {gag}
 		}
 	}
