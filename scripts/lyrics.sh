@@ -3,7 +3,7 @@
 # Dependancy check 
 for i in clyrics ; do
 if ! command -v $i &> /dev/null ; then
-    echo "{#echo Please install $i before using this script.}"
+    echo "#echo {Please install $i before using this script.}"
   exit 1
   fi
 done
