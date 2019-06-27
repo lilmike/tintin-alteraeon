@@ -10,6 +10,26 @@
 }
 {9}
 
+#ACTION {%1 approaches, but is unable to come near enough to attack.$}
+{
+	#if {"${character[cspam]}" == "true"}
+	{
+		#variable {cspam[lastLineOfTextCounter]} {0};
+		#line {gag}
+	}
+}
+{9}
+
+#ACTION {%1 circles at a distance, but does not approach.$}
+{
+	#if {"${character[cspam]}" == "true"}
+	{
+		#variable {cspam[lastLineOfTextCounter]} {0};
+		#line {gag}
+	}
+}
+{9}
+
 #ACTION {%1 kicks at %2 but barely makes contact.$}
 {
 	#if {"${character[cspam]}" == "true"}
@@ -24,6 +44,16 @@
 	#if {"${character[cspam]}" == "true"}
 	{
 		#showme {%1 ignores your feignt.};
+		#line {gag}
+	}
+}
+{9}
+
+#ACTION {%1 shrinks away in fear.$}
+{
+	#if {"${character[cspam]}" == "true"}
+	{
+		#variable {cspam[lastLineOfTextCounter]} {0};
 		#line {gag}
 	}
 }
