@@ -1,4 +1,4 @@
-#ACTION {^%S %2, '{,|:}{$trustedCommands}%s'$}
+#ACTION {^%w %2, '{,|:}{$trustedCommands}%s'$}
 {
 	#variable {channelSilence} {true};
 	Channel_Event grouptell %0;
