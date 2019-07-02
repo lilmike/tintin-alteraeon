@@ -134,7 +134,7 @@
 
 #ACTION {^give crystal %1You fail to cast the spel%*.$}
 {
-	c crystal light | prefix give crystal %1
+	vcast crystal light | prefix give crystal %1
 }
 {9}
 
@@ -233,7 +233,7 @@
 {
 	#if {"${skillsAndSpells[crystal light]}" == "true"}
 	{
-		c crystal light | prefix give crystal %1
+		vcast crystal light | prefix give crystal %1
 	};
 	#else
 	{

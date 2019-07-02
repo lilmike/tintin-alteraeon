@@ -2,7 +2,7 @@
 {
 	#if {"${skillsAndSpells[water breathing]}" == "true" && "$castingWaterBreathing" == "false"}
 	{
-		c water breathing;
+		vcast water breathing;
 		#variable {castingWaterBreathing} {true};
 		#delay {60} {#variable {castingWaterBreathing} {false}}
 	}
@@ -24,12 +24,12 @@
 				#if {"%2" != "ice"}
 				{
 					#variable {castTankMinion} {ice elemental %2};
-					cast ice elemental %2
+					vcast ice elemental %2
 				};
 				#else
 				{
 					#variable {castTankMinion} {ice elemental};
-					add_spell ice elemental
+					vcast ice elemental
 				}
 			}
 		};

@@ -745,7 +745,7 @@
 #ALIAS {autorefresh}
 {
 	#variable {auto[refresh]} {true};
-	#showme {You will automaticaly cast refresh spells if your MV is low.}
+	#showme {You will automatically cast refresh spells if your MV is low.}
 }
 {9}
 
@@ -765,7 +765,7 @@
 #ALIAS {noautorefresh}
 {
 	#variable {auto[refresh]} {false};
-	#showme {You will no longer automaticaly cast refresh spells.}
+	#showme {You will no longer automatically cast refresh spells.}
 }
 {9}
 

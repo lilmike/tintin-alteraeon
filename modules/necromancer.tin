@@ -2,10 +2,10 @@
 {
 	#if {&{lastSoulsteal}}
 	{
-		#regexp {%1} {{.*} {.*}} {c soulsteal &2};
+		#regexp {%1} {{.*} {.*}} {vcast soulsteal &2};
 		#else
 		{
-			c soulsteal %1
+			vcast soulsteal %1
 		};
 		#unvariable {lastSoulsteal}
 	}
@@ -63,7 +63,7 @@
 		{
 			#send {\cc};
 			#variable {castTankMinion} {%1};
-			cast clay man
+			vcast clay man
 		};
 		#if {"${auto[woad]}" == "true" && "%2" == "stops"}
 		{
@@ -83,7 +83,7 @@
 			#if {${kxwt[terrain} == 33]}
 			{
 				#variable {castTankMinion} {%2};
-				cast metal
+				vcast metal
 			};
 			#else
 			{
@@ -201,7 +201,7 @@
 {
 	#if {"${auto[flesh]}" == "true" && "$castTankMinion" == "flesh%*"}
 	{
-		c flesh corpse
+		vcast flesh corpse
 	}
 }
 {9}
@@ -226,7 +226,7 @@
 	#if {"${auto[flesh]}" == "true" && "$castTankMinion" == "flesh%*"}
 	{
 		#variable {castTankMinion} {clay man};
-		cast clay man
+		vcast clay man
 	}
 }
 {9}
@@ -317,7 +317,7 @@
 	#if {"${auto[flesh]}" == "true" && "$castTankMinion" == "flesh%*"}
 	{
 		#variable {castTankMinion} {clay man};
-		cast clay man
+		vcast clay man
 	}
 }
 {9}
@@ -711,7 +711,7 @@
 	};
 	get ${auto[boneMaterial]} from ${character[tankContainer]};
 	#variable {castTankMinion} {bone guardian ${auto[boneMaterial]}};
-	c bone guardian ${auto[boneMaterial]}
+	vcast bone guardian ${auto[boneMaterial]}
 }
 {5}
 
@@ -737,7 +737,7 @@
 	};
 	get ${auto[woadMaterial]} from ${character[tankContainer]};
 	drop ${auto[woadMaterial]};
-	c wood ${auto[woadMaterial]};
+	vcast wood ${auto[woadMaterial]};
 	#variable {castTankMinion} {wood woad ${auto[woadMaterial]}}
 }
 {8}
@@ -1099,7 +1099,7 @@
 		{
 			get ${character[defaultSoulstone]} ${character[container]}
 		};
-		c demonfire %1
+		vcast demonfire %1
 	};
 	#else
 	{

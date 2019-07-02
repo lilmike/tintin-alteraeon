@@ -334,10 +334,7 @@
 	{
 		#list {channel[%1]} {insert} {1} {%2}
 	};
-	#else
-	{
-		#list {channel[all]} {size} {i}
-	};
+	#list {channel[all]} {size} {i};
 	#if {$i >= 101}
 	{
 		#list {channel[all]} {delete} {101}

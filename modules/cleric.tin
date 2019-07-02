@@ -92,7 +92,7 @@
 	{
 		#variable {character[fullHeal]} {soothe wounds}
 	};
-	cast ${character[fullHeal]}
+	vcast ${character[fullHeal]}
 }
 {9}
 

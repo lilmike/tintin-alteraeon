@@ -2,14 +2,14 @@
 {
 	#if { "$castTankMinion" != "true"}
 	{
-		cast $castTankMinion
+		vcast $castTankMinion
 	}
 }
 {9}
 
 #ACTION {^silent_Missing '%1'.$}
 {
-	cast %1
+	vcast %1
 }
 {9}
 

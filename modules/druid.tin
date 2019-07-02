@@ -24,22 +24,22 @@
 			{
 				#if {${kxwt[terrain} >= 4 && ${kxwt[terrain} <= 6 || ${kxwt[terrain} == 17]]]}
 				{
-					cast liveoak
+					vcast liveoak
 				};
 				#else
 				{
-					cast liveoak acorn
+					vcast liveoak acorn
 				}
 			};
 			#else
 			{
 				#if {"${skillsAndSpells[shambling mound]}" == "true" && $currentMana >= 30}
 				{
-					c shambling mound
+					vcast shambling mound
 				};
 				#elseif {"${skillsAndSpells[earth wall]}" == "true" && $currentMana >= 25}
 				{
-					c earth wall
+					vcast earth wall
 				}
 			}
 		}
@@ -61,7 +61,7 @@
 {
 	#if {"${auto[mound]}" == "true"}
 	{
-		c shambling mound
+		vcast shambling mound
 	}
 }
 {9}
@@ -70,7 +70,7 @@
 {
 	#if {"${auto[earthwall]}" == "true"}
 	{
-		c earth wall
+		vcast earth wall
 	}
 }
 {9}
@@ -108,7 +108,7 @@
 #ACTION {^There are no suitable trees here, but you could use an acorn if necessary.$}
 {
 	#line {gag};
-	c liveoak acorn
+	vcast liveoak acorn
 }
 {9}
 
@@ -118,11 +118,11 @@
 	{
 		#if {"${skillsAndSpells[shambling mound]}" == "true" && $currentMana >= 30}
 		{
-			c shambling mound
+			vcast shambling mound
 		};
 		#elseif {"${skillsAndSpells[earth wall]}" == "true" && $currentMana >= 25}
 		{
-			c earth wall
+			vcast earth wall
 		}
 	}
 }

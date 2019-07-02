@@ -34,7 +34,7 @@
 }
 {9}
 
-#ACTION {^%S would like to join your group!  Use the 'group summon' command to add {her|him|it}.$}
+#ACTION {^%w would like to join your group!  Use the 'group summon' command to add {her|him|it}.$}
 {
 	#macro {\eY} {group summon %1};
 	play group-request
@@ -91,15 +91,15 @@
 {
 	#if {"${auto[earthwall]}" == "true"}
 	{
-		c earth wall
+		vcast earth wall
 	};
 	#elseif {"${auto[bone]}" == "true"}
 	{
-		boneguardian
+		guardian
 	};
 	#elseif {"${auto[mound]}" == "true"}
 	{
-		c shambling mound
+		vcast shambling mound
 	};
 	#elseif {"${auto[woad]}" == "true"}
 	{
@@ -109,7 +109,7 @@
 	{
 		#if {"$clayMan" == "true"}
 		{
-			c clay
+			vcast clay
 		}
 	}
 }
