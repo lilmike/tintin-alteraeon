@@ -85,6 +85,124 @@
 }
 {9}
 
+#ACTION {^It has the following runes %w into it: %*}
+{
+	#local {runes} {%2};
+	#replace {runes} { } {;};
+	#local {i} {};
+	#local {runeNames} {};
+	#local {tmp} {};
+	#foreach {$runes} {i}
+	{
+		#switch {"$i"}
+		{
+			#case {"Arim"}
+			{
+				#variable {tmp} {movement}
+			};
+			#case {"Ber"}
+			{
+				#variable {tmp} {damroll}
+			};
+			#case {"Ganta"}
+			{
+				#variable {tmp} {castability}
+			};
+			#case {"Freth"}
+			{
+				#variable {tmp} {wisdom}
+			};
+			#case {"Ilnak-Xix"}
+			{
+				#variable {tmp} {absorb magic or mana regeneration}
+			};
+			#case {"Kenn"}
+			{
+				#variable {tmp} {movement regeneration}
+			};
+			#case {"Hett"}
+			{
+				#variable {tmp} {charisma}
+			};
+			#case {"Stis"}
+			{
+				#variable {tmp} {intelligence}
+			};
+			#case {"Vin"}
+			{
+				#variable {tmp} {luck}
+			};
+			#case {"Gesu-Ciru"}
+			{
+				#variable {tmp} {saving cold}
+			};
+			#case {"Gesu-Char"}
+			{
+				#variable {tmp} {saving zap}
+			};
+			#case {"Gesu-Faru"}
+			{
+				#variable {tmp} {saving fire}
+			};
+			#case {"Gesu-Nar"}
+			{
+				#variable {tmp} {saving breath}
+			};
+			#case {"Gesu"}
+			{
+				#variable {tmp} {armor}
+			};
+			#case {"Gesu-Fell"}
+			{
+				#variable {tmp} {saving poison}
+			};
+			#case {"Gesu-Ilnak"}
+			{
+				#variable {tmp} {saving spell}
+			};
+			#case {"Ilnak"}
+			{
+				#variable {tmp} {mana}
+			};
+			#case {"Tal"}
+			{
+				#variable {tmp} {strength}
+			};
+			#case {"Oshi"}
+			{
+				#variable {tmp} {dexterity}
+			};
+			#case {"Shul"}
+			{
+				#variable {tmp} {hitpoints or constitution}
+			};
+			#case {"Khil"}
+			{
+				#variable {tmp} {hitroll}
+			};
+			#case {"Kama"}
+			{
+				#variable {tmp} {attack speed}
+			};
+			#default
+			{
+				#variable {tmp} {unknown}
+			}
+		};
+		#if {"$runeNames" == ""}
+		{
+			#variable {runeNames} {$tmp}
+		};
+		#else
+		{
+			#variable {runeNames} {$runeNames $tmp}
+		}
+	};
+	#line {gag};
+	#echo {%0 ($runeNames)}
+}
+{9}
+
 #ACTION {^It is %1  \x28{about |about -}%dC\x29$}
 {
 	#line {gag};
