@@ -6,6 +6,12 @@
 }
 {9}
 
+#ACTION {^You are too tired to continue mining.$}
+{
+	@do_hook{mineFinishAbort}
+}
+{9}
+
 #ACTION {^You begin excavating a deposit of %1.$}
 {
 	#nop {Hook name: mineStart};
@@ -40,7 +46,14 @@
 #ACTION {^You {are too tired to continue|stop} prospecting}
 {
 	#variable {isProspecting} {0};
-	@do_hook{prospectFinish}
+	#if {"%1" == "are too tired to continue"}
+	{
+		@do_hook{prospectFinishAbort}
+	};
+	#else
+	{
+		@do_hook{prospectFinish}
+	}
 }
 {9}
 
