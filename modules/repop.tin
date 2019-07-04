@@ -13,7 +13,7 @@
 {
 #if {%3 < 6}
 	{
-		#regexp {%9} {{.*} {.*}} {#showme {%3 ticks until instance "&1" repops.}}
+		#regexp {%9} {{.*} {\s+.*}} {#showme {%3 ticks until instance "&1" repops.}}
 	};
 	#if {%3 < 1}
 	{
