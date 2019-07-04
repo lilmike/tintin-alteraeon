@@ -99,6 +99,15 @@
 }
 {9}
 
+#ACTION {^The other waypoint is too far away, and you are unable to link up with it.  Better try again.$}
+{
+	#if {"${auto[waypoint]}" == "true"}
+	{
+		#delay {waypoint} {$waypointType $waypoint} {0.5}
+	}
+}
+{9}
+
 #ACTION {^You stand up and prepare to follow the group.$}
 {
 	#unvariable {position}
