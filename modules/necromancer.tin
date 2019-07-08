@@ -122,6 +122,20 @@
 }
 {8}
 
+#ACTION {^soulforge_%s(lvl%s%d) Item: {[a-zA-Z0-9]+}%s'%* soulgem gem soulstone stone'$}
+{
+	#if {"%6" == "$soul"}
+	{
+		#math {souls[%3]} {${souls[%3]} + 1}
+	};
+	#else
+	{
+		#showme {Somehow we ended up with a %6 soulstone when looking for $soul soulstones. Please report.}
+	};
+	#line {gag}
+}
+{8}
+
 #ACTION {^%sYou add A %1 to your group.$}
 {
 	#if {"%1" == "zombie" || "%1" == "ghoul" || "%1" == "mummy" || "%1" == "vampire"}
@@ -218,6 +232,93 @@
 			stand
 		}
 	}
+}
+{9}
+
+#ACTION {^DONE_LOOKING$}
+{
+	#list {souls2} {create} {${souls[]}};
+	#local {l} {};
+	#list {souls2} {size} {l};
+	#if {$l > 0}
+	{
+		#local {found} {0};
+		#local {i} {};
+		#loop {$l} {1} {i}
+		{
+			#if {${souls[${souls2[$i]}]} >= 2}
+			{
+				#variable {found} {1};
+				#break
+			}
+		};
+		#if {$found}
+		{
+			look in $soulcont -ncount -level ${souls2[$i]} +level ${souls2[$i]} $soul soulstone +insult |head 4 |tail 3 |prefix soulforge_get_;
+			lecho DONE_LOOKING_GET
+		};
+		#else
+		{
+			#local {j} {};
+			#local {k} {};
+			#local {level} {};
+			#foreach {1;2;3;4;5;6;7;8;9;10;11;12;13;14;15} {k}
+			{
+				#loop {$l} {1} {i}
+				{
+					#if {"$j" == ""}
+					{
+						#variable {j} {${souls2[$i]}};
+						#continue
+					};
+					#else
+					{
+						#if {${souls2[$i]} - $j == $k}
+						{
+							#variable {level} {-level ${souls2[$i]} +level $j};
+							#break
+						};
+						#else
+						{
+							#variable {j} {${souls[$i]}}
+						}
+					}
+				};
+				#if {"$level" != ""}
+				{
+					#break
+				}
+			};
+			#if {"$level" != ""}
+			{
+				look in $soulcont -ncount $level $soul soulstone +insult |head 4 |tail 3 |prefix soulforge_get_;
+				lecho DONE_LOOKING_GET
+			};
+			#else
+			{
+				#showme {Couldn't find 2 of the proper type of soulstone}
+			}
+		}
+	};
+	#line {gag}
+}
+{9}
+
+#ACTION {^DONE_LOOKING_GET$}
+{
+	#local {i} {};
+	#list {gets} {size} {i};
+	#if {$i == 2}
+	{
+		get ${gets[1]} $soulcont;
+		get ${gets[2]} $soulcont;
+		vcast soulforge ${gets[1]} ${gets[2]}
+	};
+	#else
+	{
+		#showme {Somehow we ended up with more or less than 2 souls in the list of soulforge souls. Please report.}
+	};
+	#line {gag}
 }
 {9}
 
@@ -656,12 +757,38 @@
 }
 {9}
 
+#ACTION {^soulforge_%*}
+{
+	#line {gag}
+}
+{9}
+
+#ACTION {^soulforge_get_%s(lvl%s%d) Item: {[a-zA-Z0-9]+}%s'%* soulgem gem soulstone stone'$}
+{
+	#if {"%6" == "$soul"}
+	{
+		#list {gets} {add} {%4}
+	};
+	#else
+	{
+		#showme {Somehow we ended up with a %6 soulstone when looking for $soul soulstones. Please report.}
+	};
+	#line {gag}
+}
+{8}
+
 #ACTION {^vcast_preservation corpse_You cast a powerful spell on the corpse of %1, slowing its decay.$}
 {
 	#if {&{client[makeUndead]}}
 	{
 		prepare corpse ${client[makeUndead]}
 	}
+}
+{9}
+
+#ACTION {^vcast_soulforge %*_You forge a %* soulstone using a %* soulstone as a base!$}
+{
+	put soul $soulcont
 }
 {9}
 
@@ -939,6 +1066,32 @@
 }
 {9}
 
+#ALIAS {^smartforge {red|yellow|green|pale blue|deep blue|purple|clear|white|black} %*}
+{
+	#variable {soulcont} {%2};
+	#variable {soul} {%1};
+	#variable {souls} {};
+	#variable {gets} {};
+	look in $soulcont -ncount $soul soulstone +insult |prefix soulforge_;
+	lecho DONE_LOOKING
+}
+{9}
+
+#ALIAS {^smartforge {red|yellow|green|pale blue|deep blue|purple|clear|white|black}$}
+{
+	#if {!&{character[soulContainer]}}
+	{
+		#variable {character[soulContainer]} {${character[container]}}
+	};
+	#variable {soulcont} {${character[soulContainer]}};
+	#variable {soul} {%1};
+	#variable {souls} {};
+	#variable {gets} {};
+	look in $soulcont -ncount $soul soulstone +insult |prefix soulforge_;
+	lecho DONE_LOOKING
+}
+{9}
+
 #ALIAS {^woad%s%S$}
 {
 	#if {!&{character[tankContainer]}}
@@ -1119,4 +1272,9 @@
 #GAG              {^None of your minions seem hungry at the moment.$}
 #GAG              {^{boneguardian|metal|woad}{C|c}ounter_%*}
 #VARIABLE         {boneFortBreakCounter}  {0}
+#VARIABLE         {gets}  {}
 #VARIABLE         {noSoulstealIndex}  {0}
+#VARIABLE         {soul}  {}
+#VARIABLE         {soulcont}  {}
+#VARIABLE         {souls}  {}
+#VARIABLE         {souls2}  {}
