@@ -1,3 +1,9 @@
+#ACTION {^You can't control %* right now.$}
+{
+	#variable {castTankMinion} {true}
+}
+{9}
+
 #ACTION {^You fail to cast the spell%*.$}
 {
 	#if { "$castTankMinion" != "true"}
