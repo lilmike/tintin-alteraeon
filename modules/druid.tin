@@ -118,7 +118,7 @@
 			};
 			#case {"Kenn"}
 			{
-				#variable {tmp} {movement regeneration}
+				#variable {tmp} {movement regeneration or hitpoint regeneration}
 			};
 			#case {"Hett"}
 			{
@@ -391,7 +391,7 @@
 		};
 		#case {"Kenn"}
 		{
-			#showme {$runeCarveMessage (movement regeneration)};
+			#showme {$runeCarveMessage (movement regeneration or hitpoint regeneration)};
 			#line {gag}
 		};
 		#case {"Hett"}
