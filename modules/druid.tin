@@ -320,7 +320,7 @@
 }
 {9}
 
-#ACTION {^You throw your magic to the wind and call {A|A blue|A mantis|A massive|A swarm of|A tall|An|An electric} %2 to this place!$}
+#ACTION {^You throw your magic to the wind and call {A blue|A mantis|A massive|A swarm of|A tall|An|An electric|A} %2 to this place!$}
 {
 	#variable {auto[lastCalledAnimal]} {%2}
 }
