@@ -364,7 +364,7 @@
 }
 {9}
 
-#ACTION {^{vcast_.+_|}There's not enough light left in a suncatcher bottle to create a liveoak.$}
+#ACTION {^{vcast_.+_|}There's not enough light left in a suncatcher bottle to create a liveoak{ from an acorn|}.$}
 {
 	#if {"${auto[liveoak]}" == "true"}
 	{
