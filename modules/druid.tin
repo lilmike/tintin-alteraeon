@@ -70,7 +70,7 @@
 {
 	#if {"${auto[earthwall]}" == "true"}
 	{
-		vcast earth wall
+		#variable {earthWall} {1}
 	}
 }
 {9}
@@ -223,29 +223,6 @@
 }
 {9}
 
-#ACTION {^{vcast_.+_|}There are no suitable trees here, but you could use an acorn if necessary.$}
-{
-	#line {gag};
-	vcast liveoak acorn
-}
-{9}
-
-#ACTION {^{vcast_.+_|}There's not enough light left in a suncatcher bottle to create a liveoak.$}
-{
-	#if {"${auto[liveoak]}" == "true"}
-	{
-		#if {"${skillsAndSpells[shambling mound]}" == "true" && $currentMana >= 30}
-		{
-			vcast shambling mound
-		};
-		#elseif {"${skillsAndSpells[earth wall]}" == "true" && $currentMana >= 25}
-		{
-			vcast earth wall
-		}
-	}
-}
-{9}
-
 #ACTION {^You carefully heat a branding tool and start firebranding %*.  Gradually you shape the rune '%*'.$}
 {
 	#variable {runeCarveMessage} {%0};
@@ -335,6 +312,26 @@
 }
 {9}
 
+#ACTION {^an earth wall {stops|starts} following you.$}
+{
+	#if {"${auto[earthwall]}" == "true"}
+	{
+		#if {"%1" == "stops" && $earthWall}
+		{
+			vcast earth wall
+		};
+		#else
+		{
+			#variable {earthWall} {0}
+		}
+	};
+	#else
+	{
+		\
+	}
+}
+{9}
+
 #ACTION {^silent_[%s%d] a {star|sun|moon}catcher bottle in %4 - 100% full.$}
 {
 	synth_play notificationSound;
@@ -356,6 +353,29 @@
 	#if {%5 == 100}
 	{
 		put %3 $character.container
+	}
+}
+{9}
+
+#ACTION {^{vcast_.+_|}There are no suitable trees here, but you could use an acorn if necessary.$}
+{
+	#line {gag};
+	vcast liveoak acorn
+}
+{9}
+
+#ACTION {^{vcast_.+_|}There's not enough light left in a suncatcher bottle to create a liveoak.$}
+{
+	#if {"${auto[liveoak]}" == "true"}
+	{
+		#if {"${skillsAndSpells[shambling mound]}" == "true" && $currentMana >= 30}
+		{
+			vcast shambling mound
+		};
+		#elseif {"${skillsAndSpells[earth wall]}" == "true" && $currentMana >= 25}
+		{
+			vcast earth wall
+		}
 	}
 }
 {9}
