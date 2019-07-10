@@ -33,11 +33,11 @@
 			};
 			#else
 			{
-				#if {"${skillsAndSpells[shambling mound]}" == "true" && $currentMana >= 30}
+				#if {"${skillsAndSpells[shambling mound]}" == "true" && ${character[currentMana]} >= 30}
 				{
 					vcast shambling mound
 				};
-				#elseif {"${skillsAndSpells[earth wall]}" == "true" && $currentMana >= 25}
+				#elseif {"${skillsAndSpells[earth wall]}" == "true" && ${character[currentMana]} >= 25}
 				{
 					vcast earth wall
 				}
@@ -368,11 +368,11 @@
 {
 	#if {"${auto[liveoak]}" == "true"}
 	{
-		#if {"${skillsAndSpells[shambling mound]}" == "true" && $currentMana >= 30}
+		#if {"${skillsAndSpells[shambling mound]}" == "true" && ${character[currentMana]} >= 30}
 		{
 			vcast shambling mound
 		};
-		#elseif {"${skillsAndSpells[earth wall]}" == "true" && $currentMana >= 25}
+		#elseif {"${skillsAndSpells[earth wall]}" == "true" && ${character[currentMana]} >= 25}
 		{
 			vcast earth wall
 		}
