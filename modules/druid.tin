@@ -573,4 +573,5 @@
 {9}
 
 #TICKER           {lightcatcher}  {#if {"${auto[suncatcher]}" == "true" && "${character[inBattle]}" == "false"}{gather lightcatcher list | prefix silent_}}                                                                                                {300.00}
+#VARIABLE         {earthWall}  {0}
 #VARIABLE         {runeCarveMessage}  {}
