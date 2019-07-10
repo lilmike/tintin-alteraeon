@@ -223,14 +223,14 @@
 }
 {9}
 
-#ACTION {^There are no suitable trees here, but you could use an acorn if necessary.$}
+#ACTION {^{vcast_.+_|}There are no suitable trees here, but you could use an acorn if necessary.$}
 {
 	#line {gag};
 	vcast liveoak acorn
 }
 {9}
 
-#ACTION {^There's not enough light left in a suncatcher bottle to create a liveoak.$}
+#ACTION {^{vcast_.+_|}There's not enough light left in a suncatcher bottle to create a liveoak.$}
 {
 	#if {"${auto[liveoak]}" == "true"}
 	{
@@ -335,11 +335,11 @@
 }
 {9}
 
-#ACTION {^silent_[%s%d] a s{tar|un}catcher bottle in %4 - 100% full.$}
+#ACTION {^silent_[%s%d] a {star|sun|moon}catcher bottle in %4 - 100% full.$}
 {
 	synth_play notificationSound;
-	#showme {Full s%3catcher in %4.};
-	notify-send Full s%3catcher in %4.
+	#showme {Full %3catcher in %4.};
+	notify-send Full %3catcher in %4.
 }
 {9}
 

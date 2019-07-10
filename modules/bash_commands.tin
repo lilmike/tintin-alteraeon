@@ -8,7 +8,7 @@
 {
 	#if {!&{zipCode}}
 	{
-		#system {date +'%I:%M%p%n%A, %B %d, %Y'}
+		#system {date +'%I:%M %p%n%A, %B %d, %Y'}
 	};
 	#else
 	{
