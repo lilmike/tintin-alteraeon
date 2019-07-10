@@ -537,7 +537,7 @@
 }
 {9}
 
-#ACTION {^You release %1 from your control. $}
+#ACTION {^You release %1 from your control.$}
 {
 	#variable {client[releasing]} {true}
 }
