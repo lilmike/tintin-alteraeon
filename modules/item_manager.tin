@@ -25,13 +25,13 @@
 }
 {9}
 
-#ACTION {^scrollcounter_Found %d items matching the criteria: %*}
+#ACTION {^scrollcounter_%*_Found %d items matching the criteria: %*}
 {
 	#variable {channelSilence} {true};
-	#variable {msg} {%1 scrolls remaining.};
+	#variable {msg} {%2 scrolls of type %1 remaining.};
 	Channel_Event all $msg;
 	#showme {$msg};
-	#if {%1 <= 3}
+	#if {%2 <= 3}
 	{
 		synth_play warningSound
 	}
@@ -77,6 +77,26 @@
 }
 {9}
 
+#ALIAS {^scrolls$}
+{
+	#if {&{scrolls}}
+	{
+		#if {"$scrolls" != ""}
+		{
+			#local {i} {};
+			#foreach {${scrolls[]}} {i}
+			{
+				#showme {$i: ${scrolls[$i]}}
+			}
+		}
+	};
+	#else
+	{
+		#showme {No scrolls found.}
+	}
+}
+{5}
+
 #ALIAS {^autostore %S}
 {
 	#variable {character[soulstoneContainer]} {%1};
@@ -100,6 +120,73 @@
 {
 	#showme {Container set to %2.};
 	#variable {character[container]} {%2}
+}
+{9}
+
+#ALIAS {^dscroll %S$}
+{
+	#if {&{scrolls[%1]}}
+	{
+		#variable {character[defaultScroll]} {%1};
+		#showme {Default scroll type set to %1. You can use alt backslash to get and use it.}
+	};
+	#else
+	{
+		#showme {Scroll type %1 not found.}
+	}
+}
+{9}
+
+#ALIAS {^noscroll %S$}
+{
+	#if {&{scrolls[%2]}}
+	{
+		#unvariable {scrolls[%2]};
+		#showme {Deleted scroll type %2.}
+	};
+	#else
+	{
+		#showme {Scroll type %2 not found.}
+	}
+}
+{9}
+
+#ALIAS {^scroll %S %*}
+{
+	#variable {scrolls[%1]} {%2};
+	#showme {Scroll type %1 created as %2. Use uscroll %1 to get and use it. You can also use uscroll %1 <name> to use it on someone else.}
+}
+{9}
+
+#ALIAS {^scroll %S$}
+{
+	#if {&{scrolls[%1]}}
+	{
+		look in ${character[container]} -ncount ${scrolls[%1]} +count |prefix scrollcounter_%1_
+	};
+	#else
+	{
+		#showme {Scroll type %1 not found.}
+	}
+}
+{9}
+
+#ALIAS {^uscroll %S{ .+|}$}
+{
+	#if {&{scrolls[%1]}}
+	{
+		get ${scrolls[%1]} ${character[container]};
+		#regexp {${scrolls[%1]}} {{.+} {.+}} {use &2%2};
+		#else
+		{
+			use ${scrolls[%1]}%2
+		};
+		look in ${character[container]} -ncount ${scrolls[%1]} +count |prefix scrollcounter_%1_
+	};
+	#else
+	{
+		#showme {Scroll type %1 Not found.}
+	}
 }
 {9}
 
@@ -151,37 +238,6 @@
 }
 {9}
 
-#ALIAS {^{noscro|noscrol|noscroll}$}
-{
-	#unvariable {battleScroll};
-	#showme {Battle scroll cleared.}
-}
-{9}
-
-#ALIAS {^{scro|scrol|scroll} %1}
-{
-	#variable {battleScroll} {%1};
-	#showme {You can now use alt+backslash to use get the %1 from your container and use it.}
-}
-{9}
-
-#ALIAS {^{scro|scrol|scroll}$}
-{
-	#if {!&{battleScroll}}
-	{
-		#showme {You don't have a battle scroll set. To set it type scroll and the item you want to use, E.g. scroll potion.}
-	};
-	#else
-	{
-		#regexp {$battleScroll} {{.*} {.*}} {l in ${character[container]} &2 | prefix scrollcounter_};
-		#else
-		{
-			l in ${character[container]} $battleScroll | prefix scrollcounter_
-		}
-	}
-}
-{9}
-
 #ALIAS {g}
 {
 	#send {get all corpse}
@@ -218,12 +274,13 @@
 #GAG              {^scrollcounter_%*}
 #MACRO {\e\}
 {
-	#regexp {$battleScroll} {{.*} {.*}} {get $battleScroll ${character[container]};use &2;l in ${character[container]} +ncount &2 +count | prefix scrollcounter_};
+	#if {&{character[defaultScroll]}}
+	{
+		uscroll ${character[defaultScroll]}
+	};
 	#else
 	{
-		get $battleScroll ${character[container]};
-		use $battleScroll;
-		l in ${character[container]} +ncount $battleScroll +count | prefix scrollcounter_
+		#showme {No default scroll set. Try using dscroll<name of scroll>.}
 	}
 }
 
