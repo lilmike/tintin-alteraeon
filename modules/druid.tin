@@ -278,13 +278,6 @@
 }
 {9}
 
-#ACTION {^You get out your heavily enchanted tools and start chiseling on %1. Gradually you shave the rune %2.$}
-{
-	#variable {runeCarveMessage} {%0};
-	SHOW_CARVING %2
-}
-{9}
-
 #ACTION {^You have collected %d acorns.$}
 {
 	#if {"${character[cspam]}" == "true"}
@@ -348,23 +341,6 @@
 	synth_play notificationSound;
 	#showme {Full %3catcher in %4.};
 	notify-send Full %3catcher in %4.
-}
-{9}
-
-#ACTION {^silent_gather%.%2$}
-{
-	#variable {gatherRoom} {%1%2};
-	gather lightcatcher list | grep %1%2 | prefix silent_retrieve
-}
-{9}
-
-#ACTION {^silent_retrieve[%s%d] a %S bottle in $gatherRoom -%s%d% full.$}
-{
-	gather %3;
-	#if {%5 == 100}
-	{
-		put %3 $character.container
-	}
 }
 {9}
 
@@ -509,62 +485,9 @@
 }
 {9}
 
-#ALIAS {^DRUID_SUN{RISE|SET}$}
-{
-	#if {!&{auto[suncatcherRoom]}}
-	{
-		#variable {auto[suncatcherRoom]} {0}
-	};
-	#if {"${auto[suncatcher]}" == "true" && ${auto[suncatcherRoom]} == ${kxwt[rvnum]}}
-	{
-		#if {&{position}}
-		{
-			getup
-		};
-		#if {"%1" == "RISE"}
-		{
-			lgather;
-			hide suncatcher
-		};
-		#else
-		{
-			lgather;
-			hide starcatcher
-		};
-		#if {&{position}}
-		{
-			$position
-		}
-	}
-}
-{9}
-
 #ALIAS {^ac{o|or|orn|orns}$}
 {
 	show acorns
-}
-{9}
-
-#ALIAS {^l{g|ga|gat|gath|gathe|gather}$}
-{
-	l | head -n 1 | prefix silent_gather
-}
-{9}
-
-#ALIAS {^{auto|noauto}suncatcher$}
-{
-	#if {"%0" == "autosuncatcher"}
-	{
-		#variable {auto[suncatcherRoom]} {${kxwt[rvnum]}};
-		#variable {auto[suncatcher]} {true};
-		#showme {You will now automatically hide and retrieve suncatcher that need filling in room ${auto[suncatcherRoom]}\.}
-	};
-	#else
-	{
-		#unvariable {auto[suncatcherRoom]};
-		#variable {auto[suncatcher]} {false};
-		#showme {Autosuncatcher disabled.}
-	}
 }
 {9}
 
@@ -579,6 +502,21 @@
 	{
 		#variable {auto[%2]} {false};
 		#showme {auto%2 disabled.}
+	}
+}
+{9}
+
+#ALIAS {^{auto|noauto}{sun|star|moon|light}catcher$}
+{
+	#if {"%1" == "auto"}
+	{
+		#variable {auto[suncatcher]} {true};
+		#showme {You will now automatically check for full lightcatchers and be alerted.}
+	};
+	#else
+	{
+		#variable {auto[suncatcher]} {false};
+		#showme {You will no longer automatically check for full lightcatchers.}
 	}
 }
 {9}
