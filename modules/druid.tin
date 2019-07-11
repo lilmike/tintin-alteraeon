@@ -61,7 +61,18 @@
 {
 	#if {"${auto[mound]}" == "true"}
 	{
-		vcast shambling mound
+		#if {"%0" == "A shambling mound stops following you." && "${client[releasing]}" != "true"}
+		{
+			vcast shambling mound
+		};
+		#elseif {"%0" == "A shambling mound begins to fall apart and lose cohesion."}
+		{
+			vcast shambling mound
+		};
+		#else
+		{
+			#variable {client[releasing]} {false}
+		}
 	}
 }
 {9}
