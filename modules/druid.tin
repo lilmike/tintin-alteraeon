@@ -96,7 +96,7 @@
 }
 {9}
 
-#ACTION {^It has the following runes %w into it: %*}
+#ACTION {^{It has the following runes \w+ into it|It has the following runes upon it}: %*}
 {
 	#local {runes} {%2};
 	#replace {runes} { } {;};
