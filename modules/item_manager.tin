@@ -139,14 +139,14 @@
 
 #ALIAS {^noscroll %S$}
 {
-	#if {&{scrolls[%2]}}
+	#if {&{scrolls[%1]}}
 	{
-		#unvariable {scrolls[%2]};
-		#showme {Deleted scroll type %2.}
+		#unvariable {scrolls[%1]};
+		#showme {Deleted scroll type %1.}
 	};
 	#else
 	{
-		#showme {Scroll type %2 not found.}
+		#showme {Scroll type %1 not found.}
 	}
 }
 {9}
