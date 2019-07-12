@@ -89,7 +89,7 @@
 #ALIAS {^cmotd$}
 {
 	#echo {@separator{}};
-	#system {fold -w $(tput cols) -s MOTD}
+	#system {fold -w $(tput cols) -s MOTD};
 	#echo {@separator{}}
 }
 {9}
