@@ -27,7 +27,7 @@
 #ALIAS {^GET_UUID$}
 {
 	#script {client[tintinAlterAeonUUID]} {if ! [ -f "${HOME}/UUID" ] ; then echo "$(($(date +%s%N)/1000000))" | md5sum | cut -c -10 > "${HOME}/UUID";fi;cat "${HOME}/UUID"};
-	#variable {client[tintinAlterAeonUUID]} {${client[tintinAlterAeonUUID[1]]}}
+	#variable {client[tintinAlterAeonUUID]} {${client[tintinAlterAeonUUID][1]}}
 }
 {9}
 
