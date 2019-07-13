@@ -491,12 +491,19 @@
 	#foreach {${message[]}} {i}
 	{
 		#list {letters} {find} {${message[$i]}} {j};
-		#math {j} {$j + 13};
-		#if {$j > 52}
+		#if {$j != 0}
 		{
-			#math {j} {$j - 52}
+			#math {j} {$j + 13};
+			#if {$j > 52}
+			{
+				#math {j} {$j - 52}
+			};
+			#variable {encryptedMessage} {${encryptedMessage}${letters[$j]}}
 		};
-		#variable {encryptedMessage} {${encryptedMessage}${letters[$j]}}
+		#else
+		{
+			#variable {encryptedMessage} {${encryptedMessage}${message[$i]}}
+		}
 	};
 	#unvariable {message};
 	#unvariable {j};
