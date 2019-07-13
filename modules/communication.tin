@@ -280,6 +280,12 @@
 }
 {8}
 
+#ALIAS {^crypttell %w %2}
+{
+	tell %1 `~[@encrypt{%2}]~`
+}
+{8}
+
 #ALIAS {^pimptell %S %2}
 {
 	tell %1 @pimp{%2}
@@ -329,10 +335,14 @@
 			#variable {channelSilence} {false}
 		}
 	};
-	#list {channel[all]} {insert} {1} {%2};
+	#variable {realMSG} {%2};
+	#regexp {%2} {{.*}`~[{.+}]~`{.*}} {#var {realMSG} {&1@decrypt{&2}&3};#var {realMSG} {$realMSG};synth_play cryptMessage};
+	#line {gag};
+	#echo {$realMSG};
+	#list {channel[all]} {insert} {1} {$realMSG};
 	#if {"%1" != "all"}
 	{
-		#list {channel[%1]} {insert} {1} {%2}
+		#list {channel[%1]} {insert} {1} {$realMSG}
 	};
 	#list {channel[all]} {size} {i};
 	#if {$i >= 101}
@@ -345,7 +355,8 @@
 		#list {channel[%1]} {delete} {101}
 	};
 	#unvariable {i};
-	@extract_link{%2}
+	@extract_link{$realMSG};
+	#unvariable {realMSG}
 }
 {9}
 
@@ -374,6 +385,12 @@
 		#replace {channel[message]} {You} {I};
 		${character[bragChannel]}  ${channel[message]}
 	}
+}
+{9}
+
+#ALIAS {^crypt%w %2}
+{
+	%1 `~[@encrypt{%2}]~`
 }
 {9}
 

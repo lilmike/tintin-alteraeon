@@ -483,6 +483,19 @@
 }
 {9}
 
+#ALIAS {^chelp %*}
+{
+	#system {if [ -f "help/%1.hlp" ] ; then fold -s -w $(tput cols) "help/%1.hlp" ; else echo "No help on %1" ; fi}
+}
+{9}
+
+#ALIAS {^chelp$}
+{
+	#showme {Help topics:};
+	#system {if [ -d "help" ] ; then IFS=$'\n' ; for x in $(ls -1 "help") ; do echo "$$x" | $sed "s/\.hlp//" ; done ; fi}
+}
+{9}
+
 #ALIAS {^getup$}
 {
 	\stand
