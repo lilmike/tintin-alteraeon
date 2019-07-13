@@ -4,15 +4,6 @@
 }
 {9}
 
-#ACTION {^You fail to cast the spell%*.$}
-{
-	#if { "$castTankMinion" != "true"}
-	{
-		vcast $castTankMinion
-	}
-}
-{9}
-
 #ACTION {^silent_Missing '%1'.$}
 {
 	vcast %1
