@@ -13,7 +13,7 @@
 		#nop {Walk in the random exit.};
 		${exits[$exitChoice]};
 	}
-}                                                                                                                                                                                                                                                                                                                                                                                        {3}
+}
 {3}
 
 #VARIABLE         {exitChoice}  {}
