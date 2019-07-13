@@ -91,9 +91,9 @@
 			#default
 			{
 				#variable {thankMessage} {Thanks.}
-			};
-			#delay {autothank} {tell %1 ${thankMessage}} {${thankTimer}}
-		}
+			}
+		};
+		#line SUBSTITUTE VARIABLES #delay {autothank} {tell %1 ${thankMessage}} {${thankTimer}}
 	}
 }
 {9}
