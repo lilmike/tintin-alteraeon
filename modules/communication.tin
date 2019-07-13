@@ -336,9 +336,7 @@
 		}
 	};
 	#variable {realMSG} {%2};
-	#regexp {%2} {{.*}`~[{.+}]~`{.*}} {#var {realMSG} {&1@decrypt{&2}&3};#var {realMSG} {$realMSG};synth_play cryptMessage};
-	#line {gag};
-	#echo {$realMSG};
+	#regexp {%2} {{.*}`~[{.+}]~`{.*}} {#var {realMSG} {&1@decrypt{&2}&3};#var {realMSG} {$realMSG};synth_play cryptMessage;#line {gag};#echo {$realMSG}};
 	#list {channel[all]} {insert} {1} {$realMSG};
 	#if {"%1" != "all"}
 	{
