@@ -311,7 +311,7 @@
 #ALIAS {^Channel_Event %S %2}
 {
 	#nop {Return for things that do not need any processing at all.};
-	#if {"%1" == "{example|gain|are|i|Number|cost|damage|Type|bid|Flag|Balance|Email|Account|difficulty|string|Weapon|Comp|name|character|date|balance|bank|account|remaining|skill|spell|battle|flag|editor|wa|Level|Name|uptime}"}
+	#if {"%1" == "{example|gain|are|i|Number|cost|damage|Type|bid|Flag|Balance|Email|Account|difficulty|string|Weapon|Comp|name|character|date|balance|bank|account|remaining|skill|spell|battle|flag|editor|wa|Level|Name}"}
 	{
 		#return
 	};
@@ -336,7 +336,7 @@
 		}
 	};
 	#variable {realMSG} {%2};
-	#regexp {%2} {{.*}`~[{.+}]~`{.*}} {#var {realMSG} {&1@decrypt{&2}&3};#var {realMSG} {$realMSG};synth_play cryptMessage;#line {gag};#echo {$realMSG}};
+	#regexp {%2} {{.*}`~[{.+}]~`{.*}} {#format {realMSG} {&1%s&3} {@encrypt{&2;d}};synth_play cryptMessage;#line {gag};#echo {$realMSG}};
 	#list {channel[all]} {insert} {1} {$realMSG};
 	#if {"%1" != "all"}
 	{
@@ -477,13 +477,13 @@
 
 #FUNCTION {decrypt}
 {
-	#return @encrypt{@encrypt{@encrypt{%1}}}
+	#return @encrypt{%1;d}
 }
 
 #FUNCTION {encrypt}
 {
 	#local {i} {0};
-	#list {letters} {create} {a;b;c;d;e;f;g;h;i;j;k;l;m;n;o;p;q;r;s;t;u;v;w;x;y;z;A;B;C;D;E;F;G;H;I;J;K;L;M;N;O;P;Q;R;S;T;U;V;W;X;Y;Z};
+	#list {letters} {create} {0;1;2;3;4;5;6;7;8;9;,;.;/;a;b;c;d;e;f;g;h;i;j;k;l;m;n;o;p;q;r;s;t;u;v;w;x;y;z;<;>;?;~;`;!;@;#;$;%;^;&;*;A;B;C;D;E;F;G;H;I;J;K;L;M;N;O;P;Q;R;S;T;U;V;W;X;Y;Z};
 	#format {message} {%r} {%1};
 	#list {message} {tokenize} {$message};
 	#foreach {${message[]}} {i}
@@ -491,10 +491,21 @@
 		#list {letters} {find} {${message[$i]}} {j};
 		#if {$j != 0}
 		{
-			#math {j} {$j + 13};
-			#if {$j > 52}
+			#if {"%2" == "d"}
 			{
-				#math {j} {$j - 52}
+				#math {j} {$j - 13}
+			};
+			#else
+			{
+				#math {j} {$j + 13}
+			};
+			#if {$j > 78}
+			{
+				#math {j} {$j - 78}
+			};
+			#elseif {$j <= 0}
+			{
+				#math {j} {$j + 78}
 			};
 			#variable {encryptedMessage} {${encryptedMessage}${letters[$j]}}
 		};
