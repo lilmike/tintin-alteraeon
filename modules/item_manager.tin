@@ -181,7 +181,7 @@
 		{
 			use ${scrolls[%1]}%2
 		};
-		look in ${character[container]} -ncount ${scrolls[%1]} +count |prefix scrollcounter_%1_
+		scroll %1
 	};
 	#else
 	{
