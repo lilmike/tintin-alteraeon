@@ -1,13 +1,13 @@
-#ACTION {^[Exits: %*}
+#ACTION {^[Exits: %*]{ \[Doors: .+\]|}$}
 {
 	#regexp {%0} {{.*} [Doors: {.*}} {play door;#var {doorFound} {1}};
 	#else
 	{
 		#unvariable {doorFound}
 	};
-	#script {exits} {echo "%1" | tr -d "[:punct:]"};
-	#replace {exits[1]} { } {;};
-	#list {exits} {create} {$exits[1]};
+	#variable {exits} {%1};
+	#replace {exits} { } {;};
+	#list {exits} {create} {$exits};
 	#list {exits} {size} {exitCount};
 	#local {i} {};
 	#foreach {$exits} {i}
