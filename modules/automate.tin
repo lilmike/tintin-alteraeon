@@ -2,19 +2,23 @@
 {
 	#nop {Hook name: assist};
 	#nop {Hook args: none};
-	#if {"${character[inBattle]}" == "true"}
+	#if {!&{spam[cassist]} || "${spam[cassist]}" != "true"}
 	{
-		#return #nop
-	};
-	#if {&{auto[cassist]}}
-	{
-		#if {!&{hook[assist]}}
+		spamset cassist 3;
+		#if {"${character[inBattle]}" == "true"}
 		{
-			@command{a;assist}
+			#return #nop
 		};
-		#else
+		#if {&{auto[cassist]}}
 		{
-			@do_hook{assist}
+			#if {!&{hook[assist]}}
+			{
+				@command{a;assist}
+			};
+			#else
+			{
+				@do_hook{assist}
+			}
 		}
 	}
 }
