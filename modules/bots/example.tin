@@ -1,4 +1,4 @@
-#ACTION {^{Only guild members are allowed beyond this point\.|.+ blocks your path, preventing you from passing\.}$}
+#ACTION {^{Radcliff the curator says to you, 'I'm sorry, but you must buy a pass to enter the museum\. The price is quite modest, I assure you!'|Only guild members are allowed beyond this point\.|.+ blocks your path, preventing you from passing\.}$}
 {
 	#nop {Wander to get out of this room and hopefully pick another path.};
 	#delay {walk} {wander} {2d2}
