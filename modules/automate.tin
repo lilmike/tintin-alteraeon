@@ -4,7 +4,7 @@
 	#nop {Hook args: none};
 	#if {"${character[inBattle]}" == "true"}
 	{
-	#return #nop
+		#return #nop
 	};
 	#if {&{auto[cassist]}}
 	{
@@ -49,26 +49,34 @@
 	{
 		#if {${character[mvPercent]} <= 10 && "${client[exhausted]}" != "true"}
 		{
-			@command{sec;second wind}
+			#return @command{sec;second wind}
 		}
 	};
 	#if {${kxwt[action]} > 50}
 	{
 		#return #nop
 	};
-	#if {"${skillsAndSpells[refresh]}" == "true" && "${character[inBattle]}" != "true"}
+	#if {"${skillsAndSpells[rejuvinate]}" == "true" && "${character[inBattle]}" != "true"}
 	{
-		#if {${character[mvPercent]} <= 15 && ${character[currentMana]} >= 15}
+		#if {${character[mvPercent]} <= 15 && ${character[currentMana]} >= 35}
 		{
-			@command{c ref;cast refresh}
+			#return @command{c rejuv;cast rejuvinate}
 		}
 	};
 	#if {"${skillsAndSpells[area refresh]}" == "true" && "${character[inBattle]}" != "true"}
 	{
 		#if {${character[mvPercent]} <= 15 && ${character[currentMana]} >= 28}
 		{
-			@command{c area;cast area refresh}
+			#return @command{c area;cast area refresh}
+		}
+	};
+	#if {"${skillsAndSpells[refresh]}" == "true" && "${character[inBattle]}" != "true"}
+	{
+		#if {${character[mvPercent]} <= 15 && ${character[currentMana]} >= 15}
+		{
+			#return @command{c ref;cast refresh}
 		}
 	};
 	#return #nop
 }
+
