@@ -47,12 +47,15 @@
 
 #ACTION {^You got a %d attack combo%2}
 {
+	#undelay {comboFail};
+#delay {comboFail} {@do_hook{comboFail}} {5};
 	play combo-partial-%1
 }
 {9}
 
 #ACTION {^You successfully finished a full %d attack combo!}
 {
+	#undelay {comboFail};
 	play combo-full-%1;
 	@do_hook{comboFinish}
 }
