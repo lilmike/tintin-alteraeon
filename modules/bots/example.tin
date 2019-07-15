@@ -1,3 +1,10 @@
+#ACTION {^{Only guild members are allowed beyond this point\.|.+ blocks your path, preventing you from passing\.}$}
+{
+	#nop {Wander to get out of this room and hopefully pick another path.};
+	#delay {walk} {wander} {2d2}
+}
+{9}
+
 #FUNCTION {bot_kill}
 {
 	#nop {Don't walk once after the bot dies.};
