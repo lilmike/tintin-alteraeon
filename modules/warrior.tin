@@ -121,6 +121,13 @@
 }
 {9}
 
+#ACTION {^silent_xcombo_wc - lines:  %d}
+{
+	#math {i} {1d%1};
+	tactics all | grep -i length | grep x | grep -v charge | grep -v taunt | prefix silent_ | tail -n $i | head -n 1
+}
+{9}
+
 #ACTION {^silent_combo_wc - lines:  %d}
 {
 	#math {i} {1d%1};
@@ -373,7 +380,7 @@
 #ALIAS {^xcombo$}
 {
 	#variable {combo[target]} {};
-	tactics all | grep -i length | grep x | grep -v charge | grep -v taunt | wc -l | prefix silent_combo_
+	tactics all | grep -i length | grep x | grep -v charge | grep -v taunt | wc -l | prefix silent_xcombo_
 }
 {9}
 
