@@ -210,12 +210,6 @@
 }
 {9}
 
-#ACTION {^You hear the loud -clang- *CLANG* of a hammer on anvil to the north.$}
-{
-	play hammer-on-anvil
-}
-{9}
-
 #ACTION {^You spend %d {experience|gold coins} to give%*}
 {
 	#if {"%2" == "experience"}
