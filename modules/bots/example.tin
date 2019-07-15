@@ -1,20 +1,27 @@
-#TICKER           {bot}
+#FUNCTION {bot_kill}
 {
-	#nop {This is the heart of the bot. Decrease the number in braces at the end to make it walk faster, increase it to make it walk slower.};
-	#nop {Make sure we're in the same area, if not, backtrack.};
-	#if {$areaNumber != $targetAreaNumber}
-	{
-		backward
-	};
-	#else
-	{
-		#nop {We're in the right area, so pick an exit at random};
-		#math {exitChoice} {1d$exitCount};
-		#nop {Walk in the random exit.};
-		${exits[$exitChoice]};
-	}
+	#nop {Don't walk once after the bot dies.};
+	#undelay {walk}
 }
-{3}
+
+#FUNCTION {bot_load}
+{
+	#nop {Walk once to get the bot started.};
+	#math {exitChoice} {1d$exitCount};
+	${exits[$exitChoice]}
+}
+
+#FUNCTION {walk}
+{
+	#nop {Delay a tiny amount in case the mud sends area number after room number.};
+	#delay {0.05} {#if {$areaNumber != $targetAreaNumber} {backward}};
+	#nop {Remove walk delay in case we went backward as to not walk twice.};
+	#undelay {walk};
+	#nop {Now, pick an exit at random. We know we're in the right area because area number will be checked before $walkDelay expires.};
+	#delay {walk} {#math {exitChoice} {1d$exitCount};${exits[$exitChoice]}} {$walkDelay}
+}
 
 #VARIABLE         {exitChoice}  {}
+#VARIABLE         {hook[rvnum][walk]} {}
 #VARIABLE         {targetAreaNumber}  {$areaNumber}
+#VARIABLE         {walkDelay}  {10}
