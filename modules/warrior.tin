@@ -93,8 +93,7 @@
 	#variable {combo[attack]} {%2};
 	#replace {combo[attack]} {\x7c} { ${combo[target]};};
 	#replace {combo[attack]} {berserking} {berserk};
-	#replace {combo[attack]} {bloodlet} {};
-	#replace {combo[attack]} {cleave {\s.\w};} {cleave;};
+	#replace {combo[attack]} {bloodletting } {};
 	#replace {combo[attack]} {crippling strike} {cripple};
 	#replace {combo[attack]} {ground strike} {gstrike};
 	#replace {combo[attack]} {leap attack} {leap};
@@ -107,9 +106,14 @@
 	{
 		#replace {combo[attack]} {knife throwing} {throw shadow}
 	};
+	#replace {combo[attack]} {dirt throwing} {dirt};
 	#nop #replace {combo[attack]} {x} {randomattack};
 	#nop #local {tmp} {};
 	#list {tmp} {create} {${combo[attack]}};
+	#foreach {${tmp[]}} {i}
+	{
+		#format {tmp[$i]} {%p} {${tmp[$i]}}
+	};
 	#nop #local {tmp2} {};
 	#nop #local {i} {};
 	#foreach {thrust;taunt;charge;leap;lunge;bash;kick;riposte;pommel strike;jab;stomp;knockback} {i}
@@ -253,7 +257,7 @@
 	};
 	#variable {combo[target]} {};
 	#variable {combo[setKey]} {false};
-	#foreach {j;k;l;m;n;o;p;tmp;tmp2;tmp3;tmp4;tmp5;tmp6} {i}
+	#foreach {j;k;l;m;n;o;p;;tmp2;tmp3;tmp4;tmp5;tmp6} {i}
 	{
 		#unvariable {$i}
 	};
