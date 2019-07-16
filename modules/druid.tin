@@ -86,16 +86,6 @@
 }
 {9}
 
-#ACTION {^An earth wall starts following you.$}
-{
-	#if {!&{auto[earthwall]}}
-	{
-		#line {gag};
-		#echo {An earth wall starts following you. You can automatically make replacements with autoearthwall.}
-	}
-}
-{9}
-
 #ACTION {^{It has the following runes \w+ into it|It has the following runes upon it}: %*}
 {
 	#local {runes} {%2};
