@@ -8,14 +8,16 @@
 #FUNCTION {bot_kill}
 {
 	#nop {Don't walk once after the bot dies.};
-	#undelay {walk}
+	#undelay {walk};
+	#return #nop
 }
 
 #FUNCTION {bot_load}
 {
 	#nop {Walk once to get the bot started.};
 	#math {exitChoice} {1d$exitCount};
-	${exits[$exitChoice]}
+	${exits[$exitChoice]};
+	#return #nop
 }
 
 #FUNCTION {walk}
@@ -25,11 +27,12 @@
 	#nop {Remove walk delay in case we went backward as to not walk twice.};
 	#undelay {walk};
 	#nop {Now, pick an exit at random. We know we're in the right area because area number will be checked before $walkDelay expires.};
-	#delay {walk} {#math {exitChoice} {1d$exitCount};${exits[$exitChoice]}} {1 d ($walkDelayMax - $walkDelayMin) + $walkDelayMin}
+	#delay {walk} {#math {exitChoice} {1d$exitCount};${exits[$exitChoice]}} {1 d ($walkDelayMax - $walkDelayMin) + $walkDelayMin};
+	#return #nop
 }
 
 #VARIABLE         {exitChoice}  {}
-#VARIABLE         {hook[rvnum][walk]} {}
+#VARIABLE {hook[rvnum][walk]} {}
 #VARIABLE         {targetAreaNumber}  {$areaNumber}
 #VARIABLE         {walkDelayMax}  {15}
 #VARIABLE         {walkDelayMin}  {10}
