@@ -188,7 +188,7 @@
 }
 {9}
 
-#ACTION {^an earth wall {stops|starts} following you.$}
+#ACTION {^{vcast_.+_|}an earth wall {stops|starts} following you.$}
 {
 	#if {"${auto[earthwall]}" == "true"}
 	{
