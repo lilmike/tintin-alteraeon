@@ -149,8 +149,8 @@
 		{
 			#unvariable {tmp2[disarm]}
 		};
-		#list {tmp} {find} {berserk} {i};
-		#if {$i > 0}
+		#list {tmp} {find} {berserking} {i};
+		#if {$i > 0 || !&{auto[berserk]} || "${auto[berserk]}" != "true"}
 		{
 			#unvariable {tmp2[berserking]}
 		};
