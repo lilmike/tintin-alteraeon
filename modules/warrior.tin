@@ -48,7 +48,7 @@
 #ACTION {^You got a %d attack combo%2}
 {
 	#undelay {comboFail};
-#delay {comboFail} {@do_hook{comboFail}} {5};
+	#delay {comboFail} {@do_hook{comboFail}} {5};
 	play combo-partial-%1
 }
 {9}
@@ -99,15 +99,150 @@
 	#replace {combo[attack]} {ground strike} {gstrike};
 	#replace {combo[attack]} {leap attack} {leap};
 	#replace {combo[attack]} {pommel strike} {pommel};
-#if {"${auto[weapon]}" == "true"}
-{	
-#replace {combo[attack]} {knife throwing} {remove $weapon;throw shadow;wield $weapon}
-};
-#else
-{
-#replace {combo[attack]} {knife throwing} {throw shadow}
-};
-	#replace {combo[attack]} {x} {randomattack};
+	#if {"${auto[weapon]}" == "true"}
+	{
+		#replace {combo[attack]} {knife throwing} {remove $weapon;throw shadow;wield $weapon}
+	};
+	#else
+	{
+		#replace {combo[attack]} {knife throwing} {throw shadow}
+	};
+	#nop #replace {combo[attack]} {x} {randomattack};
+	#nop #local {tmp} {};
+	#list {tmp} {create} {${combo[attack]}};
+	#nop #local {tmp2} {};
+	#nop #local {i} {};
+	#foreach {thrust;taunt;charge;leap;lunge;bash;kick;riposte;pommel strike;jab;stomp;knockback} {i}
+	{
+		#variable {tmp2[$i]} {true}
+	};
+	#if {"${combo[type]}" == "{advanced|cross}"}
+	{
+		#foreach {intimidate;disarm;berserking;whirlwind;cleave;ground strike} {i}
+		{
+			#variable {tmp2[$i]} {true}
+		}
+	};
+	#if {"${combo[type]}" == "cross"}
+	{
+		#foreach {backstab;trip;bloodletting stab;dirt throwing;shadow bind;shadow strike;knife throwing;feint;crippling strike;flourish} {i}
+		{
+			#variable {tmp2[$i]} {true}
+		}
+	};
+	#if {"${tmp[1]}" != "x"}
+	{
+		#unvariable {tmp2[charge]};
+		#if {"${combo[type]}" == "cross"}
+		{
+			#unvariable {tmp2[backstab]}
+		}
+	};
+	#if {"${combo[type]}" == "{advanced|cross}"}
+	{
+		#list {tmp} {find} {disarm} {i};
+		#if {$i > 0}
+		{
+			#unvariable {tmp2[disarm]}
+		};
+		#list {tmp} {find} {berserk} {i};
+		#if {$i > 0}
+		{
+			#unvariable {tmp2[berserking]}
+		};
+		#if {"${combo[target]}" == ""}
+		{
+			#unvariable {tmp2[intimidate]}
+		}
+	};
+	#foreach {${tmp2[]}} {i}
+	{
+		#if {!&{skillsAndSpells[$i]}}
+		{
+			#unvariable {tmp2[$i]}
+		}
+	};
+	#nop #local {o} {};
+	#list {tmp} {size} {o};
+	#nop #local {tmp3} {};
+	#list {tmp3} {create} {${tmp2[]}};
+	#nop #local {tmp5} {};
+	#list {tmp3} {simplify} {tmp5};
+	#replace {tmp5} {berserking} {berserk};
+	#replace {tmp5} {bloodletting } {};
+	#replace {tmp5} {crippling strike} {cripple};
+	#replace {tmp5} {ground strike} {gstrike};
+	#replace {tmp5} {leap attack} {leap};
+	#replace {tmp5} {pommel strike} {pommel};
+	#if {"${auto[weapon]}" == "true"}
+	{
+		#replace {tmp5} {knife throwing} {remove $weapon;throw shadow;wield $weapon}
+	};
+	#else
+	{
+		#replace {tmp5} {knife throwing} {throw shadow}
+	};
+	#replace {tmp5} {dirt throwing} {dirt};
+	#list {tmp3} {create} {$tmp5};
+	#foreach {${tmp[]}} {i}
+	{
+		#if {"${tmp[$i]}" == "{\s*x\s*}"}
+		{
+			#nop #local {tmp6} {${tmp3}};
+			#variable {tmp6} {${tmp3}};
+			#nop #local {tmp4} {};
+			#while {1}
+			{
+				#nop #local {continue} {0};
+				#variable {continue} {0};
+				#nop #local {j} {};
+				#nop #local {k} {};
+				#nop #local {l} {};
+				#list {tmp6} {size} {l};
+				#if {$l == 0}
+				{
+					#variable {tmp4} {randomattack};
+					#break
+				};
+				#else
+				{
+					#math {k} {1 d $l};
+					#variable {tmp4} {${tmp6[$k]}}
+				};
+				#nop #local {m} {};
+				#foreach {-2;-1;1;2} {m}
+				{
+					#nop #local {n} {};
+					#math {n} {$i + $m};
+					#if {$n < 1 || $n > $o}
+					{
+						#continue
+					};
+					#if {"${tmp[$n]}" == "{\s*$tmp4\s*}"}
+					{
+						#nop #local {p} {};
+						#list {tmp6} {find} {$tmp4} {p};
+						#if {$p > 0}
+						{
+							#list {tmp6} {delete} {$p}
+						};
+						#variable {continue} {1};
+						#break
+					}
+				};
+				#if {$continue}
+				{
+					#continue
+				};
+				#else
+				{
+					#break
+				}
+			};
+			#variable {tmp[$i]} {$tmp4}
+		}
+	};
+	#list {tmp} {simplify} {combo[attack]};
 	#if {"${combo[setKey]}" != "false"}
 	{
 		set${combo[setKey]} ${combo[attack]}
@@ -117,14 +252,12 @@
 		${combo[attack]}
 	};
 	#variable {combo[target]} {};
-	#variable {combo[setKey]} {false}
-}
-{9}
-
-#ACTION {^silent_xcombo_wc - lines:  %d}
-{
-	#math {i} {1d%1};
-	tactics all | grep -i length | grep x | grep -v charge | grep -v taunt | prefix silent_ | tail -n $i | head -n 1
+	#variable {combo[setKey]} {false};
+	#foreach {j;k;l;m;n;o;p;tmp;tmp2;tmp3;tmp4;tmp5;tmp6} {i}
+	{
+		#unvariable {$i}
+	};
+	#unvariable {i}
 }
 {9}
 
@@ -132,6 +265,13 @@
 {
 	#math {i} {1d%1};
 	tactics all | grep -i length | grep -v x | grep -v charge | grep -v taunt | prefix silent_ | tail -n $i | head -n 1
+}
+{9}
+
+#ACTION {^silent_xcombo_wc - lines:  %d}
+{
+	#math {i} {1d%1};
+	tactics ${combo[type]} | grep -i length | grep x | grep -v charge | grep -v taunt | prefix silent_ | tail -n $i | head -n 1
 }
 {9}
 
@@ -172,13 +312,6 @@
 }
 {5}
 
-#ALIAS {^xcombo %S %S$}
-{
-	#variable {combo[target]} {%2 };
-	tactics all | grep %1 | grep x | prefix silent_ | head -n 1
-}
-{8}
-
 #ALIAS {^{3|4|5|6|7|8}{combo|acombo|ccombo|lcombo} %3$}
 {
 	#variable {combo[target]} {};
@@ -201,6 +334,28 @@
 			tactics all | grep %1 | grep %3 | grep -v x | prefix silent_ | head -n 1
 		}
 	}
+}
+{8}
+
+#ALIAS {^{a|c|l}xcombo %S %S$}
+{
+	#variable {combo[target]} {%3 };
+	#switch {"%1"}
+	{
+		#case {"a"}
+		{
+			#variable {combo[type]} {advanced}
+		};
+		#case {"c"}
+		{
+			#variable {combo[type]} {cross}
+		};
+		#case {"l"}
+		{
+			#variable {combo[type]} {low}
+		}
+	};
+	tactics ${combo[type]} | grep %2 | grep x | prefix silent_ | head -n 1
 }
 {8}
 
@@ -370,20 +525,6 @@
 }
 {9}
 
-#ALIAS {^xcombo %S$}
-{
-	#variable {combo[target]} {};
-	tactics all | grep %1 | grep x | prefix silent_ | head -n 1
-}
-{9}
-
-#ALIAS {^xcombo$}
-{
-	#variable {combo[target]} {};
-	tactics all | grep -i length | grep x | grep -v charge | grep -v taunt | wc -l | prefix silent_xcombo_
-}
-{9}
-
 #ALIAS {^{3|4|5|6|7|8}{combo|lcombo|acombo|ccombo}set{a|b|c|d|e|f|g|h|n|q|r|s|t|v|w|x|y|z} %4}
 {
 	#variable {combo[setKey]} {%3};
@@ -416,6 +557,50 @@
 	{
 		#send {assist}
 	}
+}
+{9}
+
+#ALIAS {^{a|c|l}xcombo %S$}
+{
+	#variable {combo[target]} {};
+	#switch {"%1"}
+	{
+		#case {"a"}
+		{
+			#variable {combo[type]} {advanced}
+		};
+		#case {"c"}
+		{
+			#variable {combo[type]} {cross}
+		};
+		#case {"l"}
+		{
+			#variable {combo[type]} {low}
+		}
+	};
+	tactics ${combo[type]} | grep %2 | grep x | prefix silent_ | head -n 1
+}
+{9}
+
+#ALIAS {^{a|c|l}xcombo$}
+{
+	#variable {combo[target]} {};
+	#switch {"%1"}
+	{
+		#case {"a"}
+		{
+			#variable {combo[type]} {advanced}
+		};
+		#case {"c"}
+		{
+			#variable {combo[type]} {cross}
+		};
+		#case {"l"}
+		{
+			#variable {combo[type]} {low}
+		}
+	};
+	tactics ${combo[type]} | grep -i length | grep x | grep -v charge | grep -v taunt | wc -l | prefix silent_xcombo_
 }
 {9}
 
