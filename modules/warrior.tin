@@ -268,14 +268,14 @@
 #ACTION {^silent_combo_wc - lines:  %d}
 {
 	#math {i} {1d%1};
-	tactics all | grep -i length | grep -v x | grep -v charge | grep -v taunt | prefix silent_ | tail -n $i | head -n 1
+	tactics all | grep -i length | grep -v x | grep -v charge | grep -v backstab | prefix silent_ | tail -n $i | head -n 1
 }
 {9}
 
 #ACTION {^silent_xcombo_wc - lines:  %d}
 {
 	#math {i} {1d%1};
-	tactics ${combo[type]} | grep -i length | grep x | grep -v charge | grep -v taunt | prefix silent_ | tail -n $i | head -n 1
+	tactics ${combo[type]} | grep -i length | grep x | grep -v charge | grep -v backstab | prefix silent_ | tail -n $i | head -n 1
 }
 {9}
 
@@ -391,7 +391,7 @@
 #ALIAS {^combo$}
 {
 	#variable {combo[target]} {};
-	tactics all | grep -i length | grep -v x | grep -v charge | grep -v taunt | wc -l | prefix silent_combo_
+	tactics all | grep -i length | grep -v x | grep -v charge | grep -v backstab | wc -l | prefix silent_combo_
 }
 {9}
 
@@ -604,7 +604,7 @@
 			#variable {combo[type]} {low}
 		}
 	};
-	tactics ${combo[type]} | grep -i length | grep x | grep -v charge | grep -v taunt | wc -l | prefix silent_xcombo_
+	tactics ${combo[type]} | grep -i length | grep x | grep -v charge | grep -v backstab | wc -l | prefix silent_xcombo_
 }
 {9}
 
