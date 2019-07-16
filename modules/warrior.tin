@@ -107,6 +107,7 @@
 		#replace {combo[attack]} {knife throwing} {throw shadow}
 	};
 	#replace {combo[attack]} {dirt throwing} {dirt};
+	#replace {combo[attack]} {shield slam} {slam};
 	#nop #replace {combo[attack]} {x} {randomattack};
 	#nop #local {tmp} {};
 	#list {tmp} {create} {${combo[attack]}};
@@ -122,7 +123,7 @@
 	};
 	#if {"${combo[type]}" == "{advanced|cross}"}
 	{
-		#foreach {intimidate;disarm;berserking;whirlwind;cleave;ground strike} {i}
+		#foreach {intimidate;disarm;berserking;whirlwind;cleave;ground strike;shield slam} {i}
 		{
 			#variable {tmp2[$i]} {true}
 		}
@@ -187,6 +188,7 @@
 		#replace {tmp5} {knife throwing} {throw shadow}
 	};
 	#replace {tmp5} {dirt throwing} {dirt};
+	#replace {tmp5} {shield slam} {slam};
 	#list {tmp3} {create} {$tmp5};
 	#foreach {${tmp[]}} {i}
 	{
