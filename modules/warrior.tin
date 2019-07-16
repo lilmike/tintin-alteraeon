@@ -134,7 +134,7 @@
 			#variable {tmp2[$i]} {true}
 		}
 	};
-	#if {"${tmp[1]}" != "x"}
+	#if {"${tmp[1]}" != "x" || "${character[inBattle]}" == "true"}
 	{
 		#unvariable {tmp2[charge]};
 		#if {"${combo[type]}" == "cross"}
