@@ -492,7 +492,7 @@
 #ALIAS {^chelp$}
 {
 	#showme {Help topics:};
-	#system {if [ -d "help" ] ; then IFS=$'\n' ; for x in $(ls -1 "help") ; do echo "$$x" | $sed "s/\.hlp//" ; done ; fi}
+	#system {if [ -d "help" ] ; then find . -iname '*.hlp' -exec basename -s hlp {} + ; fi}
 }
 {9}
 
