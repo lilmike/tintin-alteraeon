@@ -314,6 +314,10 @@
 			}
 		}
 	};
+	#else
+	{
+		#showme {Couldn't find 2 of the proper type of soulstone}
+	};
 	#line {gag}
 }
 {9}
@@ -1068,12 +1072,24 @@
 
 #ALIAS {^smartforge {red|yellow|green|pale blue|deep blue|purple|clear|white|black} %*}
 {
-	#variable {soulcont} {%2};
-	#variable {soul} {%1};
-	#variable {souls} {};
-	#variable {gets} {};
-	look in $soulcont -ncount $soul soulstone +insult |prefix soulforge_;
-	lecho DONE_LOOKING
+	#if {"%1" != "$soul"}
+	{
+		#variable {soulcont} {%2};
+		#variable {soul} {%1};
+		#variable {souls} {};
+		#variable {gets} {};
+		#variable {yes} {look in $soulcont -ncount $soul soulstone +insult |prefix soulforge_;lecho DONE_LOOKING};
+		#showme {This command will forge two %1 soulstones together, *not* create a %1 soulstone. Type yes to continue.}
+	};
+	#else
+	{
+		#variable {soulcont} {%2};
+		#variable {soul} {%1};
+		#variable {souls} {};
+		#variable {gets} {};
+		look in $soulcont -ncount $soul soulstone +insult |prefix soulforge_;
+		lecho DONE_LOOKING
+	}
 }
 {9}
 
@@ -1083,12 +1099,7 @@
 	{
 		#variable {character[soulContainer]} {${character[container]}}
 	};
-	#variable {soulcont} {${character[soulContainer]}};
-	#variable {soul} {%1};
-	#variable {souls} {};
-	#variable {gets} {};
-	look in $soulcont -ncount $soul soulstone +insult |prefix soulforge_;
-	lecho DONE_LOOKING
+	smartforge %1 ${character[soulContainer]}
 }
 {9}
 
