@@ -136,6 +136,20 @@
 }
 {8}
 
+#ACTION {^soulforge_get_%s(lvl%s%d) Item: {[a-zA-Z0-9]+}%s'%* soulgem gem soulstone stone'$}
+{
+	#if {"%6" == "$soul"}
+	{
+		#list {gets} {add} {%4}
+	};
+	#else
+	{
+		#showme {Somehow we ended up with a %6 soulstone when looking for $soul soulstones. Please report.}
+	};
+	#line {gag}
+}
+{8}
+
 #ACTION {^%sYou add A %1 to your group.$}
 {
 	#if {"%1" == "zombie" || "%1" == "ghoul" || "%1" == "mummy" || "%1" == "vampire"}
@@ -273,14 +287,14 @@
 					};
 					#else
 					{
-						#if {${souls2[$i]} - $j == $k}
+						#if {$j - ${souls2[$i]} == $k}
 						{
-							#variable {level} {-level ${souls2[$i]} +level $j};
+							#variable {level} {+level ${souls2[$i]} -level ${j}};
 							#break
 						};
 						#else
 						{
-							#variable {j} {${souls[$i]}}
+							#variable {j} {${souls2[$i]}}
 						}
 					}
 				};
@@ -762,20 +776,6 @@
 	#line {gag}
 }
 {9}
-
-#ACTION {^soulforge_get_%s(lvl%s%d) Item: {[a-zA-Z0-9]+}%s'%* soulgem gem soulstone stone'$}
-{
-	#if {"%6" == "$soul"}
-	{
-		#list {gets} {add} {%4}
-	};
-	#else
-	{
-		#showme {Somehow we ended up with a %6 soulstone when looking for $soul soulstones. Please report.}
-	};
-	#line {gag}
-}
-{8}
 
 #ACTION {^vcast_preservation corpse_You cast a powerful spell on the corpse of %1, slowing its decay.$}
 {
