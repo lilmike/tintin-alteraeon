@@ -253,6 +253,11 @@
 {
 	#list {souls2} {create} {${souls[]}};
 	#local {l} {};
+	#variable {lastNumber} {0};
+	#foreach {${souls[]}} {l}
+	{
+		#math {lastNumber} {$lastNumber + ${souls[$l]}}
+	};
 	#list {souls2} {size} {l};
 	#if {$l > 0}
 	{
@@ -276,7 +281,12 @@
 			#local {j} {};
 			#local {k} {};
 			#local {level} {};
-			#foreach {1;2;3;4;5;6;7;8;9;10;11;12;13;14;15} {k}
+			#local {loops} {1;2;3;4;5;6;7;8;9;10;11;12;13;14;15};
+			#if {"$fullforge" != "" && "$upgraded" == "true" && "$upgradeFallback" != "true"}
+			{
+				#variable {loops} {1;2;3}
+			};
+			#foreach {$loops} {k}
 			{
 				#loop {$l} {1} {i}
 				{
@@ -310,13 +320,117 @@
 			};
 			#else
 			{
-				#showme {Couldn't find 2 of the proper type of soulstone}
+				#if {"$fullforge" == ""}
+				{
+					#showme {Couldn't find 2 of the proper type of soulstone}
+				};
+				#else
+				{
+					#switch {"$soul"}
+					{
+						#case {"white"}
+						{
+							smartforge clear $soulcont
+						};
+						#case {"clear"}
+						{
+							smartforge purple $soulcont
+						};
+						#case {"purple"}
+						{
+							smartforge deep blue $soulcont
+						};
+						#case {"deep blue"}
+						{
+							smartforge pale blue $soulcont
+						};
+						#case {"pale blue"}
+						{
+							smartforge green $soulcont
+						};
+						#case {"green"}
+						{
+							smartforge yellow $soulcont
+						};
+						#case {"yellow"}
+						{
+							smartforge red $soulcont
+						};
+						#default
+						{
+							#if {"$upgradeFallback" == "true"}
+							{
+								#showme {You seem to have run out of soulstones to create a $fullforge soulstone.};
+								#variable {fullforge} {};
+								#variable {upgraded} {false};
+								#variable {upgradeFallback} {false}
+							};
+							#else
+							{
+								#variable {upgradeFallback} {true};
+								fullforge $fullforge $soulcont
+							}
+						}
+					}
+				}
 			}
 		}
 	};
 	#else
 	{
-		#showme {Couldn't find 2 of the proper type of soulstone}
+		#if {"$fullforge" == ""}
+		{
+			#showme {Couldn't find 2 of the proper type of soulstone}
+		};
+		#else
+		{
+			#switch {"$soul"}
+			{
+				#case {"white"}
+				{
+					smartforge clear $soulcont
+				};
+				#case {"clear"}
+				{
+					smartforge purple $soulcont
+				};
+				#case {"purple"}
+				{
+					smartforge deep blue $soulcont
+				};
+				#case {"deep blue"}
+				{
+					smartforge pale blue $soulcont
+				};
+				#case {"pale blue"}
+				{
+					smartforge green $soulcont
+				};
+				#case {"green"}
+				{
+					smartforge yellow $soulcont
+				};
+				#case {"yellow"}
+				{
+					smartforge red $soulcont
+				};
+				#default
+				{
+					#if {"$upgradeFallback" == "true"}
+					{
+						#showme {You seem to have run out of soulstones to create a $fullforge soulstone.};
+						#variable {fullforge} {};
+						#variable {upgraded} {false};
+						#variable {upgradeFallback} {false}
+					};
+					#else
+					{
+						#variable {upgradeFallback} {true};
+						fullforge $fullforge $soulcont
+					}
+				}
+			}
+		}
 	};
 	#line {gag}
 }
@@ -792,7 +906,39 @@
 
 #ACTION {^vcast_soulforge %*_You forge a %* soulstone using a %* soulstone as a base!$}
 {
-	put soul $soulcont
+	#if {"$soul" != ""}
+	{
+		put soul $soulcont;
+		#variable {soul} {};
+		#if {"$fullforge" != "%2"}
+		{
+			#if {"%2" == "%3"}
+			{
+				#math {lastNumber} {$lastNumber + 1};
+				#variable {upgraded} {false}
+			};
+			#else
+			{
+				#variable {upgraded} {true}
+			};
+			#if {$lastNumber >= 1}
+			{
+				#if {$lastNumber > 3}
+				{
+					#variable {upgradeFallback} {false}
+				};
+				smartforge %2 $soulcont
+			};
+			#else
+			{
+				smartforge %3 $soulcont
+			}
+		};
+		#else
+		{
+			#variable {fullforge} {}
+		}
+	}
 }
 {9}
 
@@ -1002,6 +1148,66 @@
 }
 {9}
 
+#ALIAS {^fullforge {yellow|green|pale blue|deep blue|purple|clear|white|black} %*}
+{
+	#local {tmp} {};
+	#switch {"%1"}
+	{
+		#case {"black"}
+		{
+			#variable {tmp} {white}
+		};
+		#case {"white"}
+		{
+			#variable {tmp} {clear}
+		};
+		#case {"clear"}
+		{
+			#variable {tmp} {purple}
+		};
+		#case {"purple"}
+		{
+			#variable {tmp} {deep blue}
+		};
+		#case {"deep blue"}
+		{
+			#variable {tmp} {pale blue}
+		};
+		#case {"pale blue"}
+		{
+			#variable {tmp} {green}
+		};
+		#case {"green"}
+		{
+			#variable {tmp} {yellow}
+		};
+		#case {"yellow"}
+		{
+			#variable {tmp} {red}
+		}
+	};
+	#variable {yes} {#var {fullforge} {%1};smartforge $tmp %2};
+	#if {"$upgradeFallback" == "true"}
+	{
+		yes
+	};
+	#else
+	{
+		#showme {This will attempt to forge a %1 soulstone as cost effectively as possible. It could end up using an extremely large number of soulstones. Type yes to continue.}
+	}
+}
+{9}
+
+#ALIAS {^fullforge {yellow|green|pale blue|deep blue|purple|clear|white|black}$}
+{
+	#if {!&{character[soulContainer]}}
+	{
+		#variable {character[soulContainer]} {${character[container]}}
+	};
+	fullforge %1 ${character[soulContainer]}
+}
+{9}
+
 #ALIAS {^metalconstruct$}
 {
 	#nop {Interupt the queue and make a new metal construct instantly};
@@ -1072,7 +1278,7 @@
 
 #ALIAS {^smartforge {red|yellow|green|pale blue|deep blue|purple|clear|white|black} %*}
 {
-	#if {"%1" != "$soul"}
+	#if {"%1" != "$soul" && "$fullforge" == ""}
 	{
 		#variable {soulcont} {%2};
 		#variable {soul} {%1};
@@ -1283,9 +1489,13 @@
 #GAG              {^None of your minions seem hungry at the moment.$}
 #GAG              {^{boneguardian|metal|woad}{C|c}ounter_%*}
 #VARIABLE         {boneFortBreakCounter}  {0}
+#VARIABLE         {fullforge}  {}
 #VARIABLE         {gets}  {}
+#VARIABLE         {lastNumber}  {0}
 #VARIABLE         {noSoulstealIndex}  {0}
 #VARIABLE         {soul}  {}
 #VARIABLE         {soulcont}  {}
 #VARIABLE         {souls}  {}
 #VARIABLE         {souls2}  {}
+#VARIABLE         {upgradeFallback}  {false}
+#VARIABLE         {upgraded}  {false}
