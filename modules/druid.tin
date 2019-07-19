@@ -188,31 +188,23 @@
 }
 {9}
 
-#ACTION {^{vcast_.+_|}an earth wall {stops|starts} following you.$}
-{
-	#if {"${auto[earthwall]}" == "true"}
-	{
-		#if {"%1" == "stops" && $earthWall}
-		{
-			vcast earth wall
-		};
-		#else
-		{
-			#variable {earthWall} {0}
-		}
-	};
-	#else
-	{
-		\
-	}
-}
-{9}
-
 #ACTION {^silent_[%s%d] a {star|sun|moon}catcher bottle in %4 - 100% full.$}
 {
 	synth_play notificationSound;
 	#showme {Full %3catcher in %4.};
 	notify-send Full %3catcher in %4.
+}
+{9}
+
+#ACTION {^{A|a} water weird stops following you.$}
+{
+	#if {"${client[releasing]}" != "true" && "${auto[weird]}" == "true"}
+	{
+		#if {"${kxwt[terrain]}" == "{38|32|29|21|20|19|18|7}" || "${client[spring]}" == "true"}
+		{
+			vcast water weird
+		}
+	}
 }
 {9}
 
@@ -380,6 +372,26 @@
 }
 {9}
 
+#ACTION {^{vcast_.+_|}an earth wall {stops|starts} following you.$}
+{
+	#if {"${auto[earthwall]}" == "true"}
+	{
+		#if {"%1" == "stops" && $earthWall}
+		{
+			vcast earth wall
+		};
+		#else
+		{
+			#variable {earthWall} {0}
+		}
+	};
+	#else
+	{
+		\
+	}
+}
+{9}
+
 #ALIAS {SHOW_CARVING %1}
 {
 	#switch {"%1"}
@@ -504,6 +516,21 @@
 }
 {9}
 
+#ALIAS {^{auto|noauto}weird$}
+{
+	#if {"%1" == "noauto"}
+	{
+		#showme {Autocasting of water weirds disabled.};
+		#variable {auto[weird]} {false}
+	};
+	#else
+	{
+		#showme {Autocasting of water weirds enabled.};
+		#variable {auto[weird]} {true}
+	}
+}
+{9}
+
 #ALIAS {^{auto|noauto}{call|earthwall|liveoak|mound}$}
 {
 	#if {"%1" == "auto"}
@@ -535,5 +562,6 @@
 {9}
 
 #TICKER           {lightcatcher}  {#if {"${auto[suncatcher]}" == "true" && "${character[inBattle]}" == "false"}{gather lightcatcher list | prefix silent_}}                                                                                                {300.00}
+#VARIABLE  {client[spring]} {false}
 #VARIABLE         {earthWall}  {0}
 #VARIABLE         {runeCarveMessage}  {}
