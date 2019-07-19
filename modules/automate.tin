@@ -1,4 +1,4 @@
-#ACTION {^{(?:A|An) (?:straw man|wood woad|greater ice elemental|ice elemental|lesser ice elemental|greater crystal elemental|crystal elemental|lesser crystal elemental|greater fire elemental|fire pillar elemental|lesser fire elemental|bone guardian|flesh beast|metal construct|clay man|liveoak|ancient oak tree) heroically rescues|.+ jumps to the aid of|.+ rushes to aid} %*!$}
+#ACTION {^{(?:A|An) (?:shambling bone man|straw man|wood woad|greater ice elemental|ice elemental|lesser ice elemental|greater crystal elemental|crystal elemental|lesser crystal elemental|greater fire elemental|fire pillar elemental|lesser fire elemental|bone guardian|flesh beast|metal construct|clay man|liveoak|ancient oak tree) heroically rescues|.+ jumps to the aid of|.+ rushes to aid} %*!$}
 {
 	#nop {Hook name: assist};
 	#nop {Hook args: none};
