@@ -1,7 +1,11 @@
-#ACTION {^{A hedge wizard says, 'You should talk to me first before you go downstairs\.'|Radcliff the curator says to you, 'I'm sorry, but you must buy a pass to enter the museum\. The price is quite modest, I assure you!'|Only guild members are allowed beyond this point\.|.+ blocks your path, preventing you from passing\.}$}
+#ACTION {^{You would surely drop something, you are carrying far too much!|A hedge wizard says, 'You should talk to me first before you go downstairs\.'|Radcliff the curator says to you, 'I'm sorry, but you must buy a pass to enter the museum\. The price is quite modest, I assure you!'|Only guild members are allowed beyond this point\.|.+ blocks your path, preventing you from passing\.}$}
 {
-	#nop {Wander to get out of this room and hopefully pick another path.};
-	#delay {walk} {wander} {2d2}
+	#if {!$secondTry}
+	{
+		#nop {Wander to get out of this room and hopefully pick another path.};
+		#delay {walk} {wander} {8d3};
+		#variable {secondTry} {1}
+	}
 }
 {9}
 
@@ -22,6 +26,8 @@
 
 #FUNCTION {walk}
 {
+	#nop {We moved, so clear secondTry variable.};
+	#variable {secondTry} {0};
 	#nop {Delay a tiny amount in case the mud sends area number after room number.};
 	#delay {0.05} {#if {$areaNumber != $targetAreaNumber} {backward}};
 	#nop {Remove walk delay in case we went backward as to not walk twice.};
@@ -33,6 +39,7 @@
 
 #VARIABLE         {exitChoice}  {}
 #VARIABLE {hook[rvnum][walk]} {}
+#VARIABLE         {secondTry}  {0}
 #VARIABLE         {targetAreaNumber}  {$areaNumber}
 #VARIABLE         {walkDelayMax}  {15}
 #VARIABLE         {walkDelayMin}  {10}
