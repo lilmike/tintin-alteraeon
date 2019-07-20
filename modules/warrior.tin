@@ -117,13 +117,13 @@
 	};
 	#nop #local {tmp2} {};
 	#nop #local {i} {};
-	#foreach {thrust;taunt;charge;leap;lunge;bash;kick;riposte;pommel strike;jab;stomp;knockback} {i}
+	#foreach {thrust;taunt;charge;leap;lunge;bash;kick;riposte;pommel strike;jab;stomp;knockback;cleave} {i}
 	{
 		#variable {tmp2[$i]} {true}
 	};
 	#if {"${combo[type]}" == "{advanced|cross}"}
 	{
-		#foreach {intimidate;disarm;berserking;whirlwind;cleave;ground strike;shield slam} {i}
+		#foreach {intimidate;disarm;berserking;whirlwind;ground strike;shield slam} {i}
 		{
 			#variable {tmp2[$i]} {true}
 		}
@@ -192,6 +192,24 @@
 	#list {tmp3} {create} {$tmp5};
 	#foreach {${tmp[]}} {i}
 	{
+		#list {tmp} {find} {disarm} {p};
+		#if {$p > 0}
+		{
+			#list {tmp3} {find} {disarm} {p};
+			#if {$p > 0}
+			{
+				#list {tmp3} {delete} {$p}
+			}
+		};
+		#list {tmp} {find} {berserk} {p};
+		#if {$p > 0}
+		{
+			#list {tmp3} {find} {berserk} {p};
+			#if {$p > 0}
+			{
+				#list {tmp3} {delete} {$p}
+			}
+		};
 		#if {"${tmp[$i]}" == "{\s*x\s*}"}
 		{
 			#nop #local {tmp6} {${tmp3}};
