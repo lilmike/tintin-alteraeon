@@ -275,7 +275,10 @@
 
 #ACTION {^{The gods penalize you for botting|You have been penalized for botting}!$}
 {
-	synth_play botthwack
+	#nop {Hook name: botthwack};
+	#nop {Hook arguments: none.};
+	synth_play botthwack;
+	@do_hook{botthwack}
 }
 {9}
 
