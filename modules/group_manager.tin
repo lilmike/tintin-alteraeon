@@ -34,19 +34,19 @@
 }
 {9}
 
-#ACTION {^%w would like to join your group!  Use the 'group summon' command to add {her|him|it}.$}
-{
-	#macro {\eY} {group summon %1};
-	play group-request
-}
-{9}
-
 #ACTION {^%w beckons for you to follow.$}
 {
 	#if {"${auto[follow]}" == "true"}
 	{
 		friends find | grep -i %1 | prefix silent_follow
 	}
+}
+{9}
+
+#ACTION {^%w would like to join your group!  Use the 'group summon' command to add {her|him|it}.$}
+{
+	#macro {\eY} {group summon %1};
+	play group-request
 }
 {9}
 
@@ -75,9 +75,13 @@
 
 #ACTION {^You stop using%*}
 {
-	show stats | prefix silent_;
-	show clev | prefix silent_;
-	eq | grep wielded | prefix silent_
+	#if {"${spam[stats]}" != "true"}
+	{
+		spamset stats show stats | prefix silent_;
+		show clev | prefix silent_
+	};
+	#undelay {wieldDelay};
+	#delay {wieldDelay} {eq | grep wielded | prefix silent_} {2}
 }
 {9}
 

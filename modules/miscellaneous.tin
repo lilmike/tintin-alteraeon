@@ -181,8 +181,12 @@
 
 #ACTION {^You {hold|wear|wield}%*}
 {
-	show stats | prefix silent_;
-	show clev | prefix silent_
+	#if {"${spam[stats]}" != "true"}
+	{
+		spamset stats;
+		show stats | prefix silent_;
+		show clev | prefix silent_
+	}
 }
 {9}
 
@@ -312,14 +316,6 @@
 	#variable {auto[buyPracticeExperience]} {%2}
 }
 {9}
-
-#ALIAS {^{rest|si|sit}$}
-{
-	#variable {position} {rest};
-	#send {rest};
-	show regen | prefix silent_
-}
-{A 9}
 
 #ALIAS {^{f|fl|fle|flee}$}
 {
@@ -737,6 +733,14 @@
 #ALIAS {^{pracs|practices}$}
 {
 	show practices
+}
+{9}
+
+#ALIAS {^{rest|si|sit}$}
+{
+	#variable {position} {rest};
+	#send {rest};
+	show regen | prefix silent_
 }
 {9}
 
