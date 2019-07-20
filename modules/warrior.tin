@@ -117,13 +117,13 @@
 	};
 	#nop #local {tmp2} {};
 	#nop #local {i} {};
-	#foreach {thrust;taunt;charge;leap;lunge;bash;kick;riposte;pommel strike;jab;stomp;knockback;cleave} {i}
+	#foreach {thrust;taunt;charge;lunge;bash;kick;riposte;pommel strike;jab;stomp;knockback;cleave} {i}
 	{
 		#variable {tmp2[$i]} {true}
 	};
 	#if {"${combo[type]}" == "{advanced|cross}"}
 	{
-		#foreach {intimidate;disarm;berserking;whirlwind;ground strike;shield slam} {i}
+		#foreach {leap attack;intimidate;disarm;berserking;whirlwind;ground strike;shield slam} {i}
 		{
 			#variable {tmp2[$i]} {true}
 		}
