@@ -96,7 +96,7 @@
 }
 {9}
 
-#ALIAS {^{auto|noauto}{recall$|removepoison}$}
+#ALIAS {^{auto|noauto}{recall|removepoison}$}
 {
 	#if {"%1" == "auto"}
 	{
