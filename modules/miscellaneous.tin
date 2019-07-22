@@ -481,14 +481,38 @@
 
 #ALIAS {^chelp %*}
 {
-	#system {if [ -f "help/%1.hlp" ] ; then fold -s -w $(tput cols) "help/%1.hlp" ; else echo "No help on %1" ; fi}
+	#local {found} {0};
+	#local {tmp} {};
+	#if {&{x}}
+	{
+		#variable {found} {1};
+		#variable {tmp} {$x};
+		#unvariable {x}
+	};
+	#script {if [ -f "help/%1.hlp" ] ; then IFS=$'\n'; for x in $(fold -s -w $(tput cols) "help/%1.hlp");do echo "#showme {$x}";done; else echo "#echo {No help on %1}" ; fi};
+	#if {$found}
+	{
+		#variable {x} {$tmp}
+	}
 }
 {9}
 
 #ALIAS {^chelp$}
 {
+	#local {found} {0};
+	#local {tmp} {};
+	#if {&{x}}
+	{
+		#variable {found} {1};
+		#variable {tmp} {$x};
+		#unvariable {x}
+	};
 	#showme {Help topics:};
-	#system {if [ -d "help" ] ; then find . -iname '*.hlp' -exec basename -s hlp {} + ; fi}
+	#script {if [ -d "help" ] ; then IFS=$'\n' ; for x in $(find . -iname '*.hlp' -exec basename -s hlp {} +); do echo "#echo {$x}" ; done ; fi};
+	#if {${found}}
+	{
+		#variable {x} {$tmp}
+	}
 }
 {9}
 
