@@ -26,30 +26,6 @@
 }
 {5}
 
-#ACTION {^{You would need to be trained in the art of climbing|You'll have to climb} to go there.}
-{
-	#line {gag};
-	#if {"$autoclimb" == "true"}
-	{
-		climb $lastDirection
-	};
-	#else
-	{
-		#echo {You'll have to climb to go there. (You can enable autoclimbing by typing autoclimb.)}
-	}
-}
-{5}
-
-#ACTION {%1 begins {her|his|its} climb %2ward.}
-{
-	#if {"%1" == "${group[leader}"]}
-	{
-		climb %2;
-		Add_Direction %2
-	}
-}
-{8}
-
 #ACTION {%1 arrives from%2portal%3}
 {
 	seq_play portal
@@ -150,21 +126,6 @@
 }
 {9}
 
-#ALIAS {^{auto|noauto}climb$}
-{
-	#if {"%0" == "autoclimb"}
-	{
-		#showme {Autoclimbing enabled.};
-		#variable {autoclimb} {true}
-	};
-	#else
-	{
-		#showme {Autoclimbing disabled.};
-		#unvariable {autoclimb}
-	}
-}
-{9}
-
 #ALIAS {^{auto|noauto}waypoint$}
 {
 	#if {"%0" == "autowaypoint"}
@@ -183,7 +144,7 @@
 #ALIAS {^{d|do|dow|down|e|ea|eas|east|n|ne|nea|neas|neast|no|nor|nort|north|northe|northea|northeas|northeast|northw|northwe|northwes|northwest|nw|nwe|nwes|nwest|s|se|sea|seas|seast|so|sou|sout|south|southe|southea|southeas|southeast|southw|southwe|southwes|southwest|sw|swe|swes|swest|u|up|w|we|wes|west}$}
 {
 	#variable {lastDirection} {%0};
-	#if {"$retreat" == "true" && "$autoretreat" == "true" && "${character[inBattle]}" == "true"}
+	#if {"${skillsAndSpells[retreat]}" == "true" && "$autoretreat" == "true" && "${character[inBattle]}" == "true"}
 	{
 		retreat $lastDirection
 	};
