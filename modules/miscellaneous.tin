@@ -489,7 +489,7 @@
 		#variable {tmp} {$x};
 		#unvariable {x}
 	};
-	#script {if [ -f "help/%1.hlp" ] ; then IFS=$'\n'; for x in $(fold -s -w $(tput cols) "help/%1.hlp");do echo "#showme {$x}";done; else echo "#echo {No help on %1}" ; fi};
+	#script {if [ -f "help/%1.hlp" ] ; then IFS=$'\n'; for x in $(fold -s -w $(tput cols) "help/%1.hlp");do echo "#echo {$x}";done; else echo "#echo {No help on %1}" ; fi};
 	#if {$found}
 	{
 		#variable {x} {$tmp}
@@ -507,7 +507,7 @@
 		#variable {tmp} {$x};
 		#unvariable {x}
 	};
-	#showme {Help topics:};
+	#echo {Help topics:};
 	#script {if [ -d "help" ] ; then IFS=$'\n' ; for x in $(find . -iname '*.hlp' -exec basename -s hlp {} +); do echo "#echo {$x}" ; done ; fi};
 	#if {${found}}
 	{
