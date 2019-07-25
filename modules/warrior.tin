@@ -93,7 +93,7 @@
 	#variable {combo[attack]} {%2};
 	#replace {combo[attack]} {\x7c} { ${combo[target]};};
 	#replace {combo[attack]} {berserking} {berserk};
-	#replace {combo[attack]} {bloodletting } {};
+	#replace {combo[attack]} {bloodlet } {};
 	#replace {combo[attack]} {crippling strike} {cripple};
 	#replace {combo[attack]} {ground strike} {gstrike};
 	#replace {combo[attack]} {leap attack} {leap};
