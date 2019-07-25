@@ -170,6 +170,21 @@
 			#unvariable {tmp2[knife throwing]};
 			#unvariable {tmp2[backstab]};
 			#unvariable {tmp2[bloodletting stab]}
+		};
+		#list {tmp} {find} {knife throwing} {i};
+		#if {$i > 0}
+		{
+			#unvariable {tmp2[ground strike]}
+		};
+		#list {tmp} {find} {bloodletting stab} {i};
+		#if {$i > 0}
+		{
+			#unvariable {tmp2[ground strike]}
+		};
+		#list {tmp} {find} {backstab} {i};
+		#if {$i > 0}
+		{
+			#unvariable {tmp2[ground strike]}
 		}
 	};
 	#foreach {${tmp2[]}} {i}
