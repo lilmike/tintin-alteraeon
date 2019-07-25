@@ -98,14 +98,6 @@
 	#replace {combo[attack]} {ground strike} {gstrike};
 	#replace {combo[attack]} {leap attack} {leap};
 	#replace {combo[attack]} {pommel strike} {pommel};
-	#if {"${auto[weapon]}" == "true"}
-	{
-		#replace {combo[attack]} {knife throwing} {remove $weapon;throw shadow;wield $weapon}
-	};
-	#else
-	{
-		#replace {combo[attack]} {knife throwing} {throw shadow}
-	};
 	#replace {combo[attack]} {dirt throwing} {dirt};
 	#replace {combo[attack]} {shield slam} {slam};
 	#nop #replace {combo[attack]} {x} {randomattack};
@@ -155,9 +147,29 @@
 		{
 			#unvariable {tmp2[berserking]}
 		};
+		#list {tmp} {find} {ground strike} {i};
+		#if {$i > 0}
+		{
+			#unvariable {tmp2[shield slam]}
+		};
+		#list {tmp} {find} {shield slam} {i};
+		#if {$i > 0}
+		{
+			#unvariable {tmp2[ground strike]}
+		};
 		#if {"${combo[target]}" == ""}
 		{
 			#unvariable {tmp2[intimidate]}
+		}
+	};
+	#if {"${combo[type]}" == "cross"}
+	{
+		#list {tmp} {find} {ground strike} {i};
+		#if {$i > 0}
+		{
+			#unvariable {tmp2[knife throwing]};
+			#unvariable {tmp2[backstab]};
+			#unvariable {tmp2[bloodletting stab]}
 		}
 	};
 	#foreach {${tmp2[]}} {i}
@@ -179,14 +191,6 @@
 	#replace {tmp5} {ground strike} {gstrike};
 	#replace {tmp5} {leap attack} {leap};
 	#replace {tmp5} {pommel strike} {pommel};
-	#if {"${auto[weapon]}" == "true"}
-	{
-		#replace {tmp5} {knife throwing} {remove $weapon;throw shadow;wield $weapon}
-	};
-	#else
-	{
-		#replace {tmp5} {knife throwing} {throw shadow}
-	};
 	#replace {tmp5} {dirt throwing} {dirt};
 	#replace {tmp5} {shield slam} {slam};
 	#list {tmp3} {create} {$tmp5};
@@ -205,6 +209,39 @@
 		#if {$p > 0}
 		{
 			#list {tmp3} {find} {berserk} {p};
+			#if {$p > 0}
+			{
+				#list {tmp3} {delete} {$p}
+			}
+		};
+		#list {tmp} {find} {slam} {p};
+		#if {$p > 0}
+		{
+			#list {tmp3} {find} {gstrike} {p};
+			#if {$p > 0}
+			{
+				#list {tmp3} {delete} {$p}
+			}
+		};
+		#list {tmp} {find} {gstrike} {p};
+		#if {$p > 0}
+		{
+			#list {tmp3} {find} {slam} {p};
+			#if {$p > 0}
+			{
+				#list {tmp3} {delete} {$p}
+			};
+			#list {tmp3} {find} {stab} {p};
+			#if {$p > 0}
+			{
+				#list {tmp3} {delete} {$p}
+			};
+			#list {tmp3} {find} {backstab} {p};
+			#if {$p > 0}
+			{
+				#list {tmp3} {delete} {$p}
+			};
+			#list {tmp3} {find} {knife throwing} {p};
 			#if {$p > 0}
 			{
 				#list {tmp3} {delete} {$p}
@@ -267,6 +304,14 @@
 		}
 	};
 	#list {tmp} {simplify} {combo[attack]};
+	#if {"${auto[weapon]}" == "true"}
+	{
+		#replace {combo[attack]} {knife throwing} {remove $weapon;throw shadow;wield $weapon}
+	};
+	#else
+	{
+		#replace {combo[attack]} {knife throwing} {throw shadow}
+	};
 	#if {"${combo[setKey]}" != "false"}
 	{
 		set${combo[setKey]} ${combo[attack]}
