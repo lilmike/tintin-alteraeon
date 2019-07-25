@@ -379,6 +379,61 @@
 }
 {9}
 
+#ACTION {^silent_done_xcombo$}
+{
+	#if {"${combo[randomType]}" != ""}
+	{
+		#local {i};
+		#list {combo[randomType]} {size} {i};
+		#local {j} {};
+		#math {j} {1 d $i};
+		#switch {"${combo[randomType][$j]}"}
+		{
+			#case {"advanced"}
+			{
+				#variable {combo[tmp]} {a}
+			};
+			#case {"low level"}
+			{
+				#variable {combo[tmp]} {l}
+			};
+			#case {"cross-class"}
+			{
+				#variable {combo[tmp]} {c}
+			}
+		};
+		#if {"${combo[tmp]}" != ""}
+		{
+			#if {"${combo[tmpSkill]}" != ""}
+			{
+				#if {"${combo[target]}" != ""}
+				{
+					${combo[tmp]}xcombo ${combo[tmpSkill]} ${combo[target]}
+				};
+				#else
+				{
+					${combo[tmp]}xcombo ${combo[tmpSkill]}
+				}
+			};
+			#else
+			{
+				${combo[tmp]}xcombo
+			}
+		}
+	};
+	#else
+	{
+		#showme {No incomplete combos.}
+	}
+}
+{9}
+
+#ACTION {^silent_xcombo_You have found%s%d {low level|advanced|cross-class} attack combinations, and completed%s%d.$}
+{
+	#list {combo[randomType]} {add} {%3}
+}
+{9}
+
 #ACTION {^silent_xcombo_wc - lines:  %d}
 {
 	#math {i} {1d%1};
@@ -448,7 +503,7 @@
 }
 {8}
 
-#ALIAS {^{a|c|l}xcombo %S %S$}
+#ALIAS {^{a|c|l|}xcombo %S %S$}
 {
 	#variable {combo[target]} {%3 };
 	#switch {"%1"}
@@ -464,9 +519,19 @@
 		#case {"l"}
 		{
 			#variable {combo[type]} {low}
+		};
+		#case {""}
+		{
+			#variable {combo[tmpSkill]} {%2};
+			#variable {combo[randomType]} {};
+			tactics |prefix silent_xcombo_;
+			lecho silent_done_xcombo
 		}
 	};
-	tactics ${combo[type]} | grep %2 | grep x | prefix silent_ | head -n 1
+	#if {"%1" != ""}
+	{
+		tactics ${combo[type]} | grep %2 | grep x | prefix silent_ | head -n 1
+	}
 }
 {8}
 
@@ -671,7 +736,7 @@
 }
 {9}
 
-#ALIAS {^{a|c|l}xcombo %S$}
+#ALIAS {^{a|c|l|}xcombo %S$}
 {
 	#variable {combo[target]} {};
 	#switch {"%1"}
@@ -687,13 +752,23 @@
 		#case {"l"}
 		{
 			#variable {combo[type]} {low}
+		};
+		#case {""}
+		{
+			#variable {combo[tmpSkill]} {%2};
+			#variable {combo[randomType]} {};
+			tactics |prefix silent_xcombo_;
+			lecho silent_done_xcombo
 		}
 	};
-	tactics ${combo[type]} | grep %2 | grep x | prefix silent_ | head -n 1
+	#if {"%1" != ""}
+	{
+		tactics ${combo[type]} | grep %2 | grep x | prefix silent_ | head -n 1
+	}
 }
 {9}
 
-#ALIAS {^{a|c|l}xcombo$}
+#ALIAS {^{a|c|l|}xcombo$}
 {
 	#variable {combo[target]} {};
 	#switch {"%1"}
@@ -709,9 +784,19 @@
 		#case {"l"}
 		{
 			#variable {combo[type]} {low}
+		};
+		#case {""}
+		{
+			#variable {combo[tmpSkill]} {};
+			#variable {combo[randomType]} {};
+			tactics |prefix silent_xcombo_;
+			lecho silent_done_xcombo
 		}
 	};
-	tactics ${combo[type]} | grep -i length | grep x | grep -v charge | grep -v backstab | wc -l | prefix silent_xcombo_
+	#if {"%1" != ""}
+	{
+		tactics ${combo[type]} | grep -i length | grep x | grep -v charge | grep -v backstab | wc -l | prefix silent_xcombo_
+	}
 }
 {9}
 
