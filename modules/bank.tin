@@ -57,7 +57,11 @@
 {
 	#if {"%1" == "auto"}
 	{
-		#regexp {%2} {{.*} {\d+}} {#echo {You will automatically deposit gold when you have more than &2 coins. (Note, this requires private banking)};#variable {auto[depositgold]} {&2}}
+		#regexp {%2} {{.*} {\d+}} {#echo {You will automatically deposit gold when you have more than &2 coins. (Note, this requires private banking)};#variable {auto[depositgold]} {&2}};
+		#else
+		{
+			#echo {This command requires an amount of gold to deposit when you have more of.}
+		}
 	};
 	#else
 	{

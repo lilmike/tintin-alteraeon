@@ -39,4 +39,4 @@ Autoremovepoison: Attempt to remove poison when detected.
 cautoassist: Assist when minions rescue someone, someone assists, etc. Useful in combination with autocombat.
 autocombat <list of commands> [seconds]: Pick among the given commands to use when in combat automatically. List of commands must in enclosed in braces {} if multiple are provided, and separated by semicolons. Autocombat alone shows your settings. If a number is provided, does these commands every number of seconds, otherwises uses 3 by default.
 autobuy <amount>, autobid <amount>: Automatically bid up to amount gold on an auction currently in progress.
-autogold <amount>, autodeposit <amount>: Deposit gold automatically wen you have more than amount. Requires private banking to be active.
+autodepositgold <amount>: Deposit gold automatically wen you have more than amount. Requires private banking to be active.
