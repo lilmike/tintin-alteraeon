@@ -247,6 +247,33 @@
 				#list {tmp3} {delete} {$p}
 			}
 		};
+		#list {tmp} {find} {knife throwing} {p};
+		#if {$p > 0}
+		{
+			#list {tmp3} {find} {gstrike} {p};
+			#if {$p > 0}
+			{
+				#list {tmp3} {delete} {$p}
+			}
+		};
+		#list {tmp} {find} {stab} {p};
+		#if {$p > 0}
+		{
+			#list {tmp3} {find} {gstrike} {p};
+			#if {$p > 0}
+			{
+				#list {tmp3} {delete} {$p}
+			}
+		};
+		#list {tmp} {find} {backstab} {p};
+		#if {$p > 0}
+		{
+			#list {tmp3} {find} {gstrike} {p};
+			#if {$p > 0}
+			{
+				#list {tmp3} {delete} {$p}
+			}
+		};
 		#if {"${tmp[$i]}" == "{\s*x\s*}"}
 		{
 			#nop #local {tmp6} {${tmp3}};
