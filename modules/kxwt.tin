@@ -174,6 +174,7 @@
 	#variable {historyPath} {${HOME}/%1.history};
 	#script {if [ -f "$gameDataPath" ]; then echo "#class {gameData} {read} {$gameDataPath}";fi;if [ -f "$historyPath" ] ; then echo "#history {read} {$historyPath}";fi};
 	#script {if [ -d "$characterModulePath" ]; then for module in $characterModulePath/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
+	#script {if [ -d "$HOME/modules" ]; then for module in $HOME/modules/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
 	#class {gameData} {open};
 	#ticker {saver} {qcsave} {30}
 }
