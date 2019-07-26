@@ -320,7 +320,7 @@
 	#nop {reload all modules};
 	#if {"%0" == "cmodreload all"}
 	{
-		#script {for module in $characterModulePath/*.tin ; do echo "#class {$(basename "$module" .tin)} {kill};#class {character_$(basename "$module" .tin)} {read} {$module}";done};
+		#script {for module in $characterModulePath/*.tin $HOME/modules/*.tin ; do echo "#class {$(basename "$module" .tin)} {kill};#class {character_$(basename "$module" .tin)} {read} {$module}";done};
 		#echo {All character modules reloaded}
 	};
 	#else
@@ -334,7 +334,7 @@
 		#if {"%1" == "{load|reload}"}
 		{
 			#showme {Loading character module %2.tin};
-			#class {character_%2} {read} {$characterModulePath/%2.tin};
+			#script {if [ -f "$characterModulePath/%2.tin" ]; then echo "#class {character_%2} {read} {$characterModulePath/%2.tin}";else echo "#class {character_%2} {read} {$HOME/modules/%2.tin}";fi};
 			#class {gameData} {open}
 		}
 	};

@@ -57,6 +57,10 @@
 
 #ALIAS {^synth_play %1}
 {
+	#if {!&{volume}}
+	{
+		#variable {volume} {0}
+	};
 	#if {"$msp" == "true" && &{%1}}
 	{
 		#system {play -qV0 $%1 gain $volume &> /dev/null&}
@@ -66,6 +70,10 @@
 
 #ALIAS {seq_{play|play_norandom} %S}
 {
+	#if {!&{volume}}
+	{
+		#variable {volume} {0}
+	};
 	#if {!&{play_%1} && "$msp" == "true"}
 	{
 		#variable {play_%1} {false};
@@ -88,6 +96,10 @@
 
 #ALIAS {play %S}
 {
+	#if {!&{volume}}
+	{
+		#variable {volume} {0}
+	};
 	#if {"$msp" == "true"}
 	{
 			#system {play -qV0 "$($shuf -n 1 -e $HOME/sounds/%1[^_]*wav)" gain $volume &> /dev/null &}
@@ -130,4 +142,3 @@
 
 #VARIABLE         {msp}  {true}
 #VARIABLE         {soundHistory}  {}
-#VARIABLE         {volume}  {0}
