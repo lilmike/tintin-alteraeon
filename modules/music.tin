@@ -5,64 +5,62 @@
 		#nop {Variable order artist, title, and album.};
 		#case {"audacious"}
 		{
-			#script {i} {audtool -Q --current-song-tuple-data artist};
+			#script {i} {audtool -Q --current-song-tuple-data artist | $sed "s/;/ - /g"};
 			#format {msg[1]} {%p} {${i[1]}};
-			#script {i} {audtool --current-song-tuple-data title};
+			#script {i} {audtool --current-song-tuple-data title}ed "s/;/ - /g"
 			#format {msg[2]} {%p} {${i[1]}};
-			#script {i} {audtool --current-song-tuple-data album};
+			#script {i} {audtool --current-song-tuple-data album | $sed "s/;/ - /g"};
 			#format {msg[3]} {%p} {${i[1]}}
 		};
 		#case {"moc"}
 		{
-			#script {i} {mocp -Q %artist};
+			#script {i} {mocp -Q %artist | $sed "s/;/ - /g"};
 			#format {msg[1]} {%p} {${i[1]}};
-			#script {i} {mocp -Q %title};
+			#script {i} {mocp -Q %title | $sed "s/;/ - /g"};
 			#format {msg[2]} {%p} {${i[1]}};
-			#script {i} {mocp -Q %album};
+			#script {i} {mocp -Q %album | $sed "s/;/ - /g"};
 			#format {msg[3]} {%p} {${i[1]}}
 		};
 		#case {"m{opidy|pd}"}
 		{
-			#script {i} {mpc -f %artist% current};
+			#script {i} {mpc -f %artist% current | $sed "s/;/ - /g"};
 			#format {msg[1]} {%p} {${i[1]}};
-			#script {i} {mpc -f %title% current};
+			#script {i} {mpc -f %title% current | $sed "s/;/ - /g"};
 			#format {msg[2]} {%p} {${i[1]}};
-			#script {i} {mpc -f %album% current};
+			#script {i} {mpc -f %album% current | $sed "s/;/ - /g"};
 			#format {msg[3]} {%p} {${i[1]}}
 		};
 		#case {"pianobar"}
 		{
-			#script {i} {cut -f 1 -d '\' "$HOME/../pianobar/nowplaying" 2> /dev/null};
+			#script {i} {cut -f 1 -d '\' "$HOME/../pianobar/nowplaying" 2> /dev/null | $sed "s/;/ - /g"};
 			#format {msg[1]} {%p} {${i[1]}};
-			#script {i} {cut -f 2 -d '\' "$HOME/../pianobar/nowplaying" 2> /dev/null};
+			#script {i} {cut -f 2 -d '\' "$HOME/../pianobar/nowplaying" 2> /dev/null | $sed "s/;/ - /g"};
 			#format {msg[2]} {%p} {${i[1]}};
-			#script {i} {cut -f 3 -d '\' "$HOME/../pianobar/nowplaying" 2> /dev/null};
+			#script {i} {cut -f 3 -d '\' "$HOME/../pianobar/nowplaying" 2> /dev/null | $sed "s/;/ - /g"};
 			#variable {msg[3]} {%p} {${i[1]}}
 		};
 		#case {"xmms2"}
 		{
-			#script {i} {xmms2 info | grep artist | cut -d '=' -f2- | sed -e 's/^ *//' -e 's/ *$//'};
+			#script {i} {xmms2 info | grep artist | cut -d '=' -f2- | sed -e 's/^ *//' -e 's/ *$//' | $sed "s/;/ - /g"};
 			#variable {msg[1]} {${i[1]}};
-			#script {i} {xmms2 info | grep title | cut -d '=' -f2- | sed -e 's/^ *//' -e 's/ *$//'};
+			#script {i} {xmms2 info | grep title | cut -d '=' -f2- | sed -e 's/^ *//' -e 's/ *$//' | $sed "s/;/ - /g"};
 			#variable {msg[2]} {${i[1]}};
-			#script {i} {xmms2 info | grep album | cut -d '=' -f2- | sed -e 's/^ *//' -e 's/ *$//'};
+			#script {i} {xmms2 info | grep album | cut -d '=' -f2- | sed -e 's/^ *//' -e 's/ *$//' | $sed "s/;/ - /g"};
 			#variable {msg[3]} {${i[1]}}
 		};
 		#default
 		{
-			#script {i} {cmus-remote -Q | sed -n 's/^tag artist //p'};
+			#script {i} {cmus-remote -Q | sed -n 's/^tag artist //p' | $sed "s/;/ - /g"};
 			#format {msg[1]} {%p} {${i[1]}};
-			#script {i} {cmus-remote -Q | sed -n 's/^tag title //p'};
+			#script {i} {cmus-remote -Q | sed -n 's/^tag title //p' | $sed "s/;/ - /g"};
 			#format {msg[2]} {%p} {${i[1]}};
-			#script {i} {cmus-remote -Q | sed -n 's/^tag album //p'};
+			#script {i} {cmus-remote -Q | sed -n 's/^tag album //p' | $sed "s/;/ - /g"};
 			#format {msg[3]} {%p} {${i[1]}}
 		}
 	};
 	#variable {music[newAutoTitleString]} {${msg[1]} - ${msg[2]}};
-	#replace {music[newAutoTitleString]} {;} { - };
 	#replace {music[newAutoTitleString]} {ö} {o};
 	#variable {msg} {"${msg[2]}" by "${msg[1]}" from "${msg[3]}"};
-	#replace {msg} {;} { - };
 	#replace {msg} {ö} {o};
 	#regexp {$msg} {Now playing:{\s}via{\s}{.*}.} {#switch {"${music[player]}"}{#case {"cmus"} {#script {msg} {basename "$(cmus-remote -Q | head -2 | tail -1)" | rev | cut -d '.' -f2- | rev}};#case {"mpd"} {#script {msg} {mpc current | sed 's/\// - /g' | rev | cut -d '.' -f2- | rev}};#case {"xmms2"} {#script {msg} {basename "$(xmms2 info | tail -n 1 | sed 's/^\[server\] url = file:\/\/\///' | rev | cut -d '.' -f2- | rev)"}};};#variable {msg} {${msg[1]}};#replace {msg} {+} { };#replace {msg} {\%27} {'};#replace {msg} {\%28} {(};#replace {msg} {\%29} {)};#replace {msg} {\%2c} {,};#variable {newAutoTitleString} {$msg}};
 	#replace {msg} {from ""} {}
