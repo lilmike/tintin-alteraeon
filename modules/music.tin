@@ -7,7 +7,7 @@
 		{
 			#script {i} {audtool -Q --current-song-tuple-data artist | $sed "s/;/ - /g"};
 			#format {msg[1]} {%p} {${i[1]}};
-			#script {i} {audtool --current-song-tuple-data title}ed "s/;/ - /g"
+			#script {i} {audtool --current-song-tuple-data title | $sed "s/;/ - /g"};
 			#format {msg[2]} {%p} {${i[1]}};
 			#script {i} {audtool --current-song-tuple-data album | $sed "s/;/ - /g"};
 			#format {msg[3]} {%p} {${i[1]}}
