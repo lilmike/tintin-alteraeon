@@ -323,7 +323,15 @@
 	};
 	#if {&{%1Channel}}
 	{
-		synth_play %1Channel
+		#nop {Only play sounds if silent flag is not true.};
+		#if {"${channelSilence}" == "false"}
+		{
+			synth_play %1Channel
+	};
+		#else
+		{
+			#variable {channelSilence} {false}
+		};
 	};
 	#else
 	{
