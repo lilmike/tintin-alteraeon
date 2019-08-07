@@ -37,6 +37,16 @@
 	#return #nop
 }
 
+#function {example_botthwack} {
+	#nop {We've been bot thwacked, kill the bot and recall in case it's us.};
+	botkill example;
+	/;
+	#nop {Twice in case.};
+	/;
+	#return #nop
+}
+
+#VARIABLE  {hook[botthwack][example_botthwack]} {}
 #VARIABLE         {exitChoice}  {}
 #VARIABLE {hook[rvnum][walk]} {}
 #VARIABLE         {secondTry}  {0}
