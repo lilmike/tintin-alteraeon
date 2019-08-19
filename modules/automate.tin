@@ -60,11 +60,11 @@
 	{
 		#return #nop
 	};
-	#if {"${skillsAndSpells[rejuvinate]}" == "true" && "${character[inBattle]}" != "true"}
+	#if {"${skillsAndSpells[rejuvenate]}" == "true" && "${character[inBattle]}" != "true"}
 	{
 		#if {${character[mvPercent]} <= 15 && ${character[currentMana]} >= 35}
 		{
-			#return @command{c rejuv;cast rejuvinate}
+			#return @command{c rejuv;cast rejuvenate}
 		}
 	};
 	#if {"${skillsAndSpells[area refresh]}" == "true" && "${character[inBattle]}" != "true"}
