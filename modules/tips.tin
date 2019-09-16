@@ -9,7 +9,7 @@
 
 #ALIAS {^{noc|c}tips$}
 {
-	#if {"%0" == "ctips"}
+	#if {{%0} == {ctips}}
 	{
 		#variable {auto[clientTips]} {true};
 		#echo {Tintin-alteraeon tips enabled.}
@@ -22,4 +22,4 @@
 }
 {9}
 
-#TICKER           {clientTips}  {#if {!&{auto[clientTips]}}{#variable {auto[clientTips]} {true}};#if {!&{client[tips]}}{LOAD_CLIENT_TIPS};#if {"${auto[clientTips]}" == "true" && "${character[inBattle]}" != "true" && "$busy" != "true"}{#if {${client[tipsIndex]} <= ${client[tipsSize]}}{#echo {Tip:};#system {cat ${client[tips][${client[tipsIndex]}]}};#math {client[tipsIndex]} {${client[tipsIndex]} + 1}};#else {#variable {client[tipsIndex]} {1}}}}                                                                                                                                                                                                                                                                                                                                            {300}
+#TICKER           {clientTips}  {#if {!&{auto[clientTips]}}{#variable {auto[clientTips]} {true}};#if {!&{client[tips]}}{LOAD_CLIENT_TIPS};#if {{${auto[clientTips]}} == {true} && {${character[inBattle]}} != {true} && {$busy} != {true}}{#if {${client[tipsIndex]} <= ${client[tipsSize]}}{#echo {Tip:};#system {cat ${client[tips][${client[tipsIndex]}]}};#math {client[tipsIndex]} {${client[tipsIndex]} + 1}};#else {#variable {client[tipsIndex]} {1}}}}                                                                                                                                                                                                                                                                                                                                            {300}

@@ -6,12 +6,12 @@
 
 #ACTION {^Password:}
 {
-	#if {"$loginName" != "FALSE"}
+	#if {{$loginName} != {FALSE}}
 	{
 		#variable {loginName} {${HOME}/${loginName}_pass};
 		#script {fileExists} {if [ -f "$loginName" ] ; then echo "true"; else echo "false"; fi};
 		#variable {fileExists} {${fileExists[1]}};
-		#if {"$fileExists" == "true"}
+		#if {{$fileExists} == {true}}
 		{
 			#textin {$loginName};
 			#cr
@@ -23,7 +23,7 @@
 
 #ACTION {^Would you like to create a new character?}
 {
-	#if {"$loginName" != "FALSE"}
+	#if {{$loginName} != {FALSE}}
 	{
 		$loginName
 	}
@@ -59,11 +59,11 @@
 #ALIAS {^bot{kill|load} %S$}
 {
     #nop {Kill, load, or reload a specified bot.};
-    #if {"%1" == "kill"}
+    #if {{%1} == {kill}}
     {
         #local {exists} {@bot_%1{}};
         #variable {exists} {$exists};
-        #if {"$exists" != "@%*"}
+        #if {{$exists} != {@%*}}
         {
             $exists
         };
@@ -71,14 +71,14 @@
         #class {gameData} {open};
         #showme {bot %2 has been killed.}
     };
-    #if {"%1" == "load"}
+    #if {{%1} == {load}}
     {
         #showme {Loading bot %2.tin};
         #class {gameData} {close};
         #class {bot_%2} {read} {modules/bots/%2.tin};
         #local {exists} {@bot_%1{}};
         #variable {exists} {$exists};
-        #if {"$exists" != "@%*"}
+        #if {{$exists} != {@%*}}
         {
             $exists
         }
@@ -97,7 +97,7 @@
 #ALIAS {^mod{kill|load|reload} %S$}
 {
 	#nop {reload all modules};
-	#if {"%0" == "modreload all"}
+	#if {{%0} == {modreload all}}
 	{
 		#script {for module in modules/*.tin ; do echo "#class {$(basename "$module" .tin)} {kill};#class {$(basename "$module" .tin)} {read} {$module}";done};
 		#echo {All modules reloaded}
@@ -105,12 +105,12 @@
 	#else
 	{
 		#nop {Kill, load, or reload a specified module.};
-		#if {"%1" == "{kill|reload}"}
+		#if {{%1} == {{kill|reload}}}
 		{
 			#class {%2} {kill};
 			#showme {Class %2 has been killed.}
 		};
-		#if {"%1" == "{load|reload}"}
+		#if {{%1} == {{load|reload}}}
 		{
 			#showme {Loading modules/%2.tin};
 			#class {%2} {read} {modules/%2.tin};

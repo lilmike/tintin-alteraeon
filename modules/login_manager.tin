@@ -4,7 +4,7 @@
 {
 {NAME}{PASSWORD}
 }
-#if {"${loginList[1]} != "NAME"}
+#if {{${loginList[1]}} != {NAME}}
 {
 #delay {0.5}
 {

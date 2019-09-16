@@ -1,9 +1,9 @@
 #ACTION {%1 {\(.*\(unique\)|\(unique\)}$}
 {
 	play unique;
-	#if {"${auto[getunique]}" == "true"}
+	#if {{${auto[getunique]}} == {true}}
 	{
-		#regexp {%1} {{.*} {.*}} {get &2 corpse;#if {"${auto[donateunique]}" == "true"} {donate &2}};
+		#regexp {%1} {{.*} {.*}} {get &2 corpse;#if {{${auto[donateunique]}} == {true}} {donate &2}};
 		#else
 		{
 			get %1 corpse
@@ -49,27 +49,27 @@
 {
 	#variable {corpseVnum} {%2};
 	#send {get coins $corpseVnum | grep -v There's nothing left};
-	#if {"${skillsAndSpells[corpsecutter]}" == "true" && !&{character[inBattle]}}
+	#if {{${skillsAndSpells[corpsecutter]}} == {true} && !&{character[inBattle]}}
 	{
 		harvest components $corpseVnum | grep -v Looks like someone else beat you to it
 	};
-	#if {"${skillsAndSpells[harvest bone]}" == "true" && !&{inBattle}}
+	#if {{${skillsAndSpells[harvest bone]}} == {true} && !&{inBattle}}
 	{
 		harvest bone $corpseVnum | grep -v has no useful bones remaining
 	};
-	#if {"${skillsAndSpells[salvage equipment]}" == "true" || &{battleScroll}}
+	#if {{${skillsAndSpells[salvage equipment]}} == {true} || &{battleScroll}}
 	{
 		search $corpseVnum | grep -v unique | prefix silent_ | grep -v There's nothing left
 	};
-	#if {"${skillsAndSpells[consume]}" == "true"}
+	#if {{${skillsAndSpells[consume]}} == {true}}
 	{
 		control all consume $corpseVnum | grep -v There's nothing left
 	};
-	#if {"${skillsAndSpells[blood sacrifice]}" == "true"}
+	#if {{${skillsAndSpells[blood sacrifice]}} == {true}}
 	{
 		bsac $corpseVnum | grep -v no longer suitable
 	};
-	#if {"$busy" != "true"}
+	#if {{$busy} != {true}}
 	{
 		sac $corpseVnum
 	};
@@ -81,7 +81,7 @@
 {
 	#if {&{scrolls}}
 	{
-		#if {"$scrolls" != ""}
+		#if {{$scrolls} != {}}
 		{
 			#local {i} {};
 			#foreach {${scrolls[]}} {i}
@@ -198,15 +198,15 @@
 
 #ALIAS {^{auto|noauto}{donate|get}unique$}
 {
-	#switch {"%0"}
+	#switch {{%0}}
 	{
-		#case {"autogetunique"}
+		#case {{autogetunique}}
 		{
 			#variable {auto[getunique]} {true};
 			#variable {auto[donateunique]} {false};
 			#showme {You will automatically loot unique items from corpses.}
 		};
-		#case {"autodonateunique"}
+		#case {{autodonateunique}}
 		{
 			#variable {auto[donateunique]} {true};
 			#variable {auto[getunique]} {true};
@@ -224,7 +224,7 @@
 
 #ALIAS {^{g|ge|get|gi|giv|give|p|pu|put} %2 %S$}
 {
-	#if {!&{character[container]} && "%1" == "{p|pu|put}"}
+	#if {!&{character[container]} && {%1} == {{p|pu|put}}}
 	{
 		#variable {character[container]} {%3}
 	};

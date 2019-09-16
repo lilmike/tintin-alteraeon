@@ -53,7 +53,7 @@
 
 #ACTION {^%w %w{, '|: }%4{'?}$}
 {
-	#regexp {%1} {{[A-Z].+}} {#local {channelName} {};#list {i} {tokenize} {%2};#if {"${i[-1]}" == "s"}{#list {i} {delete} {-1}};#list {i} {simplify} {channelName};#replace {channelName} {;} {};#nop {Hook name is channel name non-plural.};#nop {Hook args %1 Name.};#nop {Hook args %3 message to channel.};Channel_Event $channelName %0;#if {"%1" != "You"}{@do_hook{$channelName;%1;%4}}}
+	#regexp {%1} {{[A-Z].+}} {#local {channelName} {};#list {i} {tokenize} {%2};#if {{${i[-1]}} == {s}}{#list {i} {delete} {-1}};#list {i} {simplify} {channelName};#replace {channelName} {;} {};#nop {Hook name is channel name non-plural.};#nop {Hook args %1 Name.};#nop {Hook args %3 message to channel.};Channel_Event $channelName %0;#if {{%1} != {You}}{@do_hook{$channelName;%1;%4}}}
 }
 {9}
 
@@ -63,7 +63,7 @@
 	#nop {Hook args %1 Name.};
 	#nop {Hook args %2 tell contents.};
 	Channel_Event tell %0;
-	#if {"%2" == "%*you%*"}
+	#if {{%2} == {%*you%*}}
 	{
 		@do_hook{tell;%1;%3}
 	}
@@ -76,7 +76,7 @@
 	#nop {Hook args %1 Name.};
 	#nop {Hook args %4 message to channel.};
 	Channel_Event %3tell %0;
-	#if {"%1" != "You"}
+	#if {{%1} != {You}}
 	{
 		@do_hook{%3tell;%1;%4}
 	}
@@ -100,7 +100,7 @@
 
 #ACTION {^(friend) %1 has left the game.$}
 {
-	#if {"%1" == "$friendNameEnter"}
+	#if {{%1} == {$friendNameEnter}}
 	{
 		#unvariable {friendNameEnter}
 	};
@@ -159,7 +159,7 @@
 #ACTION {^Three {more spinning|spinning} wheels appear in the air before you!$}
 {
 	#nop {We use a client[variable] here because they always reset, and this is just temp info we don't need to save across sessions.};
-	#if {"%1" == "spinning"}
+	#if {{%1} == {spinning}}
 	{
 		#variable {client[gambleGame]} {slots}
 	};
@@ -242,7 +242,7 @@
 	#nop {Hook args %4 Name.};
 	#nop {Hook args %6 message to channel.};
 	Channel_Event $channelName %0;
-	#if {"%1" != "You"}
+	#if {{%1} != {You}}
 	{
 		@do_hook{$channelName;%2;%6}
 	}
@@ -261,7 +261,7 @@
 
 #ACTION {^{vcast_.*You|You} {have sudden insight, and become|learn from your mistakes, and become|become} %3{\.|!|\)}$}
 {
-	#if {"%0" != "You become {indignant and agitated, blustering your way out of harm|unable to sense the presence of poison|unable to sense the presence of undead creatures}."}
+	#if {{%0} != {You become {indignant and agitated, blustering your way out of harm|unable to sense the presence of poison|unable to sense the presence of undead creatures}.}}
 	{
 		autobrag %0
 	}
@@ -270,7 +270,7 @@
 
 #ALIAS {notify-send %1}
 {
-	#if {"$notifications" == "true"}
+	#if {{$notifications} == {true}}
 	{
 		#system {if [ -n "$DISPLAY" ]; then notify-send -- "%1";fi}
 	}
@@ -303,7 +303,7 @@
 	#variable {auto[message]} {%1};
 	#replace {auto[message]} {noauto} {auto};
 	#format {auto[message]} {%n} {$auto[message]};
-	#if {"%1" == "auto%*"}
+	#if {{%1} == {auto%*}}
 	{
 		#echo {${auto[message]} enabled.}
 	};
@@ -317,14 +317,14 @@
 #ALIAS {^Channel_Event %S %2}
 {
 	#nop {Return for things that do not need any processing at all.};
-	#if {"%1" == "{example|gain|are|i|Number|cost|damage|Type|bid|Flag|Balance|Email|Account|difficulty|string|Weapon|Comp|name|character|date|balance|bank|account|remaining|skill|spell|battle|flag|editor|wa|Level|Name|uptime|player|spammer|Statu|time|Desc|vnum|str|against|Qualitie|usage}"}
+	#if {{%1} == {{example|gain|are|i|Number|cost|damage|Type|bid|Flag|Balance|Email|Account|difficulty|string|Weapon|Comp|name|character|date|balance|bank|account|remaining|skill|spell|battle|flag|editor|wa|Level|Name|uptime|player|spammer|Statu|time|Desc|vnum|str|against|Qualitie|usage}}}
 	{
 		#return
 	};
 	#if {&{%1Channel}}
 	{
 		#nop {Only play sounds if silent flag is not true.};
-		#if {"${channelSilence}" == "false"}
+		#if {{${channelSilence}} == {false}}
 		{
 			synth_play %1Channel
 	};
@@ -336,10 +336,10 @@
 	#else
 	{
 		#nop {Only play sounds if silent flag is not true.};
-		#if {"${channelSilence}" == "false"}
+		#if {{${channelSilence}} == {false}}
 		{
 			#nop {Play default channel sounds for channels that don't have their own sounds.};
-			#if {"%1" != "{example|friend|gain}"}
+			#if {{%1} != {{example|friend|gain}}}
 			{
 				synth_play broadcastChannel
 			}
@@ -352,7 +352,7 @@
 	#variable {realMSG} {%2};
 	#regexp {%2} {{.*}`~[{.+}]~`{.*}} {#format {realMSG} {&1%s&3} {@encrypt{&2;d}};synth_play cryptMessage;#line {gag};#echo {$realMSG}};
 	#list {channel[all]} {insert} {1} {$realMSG};
-	#if {"%1" != "all"}
+	#if {{%1} != {all}}
 	{
 		#list {channel[%1]} {insert} {1} {$realMSG}
 	};
@@ -374,7 +374,7 @@
 
 #ALIAS {^autobrag %1}
 {
-	#if {"${auto[brag]}" == "true"}
+	#if {{${auto[brag]}} == {true}}
 	{
 		#if {!&{character[bragChannel]}}
 		{
@@ -462,7 +462,7 @@
 
 #ALIAS {^{auto|noauto}brag$}
 {
-	#if {"%0" == "autobrag"}
+	#if {{%0} == {autobrag}}
 	{
 		#variable {auto[brag]} {true}
 	};
@@ -476,7 +476,7 @@
 
 #ALIAS {^{nonotifications|notifications}$}
 {
-	#if {"%0" == "notifications"}
+	#if {{%0} == {notifications}}
 	{
 		#showme {Notifications enabled.};
 		#variable {notifications} {true}
@@ -505,7 +505,7 @@
 		#list {letters} {find} {${message[$i]}} {j};
 		#if {$j != 0}
 		{
-			#if {"%2" == "d"}
+			#if {{%2} == {d}}
 			{
 				#math {j} {$j - 13}
 			};

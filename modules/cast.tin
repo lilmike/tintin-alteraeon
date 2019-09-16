@@ -30,7 +30,7 @@
 
 #ALIAS {^{recas|recast} %s{a|ad|add|r|re|rem|remo|remov|remove} %sall$}
 {
-	#if {"%3" == "a%*"}
+	#if {{%3} == {a%*}}
 	{
 		recast start
 	};

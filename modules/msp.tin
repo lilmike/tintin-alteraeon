@@ -8,31 +8,31 @@
 		#list {soundHistory} {delete} {11}
 	};
 	#system {if [ ! -f "$HOME/sounds/%1.wav" ] ; then DIR=$(echo "%1.wav" | sed "s/\(.*\\/\)[^\\/]*$/\\1/");FNAME=$(echo "%1.wav" | sed -e "s/.*\\/\([^\\/]*\)$/\\1/");mkdir -p "$HOME/sounds/$DIR";sox -V0 "http://alteraeon.com/soundpack/wav_v1/%1.wav" -r 22050 "$HOME/sounds/$DIR/$FNAME" 2> /dev/null;fi};
-	#switch {"%1"}
+	#switch {{%1}}
 	{
-		#case {"skill/victory_cry_%*"}
+		#case {{skill/victory_cry_%*}}
 		{
 			seq_play %1
 		};
-		#case {"spell/bolt"}
+		#case {{spell/bolt}}
 		{
 			seq_play spell/bolt
 		};
-		#case {"spell/confusion"}
+		#case {{spell/confusion}}
 		{
 			seq_play spell/confusion
 		};
-		#case {"misc/{godnotify|notify}"}
+		#case {{misc/{godnotify|notify}}}
 		{
 			seq_play %1
 		};
-		#case {"weather/{rainstart|rainstop|rain1|rain2|rain3|rain4|rain5}"}
+		#case {{weather/{rainstart|rainstop|rain1|rain2|rain3|rain4|rain5}}}
 		{
 			seq_play %1
 		};
 		#default
 		{
-			#if {"%1" != "Off U=http://www.alteraeon.com/soundpack/wav_v1/"}
+			#if {{%1} != {Off U=http://www.alteraeon.com/soundpack/wav_v1/}}
 			{
 				play %1
 			}
@@ -44,7 +44,7 @@
 #ACTION {^{silent_MSP|MSP} mode is {already|now} {dis|en}abled.$}
 {
 	#nop {Because one action handles this, we need to check for en or dis. En is enabled, dis is disabled.};
-	#if {"%3" == "en"}
+	#if {{%3} == {en}}
 	{
 		#variable {msp} {true}
 	};
@@ -61,7 +61,7 @@
 	{
 		#variable {volume} {0}
 	};
-	#if {"$msp" == "true" && &{%1}}
+	#if {{$msp} == {true} && &{%1}}
 	{
 		#system {play -qV0 $%1 gain $volume &> /dev/null&}
 	}
@@ -74,10 +74,10 @@
 	{
 		#variable {volume} {0}
 	};
-	#if {!&{play_%1} && "$msp" == "true"}
+	#if {!&{play_%1} && {$msp} == {true}}
 	{
 		#variable {play_%1} {false};
-		#if {"%1" == "play"}
+		#if {{%1} == {play}}
 		{
 			#script {soundFileName} {$shuf -n 1 -e $HOME/sounds/%2*wav};
 			#variable {soundFileName} {${soundFileName[1]}}
@@ -100,7 +100,7 @@
 	{
 		#variable {volume} {0}
 	};
-	#if {"$msp" == "true"}
+	#if {{$msp} == {true}}
 	{
 			#system {play -qV0 "$($shuf -n 1 -e $HOME/sounds/%1[^_]*wav)" gain $volume &> /dev/null &}
 	}

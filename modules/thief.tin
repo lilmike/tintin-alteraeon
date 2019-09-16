@@ -1,6 +1,6 @@
 #ACTION {%1 begins trying to pick %2...$}
 {
-	#if {"%1" == "${group[leader]}"}
+	#if {{%1} == {${group[leader]}}}
 	{
 		#regexp {%2} {{doors|door|gates|gate|portcullis|trapdoor}} {pick &1};
 		#else
@@ -17,7 +17,7 @@
 
 #ACTION {^Yo{u|ur} {lock picking skills failed you during that try|try another go at picking the lock|continue to manipulate the lock|attempt to pick the lock|thief abilities were insufficient for that attempt}{\.|\.\.\.}$}
 {
-	#if {"${character[cspam]}" == "true"}
+	#if {{${character[cspam]}} == {true}}
 	{
 		#line {gag}
 	}
@@ -65,7 +65,7 @@
 
 #ACTION {^You are forced to defend yourself against %2!$}
 {
-	#if {"${auto[withdraw]}" == "true"}
+	#if {{${auto[withdraw]}} == {true}}
 	{
 		withdraw
 	}
@@ -74,7 +74,7 @@
 
 #ACTION {^You attempt to pin %1's shadow to the ground, but miss!$}
 {
-	#if {"${skillsAndSpells[shadow bind]}" == "true" && "${character[inBattle]}" == "false" && &{client[bindName]}}
+	#if {{${skillsAndSpells[shadow bind]}} == {true} && {${character[inBattle]}} == {false} && &{client[bindName]}}
 	{
 		shadow bind ${client[bindName]}
 	}
@@ -90,13 +90,13 @@
 
 #ACTION {^You throw %1 at %2{!|\.}$}
 {
-	#regexp {%1} {{.*} {.*}} {#if {"&2" != "{electricity|fire.*|ice|snowball|unfire}"} {get &2}}
+	#regexp {%1} {{.*} {.*}} {#if {{&2} != {{electricity|fire.*|ice|snowball|unfire}}} {get &2}}
 }
 {9}
 
 #ACTION {^You throw caution to the wind and engage %1 in melee combat!$}
 {
-	#if {"${auto[stop]}" == "true"}
+	#if {{${auto[stop]}} == {true}}
 	{
 		stop
 	}
@@ -118,7 +118,7 @@
 	};
 	#else
 	{
-		#if {"${skillsAndSpells[withdraw]}" == "true"}
+		#if {{${skillsAndSpells[withdraw]}} == {true}}
 		{
 			withdraw
 		}
@@ -153,17 +153,17 @@
 #ACTION {^silent_You {carefully, carefully|carefully|disconnect|drain|scoop|scrape|unmount}%*.}
 {
 	#showme {You %1%2.};
-	#if {"${auto[junk]}" == "true"}
+	#if {{${auto[junk]}} == {true}}
 	{
-		#if {"%1" == "carefully, carefully"}
+		#if {{%1} == {carefully, carefully}}
 		{
 			${auto[junkType]} lightning
 		};
-		#elseif {"%1" == "disconnect"}
+		#elseif {{%1} == {disconnect}}
 		{
 			${auto[junkType]} voltaic
 		};
-		#elseif {"%1" == "drain"}
+		#elseif {{%1} == {drain}}
 		{
 			${auto[junkType]} vial
 		};
@@ -178,9 +178,9 @@
 #ACTION {^stealing_%1 seems to have dropped %2!%sYou'll surely return it later.$}
 {
 	play pickpocket;
-	#if {"${auto[junk]}" == "true"}
+	#if {{${auto[junk]}} == {true}}
 	{
-		#regexp {%2} {{.*} {.*}} {#if {"&2" == "envelope"} {${auto[junkType]} donation};#elseif {"&2" == "'2"} {${auto[junkType]} paper};#else {${auto[junkType]} &2}};
+		#regexp {%2} {{.*} {.*}} {#if {{&2} == {envelope}} {${auto[junkType]} donation};#elseif {{&2} == {'2}} {${auto[junkType]} paper};#else {${auto[junkType]} &2}};
 		#else
 		{
 			${auto[junkType]} %2
@@ -198,7 +198,7 @@
 
 #ALIAS {^get %S %S$}
 {
-	#if {"${skillsAndSpells[palm]}" == "true" && "$inBattle" != "true" && "%1" != "all" && "$position" != "sleep"}
+	#if {{${skillsAndSpells[palm]}} == {true} && {$inBattle} != {true} && {%1} != {all} && {$position} != {sleep}}
 	{
 		palm %1 %2
 	};
@@ -231,7 +231,7 @@
 
 #ALIAS {^{lb|lbi|lbin|lbind|lightb|lightbi|lightbin|lightbind} %1}
 {
-	#if {"${skillsAndSpells[crystal light]}" == "true"}
+	#if {{${skillsAndSpells[crystal light]}} == {true}}
 	{
 		vcast crystal light | prefix give crystal %1
 	};
@@ -244,14 +244,14 @@
 
 #ALIAS {^{noauto|auto}{stop|withdraw}$}
 {
-	#switch {"%0"}
+	#switch {{%0}}
 	{
-		#case {"autowithdraw"}
+		#case {{autowithdraw}}
 		{
 			#variable {auto[withdraw]} {true};
 			#showme {autowithdraw enabled.}
 		};
-		#case {"autostop"}
+		#case {{autostop}}
 		{
 			#variable {auto[stop]} {true};
 			#showme {autostop enabled.}
@@ -283,11 +283,11 @@
 		remove shield
 	};
 	wield $stabWeapon;
-	#if {"$cloakOfDarkness" == "true"}
+	#if {{$cloakOfDarkness} == {true}}
 	{
 		cloak on
 	};
-	#if {"$hide" == "true"}
+	#if {{$hide} == {true}}
 	{
 		hide
 	};
@@ -301,7 +301,7 @@
 	{
 		wear shield
 	};
-	#if {"$cloakOfDarkness" == "true"}
+	#if {{$cloakOfDarkness} == {true}}
 	{
 		cloak off
 	}
@@ -320,7 +320,7 @@
 		remove shield
 	};
 	wield $stabWeapon;
-	#if {"$cloakOfDarkness" == "true"}
+	#if {{$cloakOfDarkness} == {true}}
 	{
 		cloak on
 	};
@@ -342,7 +342,7 @@
 	{
 		wield $weapon
 	};
-	#if {"$cloakOfDarkness" == "true"}
+	#if {{$cloakOfDarkness} == {true}}
 	{
 		cloak off
 	}

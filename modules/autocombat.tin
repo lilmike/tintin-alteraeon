@@ -17,7 +17,7 @@
 #ACTION {^{If you really want to cast that on yourself, you must use your name\.|They are no longer here\.|You don't have enough mana\.|\w+ who\?|\w+ whom\?|You are not currently in battle\.  What enemy do you want to cast it on\?}$}
 {
 	#variable {autocombatPaused} {1};
-	#if {"%0" == "You don't have enough mana."}
+	#if {{%0} == {You don't have enough mana.}}
 	{
 		synth_play warningSound
 	}
@@ -37,7 +37,7 @@
 
 #ALIAS {^autocombat {pause|resume}$}
 {
-	#if {"%1" == "pause"}
+	#if {{%1} == {pause}}
 	{
 		#variable {autocombatForcePaused} {1};
 		#showme {Autocombat paused.}
@@ -65,7 +65,7 @@
 {
 	#local {i} {};
 	#echo {Automatic combat:};
-	#if {"${autocombatList}" != ""}
+	#if {{${autocombatList}} != {}}
 	{
 		#foreach {${autocombatList[]}} {i}
 		{
@@ -87,7 +87,7 @@
 
 #FUNCTION {createAutocombatTicker}
 {
-	#ticker {auto_combat}  {#if {"${autocombatList}" != "" && !&{autocombatForcePaused} && !&{autocombatPaused}}{#var {autocombatAttack} {${autocombatList[@list_rand{autocombatList}]}};#if {"$autocombatAttack" != "{c|ca|cas|cast|vc|vca|vcas|vcast} %*" && "${kxwt[fighting]}" == "-1"} {#var {autocombatPaused} {1};#unvar {autocombatAttack}};#else {$autocombatAttack;#unvar {autocombatAttack}}}}                                                                                            {%1};
+	#ticker {auto_combat}  {#if {{${autocombatList}} != {} && !&{autocombatForcePaused} && !&{autocombatPaused}}{#var {autocombatAttack} {${autocombatList[@list_rand{autocombatList}]}};#if {{$autocombatAttack} != {{c|ca|cas|cast|vc|vca|vcas|vcast} %*} && {${kxwt[fighting]}} == {-1}} {#var {autocombatPaused} {1};#unvar {autocombatAttack}};#else {$autocombatAttack;#unvar {autocombatAttack}}}}                                                                                            {%1};
 	#return #nop
 }
 

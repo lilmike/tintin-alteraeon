@@ -46,7 +46,7 @@
 #ACTION {^You {are too tired to continue|stop} prospecting}
 {
 	#variable {isProspecting} {0};
-	#if {"%1" == "are too tired to continue"}
+	#if {{%1} == {are too tired to continue}}
 	{
 		@do_hook{prospectFinishAbort}
 	};
@@ -78,7 +78,7 @@
 
 #ALIAS {^{auto|noauto}stopmining$}
 {
-	#if {"%1" == "auto"}
+	#if {{%1} == {auto}}
 	{
 		#showme {Automatic stopping of mining upon depletion enabled.};
 		#variable {auto[stopMining]} {1}

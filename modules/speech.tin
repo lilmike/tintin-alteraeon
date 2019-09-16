@@ -31,7 +31,7 @@
 
 #ALIAS {^speech%s{on|off}$}
 {
-	#if {"%2" == "on"}
+	#if {{%2} == {on}}
 	{
 		speak Speech enabled.;
 		#variable {speech[enabled]} {true}

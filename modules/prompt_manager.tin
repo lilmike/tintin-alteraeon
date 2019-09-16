@@ -1,16 +1,16 @@
 #ACTION {^*{pingtime\s+\d+|pong}*$}
 {
-	#if {"%1" == "pong"}
+	#if {{%1} == {pong}}
 	{
 		pang;
-		#if {"${client[gagPing]}" == "true"}
+		#if {{${client[gagPing]}} == {true}}
 		{
 			#line {gag}
 		}
 	};
 	#else
 	{
-		#if {"${client[gagPing]}" == "true"}
+		#if {{${client[gagPing]}} == {true}}
 		{
 			#line {gag};
 			#variable {client[gagPing]} {false};

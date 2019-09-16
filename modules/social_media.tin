@@ -51,7 +51,7 @@
 
 #ACTION {^[event] The pumpkin cannon operator: %S shot a pumpkin a distance of %d feet %3!$}
 {
-	#if {"%1" == "%i$name"}
+	#if {{%1} == {%i$name}}
 	{
 		#variable {pumpkinCannonFeet} {%2};
 		#variable {pumpkinCannonLocation} {%3}
@@ -86,7 +86,7 @@
 
 #ACTION {^You have {advanced|fallen} to position %d on the '%3' leaderboard!$}
 {
-	#if {"$leaderboardUpdateString" == ""}
+	#if {{$leaderboardUpdateString} == {}}
 	{
 		#variable {leaderboardUpdateString} {${name} has %1 to %2 on the '%3' board}
 	};
@@ -116,7 +116,7 @@
 
 #ALIAS {^leaderboard_update$}
 {
-	#if {"$leaderboardUpdateString" != ""}
+	#if {{$leaderboardUpdateString} != {}}
 	{
 		post $leaderboardUpdateString;
 		notify-send $leaderboardUpdateString;
@@ -127,19 +127,19 @@
 
 #ALIAS {^post %1}
 {
-	#if {"$facebook" == "true"}
+	#if {{$facebook} == {true}}
 	{
 		#script {dummyvar} {fbcmd post "%1" "Alter Aeon" "http://www.alteraeon.com/" &> /dev/null&}
 	};
-	#if {"$pump" == "true"}
+	#if {{$pump} == {true}}
 	{
 		#system {p post note --to followers --cc public --title "Alter Aeon - http://alteraeon.com" "%1" &> /dev/null&}
 	};
-	#if {"$twitter" == "true"}
+	#if {{$twitter} == {true}}
 	{
 		#system {oysttyer -silent -norc -status="%1" &> /dev/null&}
 	};
-	#if {"$gnusocial" == "true"}
+	#if {{$gnusocial} == {true}}
 	{
 		#if {!&{gusername} || !&{gpassword}}
 		{
@@ -161,44 +161,44 @@
 
 #ALIAS {^{facebook|gnusocial|pump.io|twitter|nofacebook|nognusocial|nopump.io|notwitter}$}
 {
-	#switch {"%0"}
+	#switch {{%0}}
 	{
-		#case {"facebook"}
+		#case {{facebook}}
 		{
 			#variable {facebook} {true};
 			#showme {Achievements will now be posted to Facebook.}
 		};
-		#case {"nofacebook"}
+		#case {{nofacebook}}
 		{
 			#unvariable {facebook};
 			#showme {Achievements will no longer be posted to Facebook.}
 		};
-		#case {"gnusocial"}
+		#case {{gnusocial}}
 		{
 			#variable {gnusocial} {true};
 			#showme {Achievements will now be posted to GNU Social. Remember to set your information with ginfo webfinger password.}
 		};
-		#case {"nognusocial"}
+		#case {{nognusocial}}
 		{
 			#unvariable {gnusocial};
 			#showme {Achievements will no longer be posted to GNU Social.}
 		};
-		#case {"pump.io"}
+		#case {{pump.io}}
 		{
 			#variable {pump} {true};
 			#showme {Achievements will now be posted to Pump.io.}
 		};
-		#case {"nopump.io"}
+		#case {{nopump.io}}
 		{
 			#unvariable {pump};
 			#showme {Achievements will no longer be posted to Pump.io.}
 		};
-		#case {"twitter"}
+		#case {{twitter}}
 		{
 			#variable {twitter} {true};
 			#showme {Achievements will now be posted to Twitter.}
 		};
-		#case {"notwitter"}
+		#case {{notwitter}}
 		{
 			#unvariable {twitter};
 			#showme {Achievements will no longer be posted to Twitter.}

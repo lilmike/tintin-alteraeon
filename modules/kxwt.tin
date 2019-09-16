@@ -48,14 +48,14 @@
 	#variable {oldExp} {%1};
 	#if {&{autolevelClass[3]}}
 	{
-		#if {"$justLeveled" != "true" && ${autolevelClass[3]} <= %1}
+		#if {{$justLeveled} != {true} && ${autolevelClass[3]} <= %1}
 		{
 			level ${autolevelClass[2]};
 			#variable {justLeveled} {true};
 			#delay {levelTimer} {#variable {justLeveled} {false}} {90}
 		}
 	};
-	#if {"${auto[buypractice]}" == "true" && "${spam[practice}" != "true" && %1 >= ${auto[buyPracticeExperience]}]}
+	#if {{${auto[buypractice]}} == {true} && {${spam[practice}} != {true} && %1 >= ${auto[buyPracticeExperience]}]}
 	{
 		train practice;
 		spamset practice
@@ -76,7 +76,7 @@
 	{
 		#variable {beeps} {true}
 	};
-	#if {"$beeps" == "true"}
+	#if {{$beeps} == {true}}
 	{
 		#if {%1 >= 90}
 		{
@@ -143,9 +143,9 @@
 {
 	#variable {kxwt[mdeath]} {%1};
 	#variable {client[capSound]} {true};
-	#if {"%1" != "{$ignoredMobs}"}
+	#if {{%1} != {{$ignoredMobs}}}
 	{
-		#if {"${skillsAndSpells[cry of victory]}" == "true"}
+		#if {{${skillsAndSpells[cry of victory]}} == {true}}
 		{
 			victory | grep -v You haven't had a recent victory worth shouting about.
 		};
@@ -157,9 +157,9 @@
 		{
 			#unvariable {lastSoulsteal}
 		};
-		#if {"${pkMode}" != "true"}
+		#if {{${pkMode}} != {true}}
 		{
-			#delay {0.5}{#if {"${auto[consume]}" == "true"}{control all consume corpse};#if {"${auto[bloodsacrifice]}" == "true" && "${character[inBattle]}" != "true"}{bsac corpse};#if {"${skillsAndSpells[corpsecutter]}" ==      "true" && "${character[inBattle]}" != "true"}{harvest components corpse};#if {"${skillsAndSpells[harvest bone]}" ==      "true" && "${character[inBattle]}" != "true"}{harvest bone corpse | grep -v has no useful bones remaining};#if {"${skillsAndSpells[salvage equipment]}" == "true" || &{battleScroll} && "${character[inBattle]}" != "true"}{search corpse | grep -v unique | prefix silent_};#if {"${auto[flesh]}" == "true"}{#if                     {"$makeNewFleshBeast" == "true"}{c flesh corpse};#else {lowhp | prefix silent_}};#if {&{lastReceivedExp}}{#unvariable {lastReceivedExp}};#if {&{position}}{$position}}
+			#delay {0.5}{#if {{${auto[consume]}} == {true}}{control all consume corpse};#if {{${auto[bloodsacrifice]}} == {true} && {${character[inBattle]}} != {true}}{bsac corpse};#if {{${skillsAndSpells[corpsecutter]}} ==      {true} && {${character[inBattle]}} != {true}}{harvest components corpse};#if {{${skillsAndSpells[harvest bone]}} ==      {true} && {${character[inBattle]}} != {true}}{harvest bone corpse | grep -v has no useful bones remaining};#if {{${skillsAndSpells[salvage equipment]}} == {true} || &{battleScroll} && {${character[inBattle]}} != {true}}{search corpse | grep -v unique | prefix silent_};#if {{${auto[flesh]}} == {true}}{#if                     {{$makeNewFleshBeast} == {true}}{c flesh corpse};#else {lowhp | prefix silent_}};#if {&{lastReceivedExp}}{#unvariable {lastReceivedExp}};#if {&{position}}{$position}}
 		}
 	}
 }
@@ -176,7 +176,7 @@
 	#script {if [ -d "$characterModulePath" ]; then for module in $characterModulePath/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
 	#script {if [ -d "$HOME/modules" ]; then for module in $HOME/modules/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
 	#class {gameData} {open};
-	#ticker {saver} {qcsave} {30}
+	#ticker {saver} {qcsave} {90}
 }
 {8}
 
@@ -193,15 +193,15 @@
 	#variable {character[maxMv]} {%6};
 	#variable {character[mvPercent]} {@percent{${character[currentMv]};${character[maxMv]}}};
 	#nop {Make sure alert variables are the correct type or sounds will not play.};
-	#if {!&{character[lastHpAlert]} || "${character[lastHpAlert]}" == ""}
+	#if {!&{character[lastHpAlert]} || {${character[lastHpAlert]}} == {}}
 	{
 		#variable {character[lastHpAlert]} {0}
 	};
-	#if {!&{character[lastManaAlert]} || "${character[lastManaAlert]}" == ""}
+	#if {!&{character[lastManaAlert]} || {${character[lastManaAlert]}} == {}}
 	{
 		#variable {character[lastManaAlert]} {0}
 	};
-	#if {!&{character[lastMvAlert]} || "${character[lastMvAlert]}" == ""}
+	#if {!&{character[lastMvAlert]} || {${character[lastMvAlert]}} == {}}
 	{
 		#variable {character[lastMvAlert]} {0}
 	};
@@ -221,7 +221,7 @@
 		#math {character[lastMvAlert]} {${character[mvPercent]} / 10};
 		synth_play mv${character[lastMvAlert]}
 	};
-	#if {%1 == %2 && %3 >= %4 - 3 && %5 == %6 && "${character[regenAlert]}" != "true"}
+	#if {%1 == %2 && %3 >= %4 - 3 && %5 == %6 && {${character[regenAlert]}} != {true}}
 	{
 		play regen-complete;
 		#variable {character[regenAlert]} {true}
@@ -231,7 +231,7 @@
 		#unvariable {character[regenAlert]}
 	};
 	#nop {automation};
-	#if {"${auto[refresh]}" == "true"}
+	#if {{${auto[refresh]}} == {true}}
 	{
 		@autorefresh{}
 	}
@@ -246,7 +246,7 @@
 	@do_hook{rvnum;%1;$oldVnum};
 	#if {%1 != $oldVnum}
 	{
-		#if {"$busy" == "true"}
+		#if {{$busy} == {true}}
 		{
 			#variable {busy} {false}
 		};
@@ -282,7 +282,7 @@
 #ACTION {^kxwt_time %1}
 {
 	#variable {kxwt[time]} {%1};
-	#regexp {%1} {{.*} {.*}:{.*} {.*}} {#if {$lastPlayedTime != &2} {#if {"$editorMode" != "true"}{#delay {0.5}{#if {!&{repop[mob]}}{#variable {repop[mob]} {false}};#if {"${repop[mob]}" != "false"}{where ${repop[mob]} | prefix mobrepop_};#if {"${repop[instance]}" == "true"}{instance | prefix instancerepop_}};#delay {1} {leaderboard_update}};#if {"&4" == "am" && &2 == 7 && &3 == 00} {play sunrise};#elseif {"&4" == "pm" && &2 == 7 && &3 == 00} {play sunset};#if {"$clock" == "true"} {#variable {chimeCounter} {1};#variable {chimeLoop} {};#while {$chimeCounter <= &2}{#variable {chimeLoop} {$chimeLoop $HOME/sounds/clock.wav};#math {chimeCounter} {$chimeCounter + 1}};#echo {&2 O'clock &4};#if {"$msp" == "true"} {#system {play -q $chimeLoop gain $volume &> /dev/null &}}}};#variable {lastPlayedTime} {&2}}
+	#regexp {%1} {{.*} {.*}:{.*} {.*}} {#if {$lastPlayedTime != &2} {#if {{$editorMode} != {true}}{#delay {0.5}{#if {!&{repop[mob]}}{#variable {repop[mob]} {false}};#if {{${repop[mob]}} != {false}}{where ${repop[mob]} | prefix mobrepop_};#if {{${repop[instance]}} == {true}}{instance | prefix instancerepop_}};#delay {1} {leaderboard_update}};#if {{&4} == {am} && &2 == 7 && &3 == 00} {play sunrise};#elseif {{&4} == {pm} && &2 == 7 && &3 == 00} {play sunset};#if {{$clock} == {true}} {#variable {chimeCounter} {1};#variable {chimeLoop} {};#while {$chimeCounter <= &2}{#variable {chimeLoop} {$chimeLoop $HOME/sounds/clock.wav};#math {chimeCounter} {$chimeCounter + 1}};#echo {&2 O'clock &4};#if {{$msp} == {true}} {#system {play -q $chimeLoop gain $volume &> /dev/null &}}}};#variable {lastPlayedTime} {&2}}
 }
 {8}
 
@@ -319,7 +319,7 @@
 #ALIAS {^cmod{kill|load|reload} %S$}
 {
 	#nop {reload all modules};
-	#if {"%0" == "cmodreload all"}
+	#if {{%0} == {cmodreload all}}
 	{
 		#script {for module in $characterModulePath/*.tin $HOME/modules/*.tin ; do echo "#class {$(basename "$module" .tin)} {kill};#class {character_$(basename "$module" .tin)} {read} {$module}";done};
 		#echo {All character modules reloaded}
@@ -327,12 +327,12 @@
 	#else
 	{
 		#nop {Kill, load, or reload a specified module.};
-		#if {"%1" == "{kill|reload}"}
+		#if {{%1} == {{kill|reload}}}
 		{
 			#class {character_%2} {kill};
 			#showme {Character module %2 has been killed.}
 		};
-		#if {"%1" == "{load|reload}"}
+		#if {{%1} == {{load|reload}}}
 		{
 			#showme {Loading character module %2.tin};
 			#script {if [ -f "$characterModulePath/%2.tin" ]; then echo "#class {character_%2} {read} {$characterModulePath/%2.tin}";else echo "#class {character_%2} {read} {$HOME/modules/%2.tin}";fi};

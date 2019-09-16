@@ -6,17 +6,17 @@
 	synth_play trustedCommandSound;
 	#if {${trust[index]} > 0}
 	{
-		#if {"%4" == "{${trustedCommands}}"}
+		#if {{%4} == {{${trustedCommands}}}}
 		{
-			#switch {"%4"}
+			#switch {{%4}}
 			{
-				#case {"fame"}
+				#case {{fame}}
 				{
 					#delay {1d3} {brag gt areafame}
 				};
-				#case {"target%*"}
+				#case {{target%*}}
 				{
-					#if {"${skillsAndSpells[rally]}" == "true"}
+					#if {{${skillsAndSpells[rally]}} == {true}}
 					{
 						#delay {1d3} {#regexp {%3} {{.*} {.*}} {rally &2}}
 					};
@@ -46,7 +46,7 @@
 {
 	#format {trust[name]} {%n} {%2};
 	#list {trustedList} {find} {${trust[name]}} {trust[index]};
-	#if {"%1" == "trust"}
+	#if {{%1} == {trust}}
 	{
 		#if {${trust[index]} == 0}
 		{

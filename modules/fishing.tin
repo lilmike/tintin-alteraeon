@@ -27,7 +27,7 @@
 #ACTION {%1 {gets|get} a bite, and after a little effort {you manage|manages} to reel in %4.$}
 {
 	play catch-fish;
-	#if {"%1" == "You" && "$autojunk" == "true"}
+	#if {{%1} == {You} && {$autojunk} == {true}}
 	{
 		#regexp {%4} {{.*} {.*}} {$junkType &2}
 	}
@@ -37,9 +37,9 @@
 #ACTION {%1 {reels|reel} in %3.$}
 {
 	play catch-fish;
-	#if {"%1" == "You"}
+	#if {{%1} == {You}}
 	{
-		#regexp {%3} {{.*} {.*}} {#if {"&2" != "{bushes|while}" && "$autojunk" == "true"} {$junkType &2};#if {"&2" == "{bushes|while}"} {#delay {1d3} {\!fis}}}
+		#regexp {%3} {{.*} {.*}} {#if {{&2} != {{bushes|while}} && {$autojunk} == {true}} {$junkType &2};#if {{&2} == {{bushes|while}}} {#delay {1d3} {\!fis}}}
 	}
 }
 {9}
@@ -53,7 +53,7 @@
 #ACTION {^After a big fight, %1 {reels|reel} in %3.$}
 {
 	play catch-fish;
-	#if {"%1" == "you" && "$autojunk" == "true"}
+	#if {{%1} == {you} && {$autojunk} == {true}}
 	{
 		#regexp {%3} {{.*} {.*}} {$junkType &2}
 	}

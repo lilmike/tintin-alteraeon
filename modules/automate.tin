@@ -2,10 +2,10 @@
 {
 	#nop {Hook name: assist};
 	#nop {Hook args: none};
-	#if {!&{spam[cassist]} || "${spam[cassist]}" != "true"}
+	#if {!&{spam[cassist]} || {${spam[cassist]}} != {true}}
 	{
 		spamset cassist 3;
-		#if {"${character[inBattle]}" == "true"}
+		#if {{${character[inBattle]}} == {true}}
 		{
 			#return #nop
 		};
@@ -26,7 +26,7 @@
 
 #ALIAS {^{noc|c}autoassist$}
 {
-	#if {"%1" == "noc"}
+	#if {{%1} == {noc}}
 	{
 		#unvariable {auto[cassist]};
 		#showme {Client side autoassist disabled.}
@@ -41,17 +41,17 @@
 
 #FUNCTION {autorefresh}
 {
-	#if {"${kxwt[context]}" != "none" && "${kxwt[context]}" != ""}
+	#if {{${kxwt[context]}} != {none} && {${kxwt[context]}} != {}}
 	{
 		#return #nop
 	};
-	#if {&{client[exhausted]} && "${character[inBattle]}" == "true"}
+	#if {&{client[exhausted]} && {${character[inBattle]}} == {true}}
 	{
 		#return #nop
 	};
-	#if {"${skillsAndSpells[second wind]}" == "true" && "${character[inBattle]}" == "true"}
+	#if {{${skillsAndSpells[second wind]}} == {true} && {${character[inBattle]}} == {true}}
 	{
-		#if {${character[mvPercent]} <= 10 && "${client[exhausted]}" != "true"}
+		#if {${character[mvPercent]} <= 10 && {${client[exhausted]}} != {true}}
 		{
 			#return @command{sec;second wind}
 		}
@@ -60,21 +60,21 @@
 	{
 		#return #nop
 	};
-	#if {"${skillsAndSpells[rejuvenate]}" == "true" && "${character[inBattle]}" != "true"}
+	#if {{${skillsAndSpells[rejuvenate]}} == {true} && {${character[inBattle]}} != {true}}
 	{
 		#if {${character[mvPercent]} <= 15 && ${character[currentMana]} >= 35}
 		{
 			#return @command{c rejuv;cast rejuvenate}
 		}
 	};
-	#if {"${skillsAndSpells[area refresh]}" == "true" && "${character[inBattle]}" != "true"}
+	#if {{${skillsAndSpells[area refresh]}} == {true} && {${character[inBattle]}} != {true}}
 	{
 		#if {${character[mvPercent]} <= 15 && ${character[currentMana]} >= 28}
 		{
 			#return @command{c area;cast area refresh}
 		}
 	};
-	#if {"${skillsAndSpells[refresh]}" == "true" && "${character[inBattle]}" != "true"}
+	#if {{${skillsAndSpells[refresh]}} == {true} && {${character[inBattle]}} != {true}}
 	{
 		#if {${character[mvPercent]} <= 15 && ${character[currentMana]} >= 15}
 		{

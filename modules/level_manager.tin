@@ -1,10 +1,10 @@
 #ACTION {^silent_%1%s(%d {hours|minutes} remaining)}
 {
-	#if {"%4" == "hours" && %3 > 1}
+	#if {{%4} == {hours} && %3 > 1}
 	{
 		#math {levelTimer} {3600 * (%3 - 1)}
 	};
-	#elseif {"%4" == "hours"}
+	#elseif {{%4} == {hours}}
 	{
 		#math {levelTimer} {%3 * 800}
 	};
@@ -32,7 +32,7 @@
 {
 	#if {&{autolevelClass}}
 	{
-		#if {"${autolevelClass[1]}" == "{a|al|all}"}
+		#if {{${autolevelClass[1]}} == {{a|al|all}}}
 		{
 			autolevel all
 		};
@@ -48,7 +48,7 @@
 {
 	#if {&{autolevelClass}}
 	{
-		#if {"${autolevelClass[1]}" == "{a|al|all}"}
+		#if {{${autolevelClass[1]}} == {{a|al|all}}}
 		{
 			autolevel all
 		};
@@ -156,7 +156,7 @@
 {
 	#list {autolevelClass} {clear};
 	#list {autolevelClass} {add} {%2};
-	#if {"%2" == "{a|al|all}"}
+	#if {{%2} == {{a|al|all}}}
 	{
 		show cost | prefix silent_
 	};
@@ -170,7 +170,7 @@
 
 #ALIAS {^{auto|noauto}level$}
 {
-	#if {"%0" == "autolevel"}
+	#if {{%0} == {autolevel}}
 	{
 		#if {!&{autolevelClass}}
 		{

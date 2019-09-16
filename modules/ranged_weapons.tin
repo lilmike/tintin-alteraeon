@@ -1,7 +1,7 @@
 #ACTION {^amo_You get %*${amo}\.$}
 {
 	#line {gag};
-	#if {"${auto[store]}" == "true"}
+	#if {{${auto[store]}} == {true}}
 	{
 		#if {!&{character[amoContainer]}}
 		{
@@ -36,7 +36,7 @@
 
 #ACTION {^{A|An|The} %2 isn't loaded.$}
 {
-	#if {"${auto[store]}" == "true"}
+	#if {{${auto[store]}} == {true}}
 	{
 		get $amo ${character[amoContainer]} | grep nospam
 	};
