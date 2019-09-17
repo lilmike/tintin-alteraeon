@@ -1,5 +1,6 @@
 #nop Remove the /* and */ lines and replace NAME and PASSWORD with your information. You can have up to 10.
 
+/*
 #variable {loginList}
 {
 {NAME}{PASSWORD}
@@ -15,3 +16,4 @@ PASSWORD;
 1
 }
 }
+*/
