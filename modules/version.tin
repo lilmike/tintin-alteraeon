@@ -11,7 +11,7 @@
 		synth_play tellReceiveSound
 	}
 }
-{8}
+{5}
 
 #ACTION {^silent_Version Tag gtt-{beta|stable} %s- %S %sOwners: %5}
 {

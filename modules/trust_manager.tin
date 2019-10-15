@@ -1,4 +1,4 @@
-#ACTION {^%w {tells the group|tells you|replies to you}, '{[^1-zA-Z0-9]}%4'$}
+#ACTION {^%w {tells the group|tells you|replies to you}, '{[^a-zA-Z0-9]}%4'$}
 {
 	#variable {channelSilence} {true};
 	Channel_Event grouptell %0;
