@@ -80,7 +80,7 @@
 	#if {${trust[index]} > 0}
 	{
 		#local {i} {};
-		#foreach {${trustedList[]}} {i}
+		#foreach {*{trustedList[]}} {i}
 		{
 			#showme {${trustedList[$i]}}
 		}

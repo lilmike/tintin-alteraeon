@@ -84,7 +84,7 @@
 		#if {{$scrolls} != {}}
 		{
 			#local {i} {};
-			#foreach {${scrolls[]}} {i}
+			#foreach {*{scrolls[]}} {i}
 			{
 				#showme {$i: ${scrolls[$i]}}
 			}

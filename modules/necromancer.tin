@@ -251,10 +251,10 @@
 
 #ACTION {^DONE_LOOKING$}
 {
-	#list {souls2} {create} {${souls[]}};
+	#list {souls2} {create} {*{souls[]}};
 	#local {l} {};
 	#variable {lastNumber} {0};
-	#foreach {${souls[]}} {l}
+	#foreach {*{souls[]}} {l}
 	{
 		#math {lastNumber} {$lastNumber + ${souls[$l]}}
 	};
