@@ -42,7 +42,7 @@
 {
 	#if {{${auto[waypoint]}} == {true}}
 	{
-		#undelay {waypoint};
+		#unticker {waypoint};
 		#send {$waypointType %1};
 		#delay {waypoint} {$waypointType $waypoint} {3}
 	}

@@ -73,7 +73,7 @@
 
 #ACTION {^kxwt_fighting %1 %2 %3}
 {
-     #undelay {autocombatDelay};
+     #unticker {autocombatDelay};
      #unvariable {autocombatPaused};
      #delay {autocombatDelay} {#var {autocombatPaused} {1}} {60};
      #variable {kxwt[fighting]} {%1 %2 %3};

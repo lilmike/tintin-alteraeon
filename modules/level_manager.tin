@@ -13,7 +13,7 @@
 		#math {levelTimer} {%3 * 60}
 	};
 	#variable {justLeveled} {true};
-	#undelay {levelTimer};
+	#unticker {levelTimer};
 	#delay {levelTimer} {#variable {justLeveled} {false}} {$levelTimer}
 }
 {5}

@@ -1,6 +1,6 @@
 #ACTION {^You jump to {assist|attack} %*!$}
 {
-	#undelay {autocombatDelay};
+	#unticker {autocombatDelay};
 	#unvariable {autocombatPaused};
 	#delay {autocombatDelay} {#var {autocombatPaused} {1}} {60}
 }
@@ -8,7 +8,7 @@
 
 #ACTION {^You're already targeting %*!$}
 {
-	#undelay {autocombatDelay};
+	#unticker {autocombatDelay};
 	#unvariable {autocombatPaused};
 	#delay {autocombatDelay} {#var {autocombatPaused} {1}} {60}
 }
