@@ -68,8 +68,7 @@
 
 #ACTION {^You get the feeling that this spot is fished out.$}
 {
-	synth_play notificationSound;
-	#delay {1d4} {stop}
+	synth_play notificationSound
 }
 {9}
 
