@@ -14,7 +14,7 @@
 #CONFIG           {REPEAT ENTER}  {ON}
 #CONFIG           {SCREEN READER}  {OFF}
 #CONFIG           {SCROLL LOCK}  {ON}
-#CONFIG           {SPEEDWALK}  {ON}
+#CONFIG           {SPEEDWALK}  {OFF}
 #CONFIG           {TAB WIDTH}  {8}
 #CONFIG           {TELNET}  {ON}
 #CONFIG           {TINTIN CHAR}  {#}
