@@ -62,38 +62,41 @@
           {
                #variable {castTankMinion} {true}
           };
-          #if {{${auto[clay]}} == {true} && {%2} == {stops}}
+          #if {{%1} != {straw man}}
           {
-               #send {\cc};
-               #variable {castTankMinion} {%1};
-               vcast clay man
-          };
-          #if {{${auto[woad]}} == {true} && {%2} == {stops}}
-          {
-               woad
-          };
-          #if {{${auto[bone]}} == {true} && {%2} == {stops}}
-          {
-               guardian
-          };
-          #if {{${auto[flesh]}} == {true} && {%2} == {stops}}
-          {
-               #variable {castTankMinion} {flesh beast corpse};
-               release corpse
-          };
-          #if {{${auto[metal]}} == {true} && {%2} == {stops}}
-          {
-               #if {${kxwt[terrain} == 33]}
+               #if {{${auto[clay]}} == {true} && {%2} == {stops}}
                {
-                    #variable {castTankMinion} {%2};
-                    vcast metal
+                    #send {\cc};
+                    #variable {castTankMinion} {%1};
+                    vcast clay man
                };
-               #else
+               #if {{${auto[woad]}} == {true} && {%2} == {stops}}
                {
-                    metalconstruct
+                    woad
+               };
+               #if {{${auto[bone]}} == {true} && {%2} == {stops}}
+               {
+                    guardian
+               };
+               #if {{${auto[flesh]}} == {true} && {%2} == {stops}}
+               {
+                    #variable {castTankMinion} {flesh beast corpse};
+                    release corpse
+               };
+               #if {{${auto[metal]}} == {true} && {%2} == {stops}}
+               {
+                    #if {${kxwt[terrain} == 33]}
+                    {
+                         #variable {castTankMinion} {%2};
+                         vcast metal
+                    };
+                    #else
+                    {
+                         metalconstruct
+                    }
                }
           };
-          #if {{${auto[straw]}} == {true} && {%2} == {stops} && {%1} == {straw man}}
+          #elseif {{${auto[straw]}} == {true} && {%2} == {stops} && {%1} == {straw man}}
           {
                #send {\cc};
                #variable {castTankMinion} {%1};
