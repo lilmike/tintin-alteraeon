@@ -49,6 +49,15 @@
 }
 {9}
 
+#ACTION {^%d exp.$}
+{
+     #if {${fishingWin}}
+     {
+          #variable {fishingXp} {%1}
+     }
+}
+{9}
+
 #ACTION {^%w %w{, '|: }%4{'?}$}
 {
      #regexp {%1} {{[A-Z].+}}
@@ -189,6 +198,16 @@
 }
 {9}
 
+#ACTION {^You are rewarded with %d gold coins!$}
+{
+     #if {${fishingWin}}
+     {
+          autobrag I won a fishing durby! $fishingXp xp and %1 gold!;
+          #variable {fishingWin} {0}
+     }
+}
+{9}
+
 #ACTION {^You can now learn the {skill|spell} '%2'!$}
 {
      #variable {channelSilence} {true};
@@ -224,6 +243,17 @@
      #variable {channelSilence} {true};
      Channel_Event all %0;
      autobrag %0
+}
+{9}
+
+#ACTION {^[event] THE FISHING DERBY HAS ENDED, PLAYER '%w' IS THE WINNER!$}
+{
+     #local {tmp} {};
+     #format {tmp} {%l} {%1};
+     #if {{$tmp} == {${kxwt[myname]}}}
+     {
+          #variable {fishingWin} {1}
+     }
 }
 {9}
 
@@ -503,31 +533,6 @@
 {9}
 
 
-#CONFIG           {AUTO TAB}  {5000}
-#CONFIG           {BUFFER SIZE}  {10000}
-#CONFIG           {CHARSET}  {UTF-8}
-#CONFIG           {COLOR MODE}  {TRUE}
-#CONFIG           {COLOR PATCH}  {OFF}
-#CONFIG           {COMMAND COLOR}  {\e[0;37m}
-#CONFIG           {COMMAND ECHO}  {ON}
-#CONFIG           {CONNECT RETRY}  {0.0}
-#CONFIG           {HISTORY SIZE}  {1000}
-#CONFIG           {LOG MODE}  {RAW}
-#CONFIG           {MOUSE TRACKING}  {OFF}
-#CONFIG           {PACKET PATCH}  {AUTO OFF}
-#CONFIG           {RANDOM SEED}  {962906349}
-#CONFIG           {REPEAT CHAR}  {!}
-#CONFIG           {REPEAT ENTER}  {OFF}
-#CONFIG           {SCREEN READER}  {OFF}
-#CONFIG           {SCROLL LOCK}  {ON}
-#CONFIG           {SPEEDWALK}  {OFF}
-#CONFIG           {TAB WIDTH}  {8}
-#CONFIG           {TELNET}  {ON}
-#CONFIG           {TINTIN CHAR}  {#}
-#CONFIG           {VERBATIM}  {OFF}
-#CONFIG           {VERBATIM CHAR}  {\}
-#CONFIG           {VERBOSE}  {OFF}
-#CONFIG           {WORDWRAP}  {ON}
 
 #FUNCTION {decrypt}
 {
@@ -789,16 +794,6 @@
 }
 
 
-#PATHDIR          {d}  {u}  {32}
-#PATHDIR          {e}  {w}  {2}
-#PATHDIR          {n}  {s}  {1}
-#PATHDIR          {ne}  {sw}  {3}
-#PATHDIR          {nw}  {se}  {9}
-#PATHDIR          {s}  {n}  {4}
-#PATHDIR          {se}  {nw}  {6}
-#PATHDIR          {sw}  {ne}  {12}
-#PATHDIR          {u}  {d}  {16}
-#PATHDIR          {w}  {e}  {8}
 
 #SUBSTITUTE       {^\^}  {}  {9}
 
@@ -806,4 +801,6 @@
 #VARIABLE         {channelBuffer}  {{1}{all}{2}{auction}{3}{bovine}{4}{cowsay}{5}{clantell}{6}{event}{7}{friend}{8}{gossip}{9}{grouptell}{10}{music}{11}{tell}{12}{say}{13}{chat}{14}{imm}}
 #VARIABLE         {channelBufferIndex}  {1}
 #VARIABLE         {channelSilence}  {false}
+#VARIABLE         {fishingWin}  {0}
+#VARIABLE         {fishingXp}  {0}
 
