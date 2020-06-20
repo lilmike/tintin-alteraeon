@@ -54,7 +54,7 @@
 }
 {2}
 
-#ACTION {^A {clay man|bone guardian|flesh beast|metal construct|wood woad} {starts|stops} following you.$}
+#ACTION {^A {straw man|clay man|bone guardian|flesh beast|metal construct|wood woad} {starts|stops} following you.$}
 {
      #if {{${client[releasing]}} != {true}}
      {
@@ -81,7 +81,7 @@
                #variable {castTankMinion} {flesh beast corpse};
                release corpse
           };
-          #if {{${auto[metal]}} == {true} && {$%2} == {stops}}
+          #if {{${auto[metal]}} == {true} && {%2} == {stops}}
           {
                #if {${kxwt[terrain} == 33]}
                {
@@ -92,6 +92,12 @@
                {
                     metalconstruct
                }
+          };
+          #if {{${auto[straw]}} == {true} && {%2} == {stops}}
+          {
+               #send {\cc};
+               #variable {castTankMinion} {%1};
+               vcast strawman
           }
      };
      #else
@@ -1375,7 +1381,7 @@
 }
 {9}
 
-#ALIAS {^{noauto|auto}{bone|clay|flesh|metal|woad}$}
+#ALIAS {^{noauto|auto}{bone|clay|flesh|metal|woad|straw}$}
 {
      #if {!&{auto[boneMaterial]}}
      {
@@ -1437,6 +1443,10 @@
                     #variable {auto[metal]} {false};
                     #variable {auto[woad]} {true};
                     #variable {castTankMinion} {wood woad}
+               };
+               #case {{straw}}
+               {
+                    #variable {auto[straw]} {true}
                }
           };
           #echo {auto%2 enabled.}
