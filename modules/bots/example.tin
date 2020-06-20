@@ -12,14 +12,14 @@
 #FUNCTION {bot_kill}
 {
 	#nop {Don't walk once after the bot dies.};
-	#undelay {walk};
+	#unticker {walk};
 	#return #nop
 }
 
 #FUNCTION {bot_load}
 {
 	#nop {Walk once to get the bot started.};
-	#math {exitChoice} {1d$exitCount};
+	#math {exitChoice} {(1d($exitCount * 100)) / 100 + 1};
 	${exits[$exitChoice]};
 	#return #nop
 }
@@ -31,9 +31,9 @@
 	#nop {Delay a tiny amount in case the mud sends area number after room number.};
 	#delay {0.05} {#if {$areaNumber != $targetAreaNumber} {backward}};
 	#nop {Remove walk delay in case we went backward as to not walk twice.};
-	#undelay {walk};
+	#unticker {walk};
 	#nop {Now, pick an exit at random. We know we're in the right area because area number will be checked before $walkDelay expires.};
-	#delay {walk} {#math {exitChoice} {1d$exitCount};${exits[$exitChoice]}} {1 d ($walkDelayMax - $walkDelayMin) + $walkDelayMin};
+	#delay {walk} {#math {exitChoice} {(1d($exitCount * 100)) / 100 + 1};${exits[$exitChoice]}} {1 d ($walkDelayMax - $walkDelayMin) + $walkDelayMin};
 	#return #nop
 }
 
