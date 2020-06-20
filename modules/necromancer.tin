@@ -93,7 +93,7 @@
                     metalconstruct
                }
           };
-          #if {{${auto[straw]}} == {true} && {%2} == {stops}}
+          #if {{${auto[straw]}} == {true} && {%2} == {stops} && {%1} == {straw man}}
           {
                #send {\cc};
                #variable {castTankMinion} {%1};
