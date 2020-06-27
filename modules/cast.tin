@@ -1,15 +1,12 @@
-#ACTION {^You fail to cast the spell%*.$}
+#ACTION {^You can't control %* right now.$}
 {
-	#if { "$castTankMinion" != "true"}
-	{
-		cast $castTankMinion
-	}
+	#variable {castTankMinion} {true}
 }
 {9}
 
 #ACTION {^silent_Missing '%1'.$}
 {
-	cast %1
+	vcast %1
 }
 {9}
 
@@ -33,7 +30,7 @@
 
 #ALIAS {^{recas|recast} %s{a|ad|add|r|re|rem|remo|remov|remove} %sall$}
 {
-	#if {"%3" == "a%*"}
+	#if {{%3} == {a%*}}
 	{
 		recast start
 	};

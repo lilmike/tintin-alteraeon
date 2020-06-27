@@ -1,8 +1,8 @@
 #ACTION {^You {are drowning|struggle for air but find none|struggle desperately for air to breathe}!$}
 {
-	#if {"${skillsAndSpells[water breathing]}" == "true" && "$castingWaterBreathing" == "false"}
+	#if {{${skillsAndSpells[water breathing]}} == {true} && {$castingWaterBreathing} == {false}}
 	{
-		c water breathing;
+		vcast water breathing;
 		#variable {castingWaterBreathing} {true};
 		#delay {60} {#variable {castingWaterBreathing} {false}}
 	}
@@ -11,29 +11,29 @@
 
 #ACTION {^{An|A|a|an} {greater ice|ice|lesser ice} elemental {starts|stops} following you.$}
 {
-	#if {"%3" == "starts"}
+	#if {{%3} == {starts}}
 	{
 		#variable {castTankMinion} {true}
 	};
-	#if {"${client[releasing]}" != "true"}
+	#if {{${client[releasing]}} != {true}}
 	{
-		#if {"${auto[iceElemental]}" == "true" && ${character[currentMana]} > 200}
+		#if {{${auto[iceElemental]}} == {true} && ${character[currentMana]} > 200}
 		{
-			#if {"%3" == "stops"}
+			#if {{%3} == {stops}}
 			{
-				#if {"%2" != "ice"}
+				#if {{%2} != {ice}}
 				{
 					#variable {castTankMinion} {ice elemental %2};
-					cast ice elemental %2
+					vcast ice elemental %2
 				};
 				#else
 				{
 					#variable {castTankMinion} {ice elemental};
-					add_spell ice elemental
+					vcast ice elemental
 				}
 			}
 		};
-		#elseif {"${auto[iceElemental]}" == "true" && ${character[currentMana]} < 200}
+		#elseif {{${auto[iceElemental]}} == {true} && ${character[currentMana]} < 200}
 		{
 			synth_play warningSound
 		}
@@ -47,7 +47,7 @@
 
 #ALIAS {^{noauto|auto}ice$}
 {
-	#if {"%1" == "auto"}
+	#if {{%1} == {auto}}
 	{
 		#variable {auto[iceElemental]} {true};
 		#echo {auto ice elemental enabled}

@@ -30,7 +30,7 @@
 
 #ALIAS {^unset %1}
 {
-	#if {"${skillsAndSpells[%1]}" == "true"}
+	#if {{${skillsAndSpells[%1]}} == {true}}
 	{
 		#unvariable {skillsAndSpells[%1]};
 		#showme {%1 unset}
@@ -68,7 +68,7 @@
 
 #ALIAS {^{noauto|auto}keyprofile$}
 {
-	#if {"%0" == "autokeyprofile"}
+	#if {{%0} == {autokeyprofile}}
 	{
 		#variable {auto[keyprofile]} {true};
 		#showme {Auto keyprofile enabled.}

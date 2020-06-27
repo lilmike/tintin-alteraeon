@@ -1,9 +1,9 @@
 #ACTION {%1 {\(.*\(unique\)|\(unique\)}$}
 {
 	play unique;
-	#if {"${auto[getunique]}" == "true"}
+	#if {{${auto[getunique]}} == {true}}
 	{
-		#regexp {%1} {{.*} {.*}} {get &2 corpse;#if {"${auto[donateunique]}" == "true"} {donate &2}};
+		#regexp {%1} {{.*} {.*}} {get &2 corpse;#if {{${auto[donateunique]}} == {true}} {donate &2}};
 		#else
 		{
 			get %1 corpse
@@ -25,12 +25,13 @@
 }
 {9}
 
-#ACTION {^scrollcounter_Found %d items matching the criteria: %*}
+#ACTION {^scrollcounter_%*_Found %d items matching the criteria: %*}
 {
-	#variable {msg} {%1 scrolls remaining.};
-	Add_Event $msg;
+	#variable {channelSilence} {true};
+	#variable {msg} {%2 scrolls of type %1 remaining.};
+	Channel_Event all $msg;
 	#showme {$msg};
-	#if {%1 <= 20}
+	#if {%2 <= 3}
 	{
 		synth_play warningSound
 	}
@@ -48,33 +49,53 @@
 {
 	#variable {corpseVnum} {%2};
 	#send {get coins $corpseVnum | grep -v There's nothing left};
-	#if {"${skillsAndSpells[corpsecutter]}" == "true" && !&{inBattle}}
+	#if {{${skillsAndSpells[corpsecutter]}} == {true} && !&{character[inBattle]}}
 	{
 		harvest components $corpseVnum | grep -v Looks like someone else beat you to it
 	};
-	#if {"${skillsAndSpells[harvest bone]}" == "true" && !&{inBattle}}
+	#if {{${skillsAndSpells[harvest bone]}} == {true} && !&{inBattle}}
 	{
 		harvest bone $corpseVnum | grep -v has no useful bones remaining
 	};
-	#if {"${skillsAndSpells[salvage equipment]}" == "true" || &{battleScroll}}
+	#if {{${skillsAndSpells[salvage equipment]}} == {true} || &{battleScroll}}
 	{
 		search $corpseVnum | grep -v unique | prefix silent_ | grep -v There's nothing left
 	};
-	#if {"${skillsAndSpells[consume]}" == "true"}
+	#if {{${skillsAndSpells[consume]}} == {true}}
 	{
 		control all consume $corpseVnum | grep -v There's nothing left
 	};
-	#if {"${skillsAndSpells[blood sacrifice]}" == "true"}
+	#if {{${skillsAndSpells[blood sacrifice]}} == {true}}
 	{
 		bsac $corpseVnum | grep -v no longer suitable
 	};
-	#if {"$busy" != "true"}
+	#if {{$busy} != {true}}
 	{
 		sac $corpseVnum
 	};
 	#unvariable {corpseVnum}
 }
 {9}
+
+#ALIAS {^scrolls$}
+{
+	#if {&{scrolls}}
+	{
+		#if {{$scrolls} != {}}
+		{
+			#local {i} {};
+			#foreach {*{scrolls[]}} {i}
+			{
+				#showme {$i: ${scrolls[$i]}}
+			}
+		}
+	};
+	#else
+	{
+		#showme {No scrolls found.}
+	}
+}
+{5}
 
 #ALIAS {^autostore %S}
 {
@@ -102,6 +123,73 @@
 }
 {9}
 
+#ALIAS {^dscroll %S$}
+{
+	#if {&{scrolls[%1]}}
+	{
+		#variable {character[defaultScroll]} {%1};
+		#showme {Default scroll type set to %1. You can use alt backslash to get and use it.}
+	};
+	#else
+	{
+		#showme {Scroll type %1 not found.}
+	}
+}
+{9}
+
+#ALIAS {^noscroll %S$}
+{
+	#if {&{scrolls[%1]}}
+	{
+		#unvariable {scrolls[%1]};
+		#showme {Deleted scroll type %1.}
+	};
+	#else
+	{
+		#showme {Scroll type %1 not found.}
+	}
+}
+{9}
+
+#ALIAS {^scroll %S %*}
+{
+	#variable {scrolls[%1]} {%2};
+	#showme {Scroll type %1 created as %2. Use uscroll %1 to get and use it. You can also use uscroll %1 <name> to use it on someone else.}
+}
+{9}
+
+#ALIAS {^scroll %S$}
+{
+	#if {&{scrolls[%1]}}
+	{
+		look in ${character[container]} -ncount ${scrolls[%1]} +count |prefix scrollcounter_%1_
+	};
+	#else
+	{
+		#showme {Scroll type %1 not found.}
+	}
+}
+{9}
+
+#ALIAS {^uscroll %S{ .+|}$}
+{
+	#if {&{scrolls[%1]}}
+	{
+		get ${scrolls[%1]} ${character[container]};
+		#regexp {${scrolls[%1]}} {{.+} {.+}} {use &2%2};
+		#else
+		{
+			use ${scrolls[%1]}%2
+		};
+		scroll %1
+	};
+	#else
+	{
+		#showme {Scroll type %1 Not found.}
+	}
+}
+{9}
+
 #ALIAS {^x$}
 {
 	insult corpse | prefix silent_
@@ -110,15 +198,15 @@
 
 #ALIAS {^{auto|noauto}{donate|get}unique$}
 {
-	#switch {"%0"}
+	#switch {{%0}}
 	{
-		#case {"autogetunique"}
+		#case {{autogetunique}}
 		{
 			#variable {auto[getunique]} {true};
 			#variable {auto[donateunique]} {false};
 			#showme {You will automatically loot unique items from corpses.}
 		};
-		#case {"autodonateunique"}
+		#case {{autodonateunique}}
 		{
 			#variable {auto[donateunique]} {true};
 			#variable {auto[getunique]} {true};
@@ -136,7 +224,7 @@
 
 #ALIAS {^{g|ge|get|gi|giv|give|p|pu|put} %2 %S$}
 {
-	#if {!&{character[container]} && "%1" == "{p|pu|put}"}
+	#if {!&{character[container]} && {%1} == {{p|pu|put}}}
 	{
 		#variable {character[container]} {%3}
 	};
@@ -146,37 +234,6 @@
 	#foreach {$i} {j}
 	{
 		#send {%1 $j %3}
-	}
-}
-{9}
-
-#ALIAS {^{noscro|noscrol|noscroll}$}
-{
-	#unvariable {battleScroll};
-	#showme {Battle scroll cleared.}
-}
-{9}
-
-#ALIAS {^{scro|scrol|scroll} %1}
-{
-	#variable {battleScroll} {%1};
-	#showme {You can now use alt+backslash to use get the %1 from your container and use it.}
-}
-{9}
-
-#ALIAS {^{scro|scrol|scroll}$}
-{
-	#if {!&{battleScroll}}
-	{
-		#showme {You don't have a battle scroll set. To set it type scroll and the item you want to use, E.g. scroll potion.}
-	};
-	#else
-	{
-		#regexp {$battleScroll} {{.*} {.*}} {l in ${character[container]} &2 | prefix scrollcounter_};
-		#else
-		{
-			l in ${character[container]} $battleScroll | prefix scrollcounter_
-		}
 	}
 }
 {9}
@@ -217,12 +274,13 @@
 #GAG              {^scrollcounter_%*}
 #MACRO {\e\}
 {
-	#regexp {$battleScroll} {{.*} {.*}} {get $battleScroll ${character[container]};use &2;l in ${character[container]} &2 +count | prefix scrollcounter_};
+	#if {&{character[defaultScroll]}}
+	{
+		uscroll ${character[defaultScroll]}
+	};
 	#else
 	{
-		get $battleScroll ${character[container]};
-		use $battleScroll;
-		l in ${character[container]} $battleScroll +count | prefix scrollcounter_
+		#showme {No default scroll set. Try using dscroll<name of scroll>.}
 	}
 }
 

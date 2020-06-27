@@ -9,7 +9,7 @@
 
 #ACTION {^You create {a|an} %2 {potion|tincture} from %3.$}
 {
-	#if {"${auto[junk]}" == "true"}
+	#if {{${auto[junk]}} == {true}}
 	{
 		${auto[junkType]} %2 %3
 	}

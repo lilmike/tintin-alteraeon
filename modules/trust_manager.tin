@@ -1,34 +1,40 @@
-#ACTION {^%S %2, ':{$trustedCommands}%s'$}
+#ACTION {^%w {tells the group|tells you|replies to you}, '{[^a-zA-Z0-9]}%4'$}
 {
+	#variable {channelSilence} {true};
+	Channel_Event grouptell %0;
 	#list {trustedList} {find} {%1} {trust[index]};
 	synth_play trustedCommandSound;
 	#if {${trust[index]} > 0}
 	{
-		#switch {"%3"}
+		#if {{%4} == {{${trustedCommands}}}}
 		{
-			#case {"fame"}
+			#switch {{%4}}
 			{
-				brag gt areafame
-			};
-			#case {"target%*"}
-			{
-				#if {"$rally" == "true"}
+				#case {{fame}}
 				{
-					#regexp {%3} {{.*} {.*}} {rally &2}
+					#delay {1d3} {brag gt areafame}
 				};
-				#else
+				#case {{target%*}}
 				{
-					#regexp {%3} {{.*} {.*}} {target &2}
+					#if {{${skillsAndSpells[rally]}} == {true}}
+					{
+						#delay {1d3} {#regexp {%3} {{.*} {.*}} {rally &2}}
+					};
+					#else
+					{
+						#delay {1d3} {#regexp {%3} {{.*} {.*}} {target &2}}
+					}
+				};
+				#default
+				{
+					#delay {1d3} {%4}
 				}
-			};
-			#default
-			{
-				%3
 			}
-		}
+		};
+		@do_hook{trust;%4}
 	}
 }
-{5}
+{6}
 
 #ACTION {^silent_{trust|untrust}_'%S' is not a valid player name.$}
 {
@@ -38,14 +44,14 @@
 
 #ACTION {^silent_{trust|untrust}_Name: '%S'$}
 {
-	#format {trust[name} {%n} {%2]};
+	#format {trust[name]} {%n} {%2};
 	#list {trustedList} {find} {${trust[name]}} {trust[index]};
-	#if {"%1" == "trust"}
+	#if {{%1} == {trust}}
 	{
 		#if {${trust[index]} == 0}
 		{
 			#list {trustedList} {add} {${trust[name]}};
-			#showme {You have granted trust to ${trust[name]}\.}
+			#showme {You have granted trust to ${trust[name]}.}
 		};
 		#else
 		{
@@ -56,7 +62,7 @@
 	{
 		#if {${trust[index]} > 0}
 		{
-			#showme {Removing trust for ${trustedList[${trust[index]}]}\.};
+			#showme {Removing trust for ${trustedList[${trust[index]}]}.};
 			#list {trustedList} {delete} {${trust[index]}}
 		};
 		#else
@@ -74,7 +80,7 @@
 	#if {${trust[index]} > 0}
 	{
 		#local {i} {};
-		#foreach {${trustedList[]}} {i}
+		#foreach {*{trustedList[]}} {i}
 		{
 			#showme {${trustedList[$i]}}
 		}
@@ -93,4 +99,4 @@
 {9}
 
 #VARIABLE         {trust}  {{index}{0}{name}{0}}
-#VARIABLE         {trustedCommands}  {fame|pick .*|recall|rest|sit|sleep|talk .*|target .*|quest .*|open .*|lock .*|unlock .*|use .*}
+#VARIABLE         {trustedCommands}  {fame|get .*|pick .*|pray here|recall|rest|sit|sleep|talk .*|target .*|quest .*|open .*|lock .*|unlock .*|use .*|wear .*|wield .*|way .*}

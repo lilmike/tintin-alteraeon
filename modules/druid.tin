@@ -1,33 +1,87 @@
 #ACTION {^You add A liveoak to your group.$}
 {
-	#if {"${character[cspam]}" == "true"}
+	#if {{${character[cspam]}} == {true}}
 	{
 		#line {gag}
 	}
 }
 {8}
 
-#ACTION {^%s'{Arim|Ber|Freth|Ganta|Gesu|Gesu-Char|Gesu-Ciru|Gesu-Faru|Gesu-Fell|Gesu-Ilnak|Gesu-Nar|Hett|Ilnak|Ilnak-Xix|Kenn|Oshi|Shul|Stis|Tal|Vin}'.}
+#ACTION {^%s'{Arim|Ber|Freth|Ganta|Gesu|Gesu-Char|Gesu-Ciru|Gesu-Faru|Gesu-Fell|Gesu-Ilnak|Gesu-Nar|Hett|Ilnak|Ilnak-Xix|Kenn|Oshi|Shul|Stis|Tal|Vin|Kama|Khil}'.}
 {
 	#variable {runeCarveMessage} {%0};
 	SHOW_CARVING %1
 }
 {9}
 
+#ACTION {^A liveoak {starts|stops} following you.$}
+{
+	#if {{${auto[liveoak]}} == {true}}
+	{
+		#if {{%1} == {stops}}
+		{
+			#if {{${character[inBattle]}} != {true}}
+			{
+				#if {${kxwt[terrain} >= 4 && ${kxwt[terrain} <= 6 || ${kxwt[terrain} == 17]]]}
+				{
+					vcast liveoak
+				};
+				#else
+				{
+					vcast liveoak acorn
+				}
+			};
+			#else
+			{
+				#if {{${skillsAndSpells[shambling mound]}} == {true} && ${character[currentMana]} >= 30}
+				{
+					vcast shambling mound
+				};
+				#elseif {{${skillsAndSpells[earth wall]}} == {true} && ${character[currentMana]} >= 25}
+				{
+					vcast earth wall
+				}
+			}
+		}
+	}
+}
+{9}
+
+#ACTION {^A shambling mound starts following you.$}
+{
+	#if {!&{auto[mound]}}
+	{
+		#line {gag};
+		#echo {A shambling mound starts following you. You can automatically make replacements with automound.}
+	}
+}
+{9}
+
 #ACTION {^A shambling mound {begins to fall apart and lose cohesion|stops following you}.}
 {
-	#if {"${auto[mound]}" == "true"}
+	#if {{${auto[mound]}} == {true}}
 	{
-		c shambling mound
+		#if {{%0} == {A shambling mound stops following you.} && {${client[releasing]}} != {true}}
+		{
+			vcast shambling mound
+		};
+		#elseif {{%0} == {A shambling mound begins to fall apart and lose cohesion.}}
+		{
+			vcast shambling mound
+		};
+		#else
+		{
+			#variable {client[releasing]} {false}
+		}
 	}
 }
 {9}
 
 #ACTION {^A wall of earth crumbles and collapses, returning to mother earth.$}
 {
-	#if {"${auto[earthwall]}" == "true"}
+	#if {{${auto[earthwall]}} == {true}}
 	{
-		c earth wall
+		#variable {earthWall} {1}
 	}
 }
 {9}
@@ -35,7 +89,7 @@
 #ACTION {^It is %1  \x28{about |about -}%dC\x29$}
 {
 	#line {gag};
-	#if {"%2" != "about -"}
+	#if {{%2} != {about -}}
 	{
 		#math {i} {%3 * 1.8 + 32}
 	};
@@ -52,24 +106,24 @@
 }
 {9}
 
-#ACTION {^You carve the rune '%1' into %*.$}
+#ACTION {^You beat the heated metal into a thin sheet on the surface of %* and rub away the excess metal, revealing the rune '%*'.$}
 {
-	#variable {runeCarveMessage} {%0};
-	SHOW_CARVING %1
+        #variable {runeCarveMessage} {%0};
+        SHOW_CARVING %2
 }
 {9}
-
-#ACTION {^You get out your heavily enchanted tools and start chiseling on %1. Gradually you shape the rune '%2'.$}
+ 
+#ACTION {^You carefully heat a branding tool and start firebranding %*.  Gradually you shape the rune '%*'.$}
 {
 	#variable {runeCarveMessage} {%0};
 	SHOW_CARVING %2
 }
 {9}
 
-#action {^You open your sewing kit and begin tailoring %1.%sFollowing your instincts, you embroider the rune '%3'.$}
+#ACTION {^You carve the rune '%1' into %*.$}
 {
 	#variable {runeCarveMessage} {%0};
-	SHOW_CARVING %3
+	SHOW_CARVING %1
 }
 {9}
 
@@ -80,16 +134,23 @@
 }
 {9}
 
-#ACTION {^You find and gather up {a|some} {handful of different fruits|handful of local vegetables|large, edible roots|large greenish yellow squash|small, soft potato|stale bread crust}.}
+#ACTION {^You find and gather up {a|some} {handful of different fruits|handful of local vegetables|large, edible roots|large greenish yellow squash|small, soft potato|stale bread crust|handful of edible leaves}.$}
 {
-	#if {"${auto[junk]}" == "true"}
+	#if {{${auto[junk]}} == {true}}
 	{
 		#regexp {%2} {{.*} {.*}} {${auto[junkType]} &2}
 	}
 }
 {9}
 
-#ACTION {^You get out your heavily enchanted tools and start chiseling on %1. Gradually you shave the rune %2.$}
+#ACTION {^You get out a pick and some other tiny enchanted tools and start chiseling on %*.  Gradually you shape the rune '%*'.$}
+{
+	#variable {runeCarveMessage} {%0};
+	SHOW_CARVING %2
+}
+{9}
+
+#ACTION {^You get out your heavily enchanted tools and start chiseling on %*.  Gradually you shape the rune '%*'.$}
 {
 	#variable {runeCarveMessage} {%0};
 	SHOW_CARVING %2
@@ -98,11 +159,18 @@
 
 #ACTION {^You have collected %d acorns.$}
 {
-	#if {"${character[cspam]}" == "true"}
+	#if {{${character[cspam]}} == {true}}
 	{
 		#showme {%1 acorns.};
 		#line {gag}
 	}
+}
+{9}
+
+#ACTION {^You open your sewing kit and begin tailoring %1.%sFollowing your instincts, you embroider the rune '%3'.$}
+{
+	#variable {runeCarveMessage} {%0};
+	SHOW_CARVING %3
 }
 {9}
 
@@ -112,7 +180,7 @@
 }
 {9}
 
-#ACTION {^You throw your magic to the wind and call {A|A blue|A mantis|A massive|A swarm of|A tall|An|An electric} %2 to this place!$}
+#ACTION {^You throw your magic to the wind and call {A blue|A mantis|A massive|A swarm of|A tall|An|An electric|A} %2 to this place!$}
 {
 	#variable {auto[lastCalledAnimal]} {%2}
 }
@@ -120,247 +188,330 @@
 
 #ACTION {^Your call goes unanswered.$}
 {
-	#if {"${auto[call]}" == "true"}
+	#if {{${auto[call]}} == {true}}
 	{
 		call ${auto[lastCalledAnimal]}
 	}
 }
 {9}
 
-#ACTION {^There are no suitable trees here, but you could use an acorn if necessary.$}
-{
-	#line {gag};
-	c liveoak acorn
-}
-{9}
-
-#ACTION {^A shambling mound starts following you.$}
-{
-	#if {!&{auto[mound]}}
-	{
-		#line {gag};
-		#echo {A shambling mound starts following you. You can automatically make replacements with automound.}
-	}
-}
-{9}
-
-#ACTION {^An earth wall starts following you.$}
-{
-	#if {!&{auto[earthwall]}}
-	{
-		#line {gag};
-		#echo {An earth wall starts following you. You can automatically make replacements with autoearthwall.}
-	}
-}
-{9}
-
-#ACTION {^There's not enough light left in a suncatcher bottle to create a liveoak.$}
-{
-	#if {"${auto[liveoak]}" == "true"}
-	{
-		#if {"${skillsAndSpells[shambling mound]}" == "true" && $currentMana >= 30}
-		{
-			c shambling mound
-		};
-		#elseif {"${skillsAndSpells[earth wall]}" == "true" && $currentMana >= 25}
-		{
-			c earth wall
-		}
-	}
-}
-{9}
-
-#ACTION {^silent_[%s%d] a s{tar|un}catcher bottle in %4 - 100% full.$}
+#ACTION {^silent_[%s%d] a {star|sun|moon}catcher bottle in %4 - 100% full.$}
 {
 	synth_play notificationSound;
-	#showme {Full s%3catcher in %4.};
-	notify-send Full s%3catcher in %4.
+	#showme {Full %3catcher in %4.};
+	notify-send Full %3catcher in %4.
 }
 {9}
 
-#ACTION {^silent_gather%.%2$}
+#ACTION {^{A|a} water weird stops following you.$}
 {
-	#variable {gatherRoom} {%1%2};
-	gather lightcatcher list | grep %1%2 | prefix silent_retrieve
-}
-{9}
-
-#ACTION {^silent_retrieve[%s%d] a %S bottle in $gatherRoom -%s%d% full.$}
-{
-	gather %3;
-	#if {%5 == 100}
+	#if {{${client[releasing]}} != {true} && {${auto[weird]}} == {true}}
 	{
-		put %3 $character.container
+		#if {{${kxwt[terrain]}} == {{38|32|29|21|20|19|18|7}} || {${client[spring]}} == {true}}
+		{
+			vcast water weird
+		}
 	}
 }
 {9}
 
-#ACTION {^A liveoak {starts|stops} following you.$}
+#ACTION {^{It has the following runes \w+ into it|It has the following runes upon it}: %*}
 {
-	#if {"${auto[liveoak]}" == "true"}
+	#local {runes} {%2};
+	#replace {runes} { } {;};
+	#local {i} {};
+	#local {runeNames} {};
+	#local {tmp} {};
+	#foreach {$runes} {i}
 	{
-		#if {"%1" == "stops"}
+		#switch {{$i}}
 		{
-			#if {"${character[inBattle]}" != "true"}
+			#case {{Arim}}
 			{
-				#if {${kxwt[terrain} >= 4 && ${kxwt[terrain} <= 6 || ${kxwt[terrain} == 17]]]}
-				{
-					cast liveoak
-				};
-				#else
-				{
-					cast liveoak acorn
-				}
+				#variable {tmp} {movement}
 			};
-			#else
+			#case {{Ber}}
 			{
-				#if {"${skillsAndSpells[shambling mound]}" == "true" && $currentMana >= 30}
-				{
-					c shambling mound
-				};
-				#elseif {"${skillsAndSpells[earth wall]}" == "true" && $currentMana >= 25}
-				{
-					c earth wall
-				}
+				#variable {tmp} {damroll}
+			};
+			#case {{Ganta}}
+			{
+				#variable {tmp} {castability}
+			};
+			#case {{Freth}}
+			{
+				#variable {tmp} {wisdom}
+			};
+			#case {{Ilnak-Xix}}
+			{
+				#variable {tmp} {absorb magic or mana regeneration}
+			};
+			#case {{Kenn}}
+			{
+				#variable {tmp} {movement regeneration or hitpoint regeneration}
+			};
+			#case {{Hett}}
+			{
+				#variable {tmp} {charisma}
+			};
+			#case {{Stis}}
+			{
+				#variable {tmp} {intelligence}
+			};
+			#case {{Vin}}
+			{
+				#variable {tmp} {luck}
+			};
+			#case {{Gesu-Ciru}}
+			{
+				#variable {tmp} {saving cold}
+			};
+			#case {{Gesu-Char}}
+			{
+				#variable {tmp} {saving zap}
+			};
+			#case {{Gesu-Faru}}
+			{
+				#variable {tmp} {saving fire}
+			};
+			#case {{Gesu-Nar}}
+			{
+				#variable {tmp} {saving breath}
+			};
+			#case {{Gesu}}
+			{
+				#variable {tmp} {armor}
+			};
+			#case {{Gesu-Fell}}
+			{
+				#variable {tmp} {saving poison}
+			};
+			#case {{Gesu-Ilnak}}
+			{
+				#variable {tmp} {saving spell}
+			};
+			#case {{Ilnak}}
+			{
+				#variable {tmp} {mana}
+			};
+			#case {{Tal}}
+			{
+				#variable {tmp} {strength}
+			};
+			#case {{Oshi}}
+			{
+				#variable {tmp} {dexterity}
+			};
+			#case {{Shul}}
+			{
+				#variable {tmp} {hitpoints or constitution}
+			};
+			#case {{Khil}}
+			{
+				#variable {tmp} {hitroll}
+			};
+			#case {{Kama}}
+			{
+				#variable {tmp} {attack speed}
+			};
+			#default
+			{
+				#variable {tmp} {unknown}
 			}
+		};
+		#if {{$runeNames} == {}}
+		{
+			#variable {runeNames} {$tmp}
+		};
+		#else
+		{
+			#variable {runeNames} {$runeNames $tmp}
 		}
+	};
+	#line {gag};
+	#echo {%0 ($runeNames)}
+}
+{9}
+
+#ACTION {^{vcast_.+_|}There are no suitable trees here, and you don't have any acorns.$}
+{
+	vcast liveoak acorn;
+	#line gag
+}
+{9}
+
+#ACTION {^{vcast_.+_|}There are no suitable trees here, but you could use an acorn if necessary.$}
+{
+	#line {gag};
+	vcast liveoak acorn
+}
+{9}
+
+#ACTION {^{vcast_.+_|}There's not enough light left in a {cracked |}suncatcher bottle to create a liveoak{ from an acorn|}.$}
+{
+	#if {{${auto[liveoak]}} == {true}}
+	{
+		#if {{${skillsAndSpells[shambling mound]}} == {true} && ${character[currentMana]} >= 30}
+		{
+			vcast shambling mound
+		};
+		#elseif {{${skillsAndSpells[earth wall]}} == {true} && ${character[currentMana]} >= 25}
+		{
+			vcast earth wall
+		}
+	}
+}
+{9}
+
+#ACTION {^{vcast_.+_|}You don't have any acorns.$}
+{
+	#if {{${auto[liveoak]}} == {true}}
+	{
+		#if {{${skillsAndSpells[shambling mound]}} == {true} && ${character[currentMana]} >= 30}
+		{
+			vcast shambling mound
+		};
+		#elseif {{${skillsAndSpells[earth wall]}} == {true} && ${character[currentMana]} >= 25}
+		{
+			vcast earth wall
+		}
+	}
+}
+{9}
+
+#ACTION {^{vcast_.+_|}an earth wall {stops|starts} following you.$}
+{
+	#if {{${auto[earthwall]}} == {true}}
+	{
+		#if {{%1} == {stops} && $earthWall}
+		{
+			vcast earth wall
+		};
+		#else
+		{
+			#variable {earthWall} {0}
+		}
+	};
+	#else
+	{
+		\
 	}
 }
 {9}
 
 #ALIAS {SHOW_CARVING %1}
 {
-	#switch {"%1"}
+	#switch {{%1}}
 	{
-		#case {"Arim"}
+		#case {{Arim}}
 		{
 			#showme {$runeCarveMessage (movement)};
 			#line {gag}
 		};
-		#case {"Ber"}
+		#case {{Ber}}
 		{
 			#showme {$runeCarveMessage (damroll)};
 			#line {gag}
 		};
-		#case {"Ganta"}
+		#case {{Ganta}}
 		{
 			#showme {$runeCarveMessage (cast ability)};
 			#line {gag}
 		};
-		#case {"Freth"}
+		#case {{Freth}}
 		{
 			#showme {$runeCarveMessage (wisdom)};
 			#line {gag}
 		};
-		#case {"Ilnak-Xix"}
+		#case {{Ilnak-Xix}}
 		{
-			#showme {$runeCarveMessage (absorb magic)};
+			#showme {$runeCarveMessage (absorb magic or mana regeneration)};
 			#line {gag}
 		};
-		#case {"Kenn"}
+		#case {{Kenn}}
 		{
-			#showme {$runeCarveMessage (movement regeneration)};
+			#showme {$runeCarveMessage (movement regeneration or hitpoint regeneration)};
 			#line {gag}
 		};
-		#case {"Hett"}
+		#case {{Hett}}
 		{
 			#showme {$runeCarveMessage (charisma)};
 			#line {gag}
 		};
-		#case {"Stis"}
+		#case {{Stis}}
 		{
 			#showme {$runeCarveMessage (intelligence)};
 			#line {gag}
 		};
-		#case {"Vin"}
+		#case {{Vin}}
 		{
 			#showme {$runeCarveMessage (Luck)};
 			#line {gag}
 		};
-		#case {"Gesu-Ciru"}
+		#case {{Gesu-Ciru}}
 		{
 			#showme {$runeCarveMessage (saving cold)};
 			#line {gag}
 		};
-		#case {"Gesu-Char"}
+		#case {{Gesu-Char}}
 		{
 			#showme {$runeCarveMessage (saving zap)};
 			#line {gag}
 		};
-		#case {"Gesu-Faru"}
+		#case {{Gesu-Faru}}
 		{
 			#showme {$runeCarveMessage (saving fire)};
 			#line {gag}
 		};
-		#case {"Gesu-Nar"}
+		#case {{Gesu-Nar}}
 		{
 			#showme {$runeCarveMessage (saving breath)};
 			#line {gag}
 		};
-		#case {"Gesu"}
+		#case {{Gesu}}
 		{
 			#showme {$runeCarveMessage (armor)};
 			#line {gag}
 		};
-		#case {"Gesu-Fell"}
+		#case {{Gesu-Fell}}
 		{
 			#showme {$runeCarveMessage (saving poison)};
 			#line {gag}
 		};
-		#case {"Gesu-Ilnak"}
+		#case {{Gesu-Ilnak}}
 		{
 			#showme {$runeCarveMessage (saving spell)};
 			#line {gag}
 		};
-		#case {"Ilnak"}
+		#case {{Ilnak}}
 		{
 			#showme {$runeCarveMessage (mana)};
 			#line {gag}
 		};
-		#case {"Tal"}
+		#case {{Tal}}
 		{
 			#showme {$runeCarveMessage (strength)};
 			#line {gag}
 		};
-		#case {"Oshi"}
+		#case {{Oshi}}
 		{
 			#showme {$runeCarveMessage (dexterity)};
 			#line {gag}
 		};
-		#case {"Shul"}
+		#case {{Shul}}
 		{
-			#showme {$runeCarveMessage (hitpoints)};
+			#showme {$runeCarveMessage (hitpoints or constitution)};
 			#line {gag}
-		}
-	}
-}
-{9}
-
-#ALIAS {^DRUID_SUN{RISE|SET}$}
-{
-	#if {!&{auto[suncatcherRoom]}}
-	{
-		#variable {auto[suncatcherRoom]} {0}
-	};
-	#if {"${auto[suncatcher]}" == "true" && ${auto[suncatcherRoom]} == ${kxwt[rvnum]}}
-	{
-		#if {&{position}}
-		{
-			getup
 		};
-		#if {"%1" == "RISE"}
+		#case {{Khil}}
 		{
-			lgather;
-			hide suncatcher
+			#showme {$runeCarveMessage (hitroll)};
+			#line {gag}
 		};
-		#else
+		#case {{Kama}}
 		{
-			lgather;
-			hide starcatcher
-		};
-		#if {&{position}}
-		{
-			$position
+			#showme {$runeCarveMessage (attack speed)};
+			#line {gag}
 		}
 	}
 }
@@ -372,15 +523,24 @@
 }
 {9}
 
-#ALIAS {^l{g|ga|gat|gath|gathe|gather}$}
+#ALIAS {^{auto|noauto}weird$}
 {
-	l | head -n 1 | prefix silent_gather
+	#if {{%1} == {noauto}}
+	{
+		#showme {Autocasting of water weirds disabled.};
+		#variable {auto[weird]} {false}
+	};
+	#else
+	{
+		#showme {Autocasting of water weirds enabled.};
+		#variable {auto[weird]} {true}
+	}
 }
 {9}
 
 #ALIAS {^{auto|noauto}{call|earthwall|liveoak|mound}$}
 {
-	#if {"%1" == "auto"}
+	#if {{%1} == {auto}}
 	{
 		#variable {auto[%2]} {true};
 		#showme {auto%2 enabled.}
@@ -393,22 +553,22 @@
 }
 {9}
 
-#ALIAS {^{auto|noauto}suncatcher$}
+#ALIAS {^{auto|noauto}{sun|star|moon|light}catcher$}
 {
-	#if {"%0" == "autosuncatcher"}
+	#if {{%1} == {auto}}
 	{
-		#variable {auto[suncatcherRoom]} {${kxwt[rvnum]}};
 		#variable {auto[suncatcher]} {true};
-		#showme {You will now automatically hide and retrieve suncatcher that need filling in room ${auto[suncatcherRoom]}\.}
+		#showme {You will now automatically check for full lightcatchers and be alerted.}
 	};
 	#else
 	{
-		#unvariable {auto[suncatcherRoom]};
 		#variable {auto[suncatcher]} {false};
-		#showme {Autosuncatcher disabled.}
+		#showme {You will no longer automatically check for full lightcatchers.}
 	}
 }
 {9}
 
-#TICKER           {lightcatcher}  {#if {"${auto[suncatcher]}" == "true" && "${character[inBattle]}" == "false"}{gather lightcatcher list | prefix silent_}}                                                                 {300.00}
+#TICKER           {lightcatcher}  {#if {{${auto[suncatcher]}} == {true} && {${character[inBattle]}} == {false}}{gather lightcatcher list | prefix silent_}}                                                                                                {300.00}
+#VARIABLE  {client[spring]} {false}
+#VARIABLE         {earthWall}  {0}
 #VARIABLE         {runeCarveMessage}  {}

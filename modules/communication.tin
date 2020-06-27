@@ -1,833 +1,806 @@
 #ACTION {^silent_paste_END_OF_PASTE_TEXT$}
 {
-	#replace {pasteText} { %s} { };
-	#script {IFS=$'\n';for xline in $(fold -s -w 480 <<< "${pasteText}");do echo "${pasteChannel} $xline";done}
+     #replace {pasteText} { %s} { };
+     #script {IFS=$'\n';for xline in $(fold -s -w 480 <<< "${pasteText}");do echo "${pasteChannel} $xline";done}
 }
 {2}
 
 #ACTION {^silent_paste_%*}
 {
-	#local {tmp} {%1};
-	#replace {tmp} {vcast_%*_} {};
-	#replace {tmp} {silent_%*_} {};
-	#variable {pasteText} {$pasteText $tmp}
+     #local {tmp} {%1};
+     #replace {tmp} {vcast_%*_} {};
+     #replace {tmp} {silent_%*_} {};
+     #variable {pasteText} {$pasteText $tmp}
 }
 {3}
 
-#ACTION {^%w {imm|imms}: %*}
-{
-	#if {"${channel[sounds]}" != "false"}
-	{
-		#if {"%1" == "You"}
-		{
-			synth_play immSendSound
-		};
-		#else
-		{
-			synth_play immReceiveSound
-		}
-	};
-	notify-send %0
-}
-{4}
-
 #ACTION {^%S has restored you to full health!$}
 {
-	Add_Event %0;
-	notify-send %0
+     #variable {channelSilence} {true};
+     Channel_Event all %0;
+     notify-send %0
 }
-{5}
 
-#ACTION {^You %w: %3}
+#ACTION {^[announcement] %*}
 {
-	#if {"%2" != "friend" && "${channel[sounds]}" != "false"}
-	{
-		#switch {"%2"}
-		{
-			#case {"bovine"}
-			{
-				synth_play bovineChannelSound
-			};
-			#case {"kelnale"}
-			{
-				synth_play kelnaleChannelSound
-			};
-			#case {"xp"}
-			{
-				synth_play xpChannelSound
-			};
-			#case {"zt"}
-			{
-				seq_play channels/zt
-			};
-			#default
-			{
-				synth_play broadcastSound
-			}
-		}
-	}
+     #variable {channelSilence} {true};
+     Channel_Event all %0;
+     notify-send %0
 }
-{5}
 
-#ACTION {^%S cow{say|says}, '749d7217f438bcbe1559047c940b7010'$}
+#ACTION {^Double {mob experience|experience caps for mob kills} {is|are} now enabled!$}
 {
-	#showme {Go %1!};
-	#line {gag};
-	#if {"${channel[sounds]}" != "false"}
-	{
-		seq_play i-scored
-	}
+     synth_play notificationSound;
+     #variable {channelSilence} {true};
+     Channel_Event all %0;
+     notify-send %0
 }
 {7}
 
-#ACTION {^{The|Double} {experience|mob|monster death exp cap}%*{\.|!}$}
+#ACTION {^Ignore friends:%s%w$}
 {
-	synth_play notificationSound;
-	Add_Event %0;
-	notify-send %0
-}
-{7}
-
-#ACTION {%1-EBG31@ %2}
-{
-	#line {gag};
-	#script {unencryptedMessage} {echo "%2" | rev | scripts/msgcrypt.sh | $sed "s/^'//"};
-	#variable {unencryptedMessage} {${unencryptedMessage[1]}};
-	#echo {%1${unencryptedMessage}'};
-	#if {"${channel[sounds]}" != "false"}
-	{
-		play cryptmsg
-	};
-	notify-send %1${unencryptedMessage}'
-}
-{8}
-
-#ACTION {^You %1, '%2'$}
-{
-	#if {"%1" != "{ct|yell}" && "${channel[sounds]}" != "false"}
-	{
-		#switch {"%1"}
-		{
-			#case {"auction"}
-			{
-				synth_play auctionSendSound
-			};
-			#case {"chat"}
-			{
-				synth_play chatSendSound
-			};
-			#case {"cowsay"}
-			{
-				synth_play cowsaySendSound
-			};
-			#case {"gossip"}
-			{
-				synth_play gossipSendSound
-			};
-			#case {"music"}
-			{
-				synth_play musicSendSound
-			};
-			#case {"say"}
-			{
-				synth_play saySendSound
-			};
-			#case {"{tell|reply to} %w"}
-			{
-				synth_play tellSendSound
-			};
-			#case {"tell the clan"}
-			{
-				#if {"${character[cspam]}" == "true"}
-				{
-					#showme {You ct, '%2'};
-					#line {gag}
-				};
-				synth_play clantellSendSound;
-				#break
-			};
-			#case {"tell the group"}
-			{
-				#if {"${character[cspam]}" == "true"}
-				{
-					#line {ignore} {#showme {You gt, '%2'}};
-					#line {gag}
-				};
-				synth_play grouptellSendSound
-			};
-			#case {"warn the group"}
-			{
-				synth_play groupWarnSound
-			};
-			#default
-			{
-				synth_play defaultSendSound
-			}
-		}
-	}
-}
-{8}
-
-#ACTION {^{>|> }***END_REPLAY****<$}
-{
-	#variable {channel[sounds]} {true};
-	#line {gag}
+     #nop {Do nothing to avoid channel sounds but allow friend buffer.}
 }
 {8}
 
 #ACTION {^ %sYou now have %d explorer points.$}
 {
-	autobrag %0
+     autobrag %0
 }
 {9}
 
-#ACTION {^%S %2{n|p|s|u}, '%3'$}
+#ACTION {^%d exp.$}
 {
-	#if {"%1" != "{A|An|The|You}" && "%2" != "yell" && "%2" != "{.*}utters the word" && "${channel[sounds]}" != "false"}
-	{
-		notify-send %0;
-		#switch {"%2"}
-		{
-			#case {"auction"}
-			{
-				synth_play auctionReceiveSound
-			};
-			#case {"chat"}
-			{
-				synth_play chatReceiveSound
-			};
-			#case {"cowsay"}
-			{
-				synth_play cowsayReceiveSound
-			};
-			#case {"gossip"}
-			{
-				synth_play gossipReceiveSound
-			};
-			#case {"music"}
-			{
-				synth_play musicReceiveSound
-			};
-			#case {"say"}
-			{
-				synth_play sayReceiveSound
-			};
-			#case {"{tells|replies to} yo"}
-			{
-				synth_play tellReceiveSound
-			};
-			#case {"tells the cla"}
-			{
-				#if {"${character[cspam]}" == "true"}
-				{
-					#showme {%1 ct, '%3'};
-					#line {gag}
-				};
-				synth_play clantellReceiveSound;
-				#break
-			};
-			#case {"tells the grou"}
-			{
-				#if {"${character[cspam]}" == "true"}
-				{
-					#line {ignore} {#showme {%1 gt, '%3'}};
-					#line {gag}
-				};
-				synth_play grouptellReceiveSound
-			};
-			#case {"warns the grou"}
-			{
-				synth_play groupWarnSound
-			};
-			#default
-			{
-				#if {"%2" == "{rep|tel}{.*}" && "$awayMessage" != "false"}
-				{
-					reply $awayMessage
-				};
-				synth_play defaultReceiveSound
-			}
-		}
-	}
+     #if {${fishingWin}}
+     {
+          #variable {fishingXp} {%1}
+     }
 }
 {9}
 
-#ACTION {^%S has given you a gift!$}
+#ACTION {^%w %w{, '|: }%4{'?}$}
 {
-	#if {"${auto[thank]}" == "true"}
-	{
-		#nop {Randomly generate thank you message.};
-		#math {i} {1d4};
-		#switch {$i}
-		{
-			#case {1}
-			{
-				#variable {msg} {Awesome, thanks.}
-			};
-			#case {2}
-			{
-				#variable {msg} {Awesome, thank you.}
-			};
-			#case {3}
-			{
-				#variable {msg} {Thanks.}
-			};
-			#default
-			{
-				#variable {msg} {Thank you.}
-			}
-		};
-		#math {i} {4d2+1};
-		#delay {1.$i} {tell %1 $msg}
-	};
-	Add_Event %0;
-	notify-send %0
+     #regexp {%1} {{[A-Z].+}}
+     {
+          #local {channelName} {};#list {i} {tokenize} {%2};#if {{${i[-1]}} == {s}}{#list {i} {delete} {-1}};#list {i} {simplify} {channelName};#replace {channelName} {;} {};#nop {Hook name is channel name non-plural.};#nop {Hook args %1 Name.};#nop {Hook args %3 message to channel.};Channel_Event $channelName %0;#if {{%1} != {You}}{@do_hook{$channelName;%1;%4}}
+     }
+}
+{9}
+
+#ACTION {^%w {tell \w+|tells you|replies to you|reply to \w+}, '%3'$}
+{
+     #nop {Hook name tell.};
+     #nop {Hook args %1 Name.};
+     #nop {Hook args %2 tell contents.};
+     Channel_Event tell %0;
+     #if {{%2} == {%*you%*}}
+     {
+          @do_hook{tell;%1;%3}
+     }
+}
+{9}
+
+#ACTION {^%w {tell|tells|warn|warns} the {clan|group}, '%4'$}
+{
+     #nop {Hook name is {clan|group}tell.};
+     #nop {Hook args %1 Name.};
+     #nop {Hook args %4 message to channel.};
+     Channel_Event %3tell %0;
+     #if {{%1} != {You}}
+     {
+          @do_hook{%3tell;%1;%4}
+     }
 }
 {9}
 
 #ACTION {^(Log in tomorrow for another december advent calendar gift!)$}
 {
-	gift | tail -n 1 | prefix silent_
+     gift | tail -n 1 | prefix silent_
 }
 {9}
 
 #ACTION {^(friend) %1 has entered the game.$}
 {
-	#if {"${channel[sounds]}" != "false"}
-	{
-		#variable {friendNameEnter} {%1};
-		play friend-enter
-	};
-	notify-send %0
+     #variable {friendNameEnter} {%1};
+     play friend-enter;
+     Channel_Event friend %0;
+     notify-send %0
 }
 {9}
 
 #ACTION {^(friend) %1 has left the game.$}
 {
-	#if {"%1" == "$friendNameEnter"}
-	{
-		#unvariable {friendNameEnter}
-	};
-	#if {"${channel[sounds]}" != "false"}
-	{
-		play friend-leave
-	};
-	notify-send %0
+     #if {{%1} == {$friendNameEnter}}
+     {
+          #unvariable {friendNameEnter}
+     };
+     play friend-leave;
+     Channel_Event friend %0;
+     notify-send %0
 }
 {9}
 
 #ACTION {^(friend) %S was kille%*}
 {
-	#if {"${channel[sounds]}" != "false"}
-	{
-		play friend-death
-	};
-	notify-send %0
+     play friend-death;
+     Channel_Event friend %0;
+     notify-send %0
+}
+{9}
+
+#ACTION {^({friend|notify}) %w %2}
+{
+     #nop {Hook name: notify};
+     #nop {Hook arg: %1 name of person in the notification.};
+     #nop {Hook arg: %2 contents of the notification.};
+     #variable {channelSilence} {true};
+     Channel_Event all %0;
+     @do_hook{notify;%2;%3};
+     notify-send %0
+}
+{9}
+
+#ACTION {^*** YOU RECEIVE %d BONUS CAMEL EXPERIENCE. HAPPY HUMP DAY! ***$}
+{
+     #nop {Hook name: humpTime};
+     #nop {Hook Args: None};
+     #nop {Note: Fires on the ticker ending, not on this action.};
+     autobrag You received %1 bonus camel experience. HAPPY HUMP DAY!;
+     #format {character[lastCamel]} {%T};
+     #ticker {humpTicker} {#local {time} {};#format {time} {%T};#if {$time - ${character[lastCamel]} >= 7200} {#var {channelSilence} {true};Channel_Event all It's time to kill a camel!;#showme {It's time to kill a camel!};synth_play notificationSound;#unticker {humpTicker};@do_hook{humpTime}}} {30}
+}
+{9}
+
+#ACTION {^*** YOU SUCCESSFULLY HUNTED ALL SIX KINDS OF SNIPE! YOU RECEIVE %d SNIPE HUNT EXP! ***$}
+{
+     autobrag You successfully hunted all six kinds of snipe! You received %1 snipe hunt exp!
 }
 {9}
 
 #ACTION {^Clan channel is now {off|on}.$}
 {
-	synth_play notificationSound
+     synth_play notificationSound
 }
 {9}
 
 #ACTION {^THE SERVER HAS DETECTED FILESYSTEM CORRUPTION.}
 {
-	synth_play attention;
-	notify-send %0
+     synth_play attention;
+     #variable {channelSilence} {true};
+     Channel_Event all %0;
+     notify-send %0
 }
 {9}
 
 #ACTION {^Three {more spinning|spinning} wheels appear in the air before you!$}
 {
-	#nop {We use a client.variable here because they always reset, and this is just temp info we don't need to save across sessions.};
-	#if {"%1" == "spinning"}
-	{
-		#variable {client[gambleGame]} {slots}
-	};
-	#else
-	{
-		#variable {client[gambleGame]} {merchant}
-	}
+     #nop {We use a client[variable] here because they always reset, and this is just temp info we don't need to save across sessions.};
+     #if {{%1} == {spinning}}
+     {
+          #variable {client[gambleGame]} {slots}
+     };
+     #else
+     {
+          #variable {client[gambleGame]} {merchant}
+     }
 }
 {9}
 
 #ACTION {^Turning {off|on} channel '%*'.}
 {
-	synth_play notificationSound
+     synth_play notificationSound
 }
 {9}
 
 #ACTION {^Welcome back! Thanks for playing Alter Aeon!$}
 {
-	gift | tail -n 1 | prefix silent_
+     gift | tail -n 1 | prefix silent_
+}
+{9}
+
+#ACTION {^You are rewarded with %d gold coins!$}
+{
+     #if {${fishingWin}}
+     {
+          autobrag I won a fishing durby! $fishingXp xp and %1 gold!;
+          #variable {fishingWin} {0}
+     }
 }
 {9}
 
 #ACTION {^You can now learn the {skill|spell} '%2'!$}
 {
-	Add_Event %0
+     #variable {channelSilence} {true};
+     Channel_Event all %0
 }
 {9}
 
 #ACTION {^You gain a practice!$}
 {
-	play train-practice;
-	train | grep You can train to get a practice, | prefix silent_autobrag_
+     play train-practice;
+     train | grep You can train to get a practice, | prefix silent_autobrag_
 }
 {9}
 
-#ACTION {^You spend %d points and improve at '%2'!$}
+#ACTION {^You spend %d %2 points and improve at '%3'!$}
 {
-	autobrag %0
+     autobrag %0
 }
 {9}
 
 #ACTION {^You've won %d gold coins!$}
 {
-	notify-send %0 (From the ${client[gambleGame]} game.);
-	#if {%1 >= 1000}
-	{
-		autobrag %0 (From the ${client[gambleGame]} game.)
-	}
+     notify-send %0 (From the ${client[gambleGame]} game.);
+     #if {%1 >= 1000}
+     {
+          autobrag %0 (From the ${client[gambleGame]} game.)
+     }
 }
 {9}
 
 #ACTION {^Your total fame is now %d.$}
 {
-	autobrag %0
+     #variable {channelSilence} {true};
+     Channel_Event all %0;
+     autobrag %0
+}
+{9}
+
+#ACTION {^[event] THE FISHING DERBY HAS ENDED, PLAYER '%w' IS THE WINNER!$}
+{
+     #local {tmp} {};
+     #format {tmp} {%l} {%1};
+     #if {{$tmp} == {${kxwt[myname]}}}
+     {
+          #variable {fishingWin} {1}
+     }
 }
 {9}
 
 #ACTION {^silent_Your gift was:%1}
 {
-	Add_Event Your daily gift was:%1;
-	notify-send Your daily gift was %1
+     #variable {channelSilence} {true};
+     Channel_Event all Your daily gift was:%1;
+     notify-send Your daily gift was %1;
+     autobrag My daily gift was %1
 }
 {9}
 
 #ACTION {^silent_autobrag_You can train to get a practice, at a cost of %d experience each.$}
 {
-	autobrag I spent %1 experience to buy a practice!
+     autobrag I spent %1 experience to buy a practice!
 }
 {9}
 
-#ACTION {^{\(|\[}%S{\)|\]} %S: %5}
+#ACTION {^{\(|\[}%w{\)|\]} %4{:|\s+posted:} %6}
 {
-	#if {"%2" != "friend" && "${channel[sounds]}" == "true"}
-	{
-		#switch {"%2"}
-		{
-			#case {"bovine"}
-			{
-				synth_play bovineChannelSound
-			};
-			#case {"kelnale"}
-			{
-				synth_play kelnaleChannelSound
-			};
-			#case {"xp"}
-			{
-				synth_play xpChannelSound
-			};
-			#default
-			{
-				synth_play broadcastSound
-			}
-		}
-	};
-	notify-send %0
+     #local {channelName} {%2};
+     #nop {Hook name is channel name non-plural.};
+     #nop {Hook args %4 Name.};
+     #nop {Hook args %6 message to channel.};
+     Channel_Event $channelName %0;
+     #if {{%1} != {You}}
+     {
+          @do_hook{$channelName;%2;%6}
+     }
 }
 {9}
 
 #ACTION {^{casting.*_You|You} gain favor in the eyes of %S!$}
 {
-	Add_Event You gained favor in the eyes of %2!;
-	play favor;
-	notify-send you gained favor in the eyes of %2!;
-	autobrag %0
+     #variable {channelSilence} {true};
+     Channel_Event all You gained favor in the eyes of %2!;
+     play favor;
+     notify-send you gained favor in the eyes of %2!;
+     autobrag %0
 }
 {9}
 
 #ACTION {^{vcast_.*You|You} {have sudden insight, and become|learn from your mistakes, and become|become} %3{\.|!|\)}$}
 {
-	#if {"%0" != "You become {indignant and agitated, blustering your way out of harm|unable to sense the presence of poison|unable to sense the presence of undead creatures}."}
-	{
-		autobrag %0
-	}
+     #if {{%0} != {You become {indignant and agitated, blustering your way out of harm|unable to sense the presence of poison|unable to sense the presence of undead creatures}.}}
+     {
+          autobrag %0
+     }
 }
 {9}
 
-#ALIAS {^repla%*}
-{
-	#variable {channel[sounds]} {false};
-	#send {%0};
-	lecho >***END_REPLAY****<
-}
-{5}
-
-#ALIAS {display_channel %1 %2 %3}
-{
-	#if {%2 <= 0}
-	{
-		replay %3 | head -2
-	};
-	#elseif {%2 > 0 && %2 < 5 || %2 == 8 || %2 == 9}
-	{
-		replay %1 %3 | head -2
-	};
-	#elseif {%2 == 5}
-	{
-		#showme {${eventList[%3]}}
-	};
-	#elseif {%2 == 6}
-	{
-		replay 100 | grep -i (friend) | tail %3 | head -1
-	};
-	#else
-	{
-		replay 100 | grep -i the group, ' | tail %3 | head -1
-	};
-	#variable {replaying} {true};
-	#delay {2} {#unvariable {replaying}}
-}
-{5}
 
 #ALIAS {notify-send %1}
 {
-	#if {"$notifications" == "true"}
-	{
-		#system {if [ -n "$DISPLAY" ]; then notify-send -- "%1";fi}
-	}
+     #if {{$notifications} == {true}}
+     {
+          #system {if [ -n "$DISPLAY" ]; then notify-send -- "%1";fi}
+     }
 }
-{5}
 
 #ALIAS {^autobrag %s%S$}
 {
-	#variable {channel[brag]} {%2};
-	#echo {Brag channel set to %2};
-	#variable {auto[brag]} {true};
-	AUTOMESSAGE autobrag
+     #variable {character[bragChannel]} {%2};
+     #echo {Brag channel set to %2};
+     #variable {auto[brag]} {true};
+     AUTOMESSAGE autobrag
 }
 {8}
 
-#ALIAS {^crypttell %s%S %s%4}
+#ALIAS {^crypttell %w %2}
 {
-	#variable {encryptedMessage} {%4};
-	#replace {encryptedMessage} {"} {\"};
-	#script {encryptedMessage} {echo "$encryptedMessage" | rev | scripts/msgcrypt.sh};
-	#variable {encryptedMessage} {${encryptedMessage[1]}};
-	tell %2 -EBG31@  $encryptedMessage
+     tell %1 `~[@encrypt{%2}]~`
 }
 {8}
 
 #ALIAS {^pimptell %S %2}
 {
-	#script {echo -n "tell %1 "; curl -s --data-urlencode English="%2" --data-urlencode submit="Talk Like a Pimp " http://joel.net/EBONICS/translator/ | grep -A9 '<div class="bubble1 comicfont">' | $sed -e '/<div/d' -e '/<\/div>/d' -e "s/&#39;/'/g" | tr "\n" " "}
+     tell %1 @pimp{%2}
 }
 {8}
 
 #ALIAS {^AUTOMESSAGE %S$}
 {
-	#variable {auto[message]} {%1};
-	#replace {auto[message]} {noauto} {auto};
-	#format {auto[message]} {%n} {$auto.message};
-	#if {"%1" == "auto%*"}
-	{
-		#echo {${auto[message]} enabled.}
-	};
-	#else
-	{
-		#echo {${auto[message]} disabled.}
-	}
+     #variable {auto[message]} {%1};
+     #replace {auto[message]} {noauto} {auto};
+     #format {auto[message]} {%n} {$auto[message]};
+     #if {{%1} == {auto%*}}
+     {
+          #echo {${auto[message]} enabled.}
+     };
+     #else
+     {
+          #echo {${auto[message]} disabled.}
+     }
 }
 {9}
 
-#ALIAS {^Add_Event %1}
+#ALIAS {^Channel_Event %S %2}
 {
-	#list {eventList} {insert} {1} {%1};
-	#list {eventList} {size} {i};
-	#if {$i >= 11}
-	{
-		#list {eventList} {delete} {11}
-	};
-	#unvariable {i}
+     #nop {Return for things that do not need any processing at all.};
+     #if {{%1} == {{example|gain|are|i|Number|cost|damage|Type|bid|Flag|Balance|Email|Account|difficulty|string|Weapon|Comp|name|character|date|balance|bank|account|remaining|skill|spell|battle|flag|editor|wa|Level|Name|uptime|player|spammer|Statu|time|Desc|vnum|str|against|Qualitie|usage}}}
+     {
+          #return
+     };
+     #if {&{%1Channel}}
+     {
+          #nop {Only play sounds if silent flag is not true.};
+          #if {{${channelSilence}} == {false}}
+          {
+               synth_play %1Channel
+          };
+          #else
+          {
+               #variable {channelSilence} {false}
+          }
+     };
+     #else
+     {
+          #nop {Only play sounds if silent flag is not true.};
+          #if {{${channelSilence}} == {false}}
+          {
+               #nop {Play default channel sounds for channels that don't have their own sounds.};
+               #if {{%1} != {{example|friend|gain}}}
+               {
+                    synth_play broadcastChannel
+               }
+          };
+          #else
+          {
+               #variable {channelSilence} {false}
+          }
+     };
+     #variable {realMSG} {%2};
+     #regexp {%2} {{.*}`~[{.+}]~`{.*}}
+     {
+          #format {realMSG} {&1%s&3} {@encrypt{&2;d}};synth_play cryptMessage;#line {gag};#echo {$realMSG}
+     };
+     #list {channel[all]} {insert} {1} {$realMSG};
+     #if {{%1} != {all}}
+     {
+          #list {channel[%1]} {insert} {1} {$realMSG}
+     };
+     #list {channel[all]} {size} {i};
+     #if {$i >= 101}
+     {
+          #list {channel[all]} {delete} {101}
+     };
+     #list {channel[%1]} {size} {i};
+     #if {$i >= 101}
+     {
+          #list {channel[%1]} {delete} {101}
+     };
+     #unvariable {i};
+     @extract_link{$realMSG};
+     #unvariable {realMSG}
 }
 {9}
 
 #ALIAS {^autobrag %1}
 {
-	#if {"${auto[brag]}" == "true" && "${channel[sounds]}" != "false"}
-	{
-		#if {!&{channel[brag]}}
-		{
-			#variable {channel[brag]} {xp}
-		};
-		#regexp {%1} {vcast_{.*}_{.*}} {#variable {channel[message]} {&2}};
-		#else
-		{
-			#variable {channel[message]} {%1}
-		};
-		#replace {channel[message]} {You {have sudden insight, and become|learn from your mistakes, and become|become}} {};
-		#format {channel[message]} {%p} {${channel[message]}};
-		#format {channel[message]} {%n} {${channel[message]}};
-		#replace {channel[message]} { improve } { improved };
-		#replace {channel[message]} {You discover} {I discovered};
-		#replace {channel[message]} {You gain} {I gained};
-		#replace {channel[message]} {You spend} {I spent};
-		#replace {channel[message]} {your} {my};
-		#replace {channel[message]} {Your} {My};
-		#replace {channel[message]} {You} {I};
-		${channel[brag]}  ${channel[message]}
-	}
+     #if {{${auto[brag]}} == {true}}
+     {
+          #if {!&{character[bragChannel]}}
+          {
+               #variable {character[bragChannel]} {xp}
+          };
+          #regexp {%1} {vcast_{.*}_{.*}}
+          {
+               #variable {channel[message]} {&2}
+          };
+          #else
+          {
+               #variable {channel[message]} {%1}
+          };
+          #replace {channel[message]} {You {have sudden insight, and become|learn from your mistakes, and become|become}} {};
+          #format {channel[message]} {%p} {${channel[message]}};
+          #format {channel[message]} {%n} {${channel[message]}};
+          #replace {channel[message]} { improve } { improved };
+          #replace {channel[message]} {You discover} {I discovered};
+          #replace {channel[message]} {You gain} {I gained};
+          #replace {channel[message]} {You spend} {I spent};
+          #replace {channel[message]} {your} {my};
+          #replace {channel[message]} {Your} {My};
+          #replace {channel[message]} {You} {I};
+          ${character[bragChannel]}  ${channel[message]}
+     }
 }
 {9}
 
-#ALIAS {^away %1}
+#ALIAS {^crypt%w %2}
 {
-	#variable {awayMessage} {%1};
-	#showme {Your away message is set to: $awayMessage}
+     %1 `~[@encrypt{%2}]~`
 }
 {9}
 
-#ALIAS {^away$}
+#ALIAS {^display_channel %w %d}
 {
-	#variable {awayMessage} {false};
-	#showme {away message cleared.}
-}
-{9}
-
-#ALIAS {^crypt%S %2}
-{
-	#variable {encryptedMessage} {%2};
-	#replace {encryptedMessage} {"} {\"};
-	#script {encryptedMessage} {echo "$encryptedMessage" | rev | scripts/msgcrypt.sh};
-	#variable {encryptedMessage} {${encryptedMessage[1]}};
-	%1 -EBG31@  $encryptedMessage
+     #echo {%s} {${channel[%1][%2]}}
 }
 {9}
 
 #ALIAS {^fp %1}
 {
-	friend post %1
-}
-{9}
-
-#ALIAS {^is{c|co|cor|core|cored}$}
-{
-	cowsay 749d7217f438bcbe1559047c940b7010
+     friend post %1
 }
 {9}
 
 #ALIAS {^paste %1>%2}
 {
-	#variable {pasteText} {};
-	#variable {pasteChannel} {%2};
-	%1 | prefix silent_paste_;
-	lecho silent_paste_END_OF_PASTE_TEXT
-}
-{9}
-
-#ALIAS {^pig%S %s%3}
-{
-	#script {echo -n "%1 ";echo "%3" | pig}
+     #variable {pasteText} {};
+     #variable {pasteChannel} {%2};
+     %1 | prefix silent_paste_;
+     lecho silent_paste_END_OF_PASTE_TEXT
 }
 {9}
 
 #ALIAS {^pimp%+ %2}
 {
-	#script {echo -n "%1"; curl -s --data-urlencode English="%2" --data-urlencode submit="Talk Like a Pimp " http://joel.net/EBONICS/translator/ | grep -A9 '<div class="bubble1 comicfont">' | $sed -e '/<div/d' -e '/<\/div>/d' -e "s/&#39;/'/g" | tr "\n" " "}
+     %1 @pimp{%2}
+}
+{9}
+
+#ALIAS {^repla%*}
+{
+     #send {%0 | prefix ^}
+}
+{9}
+
+#ALIAS {^view %s%w$}
+{
+     #format {i} {%l} {%2};
+     #replace {i} {Repl{y|ies}} {Tell};
+     #if {&{channel[$i]}}
+     {
+          #list {channelBuffer} {find} {$i} {channelBufferIndex};
+          #if {$channelBufferIndex == 0}
+          {
+               #list {channelBuffer} {add} {$i};
+               #list {channelBuffer} {find} {$i} {channelBufferIndex}
+          };
+          #echo {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     };
+     #else
+     {
+          #echo {Nothing to show for channel $i.}
+     }
 }
 {9}
 
 #ALIAS {^{auto|noauto}brag$}
 {
-	#if {"%0" == "autobrag"}
-	{
-		#variable {auto[brag]} {true}
-	};
-	#else
-	{
-		#variable {auto[brag]} {false}
-	};
-	AUTOMESSAGE %0
+     #if {{%0} == {autobrag}}
+     {
+          #variable {auto[brag]} {true}
+     };
+     #else
+     {
+          #variable {auto[brag]} {false}
+     };
+     AUTOMESSAGE %0
 }
 {9}
 
 #ALIAS {^{nonotifications|notifications}$}
 {
-	#if {"%0" == "notifications"}
-	{
-		#showme {Notifications enabled.};
-		#variable {notifications} {true}
-	};
-	#else
-	{
-		#showme {Notifications disabled.};
-		#unvariable {notifications}
-	}
+     #if {{%0} == {notifications}}
+     {
+          #showme {Notifications enabled.};
+          #variable {notifications} {true}
+     };
+     #else
+     {
+          #showme {Notifications disabled.};
+          #unvariable {notifications}
+     }
 }
 {9}
 
-#GAG              {^{Clantell| Clantell} replay$}
-#GAG              {^{Recent| Recent} channel history$}
-#GAG              {^{Recent| Recent} tells:$}
-#GAG              {^{Sending| Sending} activity for channel '%*}
+
+
+#FUNCTION {decrypt}
+{
+     #return @encrypt{%1;d}
+}
+
+#FUNCTION {encrypt}
+{
+     #local {i} {0};
+     #list {letters} {create} {0;1;2;3;4;5;6;7;8;9;,;.;/;a;b;c;d;e;f;g;h;i;j;k;l;m;n;o;p;q;r;s;t;u;v;w;x;y;z;<;>;?;~;`;!;@;#;$;%;^;&;*;A;B;C;D;E;F;G;H;I;J;K;L;M;N;O;P;Q;R;S;T;U;V;W;X;Y;Z};
+     #format {message} {%r} {%1};
+     #list {message} {tokenize} {$message};
+     #foreach {*{message[]}} {i}
+     {
+          #list {letters} {find} {${message[$i]}} {j};
+          #if {$j != 0}
+          {
+               #if {{%2} == {d}}
+               {
+                    #math {j} {$j - 13}
+               };
+               #else
+               {
+                    #math {j} {$j + 13}
+               };
+               #if {$j > 78}
+               {
+                    #math {j} {$j - 78}
+               };
+               #elseif {$j <= 0}
+               {
+                    #math {j} {$j + 78}
+               };
+               #variable {encryptedMessage} {${encryptedMessage}${letters[$j]}}
+          };
+          #else
+          {
+               #variable {encryptedMessage} {${encryptedMessage}${message[$i]}}
+          }
+     };
+     #unvariable {message};
+     #unvariable {j};
+     #unvariable {letters};
+     #variable {result} {${encryptedMessage}};
+     #unvariable {encryptedMessage}
+}
+
+#FUNCTION {pimp}
+{
+     #script {result} {curl -s --data-urlencode English="%0" --data-urlencode submit="Talk Like a Pimp " http://joel.net/EBONICS/translator/ | grep '<textarea id="Ebonics"' | html2text};
+     #variable {result} {${result[1]}}
+}
+
+
+#MACRO {\c!}
+{
+     #variable {channelBufferIndex} {13};
+     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+}
+
 #MACRO {\e!}
 {
-	#variable {channelBufferIndex} {0};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #variable {channelBufferIndex} {2};
+     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
 }
 
 #MACRO {\e#}
 {
-	#variable {channelBufferIndex} {2};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #variable {channelBufferIndex} {4};
+     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
 }
 
 #MACRO {\e$}
 {
-	#variable {channelBufferIndex} {3};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #variable {channelBufferIndex} {5};
+     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
 }
 
 #MACRO {\e%}
 {
-	#variable {channelBufferIndex} {4};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #variable {channelBufferIndex} {6};
+     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
 }
 
 #MACRO {\e&}
 {
-	#variable {channelBufferIndex} {6};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #variable {channelBufferIndex} {8};
+     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
 }
 
 #MACRO {\e(}
 {
-	#variable {channelBufferIndex} {8};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #variable {channelBufferIndex} {10};
+     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
 }
 
 #MACRO {\e)}
 {
-	#variable {channelBufferIndex} {9};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #variable {channelBufferIndex} {11};
+     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
 }
 
 #MACRO {\e*}
 {
-	#variable {channelBufferIndex} {7};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #variable {channelBufferIndex} {9};
+     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
 }
 
 #MACRO {\e-}
 {
-	#if {!&{channelBufferIndex} || $channelBufferIndex <= 0}
-	{
-		#variable {channelBufferIndex} {0}
-	};
-	#else
-	{
-		#math {channelBufferIndex} {$channelBufferIndex - 1}
-	};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #if {!&{channelBufferIndex} || $channelBufferIndex <= 1}
+     {
+          #variable {channelBufferIndex} {1}
+     };
+     #else
+     {
+          #math {channelBufferIndex} {$channelBufferIndex - 1}
+     };
+     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
 }
 
 #MACRO {\e0}
 {
-	display_channel $channelBuffer[$channelBufferIndex] $channelBufferIndex 10
+     display_channel $channelBuffer[$channelBufferIndex] 10
 }
 
 #MACRO {\e1}
 {
-	display_channel $channelBuffer[$channelBufferIndex] $channelBufferIndex 1
+     display_channel $channelBuffer[$channelBufferIndex] 1
 }
 
 #MACRO {\e2}
 {
-	display_channel $channelBuffer[$channelBufferIndex] $channelBufferIndex 2
+     display_channel $channelBuffer[$channelBufferIndex] 2
 }
 
 #MACRO {\e3}
 {
-	display_channel $channelBuffer[$channelBufferIndex] $channelBufferIndex 3
+     display_channel $channelBuffer[$channelBufferIndex] 3
 }
 
 #MACRO {\e4}
 {
-	display_channel $channelBuffer[$channelBufferIndex] $channelBufferIndex 4
+     display_channel $channelBuffer[$channelBufferIndex] 4
 }
 
 #MACRO {\e5}
 {
-	display_channel $channelBuffer[$channelBufferIndex] $channelBufferIndex 5
+     display_channel $channelBuffer[$channelBufferIndex] 5
 }
 
 #MACRO {\e6}
 {
-	display_channel $channelBuffer[$channelBufferIndex] $channelBufferIndex 6
+     display_channel $channelBuffer[$channelBufferIndex] 6
 }
 
 #MACRO {\e7}
 {
-	display_channel $channelBuffer[$channelBufferIndex] $channelBufferIndex 7
+     display_channel $channelBuffer[$channelBufferIndex] 7
 }
 
 #MACRO {\e8}
 {
-	display_channel $channelBuffer[$channelBufferIndex] $channelBufferIndex 8
+     display_channel $channelBuffer[$channelBufferIndex] 8
 }
 
 #MACRO {\e9}
 {
-	display_channel $channelBuffer[$channelBufferIndex] $channelBufferIndex 9
+     display_channel $channelBuffer[$channelBufferIndex] 9
 }
 
 #MACRO {\e=}
 {
-	#if {!&{channelBufferIndex} || $channelBufferIndex >= $totalChannels}
-	{
-		#variable {channelBufferIndex} {$totalChannels}
-	};
-	#else
-	{
-		#math {channelBufferIndex} {$channelBufferIndex + 1}
-	};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #if {!&{channelBufferIndex} || $channelBufferIndex >= @list_size{channelBuffer}}
+     {
+          #variable {channelBufferIndex} {@list_size{channelBuffer}}
+     };
+     #else
+     {
+          #math {channelBufferIndex} {$channelBufferIndex + 1}
+     };
+     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
 }
 
 #MACRO {\e@}
 {
-	#variable {channelBufferIndex} {1};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #variable {channelBufferIndex} {3};
+     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+}
+
+#MACRO {\eOP}
+{
+     #variable {channelBufferIndex} {13};
+     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+}
+
+#MACRO {\eOQ}
+{
+     #variable {channelBufferIndex} {14};
+     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+}
+
+#MACRO {\eOR}
+{
+     #variable {channelBufferIndex} {15};
+     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+}
+
+#MACRO {\eOS}
+{
+     #variable {channelBufferIndex} {16};
+     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
 }
 
 #MACRO {\e[1;3C}
 {
-	#if {!&{channelBufferIndex} || $channelBufferIndex >= $totalChannels}
-	{
-		#variable {channelBufferIndex} {$totalChannels}
-	};
-	#else
-	{
-		#math {channelBufferIndex} {$channelBufferIndex + 1}
-	};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #nop {Alt right arrow};
+     #if {!&{channelBufferIndex} || $channelBufferIndex >= @list_size{channelBuffer}}
+     {
+          #variable {channelBufferIndex} {@list_size{channelBuffer}}
+     };
+     #else
+     {
+          #math {channelBufferIndex} {$channelBufferIndex + 1}
+     };
+     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+}
+
+#MACRO {\e[1;3D}
+{
+     #nop {Alt left arrow};
+     #if {!&{channelBufferIndex} || $channelBufferIndex <= 1}
+     {
+          #variable {channelBufferIndex} {1}
+     };
+     #else
+     {
+          #math {channelBufferIndex} {$channelBufferIndex - 1}
+     };
+     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
 }
 
 #MACRO {\e^}
 {
-	#variable {channelBufferIndex} {5};
-	#showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+     #variable {channelBufferIndex} {7};
+     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
 }
 
-#VARIABLE         {awayMessage}  {false}
-#VARIABLE         {channelBuffer}  {{0}{all}{1}{auction}{2}{bovine}{3}{cowsay}{4}{ct}{5}{events}{6}{friends}{7}{grouptells}{8}{music}{9}{tells}}
-#VARIABLE         {encryptedMessage}  {}
-#VARIABLE         {eventList}  {}
-#VARIABLE         {pasteChannel}  {}
-#VARIABLE         {pasteText}  {}
-#VARIABLE         {totalChannels}  {9}
-#VARIABLE         {unencryptedMessage}  {}
+#MACRO {\e`}
+{
+     #variable {channelBufferIndex} {12};
+     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+}
+
+#MACRO {\e~}
+{
+     #variable {channelBufferIndex} {1};
+     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
+}
+
+
+
+#SUBSTITUTE       {^\^}  {}  {9}
+
+#VARIABLE         {channel}  {}
+#VARIABLE         {channelBuffer}  {{1}{all}{2}{auction}{3}{bovine}{4}{cowsay}{5}{clantell}{6}{event}{7}{friend}{8}{gossip}{9}{grouptell}{10}{music}{11}{tell}{12}{say}{13}{chat}{14}{imm}}
+#VARIABLE         {channelBufferIndex}  {1}
+#VARIABLE         {channelSilence}  {false}
+#VARIABLE         {fishingWin}  {0}
+#VARIABLE         {fishingXp}  {0}
+

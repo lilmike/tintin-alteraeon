@@ -2,7 +2,7 @@
 {
 	#nop {There's no loop here, but this stores the number of items in the disc elsewhere, so may as well recycle.};
 	#list {discList} {size} {discLoopCounter};
-	#if {$discLoopCounter > 0 && "$discSpamCatcher" != "true"}
+	#if {$discLoopCounter > 0 && {$discSpamCatcher} != {true}}
 	{
 		vcast tensors floating disc;
 #variable {discSpamCatcher} {true}
@@ -12,13 +12,13 @@
 
 #ACTION {^Tensor's floating disc cannot carry any more weight without sinking.$}
 {
-	#if {"$discSpamCatcher" == "true"}
+	#if {{$discSpamCatcher} == {true}}
 	{
 		#line {gag}
 	};
 	#nop {There's no loop here, but this stores the number of items in the disc elsewhere, so may as well recycle.};
 	#list {discList} {size} {discLoopCounter};
-	#if {"$discSpamCatcher" == "false" && $discLoopCounter > 0}
+	#if {{$discSpamCatcher} == {false} && $discLoopCounter > 0}
 	{
 		#variable {discSpamCatcher} {true};
 		vcast tensors floating disc
@@ -42,7 +42,7 @@
 		};
 		#unvariable {discLoopCounter}
 	};
-	#if {"$discSpamCatcher" == "true"}
+	#if {{$discSpamCatcher} == {true}}
 	{
 		#variable {discSpamCatcher} {false}
 	}
@@ -69,7 +69,7 @@
 #ALIAS {^{d|di|dis|disc|disk}store {-|\+|d|de|del|dele|delet|delete|a|ad|add|r|re|rem|remo|remov|remove} %3}
 {
 	#list {discList} {find} {%3%*} {discIndex};
-	#if {"%2" == "{-|d|de|del|dele|delet|delete|r|re|rem|remo|remov|remove}"}
+	#if {{%2} == {{-|d|de|del|dele|delet|delete|r|re|rem|remo|remov|remove}}}
 	{
 		#if {$discIndex != 0}
 		{

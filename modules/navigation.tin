@@ -1,14 +1,18 @@
-#ACTION {^[Exits: %*}
+#ACTION {^[Exits: %*]{ \[Doors: .+\]|}$}
 {
-	#regexp {%0} {{.*} [Doors: {.*}} {play door};
-	#script {exits} {echo "%1" | tr -d "[:punct:]"};
-	#replace {exits[1]} { } {;};
-	#list {exits} {create} {$exits[1]};
+	#regexp {%0} {{.*} [Doors: {.*}} {play door;#var {doorFound} {1}};
+	#else
+	{
+		#unvariable {doorFound}
+	};
+	#variable {exits} {%1};
+	#replace {exits} { } {;};
+	#list {exits} {create} {$exits};
 	#list {exits} {size} {exitCount};
 	#local {i} {};
 	#foreach {$exits} {i}
 	{
-		#if {"$exitfind" == "$i"}
+		#if {{$exitfind} == {$i}}
 		{
 			synth_play exitFindSound
 		}
@@ -21,30 +25,6 @@
 	seq_play portal
 }
 {5}
-
-#ACTION {^{You would need to be trained in the art of climbing|You'll have to climb} to go there.}
-{
-	#line {gag};
-	#if {"$autoclimb" == "true"}
-	{
-		climb $lastDirection
-	};
-	#else
-	{
-		#echo {You'll have to climb to go there. (You can enable autoclimbing by typing autoclimb.)}
-	}
-}
-{5}
-
-#ACTION {%1 begins {her|his|its} climb %2ward.}
-{
-	#if {"%1" == "${group[leader}"]}
-	{
-		climb %2;
-		Add_Direction %2
-	}
-}
-{8}
 
 #ACTION {%1 arrives from%2portal%3}
 {
@@ -60,11 +40,11 @@
 
 #ACTION {^(You {may be able to|can} use waypoint %1 {to|to more easily} bridge the distance.)$}
 {
-	#if {"${auto[waypoint]}" == "true"}
+	#if {{${auto[waypoint]}} == {true}}
 	{
-		#undelay {waypoint};
-		#send {waypoint %1};
-		#delay {waypoint} {waypoint $waypoint} {3}
+		#unticker {waypoint};
+		#send {$waypointType %1};
+		#delay {waypoint} {$waypointType $waypoint} {3}
 	}
 }
 {9}
@@ -79,7 +59,7 @@
 #ACTION {^Alas, you cannot go that way.$}
 {
 	play bump;
-	#if {"$pathing" == "true"}
+	#if {{$pathing} == {true}}
 	{
 		#path {del}
 	}
@@ -88,9 +68,18 @@
 
 #ACTION {^It seems to be locked.$}
 {
-	#if {&{doorName} && "${skillsAndSpells[pick locks]}" == "true"}
+	#if {&{doorName} && {${skillsAndSpells[pick locks]}} == {true}}
 	{
 		pick $doorName $lastDirection
+	}
+}
+{9}
+
+#ACTION {^The other waypoint is too far away, and you are unable to link up with it.  Better try again.$}
+{
+	#if {{${auto[waypoint]}} == {true}}
+	{
+		#delay {waypoint} {$waypointType $waypoint} {0.5}
 	}
 }
 {9}
@@ -101,8 +90,17 @@
 }
 {9}
 
+#ALIAS {^{c|ca|cas|cast} {gr|gro|grou|group} {w|wa|way|wayp|waypo|waypoi|waypoin|waypoint} %4}
+{
+	#variable {waypointType} {cast group waypoint};
+	#variable {waypoint} {%4};
+	\cast group waypoint %4
+}
+{8}
+
 #ALIAS {^{way|wayp|waypo|waypoi|waypoin|waypoint} %1}
 {
+	#variable {waypointType} {waypoint};
 	#variable {waypoint} {%1};
 	\waypoint %1
 }
@@ -128,24 +126,9 @@
 }
 {9}
 
-#ALIAS {^{auto|noauto}climb$}
-{
-	#if {"%0" == "autoclimb"}
-	{
-		#showme {Autoclimbing enabled.};
-		#variable {autoclimb} {true}
-	};
-	#else
-	{
-		#showme {Autoclimbing disabled.};
-		#unvariable {autoclimb}
-	}
-}
-{9}
-
 #ALIAS {^{auto|noauto}waypoint$}
 {
-	#if {"%0" == "autowaypoint"}
+	#if {{%0} == {autowaypoint}}
 	{
 		#showme {You will now try to bridge waypoints automatically.};
 		#variable {auto[waypoint]} {true}
@@ -161,11 +144,11 @@
 #ALIAS {^{d|do|dow|down|e|ea|eas|east|n|ne|nea|neas|neast|no|nor|nort|north|northe|northea|northeas|northeast|northw|northwe|northwes|northwest|nw|nwe|nwes|nwest|s|se|sea|seas|seast|so|sou|sout|south|southe|southea|southeas|southeast|southw|southwe|southwes|southwest|sw|swe|swes|swest|u|up|w|we|wes|west}$}
 {
 	#variable {lastDirection} {%0};
-	#if {"$retreat" == "true" && "$autoretreat" == "true" && "$inBattle" == "true"}
+	#if {{${skillsAndSpells[retreat]}} == {true} && {$autoretreat} == {true} && {${character[inBattle]}} == {true}}
 	{
 		retreat $lastDirection
 	};
-	#elseif {"${auto[stealth]}" == "true"}
+	#elseif {{${auto[stealth]}} == {true}}
 	{
 		#send {sneak %0}
 	};
@@ -178,7 +161,7 @@
 
 #ALIAS {^{noauto|auto}{stealth}$}
 {
-	#if {"%1" == "auto"}
+	#if {{%1} == {auto}}
 	{
 		#variable {auto[%2]} {true};
 		#echo {auto%2 enabled.}
@@ -218,44 +201,22 @@
 	up
 }
 
-#MACRO {\eJ}
-{
-	#if {"$pathLoaded" == "true"}
-	{
-		#path {walk} {backward}
-	};
-	#else
-	{
-		#showme {Path not loaded.}
-	}
-}
-
 #MACRO {\eK}
 {
-	enter portal
-}
-
-#MACRO {\eL}
-{
-	#if {"$pathLoaded" == "true"}
+	#if {&{doorFound}}
 	{
-		#path {walk} {forward}
+		#if {&{doorName}}
+		{
+			open $doorName $lastDirection
+		};
+		#else
+		{
+			#echo {Nothing to open.}
+		}
 	};
 	#else
 	{
-		#showme {Path not loaded.}
-	}
-}
-
-#MACRO {\eO}
-{
-	#if {&{doorName}}
-	{
-		open $doorName $lastDirection
-	};
-	#else
-	{
-		#showme {Nothing to open.}
+		enter portal
 	}
 }
 
@@ -299,3 +260,4 @@
 #VARIABLE         {exits}  {}
 #VARIABLE         {lastDirection}  {}
 #VARIABLE         {waypoint}  {}
+#VARIABLE         {waypointType}  {}

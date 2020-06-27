@@ -4,10 +4,10 @@
 	#variable {news[old]} {${client[tmp[1]]}};
 	#script {client[tmp]} {soxi "${client[newsURL]}/${client[newsFile]}" | grep '^md5sum=' | cut -d= -f2};
 	#variable {news[current]} {${client[tmp[1]]}};
-	#if {"${news[current]}" != "${news[old]}"}
+	#if {{${news[current]}} != {${news[old]}}}
 	{
 		#echo {There is a news update available. Please type cnews to listen to it when you are in a safe place such as recall.};
-		Add_Event {There is a news update available. Please type cnews to listen to it when you are in a safe place such as recall.};
+		Channel_Event all {There is a news update available. Please type cnews to listen to it when you are in a safe place such as recall.};
 		notify-send {There is a news update available. Please type cnews to listen to it when you are in a safe place such as recall.};
 		synth_play notificationSound
 	}

@@ -1,6 +1,6 @@
 #ACTION {^instancerepop_You are not currently the owner of any instances.$}
 {
-	#if {"${repop[instance]}" == "true"}
+	#if {{${repop[instance]}} == {true}}
 	{
 		synth_play notificationSound;
 		#variable {repop[instance]}  {false}
@@ -13,7 +13,7 @@
 {
 #if {%3 < 6}
 	{
-		#regexp {%9} {{.*} {.*}} {#showme {%3 ticks until instance "&1" repops.}}
+		#regexp {%9} {{.*} {\s+.*}} {#showme {%3 ticks until instance "&1" repops.}}
 	};
 	#if {%3 < 1}
 	{
@@ -39,12 +39,12 @@
 
 #ALIAS {^{nore|re}pop$}
 {
-	#if {"%0" == "norepop"}
+	#if {{%0} == {norepop}}
 	{
 		#variable {repop[mob]} {false};
 		#showme {You are no longer waiting for anything to repop.}
 	};
-	#elseif {&{repop[mob]} && "${repop[mob]}" != "false"}
+	#elseif {&{repop[mob]} && {${repop[mob]}} != {false}}
 	{
 		#echo {You are waiting for ${repop[mob]} to repop.}
 	};
@@ -57,7 +57,7 @@
 
 #ALIAS {^{nowatch|watch}instance$}
 {
-	#if {"%0" == "nowatchinstance"}
+	#if {{%0} == {nowatchinstance}}
 	{
 		#variable {repop[instance]}  {false};
 		#showme {Instance repop notification cleared.}

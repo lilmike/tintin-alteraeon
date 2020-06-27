@@ -1,6 +1,6 @@
 #ACTION {^You follow %S %S.$}
 {
-	#if {"$pathing" == "true"}
+	#if {{$pathing} == {true}}
 	{
 		Add_Direction %2
 	}
@@ -9,47 +9,47 @@
 
 #ALIAS {Add_Direction %S}
 {
-	#if {"$pathing" == "true"}
+	#if {{$pathing} == {true}}
 	{
-		#switch {"%1"}
+		#switch {{%1}}
 		{
-			#case {"down"}
+			#case {{down}}
 			{
 				#path {insert} {down} {up}
 			};
-			#case {"east"}
+			#case {{east}}
 			{
 				#path {insert} {east} {west}
 			};
-			#case {"north"}
+			#case {{north}}
 			{
 				#path {insert} {north} {south}
 			};
-			#case {"northeast"}
+			#case {{northeast}}
 			{
 				#path {insert} {northeast} {southwest}
 			};
-			#case {"northwest"}
+			#case {{northwest}}
 			{
 				#path {insert} {northwest} {southeast}
 			};
-			#case {"south"}
+			#case {{south}}
 			{
 				#path {insert} {south} {north}
 			};
-			#case {"southeast"}
+			#case {{southeast}}
 			{
 				#path {insert} {southeast} {northwest}
 			};
-			#case {"southwest"}
+			#case {{southwest}}
 			{
 				#path {insert} {southwest} {northeast}
 			};
-			#case {"up"}
+			#case {{up}}
 			{
 				#path {insert} {up} {down}
 			};
-			#case {"west"}
+			#case {{west}}
 			{
 				#path {insert} {west} {east}
 			};
@@ -64,7 +64,7 @@
 
 #ALIAS {^nopath$}
 {
-	#if {"$pathing" == "true"}
+	#if {{$pathing} == {true}}
 	{
 		#path {end};
 		#path {save} {forward} {$pathName};
@@ -80,7 +80,7 @@
 
 #ALIAS {^path %S}
 {
-	#if {"$pathing" != "true"}
+	#if {{$pathing} != {true}}
 	{
 		#showme {Recording path %1.};
 		#path {new};
@@ -124,7 +124,8 @@
 
 #EVENT {END OF PATH}
 {
-	#unvariable {pathLoaded}
+	#unvariable {pathLoaded};
+	@do_hook{endOfPath}
 }
 
 #VARIABLE         {pathName}  {}

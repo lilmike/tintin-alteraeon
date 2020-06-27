@@ -1,20 +1,16 @@
 #ACTION {^(friend) %S completed custom job %*}
 {
-	#if {"${channel[sounds]}" == "true"}
-	{
 		play friend-complete-quest;
-		notify-send %0
-	}
+		notify-send %0;
+		Channel_Event friend %0
 }
 {4}
 
 #ACTION {^(friend) %S completed quest %*}
 {
-	#if {"${channel[sounds]}" == "true"}
-	{
 		play friend-complete-quest;
-		notify-send %0
-	}
+		notify-send %0;
+		Channel_Event friend %0
 }
 {4}
 
@@ -62,17 +58,17 @@
 
 #ACTION {^*{IDLE|TICK}*$}
 {
-	#if {"$audioTick" == "true"}
+	#if {{$audioTick} == {true}}
 	{
 		#line {gag}
 	};
-	#if {"${auto[mend]}" == "true" && "${character[inBattle]}" != "true"}
+	#if {{${auto[mend]}} == {true} && {${character[inBattle]}} != {true}}
 	{
-		#if {"${skillsAndSpells[mend bones]}" == "true" && ${character[currentMana]} > ${character[maxMana]} / 2}
+		#if {{${skillsAndSpells[mend bones]}} == {true} && ${character[currentMana]} > ${character[maxMana]} / 2}
 		{
-			#if {"$doAutoMend" == "true" && ${kxwt[action} == 0]}
+			#if {{$doAutoMend} == {true} && ${kxwt[action]} == 0]}
 			{
-				#delay {3d3} {#if {"${kxwt[position}" != "{sitt|sleep}ing"}{show teeth | prefix silent_cast_mend_bones}]};
+				#delay {3d3} {#if {{${kxwt[position}} != {{sitt|sleep}ing}}{show teeth | prefix silent_cast_mend_bones}]};
 				#unvariable {doAutoMend}
 			}
 		}
@@ -88,7 +84,7 @@
 
 #ACTION {^A confused looking squirrel scampers up to you, spits out {an|2|3} acor{ns|n}, then runs away.$}
 {
-	#if {"%1" == "an"}
+	#if {{%1} == {an}}
 	{
 		play animal_calls/acorn-1
 	};
@@ -209,19 +205,14 @@
 
 #ACTION {^You have toiled long enough. You now follow %S!$}
 {
+	autobrag I now follow the teachings of %1!;
 	play convert-to-god-complete
-}
-{9}
-
-#ACTION {^You hear the loud -clang- *CLANG* of a hammer on anvil to the north.$}
-{
-	play hammer-on-anvil
 }
 {9}
 
 #ACTION {^You spend %d {experience|gold coins} to give%*}
 {
-	#if {"%2" == "experience"}
+	#if {{%2} == {experience}}
 	{
 		synth_play giftExp
 	};
@@ -284,7 +275,10 @@
 
 #ACTION {^{The gods penalize you for botting|You have been penalized for botting}!$}
 {
-	synth_play botthwack
+	#nop {Hook name: botthwack};
+	#nop {Hook arguments: none.};
+	synth_play botthwack;
+	@do_hook{botthwack}
 }
 {9}
 
