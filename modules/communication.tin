@@ -140,7 +140,7 @@
 }
 {9}
 
-#ACTION {^*** YOU RECEIVE %d BONUS CAMEL EXPERIENCE. HAPPY HUMP DAY! ***$}
+#ACTION {^*** YOU RECEIVE %d BONUS CAMEL EXPERIENCE. HAPPY HUMPDAY! ***$}
 {
      #nop {Hook name: humpTime};
      #nop {Hook Args: None};
