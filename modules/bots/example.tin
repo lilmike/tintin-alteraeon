@@ -1,55 +1,72 @@
 #ACTION {^{You would surely drop something, you are carrying far too much!|A hedge wizard says, 'You should talk to me first before you go downstairs\.'|Radcliff the curator says to you, 'I'm sorry, but you must buy a pass to enter the museum\. The price is quite modest, I assure you!'|Only guild members are allowed beyond this point\.|.+ blocks your path, preventing you from passing\.}$}
 {
-	#if {!$secondTry}
-	{
-		#nop {Wander to get out of this room and hopefully pick another path.};
-		#delay {walk} {wander} {8d3};
-		#variable {secondTry} {1}
-	}
+    #if {!$secondTry}
+    {
+        #nop {Wander to get out of this room and hopefully pick another path.};
+        #delay {walk} {wander} {8d3};
+        #variable {secondTry} {1}
+    }
 }
 {9}
 
+
+
 #FUNCTION {bot_kill}
 {
-	#nop {Don't walk once after the bot dies.};
-	#unticker {walk};
-	#return #nop
+    #nop {Don't walk once after the bot dies.};
+    #unticker {walk};
+    #nop {Don't look after the bot dies either.};
+    #unticker {didnt_walk};
+    #nop {Remove hooks. The client should do this once the functions are detected as not existing, but it's always nice to clean up after one's self.};
+    #unvariable {hook[rvnum][walk]};
+    #unvariable {hook[botthwack][example_botthwack]};
+    #return #nop
 }
 
 #FUNCTION {bot_load}
 {
-	#nop {Walk once to get the bot started.};
-	#math {exitChoice} {(1d($exitCount * 100)) / 100 + 1};
-	${exits[$exitChoice]};
-	#return #nop
+    #nop {setup hooks.};
+    #variable {hook[rvnum][walk]} {};
+    #variable {hook[botthwack][example_botthwack]} {};
+    #nop {Walk once to get the bot started.};
+    #math {exitChoice} {(1d($exitCount * 100)) / 100 + 1};
+    ${exits[$exitChoice]};
+    #return #nop
+}
+
+#FUNCTION {example_botthwack}
+{
+    #nop {We've been bot thwacked, kill the bot and recall in case it's us.};
+    botkill example;
+    /;
+    #nop {Twice in case.};
+    /;
+    #return #nop
 }
 
 #FUNCTION {walk}
 {
-	#nop {We moved, so clear secondTry variable.};
-	#variable {secondTry} {0};
-	#nop {Delay a tiny amount in case the mud sends area number after room number.};
-	#delay {0.05} {#if {$areaNumber != $targetAreaNumber} {backward}};
-	#nop {Remove walk delay in case we went backward as to not walk twice.};
-	#unticker {walk};
-	#nop {Now, pick an exit at random. We know we're in the right area because area number will be checked before $walkDelay expires.};
-	#delay {walk} {#math {exitChoice} {(1d($exitCount * 100)) / 100 + 1};${exits[$exitChoice]}} {1 d ($walkDelayMax - $walkDelayMin) + $walkDelayMin};
-	#return #nop
+    #nop {We moved, so clear secondTry variable.};
+    #variable {secondTry} {0};
+    #nop {And also remove the didn't walk delay.};
+    #unticker {didnt_walk};
+    #nop {Now, set it back up.};
+    #nop {If we haven't walked in double the max delay variable, then do a look, that seems to clear things up.};
+    #line oneshot #ticker {didnt_walk} {@command{l;look}} {$walkDelayMax * 2};
+    #nop {Delay a tiny amount in case the mud sends area number after room number.};
+    #delay {0.05} {#if {$areaNumber != $targetAreaNumber} {backward}};
+    #nop {Remove walk delay in case we went backward as to not walk twice.};
+    #unticker {walk};
+    #nop {Now, pick an exit at random. We know we're in the right area because area number will be checked before $walkDelay expires.};
+    #delay {walk} {#math {exitChoice} {(1d($exitCount * 100)) / 100 + 1};${exits[$exitChoice]}} {1 d ($walkDelayMax - $walkDelayMin) + $walkDelayMin};
+    #return #nop
 }
 
-#function {example_botthwack} {
-	#nop {We've been bot thwacked, kill the bot and recall in case it's us.};
-	botkill example;
-	/;
-	#nop {Twice in case.};
-	/;
-	#return #nop
-}
 
-#VARIABLE  {hook[botthwack][example_botthwack]} {}
-#VARIABLE         {exitChoice}  {}
-#VARIABLE {hook[rvnum][walk]} {}
-#VARIABLE         {secondTry}  {0}
-#VARIABLE         {targetAreaNumber}  {$areaNumber}
-#VARIABLE         {walkDelayMax}  {15}
-#VARIABLE         {walkDelayMin}  {10}
+
+#VARIABLE {exitChoice} {}
+#VARIABLE {secondTry} {0}
+#VARIABLE {targetAreaNumber} {$areaNumber}
+#VARIABLE {walkDelayMax} {15}
+#VARIABLE {walkDelayMin} {10}
+
