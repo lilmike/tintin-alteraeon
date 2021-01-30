@@ -71,9 +71,10 @@
 
 #ACTION {^%w %w{, '|: }%4{'?}$}
 {
+    #variable {channelName} {};
     #regexp {%1} {{[A-Z].+}}
     {
-        @var_save{channelName};#list {i} {tokenize} {%2};#if {{${i[-1]}} == {s}}{#list {i} {delete} {-1}};#list {i} {simplify} {channelName};#replace {channelName} {;} {};#nop {Hook name is channel name non-plural.};#nop {Hook args %1 Name.};#nop {Hook args %3 message to channel.};Channel_Event $channelName %0;#if {{%1} != {You}}{@do_hook{$channelName;%1;%4}};@var_restore{channelName}
+        #list {channelName} {tokenize} {%2};#if {{${channelName[-1]}} == {s}}{#list {channelName} {delete} {-1}};#list {channelName} {collapse};#replace {channelName} {;} {};#nop {Hook name is channel name non-plural.};#nop {Hook args %1 Name.};#nop {Hook args %3 message to channel.};Channel_Event $channelName %0;#if {{%1} != {You}}{@do_hook{$channelName;%1;%4}}
     }
 }
 {9}
@@ -833,6 +834,7 @@
     {14} {imm}
 }
 #VARIABLE {channelBufferIndex} {1}
+#VARIABLE {channelName} {}
 #VARIABLE {channelSilence} {false}
 #VARIABLE {fishingWin} {0}
 #VARIABLE {fishingXp} {0}
