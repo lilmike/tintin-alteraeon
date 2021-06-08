@@ -65,6 +65,10 @@
     #if {${fishingWin}}
     {
         #variable {fishingXp} {%1}
+    };
+    #elseif {${archeryWin}}
+    {
+        #variable {archeryXp} {%1}
     }
 }
 {9}
@@ -216,6 +220,11 @@
     {
         autobrag I won a fishing durby! $fishingXp xp and %1 gold!;
         #variable {fishingWin} {0}
+    };
+    #elseif {${archeryWin}}
+    {
+        autobrag I won an archery contest with $archeryPoints points, gaining $archeryXp xp and %1 gold!;
+        #variable {archeryWin} {0}
     }
 }
 {9}
@@ -261,6 +270,18 @@
     #variable {channelSilence} {true};
     Channel_Event all %0;
     autobrag %0
+}
+{9}
+
+#ACTION {^[event announcement] THE ARCHERY CONTEST HAS ENDED, PLAYER '%w' IS THE WINNER WITH %d POINTS!$}
+{
+    #local {tmp} {};
+    #format {tmp} {%l} {%1};
+    #if {{$tmp} == {${kxwt[myname]}}}
+    {
+        #variable {archeryWin} {1};
+        #variable {archeryPoints} {%2}
+    }
 }
 {9}
 
