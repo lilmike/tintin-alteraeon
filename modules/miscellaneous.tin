@@ -446,39 +446,6 @@
 }
 {9}
 
-#ALIAS {^camel$}
-{
-	#if {!&{character[lastCamel]}}
-	{
-		#showme {Your last hump day kill hasn't been recorded.}
-	};
-	#else
-	{
-		#nop local variables suck apparently. #local {dayOfWeek} {};
-		#script {dayOfWeek} {date +%w};
-		#if {{${dayOfWeek[1]}} != {3}}
-		{
-			#showme {It doesn't appear to be hump day right now, but in case it is in server time...}
-		};
-		#unvariable {dayOfWeek};
-		#local {time} {};
-		#format {time} {%T} {};
-		#if {${time}-${character[lastCamel]} >= 7200}
-		{
-			#showme {It's time to kill a camel!}
-		};
-		#else
-		{
-			#local {neededTime} {};
-			#math {neededTime} {${character[lastCamel]}+7200};
-			#local {leftoverTime} {};
-			#math {leftoverTime} {${neededTime}-${time}};
-			#echo {You have %m hours, %m minutes, and %m seconds until you can kill a camel again.} {$leftoverTime/3600} {$leftoverTime%%3600/60} {$leftoverTime%%60}
-		}
-	}
-}
-{9}
-
 #ALIAS {^chelp %*}
 {
 	#local {found} {0};

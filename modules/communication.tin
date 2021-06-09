@@ -158,12 +158,7 @@
 
 #ACTION {^*** YOU RECEIVE %d BONUS CAMEL EXPERIENCE. HAPPY HUMPDAY! ***$}
 {
-    #nop {Hook name: humpTime};
-    #nop {Hook Args: None};
-    #nop {Note: Fires on the ticker ending, not on this action.};
-    autobrag You received %1 bonus camel experience. HAPPY HUMP DAY!;
-    #format {character[lastCamel]} {%T};
-    #ticker {humpTicker} {#local {time} {};#format {time} {%T};#if {$time - ${character[lastCamel]} >= 7200} {#var {channelSilence} {true};Channel_Event all It's time to kill a camel!;#showme {It's time to kill a camel!};synth_play notificationSound;#unticker {humpTicker};@do_hook{humpTime}}} {30}
+    autobrag You received %1 bonus camel experience. HAPPY HUMP DAY!
 }
 {9}
 
