@@ -280,7 +280,7 @@
 }
 {9}
 
-#ACTION {^[event] THE FISHING DERBY HAS ENDED, PLAYER '%w' IS THE WINNER!$}
+#ACTION {^[event announcement] THE FISHING DERBY HAS ENDED, PLAYER '%w' IS THE WINNER!$}
 {
     #local {tmp} {};
     #format {tmp} {%l} {%1};
