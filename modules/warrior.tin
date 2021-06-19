@@ -435,7 +435,7 @@
 }
 {9}
 
-#ACTION {^silent_xcombo_{Low level|Advanced|Cross-class} attack combinations
+#ACTION {^silent_xcombo_{Low level|Advanced|Cross-class} attack combinations}
 {
      #list {combo[randomType]} {add} {%1}
 }
