@@ -86,7 +86,7 @@
 }
 {9}
 
-#ACTION {^silent_ Length %d \x7c %2}
+#ACTION {^silent_Length %d \x7c %2}
 {
      #variable {combo[attack]} {%2};
      #replace {combo[attack]} {\x7c} { ${combo[target]};};
