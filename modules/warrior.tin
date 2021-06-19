@@ -580,14 +580,14 @@
      {
           #list {randomAttack} {add} {bash}
      };
-     #if {{${skillsAndSpells[berserking]}} == {true} && {${skillsAndSpells[advanced tactics]}} == {true} && {${auto[berserk]}} == {true} && {${character[inBattle]}} == {true}}
+     #if {{${skillsAndSpells[berserking]}} == {true} && {${auto[berserk]}} == {true} && {${character[inBattle]}} == {true}}
      {
           #if {${character[currentHp]} >= ${character[maxHp]} / 2 && ${character[currentMv]} >= ${character[maxMv]} / 2}
           {
                #list {randomAttack} {add} {berserk}
           }
      };
-     #if {{${skillsAndSpells[bloodletting stab]}} == {true} && {${skillsAndSpells[cross class tactics]}} == {true} && {${character[inBattle]}} == {true}}
+     #if {{${skillsAndSpells[bloodletting stab]}} == {true} && {${character[inBattle]}} == {true}}
      {
           #list {randomAttack} {add} {stab}
      };
@@ -595,31 +595,31 @@
      {
           #list {randomAttack} {add} {charge}
      };
-     #if {{${skillsAndSpells[cleave]}} == {true} && {${skillsAndSpells[advanced tactics]}} == {true}}
+     #if {{${skillsAndSpells[cleave]}} == {true}}
      {
           #list {randomAttack} {add} {cleave}
      };
-     #if {{${skillsAndSpells[crippling strike]}} == {true} && {${skillsAndSpells[cross class tactics]}} == {true}}
+     #if {{${skillsAndSpells[crippling strike]}} == {true}}
      {
           #list {randomAttack} {add} {cripple}
      };
-     #if {{${skillsAndSpells[disarm]}} == {true} && {${skillsAndSpells[advanced tactics]}} == {true} && {${auto[disarm]}} == {true}}
+     #if {{${skillsAndSpells[disarm]}} == {true} && {${auto[disarm]}} == {true}}
      {
           #list {randomAttack} {add} {disarm}
      };
-     #if {{${skillsAndSpells[feint]}} == {true} && {${skillsAndSpells[cross class tactics]}} == {true} && {${character[inBattle]}} == {true}}
+     #if {{${skillsAndSpells[feint]}} == {true} && {${character[inBattle]}} == {true}}
      {
           #list {randomAttack} {add} {feint}
      };
-     #if {{${skillsAndSpells[ground strike]}} == {true} && {${skillsAndSpells[advanced tactics]}} == {true} && {${kxwt[terrain}} != {{7|18|19|20|21|23|25|29|31|32}}]}
+     #if {{${skillsAndSpells[ground strike]}} == {true} && {${kxwt[terrain}} != {{7|18|19|20|21|23|25|29|31|32}}]}
      {
           #list {randomAttack} {add} {gstrike}
      };
-     #if {{${skillsAndSpells[flourish]}} == {true} && {${skillsAndSpells[cross class tactics]}} == {true}}
+     #if {{${skillsAndSpells[flourish]}} == {true}}
      {
           #list {randomAttack} {add} {flourish}
      };
-     #if {{${skillsAndSpells[intimidate]}} == {true} && {${skillsAndSpells[advanced tactics]}} == {true}}
+     #if {{${skillsAndSpells[intimidate]}} == {true}}
      {
           #list {randomAttack} {add} {intimidate}
      };
@@ -631,7 +631,7 @@
      {
           #list {randomAttack} {add} {kick}
      };
-     #if {{${skillsAndSpells[knife throwing]}} == {true} && {${skillsAndSpells[cross class tactics]}} == {true}}
+     #if {{${skillsAndSpells[knife throwing]}} == {true}}
      {
           #list {randomAttack} {add} {throw shadow}
      };
@@ -655,7 +655,7 @@
      {
           #list {randomAttack} {add} {riposte}
      };
-     #if {{${skillsAndSpells[shadow bind]}} == {true} && {${skillsAndSpells[cross class tactics]}} == {true}}
+     #if {{${skillsAndSpells[shadow bind]}} == {true}}
      {
           #list {randomAttack} {add} {shadow bind}
      };
@@ -671,11 +671,11 @@
      {
           #list {randomAttack} {add} {thrust}
      };
-     #if {{${skillsAndSpells[trip]}} == {true} && {${skillsAndSpells[cross class tactics]}} == {true}}
+     #if {{${skillsAndSpells[trip]}} == {true}}
      {
           #list {randomAttack} {add} {trip}
      };
-     #if {{${skillsAndSpells[whirlwind]}} == {true} && {${skillsAndSpells[advanced tactics]}} == {true}}
+     #if {{${skillsAndSpells[whirlwind]}} == {true}}
      {
           #list {randomAttack} {add} {whirlwind}
      };
