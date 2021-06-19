@@ -204,7 +204,7 @@
      #nop #local {tmp3} {};
      #list {tmp3} {create} {*{tmp2[]}};
      #nop #local {tmp5} {};
-     #list {tmp3} {simplify} {tmp5};
+     #list {tmp3} {collapse} {tmp5};
      #replace {tmp5} {berserking} {berserk};
      #replace {tmp5} {bloodletting } {};
      #replace {tmp5} {crippling strike} {cripple};
@@ -350,7 +350,7 @@
                #variable {tmp[$i]} {$tmp4}
           }
      };
-     #list {tmp} {simplify} {combo[attack]};
+     #list {tmp} {collapse} {combo[attack]};
      #if {{${auto[weapon]}} == {true}}
      {
           #replace {combo[attack]} {knife throwing} {remove $weapon;throw shadow;wield $weapon}
