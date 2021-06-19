@@ -396,15 +396,15 @@
           #math {j} {1 d $i};
           #switch {{${combo[randomType][$j]}}}
           {
-               #case {{advanced}}
+               #case {{Advanced}}
                {
                     #variable {combo[tmp]} {a}
                };
-               #case {{low level}}
+               #case {{Low level}}
                {
                     #variable {combo[tmp]} {l}
                };
-               #case {{cross-class}}
+               #case {{Cross-class}}
                {
                     #variable {combo[tmp]} {c}
                }
@@ -435,9 +435,9 @@
 }
 {9}
 
-#ACTION {^silent_xcombo_You have found%s%d {low level|advanced|cross-class} attack combinations, and completed%s%d.$}
+#ACTION {^silent_xcombo_{Low level|Advanced|Cross-class} attack combinations
 {
-     #list {combo[randomType]} {add} {%3}
+     #list {combo[randomType]} {add} {%1}
 }
 {9}
 
