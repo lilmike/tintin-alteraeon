@@ -295,7 +295,7 @@
                     #list {tmp3} {delete} {$p}
                }
           };
-          #if {{${tmp[$i]}} == {{?:\s*}x{?:\s*}}}
+          #if {{${tmp[$i]}} == {{?:\s*}x{?:\s*}{?:(?:${combo[target]})?}}}
           {
                #nop #local {tmp6} {${tmp3}};
                #variable {tmp6} {${tmp3}};
