@@ -518,7 +518,7 @@
 
 #ALIAS {^{a|c|l|}xcombo %S %S$}
 {
-    #variable {combo[target]} {%3 };
+    #variable {combo[target]} {%3};
     #switch {{%1}}
     {
         #case {{a}}
