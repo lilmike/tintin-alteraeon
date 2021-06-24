@@ -127,9 +127,9 @@
 
 #ALIAS {^post %1}
 {
-	#if {{$facebook} == {true}}
+	#if {{$mastodon} == {true}}
 	{
-		#script {dummyvar} {fbcmd post "%1" "Alter Aeon" "http://www.alteraeon.com/" &> /dev/null&}
+		#script {dummyvar} {toot post --quiet -v public -p "Alter Aeon" "%1 http://www.alteraeon.com/" &> /dev/null&}
 	};
 	#if {{$pump} == {true}}
 	{
@@ -159,19 +159,19 @@
 }
 {9}
 
-#ALIAS {^{facebook|gnusocial|pump.io|twitter|nofacebook|nognusocial|nopump.io|notwitter}$}
+#ALIAS {^{mastodon|gnusocial|pump.io|twitter|nomastodon|nognusocial|nopump.io|notwitter}$}
 {
 	#switch {{%0}}
 	{
-		#case {{facebook}}
+		#case {{mastodon}}
 		{
-			#variable {facebook} {true};
-			#showme {Achievements will now be posted to Facebook.}
+			#variable {mastodon} {true};
+			#showme {Achievements will now be posted to your Mastodon compatible instance.}
 		};
-		#case {{nofacebook}}
+		#case {{nomastodon}}
 		{
-			#unvariable {facebook};
-			#showme {Achievements will no longer be posted to Facebook.}
+			#unvariable {mastodon};
+			#showme {Achievements will no longer be posted to your Mastodon compatible instance.}
 		};
 		#case {{gnusocial}}
 		{
