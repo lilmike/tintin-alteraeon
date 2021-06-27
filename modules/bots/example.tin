@@ -1,9 +1,11 @@
 #ACTION {^{You would surely drop something, you are carrying far too much!|A hedge wizard says, 'You should talk to me first before you go downstairs\.'|Radcliff the curator says to you, 'I'm sorry, but you must buy a pass to enter the museum\. The price is quite modest, I assure you!'|Only guild members are allowed beyond this point\.|.+ blocks your path, preventing you from passing\.}$}
 {
-    #if {!$secondTry}
+    #if {!${secondTry}}
     {
         #nop {Wander to get out of this room and hopefully pick another path.};
-        #delay {walk} {wander} {8d3};
+        #line oneshot #ticker {walk} {wander} {$walkDelayMax};
+        #unticker {didnt_walk};
+        #line oneshot #ticker {didnt_walk} {@command{l;look};#var {looking} {1}} {$walkDelayMax * 2};
         #variable {secondTry} {1}
     }
 }
@@ -46,17 +48,26 @@
 
 #FUNCTION {walk}
 {
-    #nop {We moved, so clear secondTry variable.};
-    #variable {secondTry} {0};
-    #nop {And also remove the didn't walk delay.};
-    #unticker {didnt_walk};
-    #nop {Now, set it back up.};
-    #nop {If we haven't walked in double the max delay variable, then do a look, that seems to clear things up.};
-    #line oneshot #ticker {didnt_walk} {@command{l;look}} {$walkDelayMax * 2};
-    #nop {Delay a tiny amount in case the mud sends area number after room number.};
-    #delay {0.05} {#if {$areaNumber != $targetAreaNumber} {backward}};
-    #nop {Remove walk delay in case we went backward as to not walk twice.};
-    #unticker {walk};
+    #nop {Make sure we're not looking, since that will make us think we've moved and clear second try.};
+    #if {!${looking}}
+    {
+        #nop {We moved, so clear secondTry variable.};
+        #variable {secondTry} {0};
+        #nop {And also remove the didn't walk delay.};
+        #unticker {didnt_walk};
+        #nop {Now, set it back up.};
+        #nop {If we haven't walked in double the max delay variable, then do a look, that seems to clear things up.};
+        #line oneshot #ticker {didnt_walk} {@command{l;look};#var {looking} {1}} {$walkDelayMax * 2};
+        #nop {Delay a tiny amount in case the mud sends area number after room number.};
+        #delay {0.05} {#if {$areaNumber != $targetAreaNumber} {backward}};
+        #nop {Remove walk delay in case we went backward as to not walk twice.};
+        #unticker {walk}
+    };
+    #else
+    {
+        #nop {It was a look, set looking to 0.};
+        #variable {looking} {0}
+    };
     #nop {Now, pick an exit at random. We know we're in the right area because area number will be checked before $walkDelay expires.};
     #delay {walk} {#math {exitChoice} {(1d($exitCount * 100)) / 100 + 1};${exits[$exitChoice]}} {1 d ($walkDelayMax - $walkDelayMin) + $walkDelayMin};
     #return #nop
@@ -65,6 +76,7 @@
 
 
 #VARIABLE {exitChoice} {}
+#VARIABLE {looking} {0}
 #VARIABLE {secondTry} {0}
 #VARIABLE {targetAreaNumber} {$areaNumber}
 #VARIABLE {walkDelayMax} {15}

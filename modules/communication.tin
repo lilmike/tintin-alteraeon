@@ -65,6 +65,10 @@
     #if {${fishingWin}}
     {
         #variable {fishingXp} {%1}
+    };
+    #elseif {${archeryWin}}
+    {
+        #variable {archeryXp} {%1}
     }
 }
 {9}
@@ -154,12 +158,7 @@
 
 #ACTION {^*** YOU RECEIVE %d BONUS CAMEL EXPERIENCE. HAPPY HUMPDAY! ***$}
 {
-    #nop {Hook name: humpTime};
-    #nop {Hook Args: None};
-    #nop {Note: Fires on the ticker ending, not on this action.};
-    autobrag You received %1 bonus camel experience. HAPPY HUMP DAY!;
-    #format {character[lastCamel]} {%T};
-    #ticker {humpTicker} {#local {time} {};#format {time} {%T};#if {$time - ${character[lastCamel]} >= 7200} {#var {channelSilence} {true};Channel_Event all It's time to kill a camel!;#showme {It's time to kill a camel!};synth_play notificationSound;#unticker {humpTicker};@do_hook{humpTime}}} {30}
+    autobrag You received %1 bonus camel experience. HAPPY HUMP DAY!
 }
 {9}
 
@@ -216,6 +215,11 @@
     {
         autobrag I won a fishing durby! $fishingXp xp and %1 gold!;
         #variable {fishingWin} {0}
+    };
+    #elseif {${archeryWin}}
+    {
+        autobrag I won an archery contest with $archeryPoints points, gaining $archeryXp xp and %1 gold!;
+        #variable {archeryWin} {0}
     }
 }
 {9}
@@ -264,7 +268,19 @@
 }
 {9}
 
-#ACTION {^[event] THE FISHING DERBY HAS ENDED, PLAYER '%w' IS THE WINNER!$}
+#ACTION {^[event announcement] THE ARCHERY CONTEST HAS ENDED, PLAYER '%w' IS THE WINNER WITH %d POINTS!$}
+{
+    #local {tmp} {};
+    #format {tmp} {%l} {%1};
+    #if {{$tmp} == {${kxwt[myname]}}}
+    {
+        #variable {archeryWin} {1};
+        #variable {archeryPoints} {%2}
+    }
+}
+{9}
+
+#ACTION {^[event announcement] THE FISHING DERBY HAS ENDED, PLAYER '%w' IS THE WINNER!$}
 {
     #local {tmp} {};
     #format {tmp} {%l} {%1};
