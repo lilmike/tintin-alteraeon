@@ -409,10 +409,20 @@
         #nop {Only play sounds if silent flag is not true.};
         #if {{${channelSilence}} == {false}}
         {
-            #nop {Play default channel sounds for channels that don't have their own sounds.};
+            #nop {Play default channel sounds for channels that don't have their own sounds, or custom sounds for channels that don't use synth.};
             #if {{%1} != {{example|friend|gain}}}
             {
-                synth_play broadcastChannel
+                #switch {{%1}}
+                {
+                    #case {{linux}}
+                    {
+                        play channel_linux
+                    };
+                    #default
+                    {
+                        synth_play broadcastChannel
+                    }
+                }
             }
         };
         #else
@@ -565,7 +575,6 @@
     }
 }
 {9}
-
 
 
 #FUNCTION {decrypt}
@@ -826,7 +835,6 @@
     #variable {channelBufferIndex} {1};
     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
 }
-
 
 
 #SUBSTITUTE {^\^} {} {9}
