@@ -95,7 +95,7 @@
 
 #ACTION {^silent_ Length %d \x7c %2}
 {
-    #variable {combo[attack]} {%2};
+    #variable {combo[attack]} {%2 |};
     #replace {combo[attack]} {\x7c} { ${combo[target]};};
     #replace {combo[attack]} {berserking} {berserk};
     #replace {combo[attack]} {bloodlet } {};
@@ -317,7 +317,7 @@
                 #list {tmp6} {size} {l};
                 #if {$l == 0}
                 {
-                    #variable {tmp4} {randomattack};
+                    #variable {tmp4} {randomattack ${combo[target]}};
                     #break
                 };
                 #else
@@ -334,7 +334,7 @@
                     {
                         #continue
                     };
-                    #if {{${tmp[$n]}} == {{?:\s*}$tmp4{?:\s*}}}
+                    #if {{${tmp[$n]}} == {{?:\s*}$tmp4{?:\s*}${combo[target]}}}
                     {
                         #nop #local {p} {};
                         #list {tmp6} {find} {$tmp4} {p};
@@ -355,7 +355,7 @@
                     #break
                 }
             };
-            #variable {tmp[$i]} {$tmp4}
+            #variable {tmp[$i]} {$tmp4 ${combo[target]}}
         }
     };
     #list {tmp} {simplify};
