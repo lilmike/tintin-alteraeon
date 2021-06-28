@@ -428,7 +428,7 @@
     #replace {combo[tmpvar]} {^ } {};
     #regexp {${combo[tmpvar]}} {{.+} {.+}}
     {
-        #var {combo[target]} {&2};#var {combo[search]} {&1}
+        #var {combo[target]} {&2};#var {combo[search]} {| grep &1}
     };
     #else
     {
@@ -479,7 +479,7 @@
     #replace {combo[tmpvar]} {^ } {};
     #regexp {${combo[tmpvar]}} {{.+} {.+}}
     {
-        #var {combo[target]} {&2};#var {combo[search]} {&1}
+        #var {combo[target]} {&2};#var {combo[search]} {| grep &1}
     };
     #else
     {
