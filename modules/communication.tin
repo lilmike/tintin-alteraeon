@@ -165,6 +165,7 @@
 #ACTION {^*** YOU SUCCESSFULLY HUNTED ALL SIX KINDS OF SNIPE! YOU RECEIVE %d SNIPE HUNT EXP! ***$}
 {
     autobrag You successfully hunted all six kinds of snipe! You received %1 snipe hunt exp!
+    post $name successfully hunted all six kinds of snipe and received %1 snipe hunt experience!
 }
 {9}
 
@@ -214,11 +215,13 @@
     #if {${fishingWin}}
     {
         autobrag I won a fishing durby! $fishingXp xp and %1 gold!;
+        post $name won a fishing durby! $fishingXp xp and %1 gold!;
         #variable {fishingWin} {0}
     };
     #elseif {${archeryWin}}
     {
         autobrag I won an archery contest with $archeryPoints points, gaining $archeryXp xp and %1 gold!;
+        post $name won an archery contest with $archeryPoints points, gaining $archeryXp xp and %1 gold!;
         #variable {archeryWin} {0}
     }
 }
@@ -297,6 +300,7 @@
     Channel_Event all Your daily gift was:%1;
     notify-send Your daily gift was %1;
     autobrag My daily gift was %1
+    post $name received a daily gift of %1
 }
 {9}
 
