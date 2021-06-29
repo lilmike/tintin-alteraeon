@@ -184,13 +184,16 @@
 }
 {9}
 
-#ACTION {^There is a sharp SNAP, and a{?:n?} %* target pops up in the middle of the archery range.$}
+#ACTION {^There is a sharp SNAP, and a{?:n?} %2 target pops up in the middle of the archery range.$}
 {
+    #nop {hook archery_target};
+    #nop {arg: target type};
     #if {{${character[cspam]}} == {true}}
     {
         #line gag
     };
-    play target
+    play target;
+    @do_hook{archery_target;%2}
 }
 {9}
 
