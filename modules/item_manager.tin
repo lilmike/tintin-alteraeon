@@ -83,7 +83,7 @@
 #ACTION {^silent_get_%*_You get %* from %*.}
 {
     #unticker {autoget_%1};
-    #line oneshot #ticker {autoget_%1} {#if {&{character[autogetContainer]}} {put all.%1 ${character[autogetContainer]}};get %1 corpse | prefix silent_get_%1_;#showme {You got some %1.}} {0.2}
+    #line oneshot #ticker {autoget_%1} {#if {&{character[autogetContainer]}} {put all.%1 ${character[autogetContainer]}};get %1 corpse | prefix silent_get_%1_;#showme {You got some %1.}} {0.5}
 }
 {9}
 
