@@ -83,7 +83,7 @@
 #ACTION {^silent_get_%*_You get %* from %*.}
 {
     #unticker {autoget_%1};
-    #line oneshot #ticker {autoget_%1} {get %1 corpse | prefix silent_get_%1_;#showme {You got some %1.}} {0.2}
+    #line oneshot #ticker {autoget_%1} {#if {&{character[autogetContainer]}} {put all.%1 ${character[autogetContainer]}};get %1 corpse | prefix silent_get_%1_;#showme {You got some %1.}} {0.2}
 }
 {9}
 
@@ -115,7 +115,7 @@
 }
 {8}
 
-#ALIAS {^autoget {remove|add|clear}%*}
+#ALIAS {^autoget {remove|add|clear|container}%*}
 {
     #variable {tmpvar} {%2};
     #replace {tmpvar} {^ } {};
@@ -123,6 +123,18 @@
     {
         #unvariable {character[autogetList]};
         #showme {You will now get nothing from corpses on death automatically.}
+    };
+    #elseif {{%1} == {container}}
+    {
+        #if {{$tmpvar} == {}}
+        {
+            #showme {Put items in what container?}
+        };
+        #else
+        {
+            #variable {character[autogetContainer]} {$tmpvar};
+            #showme {You will now put items in your ${character[autogetContainer]}.}
+        }
     };
     #elseif {{%1} == {add}}
     {
@@ -172,7 +184,20 @@
             #showme {$i}
         }
     };
-    #showme {To set your autoget list, use autoget remove item, autoget add item, or autoget clear.}
+    #if {!&{character[autogetContainer]} && &{character[container]}}
+    {
+        #variable {character[autogetContainer]} {${character[container]}};
+        #showme {Autoget container automatically set to ${character[autogetContainer]}. You can change this with autoget container <name>.}
+    };
+    #elseif {!&{character[autogetContainer]} && !&{character[container]}}
+    {
+        #showme {You don't have an autoget container set and you don't have a normal container set. This means if you run out of inventory space when autogetting you're just SOL. You should either type autoget container <name of container> or type container <name of container> and then type autoget.}
+    };
+    #else
+    {
+        #showme {Your autoget container is set to ${character[autogetContainer]}. To change it type autoget container <name>.}
+    };
+    #showme {To set your autoget list, use autoget remove item, autoget add item, autoget container <name>, or autoget clear.}
 }
 {9}
 
