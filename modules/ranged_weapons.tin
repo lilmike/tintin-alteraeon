@@ -12,6 +12,19 @@
 }
 {8}
 
+#ACTION {^Autoreload container set to '%1'.$}
+{
+    #regexp {%1} {{.*} {.*}}
+    {
+        ammocontainer &2
+    };
+    #else
+    {
+        ammocontainer %1
+    }
+}
+{9}
+
 #ACTION {^You fire %1 at %2!$}
 {
     get $amo | prefix amo_
@@ -62,13 +75,11 @@
 {9}
 
 
-#ALIAS {^amocontainer %S$}
+#ALIAS {^ammocontainer %S$}
 {
     #variable {character[amoContainer]} {%1};
     #echo {Amo will now be stored in %1.}
 }
 {9}
-
-
 
 
