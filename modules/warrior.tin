@@ -422,6 +422,34 @@
     \wield %1
 }
 
+#ALIAS {^{a|c|l}x%s%?%d$}
+{
+    #nop {Three or optionally more random attacks from chosen combo type.};
+    #local {x} {};
+    #nop {Make sure we have 3 or more hits in the combo.};
+    #format {i} {%d} {%4};
+    #if {$i < 3}
+    {
+        #variable {i} {3}
+    };
+    #if {$i > 8}
+    {
+        #variable {i} {8}
+    };
+    #nop {remove 1 from i so we can end with an x.};
+    #math {i} {$i - 1};
+    #nop {construct the string for combo};
+    #local {count} {0};
+    #while {$count < $i}
+    {
+        #math {count} {$count + 1};
+        #variable {x} {${x}x | }
+    };
+    #nop {fool tintin into thinking it saw a combo request.};
+    #showme {silent_ Length $i \x7c $x x}
+}
+{7}
+
 #ALIAS {^{3|4|5|6|7|8|}{|a|c|l}combo%*}
 {
     #variable {combo[tmpvar]} {%3};
@@ -522,6 +550,21 @@
         }
     };
     tactics ${combo[type]} ${combo[length]} ${combo[search]} | grep x | prefix silent_ | head -n 1
+}
+{8}
+
+#ALIAS {^{a|c|l}x \x7B%1\x7D %s%3}
+{
+    #nop {target is %3.};
+    #variable {combo[target]} {%3};
+    #nop {Create a list from the arguments so can send the right number length for the combo.};
+    #list {i} {create} {%1};
+    #local {j} {0};
+    #list {i} {size} {j};
+    #local {i} {@strip_braces{%1}};
+    #replace {i} {;} { | };
+    #nop {fool tintin into thinking it saw a combo request.};
+    #showme {silent_ Length $j \x7c $i}
 }
 {8}
 
@@ -694,7 +737,18 @@
 }
 {9}
 
-
+#ALIAS {^{a|c|l}x %1}
+{
+    #nop {Create a list from the arguments so can send the right number length for the combo.};
+    #list {i} {create} {%1};
+    #local {j} {0};
+    #list {i} {size} {j};
+    #local {i} {@strip_braces{%1}};
+    #replace {i} {;} { | };
+    #nop {fool tintin into thinking it saw a combo request.};
+    #showme {silent_ Length $j \x7c $i}
+}
+{9}
 
 
 #VARIABLE {combo}
