@@ -418,6 +418,10 @@
             {
                 #switch {{%1}}
                 {
+                    #case {{cowsay}}
+                    {
+                        play channel_cowsay
+                    };
                     #case {{linux}}
                     {
                         play channel_linux

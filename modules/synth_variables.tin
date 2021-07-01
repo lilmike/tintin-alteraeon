@@ -5,7 +5,6 @@
 #VARIABLE         {chatChannel}  {"|sox -np synth .1 pink" vol 0.5}
 #VARIABLE         {clantellChannel}  {"|sox -np synth .2 saw D4 pl G3" "|sox -np synth .55 saw D3 pl G2" remix - phaser gain -3}
 #VARIABLE         {connectedSound}  {"|sox -np synth tri C6 fade 0 0.02 0.01" repeat 6}
-#VARIABLE         {cowsayChannel}  {"|sox -np synth .2 pl E2 pl G2" "|sox -np synth .55 pl C2 pl C3" remix - flanger gain -7}
 #VARIABLE         {cryptMessage}  {"|sox -np synth tri E2 sin B2 bend .2,1000,.1 remix - fade 0 1 0 tempo 2"}
 #VARIABLE         {exitFindSound}  {"|sox -np synth sine 480 sine 660 remix - fade 0 0.1 delay 0.1"}
 #VARIABLE         {giftExp}  {"|sox -np synth 0.2 pl E2" "| sox -np synth 0.2 pl E3" "| sox -np synth 0.2 pl G3" "| sox -np synth 0.2 pl A#2" "| sox -np synth 0.2 pl A2" gain -9}
