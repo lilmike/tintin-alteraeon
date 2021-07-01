@@ -299,7 +299,7 @@
     #variable {channelSilence} {true};
     Channel_Event all Your daily gift was:%1;
     notify-send Your daily gift was %1;
-    autobrag My daily gift was %1
+    autobrag My daily gift was %1;
     post $name received a daily gift of %1
 }
 {9}
