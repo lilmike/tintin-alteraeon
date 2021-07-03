@@ -26,7 +26,7 @@
 
 #ACTION {%1 {(?:reels|reel) in|(?:lands|land)} %3{\.|!}$}
 {
-    #if {{%3} == {%i%*kick%*}}
+    #if {{%3} == {%i{.*kick.*|.*punch.*}}}
     {
         #return
     };
