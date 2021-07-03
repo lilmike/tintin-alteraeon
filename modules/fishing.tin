@@ -43,10 +43,26 @@
 }
 {9}
 
-#ACTION {^After %1, %w {reel|reels} in {a|an} %5!$}
+#ACTION {^%S {reel|reels} in %3{!|\.}$}
 {
     play catch-fish;
     #if {{%1} == {You} && {$autojunk} == {true}}
+    {
+        #regexp {%3} {{.*} {.*}}
+        {
+            $junkType &2
+        };
+        #else
+        {
+            junk %3
+        }
+    }
+}
+{7}
+#ACTION {^After %1, %w {reel|reels} in {a|an} %5{!|\.}$}
+{
+    play catch-fish;
+    #if {{%2} == {you} && {$autojunk} == {true}}
     {
         #regexp {%5} {{.*} {.*}}
         {
