@@ -146,7 +146,7 @@
 	#class {gameData} {write} {$gameDataPath};
 	#if {&{name}}
 	{
-		#history {write} {$historyPath}
+		#line substitute variables #history {write} {$historyPath}
 	};
 	set ctrigger off | prefix silent_;
 	#send {quit}
