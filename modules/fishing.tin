@@ -59,7 +59,7 @@
     autobrag I went fishing and caught a %2 pound %1!;
     #if {%2 > 50}
     {
-        post $name went fishing and caught a %2 pound %1!
+        #regexp {%1} {{a|an} {.*}} {post $name went fishing and caught a %2 pound &2!}
     }
 }
 {9}
