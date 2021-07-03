@@ -167,7 +167,8 @@
         };
         #if {{${pkMode}} != {true}}
         {
-            #delay {0.5}{#if {{${auto[consume]}} == {true}}{control all consume corpse};#if {{${auto[bloodsacrifice]}} == {true} && {${character[inBattle]}} != {true}}{bsac corpse};#if {{${skillsAndSpells[corpsecutter]}} ==      {true} && {${character[inBattle]}} != {true}}{harvest components corpse};#if {{${skillsAndSpells[harvest bone]}} ==      {true} && {${character[inBattle]}} != {true}}{harvest bone corpse | grep -v has no useful bones remaining};#if {{${skillsAndSpells[salvage equipment]}} == {true} || &{battleScroll} && {${character[inBattle]}} != {true}}{search corpse | grep -v unique | prefix silent_};#if {{${auto[flesh]}} == {true}}{#if                     {{$makeNewFleshBeast} == {true}}{c flesh corpse};#else {lowhp | prefix silent_}};#if {&{lastReceivedExp}}{#unvariable {lastReceivedExp}};#if {&{position}}{$position};#if {&{character[autogetList]}} {#foreach {${character[autogetList][%*]}} {i} {get all.$i corpse | prefix silent_get_${i}_}}}
+            #nop {moved automated stuff to function since it is inside a delay and the code looks all kinds of fucked up on 1 line.};
+            #delay {0.5} {@on_death{%1}}
         }
     }
 }
@@ -356,9 +357,63 @@
 {9}
 
 
+#FUNCTION {on_death}
+{
+    #if {{${auto[consume]}} == {true}}
+    {
+        control all consume corpse
+    };
+    #if {{${auto[bloodsacrifice]}} == {true} && {${character[inBattle]}} != {true}}
+    {
+        bsac corpse
+    };
+    #if {{${skillsAndSpells[corpsecutter]}} ==      {true} && {${character[inBattle]}} != {true}}
+    {
+        harvest components corpse
+    };
+    #if {{${skillsAndSpells[harvest teeth]}} ==      {true} && {${character[inBattle]}} != {true}}
+    {
+        harvest teeth corpse | grep -v no
+    };
+    #if {{${skillsAndSpells[harvest bone]}} ==      {true} && {${character[inBattle]}} != {true}}
+    {
+        harvest bone corpse | grep -v has no useful bones remaining
+    };
+    #if {{${skillsAndSpells[salvage equipment]}} == {true} || &{battleScroll} && {${character[inBattle]}} != {true}}
+    {
+        search corpse | grep -v unique | prefix silent_
+    };
+    #if {{${auto[flesh]}} == {true}}
+    {
+        #if {{$makeNewFleshBeast} == {true}}
+        {
+            c flesh corpse
+        };
+        #else
+        {
+            lowhp | prefix silent_
+        }
+    };
+    #if {&{lastReceivedExp}}
+    {
+        #unvariable {lastReceivedExp}
+    };
+    #if {&{position}}
+    {
+        $position
+    };
+    #if {&{character[autogetList]}}
+    {
+        #foreach {${character[autogetList][%*]}} {i}
+        {
+            get all.$i corpse | prefix silent_get_${i}_
+        }
+    };
+    #return #nop
+}
+
 
 #GAG {^kxwt_%*}
-
 
 #SUBSTITUTE { ]$} { ]${exploredRoomString}} {1}
 
