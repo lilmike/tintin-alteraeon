@@ -24,7 +24,7 @@
 }
 {9}
 
-#ACTION {%1 {(?:reels|reel) in|(?:lands|land)} %3{\.|!}$}
+#ACTION {%1 {(?:reels|reel) in|(?:lands|land)}{?!.*kick.*} %3{\.|!}$}
 {
     play catch-fish;
     #if {{%1} == {%i%*you%*}}
