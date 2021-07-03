@@ -1,85 +1,109 @@
 #ACTION {%1 {reels|reel} in %2 line and {recasts|recast} it.$}
 {
-	play fishing-cast
+    play fishing-cast
 }
 {8}
 
 #ACTION {^You decide to reel in your line and take a break for a while.$}
 {
-	play stop-fishing;
-	#delay {1d4} {#if {1d2 == 1} {fish};#else {fis}}
+    play stop-fishing;
+    #delay {1d4} {#if {1d2 == 1} {fish};#else {fis}}
 }
 {8}
 
 #ACTION {^Your hook gets stuck on something, and you have to break the line and stop fishing.$}
 {
-	play stop-fishing;
-	#delay {1d4} {#if {1d2 == 1} {fish};#else {fis}}
+    play stop-fishing;
+    #delay {1d4} {#if {1d2 == 1} {fish};#else {fis}}
 }
 {8}
 
 #ACTION {%1 hook gets caught, forcing {him|her|it} to break the line.$}
 {
-	play fish-line-break
-}
-{9}
-
-#ACTION {%1 {gets|get} a bite, and after a little effort {you manage|manages} to reel in %4.$}
-{
-	play catch-fish;
-	#if {{%1} == {You} && {$autojunk} == {true}}
-	{
-		#regexp {%4} {{.*} {.*}} {$junkType &2}
-	}
+    play fish-line-break
 }
 {9}
 
 #ACTION {%1 {reels|reel} in %3.$}
 {
-	play catch-fish;
-	#if {{%1} == {You}}
-	{
-		#regexp {%3} {{.*} {.*}} {#if {{&2} != {{bushes|while}} && {$autojunk} == {true}} {$junkType &2};#if {{&2} == {{bushes|while}}} {#delay {1d3} {\!fis}}}
-	}
+    play catch-fish;
+    #if {{%1} == {You}}
+    {
+        #regexp {%3} {{.*} {.*}}
+        {
+            #if {{&2} != {{bushes|while}} && {$autojunk} == {true}} {$junkType &2};#if {{&2} == {{bushes|while}}} {#delay {1d3} {\!fis}}
+        }
+    }
 }
 {9}
 
 #ACTION {%1 {throws out a line and starts|start} fishing.$}
 {
-	play fishing-cast
+    play fishing-cast
 }
 {9}
 
-#ACTION {^After a big fight, %1 {reels|reel} in %3.$}
+#ACTION {^After %1, %w {reel|reels} in {a|an} %5!$}
 {
-	play catch-fish;
-	#if {{%1} == {you} && {$autojunk} == {true}}
-	{
-		#regexp {%3} {{.*} {.*}} {$junkType &2}
-	}
+    play catch-fish;
+    #if {{%1} == {You} && {$autojunk} == {true}}
+    {
+        #regexp {%5} {{.*} {.*}}
+        {
+            $junkType &2
+        };
+        #else
+        {
+            junk %5
+        }
+    }
+}
+{9}
+
+#ACTION {^Congratulations, %1 weighs %d pounds, your new personal record!$}
+{
+    autobrag I went fishing and caught a %2 pound %1!;
+    #if {%2 > 50}
+    {
+        post $name went fishing and caught a %2 pound %1!
+    }
 }
 {9}
 
 #ACTION {^The fish is too big for your line, and it snaps!$}
 {
-	play fish-line-break
+    play fish-line-break
+}
+{9}
+
+#ACTION {^The slack goes out of your line as something strikes your hook. You've got a bite!$}
+{
+    #nop {Hook name: fish_bite};
+    #nop {args: None.};
+    #local {delayTime1} {};
+    #local {delayTime2} {};
+    #math {delayTime[1]} {1d2 - 1};
+    #math {delayTime[1]} {1d9};
+    #delay {${delayTime1}.${delayTime2}} {@command{ree;reel}};
+    @do_hook{fish_bite}
 }
 {9}
 
 #ACTION {^You get the feeling that this spot is fished out.$}
 {
-	synth_play notificationSound
+    synth_play notificationSound
 }
 {9}
 
 #ACTION {^You {finish reeling in your line and stop fishing|are no longer fishing}.$}
 {
-	play stop-fishing
+    play stop-fishing
 }
 {9}
 
-#ACTION {^{Something REALLY big catches your line, and breaks it!|Your hook gets stuck on something, and you have to break the line.}$}
+#ACTION {^{Something REALLY big catches your line, and breaks it!|Your hook gets stuck on something, and you have to break the line and stop fishing.}$}
 {
-	play fish-line-break
+    play fish-line-break
 }
 {9}
+
