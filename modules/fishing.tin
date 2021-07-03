@@ -33,11 +33,11 @@
         {
             #regexp {%3} {{.*} {.*}}
             {
-                $junkType &2
+                ${auto[junkType]} &2
             };
             #else
             {
-                $junkType %3
+                ${auto[junkType]} %3
             }
         }
     }
