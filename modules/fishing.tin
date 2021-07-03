@@ -29,9 +29,16 @@
     play catch-fish;
     #if {{%1} == {%i%*you%*}}
     {
-        #regexp {%3} {{.*} {.*}}
+        #if {{$auto[junk]} == {true}}
         {
-            #if {{$autojunk} == {true}} {$junkType &2}
+            #regexp {%3} {{.*} {.*}}
+            {
+                $junkType &2
+            };
+            #else
+            {
+                $junkType %3
+            }
         }
     }
 }
@@ -89,4 +96,7 @@
     play fish-line-break
 }
 {9}
+
+
+
 
