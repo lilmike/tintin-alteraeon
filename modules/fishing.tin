@@ -24,14 +24,14 @@
 }
 {9}
 
-#ACTION {%1 {reels|reel} in %3.$}
+#ACTION {%1 {(?:reels|reel) in|(?:lands|land) a} %3.$}
 {
     play catch-fish;
-    #if {{%1} == {You}}
+    #if {{%1} == {%i%*you%*}}
     {
         #regexp {%3} {{.*} {.*}}
         {
-            #if {{&2} != {{bushes|while}} && {$autojunk} == {true}} {$junkType &2};#if {{&2} == {{bushes|while}}} {#delay {1d3} {\!fis}}
+            #if {{$autojunk} == {true}} {$junkType &2}
         }
     }
 }
@@ -40,23 +40,6 @@
 #ACTION {%1 {throws out a line and starts|start} fishing.$}
 {
     play fishing-cast
-}
-{9}
-
-#ACTION {^After %1, %w {reel|reels} in {a|an} %5!$}
-{
-    play catch-fish;
-    #if {{%1} == {You} && {$autojunk} == {true}}
-    {
-        #regexp {%5} {{.*} {.*}}
-        {
-            $junkType &2
-        };
-        #else
-        {
-            junk %5
-        }
-    }
 }
 {9}
 
