@@ -29,16 +29,20 @@
     play catch-fish;
     #if {{%1} == {%i%*you%*}}
     {
-        #if {{$auto[junk]} == {true}}
+        #if {{$auto[junk]}}
         {
-            #regexp {%3} {{.*} {.*}}
-            {
-                ${auto[junkType]} &2
-            };
-            #else
-            {
-                ${auto[junkType]} %3
-            }
+            == {true}
+        }
+    };
+    #else
+    {
+        #regexp {%3} {{.*} {.*}}
+        {
+            ${auto[junkType]} &2
+        };
+        #else
+        {
+            ${auto[junkType]} %3
         }
     }
 }
