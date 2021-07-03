@@ -27,7 +27,7 @@
 
 #ACTION {^You fire %1 at %2!$}
 {
-    get $amo | prefix amo_
+    \get $amo | prefix amo_
 }
 {9}
 
@@ -35,7 +35,7 @@
 {
     #nop {Hook name: archery_miss};
     #nop {Hook args: target that was missed.};
-    get $amo | prefix amo_;
+    \get $amo | prefix amo_;
     @do_hook{archery_miss;%2}
 }
 {9}
