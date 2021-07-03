@@ -24,20 +24,20 @@
 }
 {9}
 
-#ACTION {%1 {(?:reels|reel) in|(?:lands|land)}{?!.*kick.*} %3{\.|!}$}
+#ACTION {%1 {(?:reels|reel) in|(?:lands|land)}{?!.*kick.*} %*{\.|!}$}
 {
     play catch-fish;
     #if {{%1} == {%i%*you%*}}
     {
         #if {{${auto[junk]}} == {true}}
         {
-            #regexp {%3} {{.*} {.*}}
+            #regexp {%4} {{.*} {.*}}
             {
                 ${auto[junkType]} &2
             };
             #else
             {
-                ${auto[junkType]} %3
+                ${auto[junkType]} %4
             }
         }
     }
