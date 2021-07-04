@@ -406,7 +406,7 @@
     {
         #foreach {${character[autogetList][%*]}} {i}
         {
-            get all.$i corpse | prefix silent_get_${i}_
+            #send {get all.$i corpse | prefix silent_get_${i}_}
         }
     };
     #return #nop
