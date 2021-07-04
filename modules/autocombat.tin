@@ -14,7 +14,7 @@
 }
 {9}
 
-#ACTION {^{If you really want to cast that on yourself, you must use your name\.|They are no longer here\.|You don't have enough mana\.|\w+ who\?|\w+ whom\?|You are not currently in battle\.  What enemy do you want to cast it on\?|You aren't fighting anyone\.}$}
+#ACTION {^{If you really want to cast that on yourself, you must use your name\.|They are no longer here\.|You don't have enough mana\.|\w+ who\?|\w+ whom\?|You are not currently in battle\.  What enemy do you want to cast it on\?|You aren't fighting anyone\.|You do not see that character here\.}$}
 {
 	#variable {autocombatPaused} {1};
 	#if {{%0} == {You don't have enough mana.}}
