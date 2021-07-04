@@ -1,13 +1,13 @@
-#ACTION {^amo_You get %*${amo}\.$}
+#ACTION {^ammo_You get %*${ammo}\.$}
 {
     #line {gag};
     #if {{${auto[store]}} == {true}}
     {
-        #if {!&{character[amoContainer]}}
+        #if {!&{character[ammoContainer]}}
         {
-            #variable {character[amoContainer]} {${character[container]}}
+            #variable {character[ammoContainer]} {${character[container]}}
         };
-        put $amo ${character[amoContainer]} | grep -v You put
+        put $ammo ${character[ammoContainer]} | grep -v You put
     }
 }
 {8}
@@ -27,7 +27,7 @@
 
 #ACTION {^You fire %1 at %2!$}
 {
-    \get $amo | prefix amo_
+    #send {get $ammo | prefix ammo_}
 }
 {9}
 
@@ -35,7 +35,7 @@
 {
     #nop {Hook name: archery_miss};
     #nop {Hook args: target that was missed.};
-    \get $amo | prefix amo_;
+    #send {get $ammo | prefix ammo_};
     @do_hook{archery_miss;%2}
 }
 {9}
@@ -44,16 +44,16 @@
 {
     #regexp {%2} {{.*} {.*}}
     {
-        #variable {amo} {&2}
+        #variable {ammo} {&2}
     };
     #else
     {
-        #variable {amo} {%2}
+        #variable {ammo} {%2}
     }
 }
 {9}
 
-#ACTION {^amo_%*}
+#ACTION {^ammo_%*}
 {
     #line {gag}
 }
@@ -63,7 +63,7 @@
 {
     #if {{${auto[store]}} == {true}}
     {
-        get $amo ${character[amoContainer]} | grep nospam
+        #send {get $ammo ${character[ammoContainer]} | grep nospam}
     };
     #regexp {%2} {{.*} {.*}}
     {
@@ -80,8 +80,8 @@
 
 #ALIAS {^ammocontainer %S$}
 {
-    #variable {character[amoContainer]} {%1};
-    #echo {Amo will now be stored in %1.}
+    #variable {character[ammoContainer]} {%1};
+    #echo {Ammo will now be stored in %1.}
 }
 {9}
 
