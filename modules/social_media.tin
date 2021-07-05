@@ -202,7 +202,7 @@
             #showme {Achievements will no longer be posted to Twitter.}
         }
     };
-    #if {{%0} != {no%*}}
+    #if {{%0} != {no%*} && ${character[level]} < 30}
     {
         #showme {Warning: Enabling this feature below level 30 may be excessively spammy for your %0 followers.} 
     }
