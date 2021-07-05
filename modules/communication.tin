@@ -164,7 +164,7 @@
 
 #ACTION {^*** YOU SUCCESSFULLY HUNTED ALL SIX KINDS OF SNIPE! YOU RECEIVE %d SNIPE HUNT EXP! ***$}
 {
-    autobrag You successfully hunted all six kinds of snipe! You received %1 snipe hunt exp!
+    autobrag You successfully hunted all six kinds of snipe! You received %1 snipe hunt exp!;
     post $name successfully hunted all six kinds of snipe and received %1 snipe hunt experience!
 }
 {9}
