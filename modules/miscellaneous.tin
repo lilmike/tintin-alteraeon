@@ -806,7 +806,7 @@
 #SUBSTITUTE       {^%sjunk_%2}  { %2}  {5}
 #SUBSTITUTE       {^junk_%1}  {%1}  {5}
 #SUBSTITUTE       {tracking_[%1] }  {}  {5}
-#TICKER           {historyWriter}  {#if {&{name}} {#history {write} {$historyPath}}}                        {90}
+#TICKER           {historyWriter}  {#if {&{name}} {#line substitute variables #history {write} {$historyPath}}}                        {10}
 #VARIABLE         {bufferLock}  {off}
 #VARIABLE         {castTankMinion}  {true}
 #VARIABLE         {lastHpAlert}  {}

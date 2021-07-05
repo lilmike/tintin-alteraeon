@@ -167,7 +167,8 @@
         };
         #if {{${pkMode}} != {true}}
         {
-            #delay {0.5}{#if {{${auto[consume]}} == {true}}{control all consume corpse};#if {{${auto[bloodsacrifice]}} == {true} && {${character[inBattle]}} != {true}}{bsac corpse};#if {{${skillsAndSpells[corpsecutter]}} ==      {true} && {${character[inBattle]}} != {true}}{harvest components corpse};#if {{${skillsAndSpells[harvest bone]}} ==      {true} && {${character[inBattle]}} != {true}}{harvest bone corpse | grep -v has no useful bones remaining};#if {{${skillsAndSpells[salvage equipment]}} == {true} || &{battleScroll} && {${character[inBattle]}} != {true}}{search corpse | grep -v unique | prefix silent_};#if {{${auto[flesh]}} == {true}}{#if                     {{$makeNewFleshBeast} == {true}}{c flesh corpse};#else {lowhp | prefix silent_}};#if {&{lastReceivedExp}}{#unvariable {lastReceivedExp}};#if {&{position}}{$position}}
+            #nop {moved automated stuff to function since it is inside a delay and the code looks all kinds of fucked up on 1 line.};
+            #delay {0.5} {@on_death{%1}}
         }
     }
 }
@@ -179,7 +180,7 @@
     #variable {gameDataPath} {${HOME}/%1};
     #variable {characterModulePath} {${HOME}/%1.modules};
     #format {name} {%n} {%1};
-    #variable {historyPath} {${HOME}/%1.history};
+    #variable {historyPath} {${HOME}/${name}.history};
     #script {if [ -f "$gameDataPath" ]; then echo "#class {gameData} {read} {$gameDataPath}";fi;if [ -f "$historyPath" ] ; then echo "#history {read} {$historyPath}";fi};
     #script {if [ -d "$characterModulePath" ]; then for module in $characterModulePath/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
     #script {if [ -d "$HOME/modules" ]; then for module in $HOME/modules/*.tin ; do echo "#class {character_$(basename "$module" .tin)} {read} {$module}";done;fi};
@@ -323,7 +324,8 @@
     set ctrigger on | prefix silent_;
     set telnetga off | prefix silent_;
     SHOW_VERSION;
-    %connect cowsay | prefix silent_
+    %connect cowsay | prefix silent_;
+    whoami | grep You are a | prefix silent_
 }
 {9}
 
@@ -356,9 +358,63 @@
 {9}
 
 
+#FUNCTION {on_death}
+{
+    #if {{${auto[consume]}} == {true}}
+    {
+        control all consume corpse
+    };
+    #if {{${auto[bloodsacrifice]}} == {true} && {${character[inBattle]}} != {true}}
+    {
+        bsac corpse
+    };
+    #if {{${skillsAndSpells[corpsecutter]}} ==      {true} && {${character[inBattle]}} != {true}}
+    {
+        harvest components corpse
+    };
+    #if {{${skillsAndSpells[harvest teeth]}} ==      {true} && {${character[inBattle]}} != {true}}
+    {
+        harvest teeth corpse | grep -v You don't see any usable teeth here. | grep -v unwise
+    };
+    #if {{${skillsAndSpells[harvest bone]}} ==      {true} && {${character[inBattle]}} != {true}}
+    {
+        harvest bone corpse | grep -v has no useful bones remaining
+    };
+    #if {{${skillsAndSpells[salvage equipment]}} == {true} || &{battleScroll} && {${character[inBattle]}} != {true}}
+    {
+        search corpse | grep -v unique | prefix silent_
+    };
+    #if {{${auto[flesh]}} == {true}}
+    {
+        #if {{$makeNewFleshBeast} == {true}}
+        {
+            c flesh corpse
+        };
+        #else
+        {
+            lowhp | prefix silent_
+        }
+    };
+    #if {&{lastReceivedExp}}
+    {
+        #unvariable {lastReceivedExp}
+    };
+    #if {&{position}}
+    {
+        $position
+    };
+    #if {&{character[autogetList]}}
+    {
+        #foreach {${character[autogetList][%*]}} {i}
+        {
+            #send {get all.$i corpse | prefix silent_get_${i}_}
+        }
+    };
+    #return #nop
+}
+
 
 #GAG {^kxwt_%*}
-
 
 #SUBSTITUTE { ]$} { ]${exploredRoomString}} {1}
 

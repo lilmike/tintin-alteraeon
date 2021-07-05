@@ -5,13 +5,12 @@
 #VARIABLE         {chatChannel}  {"|sox -np synth .1 pink" vol 0.5}
 #VARIABLE         {clantellChannel}  {"|sox -np synth .2 saw D4 pl G3" "|sox -np synth .55 saw D3 pl G2" remix - phaser gain -3}
 #VARIABLE         {connectedSound}  {"|sox -np synth tri C6 fade 0 0.02 0.01" repeat 6}
-#VARIABLE         {cowsayChannel}  {"|sox -np synth .2 pl E2 pl G2" "|sox -np synth .55 pl C2 pl C3" remix - flanger gain -7}
 #VARIABLE         {cryptMessage}  {"|sox -np synth tri E2 sin B2 bend .2,1000,.1 remix - fade 0 1 0 tempo 2"}
 #VARIABLE         {exitFindSound}  {"|sox -np synth sine 480 sine 660 remix - fade 0 0.1 delay 0.1"}
 #VARIABLE         {giftExp}  {"|sox -np synth 0.2 pl E2" "| sox -np synth 0.2 pl E3" "| sox -np synth 0.2 pl G3" "| sox -np synth 0.2 pl A#2" "| sox -np synth 0.2 pl A2" gain -9}
 #VARIABLE         {giftGold}  {"|sox -np synth pl A2 fade 0 0.3 0.05" "|sox -np synth pl A3 fade 0 0.25 0.05" "|sox -np synth 0.095 pl E3" "|sox -np synth pl A2 fade 0 0.3 0.09" "|sox -np synth pl E2 fade 0 0.3 0.05" "|sox -np synth pl G2 fade 0 0.3 0.05" "|sox -np synth pl A2 fade 0 0.3 0.05" "|sox -np synth pl C3 fade 0 0.3 0.05" gain -7}
 #VARIABLE         {gossipChannel}  {"|sox -np synth .25 sin 440:480 sin 480:520 remix - reverse norm -8 pitch -1000"}
-#VARIABLE         {groupWarnSound}  {"|sox -np synth .15 sq E2:E5" "|sox -np synth .15 sq E5:E2" gain -20}
+#VARIABLE         {groupwarnChannel}  {"|sox -np synth .15 sq E2:E5" "|sox -np synth .15 sq E5:E2" gain -20}
 #VARIABLE         {grouptellChannel}  {"|sox -np synth .2 sq B3 tri E3" "|sox -np synth .55 tri B2 sq E2" remix - phaser gain -3}
 #VARIABLE         {hp0}  {"|sox -np synth sq C#5 sq D#5 sq F#5 sq A5 sq C#6" remix - fade 0 5.5 5 remix v0.9 v0.4 pitch -400}
 #VARIABLE         {hp1}  {"|sox -np synth sq D#3 sq B3 sq C#4 sq F4 sq A4 remix - fade p 0 .7 .4" remix v0.9 v0.4}

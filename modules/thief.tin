@@ -196,7 +196,7 @@
 }
 {5}
 
-#ALIAS {^get %S %S$}
+#ALIAS {^get {?:(?!all\.)}%S %2$}
 {
 	#if {{${skillsAndSpells[palm]}} == {true} && {$inBattle} != {true} && {%1} != {all} && {$position} != {sleep}}
 	{

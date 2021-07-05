@@ -164,33 +164,42 @@
 }
 {9}
 
-#ACTION {^There is a distant SNAP, and a clay %* flies through the air.$}
+#ACTION {^There is a distant SNAP, and a clay %1 flies through the air.$}
 {
-    #if {{${character[cspam]}} == {true}}
+    #nop {hook archery_target};
+    #nop {arg: target type};
+#if {{${character[cspam]}} == {true}}
     {
         #line gag
     };
-    play pigeon
+    play pigeon;
+    @do_hook{archery_target;%1}
 }
 {9}
 
-#ACTION {^There is a sharp SNAP, and a{?:n?} %* dummy pops up a short distance down range from you.$}
+#ACTION {^There is a sharp SNAP, and a{?:n?} %1 dummy pops up a short distance down range from you.$}
 {
+    #nop {hook archery_target};
+    #nop {arg: target type};
     #if {{${character[cspam]}} == {true}}
     {
         #line gag
     };
-    play dummy
+    play dummy;
+    @do_hook{archery_target;%1 dummy}
 }
 {9}
 
-#ACTION {^There is a sharp SNAP, and a{?:n?} %* target pops up in the middle of the archery range.$}
+#ACTION {^There is a sharp SNAP, and a{?:n?} %1 target pops up in the middle of the archery range.$}
 {
+    #nop {hook archery_target};
+    #nop {arg: target type};
     #if {{${character[cspam]}} == {true}}
     {
         #line gag
     };
-    play target
+    play target;
+    @do_hook{archery_target;%1 target}
 }
 {9}
 

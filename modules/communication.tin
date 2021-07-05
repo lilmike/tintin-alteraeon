@@ -98,13 +98,15 @@
 
 #ACTION {^%w {tell|tells|warn|warns} the {clan|group}, '%4'$}
 {
-    #nop {Hook name is {clan|group}tell.};
+    #nop {Hook name is {clan|group}{tell|warn}.};
     #nop {Hook args %1 Name.};
     #nop {Hook args %4 message to channel.};
-    Channel_Event %3tell %0;
+    #local {postfix} {%2};
+    #replace {postfix} {s$} {};
+    Channel_Event %3$postfix %0;
     #if {{%1} != {You}}
     {
-        @do_hook{%3tell;%1;%4}
+        @do_hook{%3$postfix;%1;%4}
     }
 }
 {9}
@@ -164,7 +166,8 @@
 
 #ACTION {^*** YOU SUCCESSFULLY HUNTED ALL SIX KINDS OF SNIPE! YOU RECEIVE %d SNIPE HUNT EXP! ***$}
 {
-    autobrag You successfully hunted all six kinds of snipe! You received %1 snipe hunt exp!
+    autobrag You successfully hunted all six kinds of snipe! You received %1 snipe hunt exp!;
+    post $name successfully hunted all six kinds of snipe and received %1 snipe hunt experience!
 }
 {9}
 
@@ -214,11 +217,13 @@
     #if {${fishingWin}}
     {
         autobrag I won a fishing durby! $fishingXp xp and %1 gold!;
+        post $name won a fishing durby! $fishingXp xp and %1 gold!;
         #variable {fishingWin} {0}
     };
     #elseif {${archeryWin}}
     {
         autobrag I won an archery contest with $archeryPoints points, gaining $archeryXp xp and %1 gold!;
+        post $name won an archery contest with $archeryPoints points, gaining $archeryXp xp and %1 gold!;
         #variable {archeryWin} {0}
     }
 }
@@ -296,7 +301,8 @@
     #variable {channelSilence} {true};
     Channel_Event all Your daily gift was:%1;
     notify-send Your daily gift was %1;
-    autobrag My daily gift was %1
+    autobrag My daily gift was %1;
+    post $name received a daily gift of %1
 }
 {9}
 
@@ -414,6 +420,10 @@
             {
                 #switch {{%1}}
                 {
+                    #case {{cowsay}}
+                    {
+                        play channel_cowsay
+                    };
                     #case {{linux}}
                     {
                         play channel_linux
@@ -575,6 +585,7 @@
     }
 }
 {9}
+
 
 
 #FUNCTION {decrypt}
@@ -835,6 +846,7 @@
     #variable {channelBufferIndex} {1};
     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
 }
+
 
 
 #SUBSTITUTE {^\^} {} {9}
