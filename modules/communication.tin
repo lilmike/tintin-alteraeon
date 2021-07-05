@@ -98,13 +98,15 @@
 
 #ACTION {^%w {tell|tells|warn|warns} the {clan|group}, '%4'$}
 {
-    #nop {Hook name is {clan|group}tell.};
+    #nop {Hook name is {clan|group}{tell|warn}.};
     #nop {Hook args %1 Name.};
     #nop {Hook args %4 message to channel.};
-    Channel_Event %3tell %0;
+    #local {postfix} {%2};
+    #replace {postfix} {s$} {};
+    Channel_Event %3$postfix %0;
     #if {{%1} != {You}}
     {
-        @do_hook{%3tell;%1;%4}
+        @do_hook{%3$postfix;%1;%4}
     }
 }
 {9}
@@ -585,6 +587,7 @@
 {9}
 
 
+
 #FUNCTION {decrypt}
 {
     #return @encrypt{%1;d}
@@ -843,6 +846,7 @@
     #variable {channelBufferIndex} {1};
     #showme {Channel buffer set to $channelBuffer[$channelBufferIndex]}
 }
+
 
 
 #SUBSTITUTE {^\^} {} {9}
