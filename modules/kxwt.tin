@@ -373,7 +373,7 @@
     };
     #if {{${skillsAndSpells[harvest teeth]}} ==      {true} && {${character[inBattle]}} != {true}}
     {
-        harvest teeth corpse | grep -v no
+        harvest teeth corpse | grep -v You don't see any usable teeth here. | grep -v unwise
     };
     #if {{${skillsAndSpells[harvest bone]}} ==      {true} && {${character[inBattle]}} != {true}}
     {
