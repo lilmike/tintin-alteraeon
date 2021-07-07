@@ -125,6 +125,11 @@
 
 #ALIAS {^post %1}
 {
+    #nop {Try to reduce flood posting to social media.};
+    #if {{${spam[socialMedia]}} == {true}}
+    {
+        #return #nop
+    };
     #if {{$mastodon} == {true}}
     {
         #script {dummyvar} {toot post --quiet -v public -p "Alter Aeon" "%1 http://www.alteraeon.com/" &> /dev/null&}
@@ -153,6 +158,14 @@
             #variable {gnuSocialMudGroup} {muds}
         };
         #system {curl -s -u "$gusername:$gpassword" --data-binary status="$(echo -e "%1") #AlterAeon !$gnuSocialMudGroup" -d source="tintin-alteraeon" $gurl/api/statuses/update.xml &> /dev/null&}
+    };
+    #if {${character[level]} < 30}
+    {
+     spamset socialMedia 1800
+    };
+    #else
+    {
+     spamset socialMedia 300
     }
 }
 {9}
@@ -201,10 +214,6 @@
             #unvariable {twitter};
             #showme {Achievements will no longer be posted to Twitter.}
         }
-    };
-    #if {{%0} != {no%*}}
-    {
-        #showme {Warning: Enabling this feature below level 30 may be excessively spammy for your %0 followers.} 
     }
 }
 {9}

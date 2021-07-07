@@ -51,6 +51,7 @@
 #TAB {autopoints}
 #TAB {autorecall}
 #TAB {autorefresh}
+#TAB {autoreload}
 #TAB {autoremovepoison}
 #TAB {autoretreat}
 #TAB {autoriposte}
