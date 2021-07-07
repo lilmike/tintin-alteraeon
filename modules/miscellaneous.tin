@@ -463,14 +463,14 @@
 		#unvariable {dayOfWeek};
 		#local {time} {};
 		#format {time} {%T} {};
-		#if {${time}-${character[lastCamel]} >= 7200}
+		#if {${time}-${character[lastCamel]} >= 9000}
 		{
 			#showme {It's time to kill a camel!}
 		};
 		#else
 		{
 			#local {neededTime} {};
-			#math {neededTime} {${character[lastCamel]}+7200};
+			#math {neededTime} {${character[lastCamel]}+9000};
 			#local {leftoverTime} {};
 			#math {leftoverTime} {${neededTime}-${time}};
 			#echo {You have %m hours, %m minutes, and %m seconds until you can kill a camel again.} {$leftoverTime/3600} {$leftoverTime%%3600/60} {$leftoverTime%%60}
