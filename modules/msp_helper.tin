@@ -26,12 +26,6 @@
 }
 {9}
 
-#ACTION {%1 is near death!$}
-{
-    play near-death
-}
-{9}
-
 #ACTION {%w enters {an|a|the} %3 and disappears.$}
 {
     #regexp {%3} {{.*} portal {.*}}

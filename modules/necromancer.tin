@@ -162,6 +162,24 @@
 }
 {8}
 
+#ACTION {%1 is near death!$}
+{
+    #if {{${skillsAndSpells[soulsteal]}} == {true} && ${character[currentMana]} >= 15}
+    {
+        #if {{$lastSoulsteal} != {%1}}
+        {
+            #list {noSoulstealMobsList} {find} {%1} {noSoulstealIndex};
+            #if {$noSoulstealIndex == 0}
+            {
+                @command{c so;cast soulsteal}
+            }
+        };
+        #variable {lastSoulsteal} {%1}
+    };
+    play near-death
+}
+{9}
+
 #ACTION {^%sYou add A %1 to your group.$}
 {
     #if {{%1} == {zombie} || {%1} == {ghoul} || {%1} == {mummy} || {%1} == {vampire}}
@@ -1546,11 +1564,9 @@
 {9}
 
 
-
 #GAG {^Looks like the corpse of %1 is too damaged for you to use.$}
 #GAG {^None of your minions seem hungry at the moment.$}
 #GAG {^{boneguardian|metal|woad}{C|c}ounter_%*}
-
 
 #VARIABLE {boneFortBreakCounter} {0}
 #VARIABLE {fullforge} {}
