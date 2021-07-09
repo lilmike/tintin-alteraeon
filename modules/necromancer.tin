@@ -1511,7 +1511,7 @@
     #else
     {
         #showme {You will now automatically create new skeletal minions upon their death.};
-        #variable {auto[skeleton]} {}
+        #variable {auto[skeleton]} {true}
     }
 }
 {9}
