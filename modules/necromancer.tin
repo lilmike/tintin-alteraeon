@@ -215,7 +215,7 @@
 }
 {9}
 
-#ACTION {^A {skeletal mage|skeletal spider|skeleton} {starts|stops} following you.}
+#ACTION {^A {.+ skeletal knight|.*skeletal lich|skeletal mage|skeletal spider|skeleton} {starts|stops} following you.}
 {
     #if {{%2} == {starts}}
     {
@@ -232,6 +232,24 @@
         {
             get ${auto[skeletonStone]} ${character[container]} | grep nospam;
             vcast skeletal lich
+        }
+    };
+    #else
+    {
+        #if {{${auto[skeleton]}} == {true}}
+        {
+            #if {{%1} == {{.+} skeletal knight} || {%1} == {skeleton}}
+            {
+                vcast skele war
+            };
+            #elseif {{%1} == {{.*}skeletal lich} || {%1} == {skeletal mage}}
+            {
+                vcast skel mage
+            };
+            #else
+            {
+                vcast skel spid
+            }
         }
     }
 }
@@ -1039,7 +1057,7 @@
 }
 {8}
 
-#ALIAS {^{c|ca|cas|cast} %s{sk|ske|skel|skele|skelet|skeleta|skeletal} %s{m|ma|mag|mage|w|wa|war|warr|warri|warrio|warrior}$}
+#ALIAS {^{vc|vca|vcas|vcast|c|ca|cas|cast} %s{sk|ske|skel|skele|skelet|skeleta|skeletal} %s{m|ma|mag|mage|w|wa|war|warr|warri|warrio|warrior}$}
 {
     #if {!&{auto[defaultSkeletalMage]}}
     {
@@ -1461,6 +1479,21 @@
     {
         #variable {auto[%2]} {false};
         #echo {auto%2 disabled.}
+    }
+}
+{9}
+
+#ALIAS {^{no|}autoskeleton$}
+{
+    #if {{%1} == {no}}
+    {
+        #showme {You will no longer create skeletal minions on their death.};
+        #unvariable {auto[skeleton]}
+    };
+    #else
+    {
+        #showme {You will now automatically create new skeletal minions upon their death.};
+        #variable {auto[skeleton]} {}
     }
 }
 {9}
