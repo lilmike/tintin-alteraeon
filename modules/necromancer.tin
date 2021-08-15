@@ -33,18 +33,6 @@
 
 #ACTION {%1 is mortally wounded, and will die soon if not aided.$}
 {
-    #if {{${skillsAndSpells[soulsteal]}} == {true} && ${character[currentMana]} >= 15}
-    {
-        #if {{$lastSoulsteal} != {%1}}
-        {
-            #list {noSoulstealMobsList} {find} {%1} {noSoulstealIndex};
-            #if {$noSoulstealIndex == 0}
-            {
-                @command{c so;cast soulsteal}
-            }
-        };
-        #variable {lastSoulsteal} {%1}
-    };
     seq_play mortally-wounded;
     #if {{${character[cspam]}} == {true}}
     {
