@@ -4,6 +4,8 @@
 }
 
 
+#TAB {exitfind}
+#TAB {noexitfind}
 #TAB {autoberserk}
 #TAB {autobid}
 #TAB {autobloodsacrifice}
