@@ -707,7 +707,7 @@
 
 #ACTION {^You release %1 from your control.$}
 {
-    #variable {client[releasing]} {true}
+    spamset {client[releasing]} {true}
 }
 {9}
 
