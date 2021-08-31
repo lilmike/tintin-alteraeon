@@ -1,8 +1,11 @@
 #ACTION {^You jump to {assist|attack} %*!$}
 {
+	#Nop {Hook name: join_combat};
+	#Nop {Hook args: none};
 	#unticker {autocombatDelay};
 	#unvariable {autocombatPaused};
-	#delay {autocombatDelay} {#var {autocombatPaused} {1}} {60}
+	#delay {autocombatDelay} {#var {autocombatPaused} {1}} {60};
+	@do_hook{join_combat}
 }
 {9}
 
