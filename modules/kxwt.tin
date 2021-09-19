@@ -63,7 +63,7 @@
             #delay {levelTimer} {#variable {justLeveled} {false}} {90}
         }
     };
-    #if {{${auto[buypractice]}} == {true} && {${spam[practice}} != {true} && %1 >= ${auto[buyPracticeExperience]}]}
+    #if {{${auto[buypractice]}} == {true} && !@is_spammed{practice} && %1 >= ${auto[buyPracticeExperience]}]}
     {
         train practice;
         spamset practice

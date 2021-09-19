@@ -126,7 +126,7 @@
 #ALIAS {^post %1}
 {
     #nop {Try to reduce flood posting to social media.};
-    #if {{${spam[socialMedia]}} == {true}}
+    #if {@is_spammed{socialMedia}}
     {
         #return #nop
     };

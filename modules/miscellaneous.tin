@@ -178,7 +178,7 @@
 
 #ACTION {^You {hold|wear|wield}%*}
 {
-    #if {{${spam[stats]}} != {true}}
+    #if {!@is_spammed{stats}}
     {
         spamset stats;
         show stats | prefix silent_;

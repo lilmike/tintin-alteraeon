@@ -78,7 +78,7 @@
 
 #ACTION {^You stop using%*}
 {
-     #if {{${spam[stats]}} != {true}}
+     #if {!@is_spammed{stats}}
      {
           spamset stats;
           show stats | prefix silent_;
