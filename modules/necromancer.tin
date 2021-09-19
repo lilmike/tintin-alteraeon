@@ -122,7 +122,7 @@
 }
 {8}
 
-#ACTION {^soulforge_%s(lvl%s%d) Item: {[a-zA-Z0-9]+}%s'%* soulgem gem soulstone stone'$}
+#ACTION {^soulforge_%s(lvl%s%d) Item: {[a-zA-Z0-9]+}%s'%* soulgem gem soulstone stone{(?: ssoul)?}'$}
 {
     #if {{%6} == {$soul}}
     {
@@ -136,7 +136,7 @@
 }
 {8}
 
-#ACTION {^soulforge_get_%s(lvl%s%d) Item: {[a-zA-Z0-9]+}%s'%* soulgem gem soulstone stone'$}
+#ACTION {^soulforge_get_%s(lvl%s%d) Item: {[a-zA-Z0-9]+}%s'%* soulgem gem soulstone stone{(?: ssoul)?}'$}
 {
     #if {{%6} == {$soul}}
     {
