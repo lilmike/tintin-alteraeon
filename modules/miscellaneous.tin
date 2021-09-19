@@ -517,7 +517,7 @@
 }
 {9}
 
-#ALIAS {^finger %1}
+#ALIAS {^{fi(?:n(?:g(?:e(?:r)?)?)?)?} %1}
 {
     profile %1
 }
