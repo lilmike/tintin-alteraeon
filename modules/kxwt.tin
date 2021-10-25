@@ -11,6 +11,13 @@
 }
 {7}
 
+#ACTION {^kxwt_id_start%*}
+{
+    #echo {%1};
+    #variable {kxwt[id_start]} {%1}
+}
+{7}
+
 #ACTION {^kxwt_area %d %2}
 {
     #variable {kxwt[area]} {%1 %2};
@@ -358,6 +365,7 @@
 {9}
 
 
+
 #FUNCTION {on_death}
 {
     #if {{${auto[consume]}} == {true}}
@@ -415,6 +423,7 @@
 
 
 #GAG {^kxwt_%*}
+
 
 #SUBSTITUTE { ]$} { ]${exploredRoomString}} {1}
 
