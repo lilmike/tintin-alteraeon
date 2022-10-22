@@ -33,18 +33,6 @@
 
 #ACTION {%1 is mortally wounded, and will die soon if not aided.$}
 {
-    #if {{${skillsAndSpells[soulsteal]}} == {true} && ${character[currentMana]} >= 15}
-    {
-        #if {{$lastSoulsteal} != {%1}}
-        {
-            #list {noSoulstealMobsList} {find} {%1} {noSoulstealIndex};
-            #if {$noSoulstealIndex == 0}
-            {
-                @command{c so;cast soulsteal}
-            }
-        };
-        #variable {lastSoulsteal} {%1}
-    };
     seq_play mortally-wounded;
     #if {{${character[cspam]}} == {true}}
     {
@@ -134,7 +122,7 @@
 }
 {8}
 
-#ACTION {^soulforge_%s(lvl%s%d) Item: {[a-zA-Z0-9]+}%s'%* soulgem gem soulstone stone'$}
+#ACTION {^soulforge_%s(lvl%s%d) Item: {[a-zA-Z0-9]+}%s'%* soulgem gem soulstone stone{(?: ssoul)?}'$}
 {
     #if {{%6} == {$soul}}
     {
@@ -148,7 +136,7 @@
 }
 {8}
 
-#ACTION {^soulforge_get_%s(lvl%s%d) Item: {[a-zA-Z0-9]+}%s'%* soulgem gem soulstone stone'$}
+#ACTION {^soulforge_get_%s(lvl%s%d) Item: {[a-zA-Z0-9]+}%s'%* soulgem gem soulstone stone{(?: ssoul)?}'$}
 {
     #if {{%6} == {$soul}}
     {
@@ -161,6 +149,24 @@
     #line {gag}
 }
 {8}
+
+#ACTION {%1 is near death!$}
+{
+    #if {{${skillsAndSpells[soulsteal]}} == {true} && ${character[currentMana]} >= 15}
+    {
+        #if {{$lastSoulsteal} != {%1}}
+        {
+            #list {noSoulstealMobsList} {find} {%1} {noSoulstealIndex};
+            #if {$noSoulstealIndex == 0}
+            {
+                @command{c so;cast soulsteal}
+            }
+        };
+        #variable {lastSoulsteal} {%1}
+    };
+    play near-death
+}
+{9}
 
 #ACTION {^%sYou add A %1 to your group.$}
 {
@@ -215,7 +221,7 @@
 }
 {9}
 
-#ACTION {^A {skeletal mage|skeletal spider|skeleton} {starts|stops} following you.}
+#ACTION {^A {.+ skeletal knight|.*skeletal lich|skeletal mage|skeletal spider|skeleton} {starts|stops} following you.}
 {
     #if {{%2} == {starts}}
     {
@@ -232,6 +238,24 @@
         {
             get ${auto[skeletonStone]} ${character[container]} | grep nospam;
             vcast skeletal lich
+        }
+    };
+    #else
+    {
+        #if {{${auto[skeleton]}} == {true}}
+        {
+            #if {{%1} == {{.+} skeletal knight} || {%1} == {skeleton}}
+            {
+                vcast skele war
+            };
+            #elseif {{%1} == {{.*}skeletal lich} || {%1} == {skeletal mage}}
+            {
+                vcast skel mage
+            };
+            #else
+            {
+                vcast skel spid
+            }
         }
     }
 }
@@ -683,7 +707,7 @@
 
 #ACTION {^You release %1 from your control.$}
 {
-    #variable {client[releasing]} {true}
+    spamset {client[releasing]} {true}
 }
 {9}
 
@@ -1039,7 +1063,7 @@
 }
 {8}
 
-#ALIAS {^{c|ca|cas|cast} %s{sk|ske|skel|skele|skelet|skeleta|skeletal} %s{m|ma|mag|mage|w|wa|war|warr|warri|warrio|warrior}$}
+#ALIAS {^{vc|vca|vcas|vcast|c|ca|cas|cast} %s{sk|ske|skel|skele|skelet|skeleta|skeletal} %s{m|ma|mag|mage|w|wa|war|warr|warri|warrio|warrior}$}
 {
     #if {!&{auto[defaultSkeletalMage]}}
     {
@@ -1465,6 +1489,21 @@
 }
 {9}
 
+#ALIAS {^{no|}autoskeleton$}
+{
+    #if {{%1} == {no}}
+    {
+        #showme {You will no longer create skeletal minions on their death.};
+        #unvariable {auto[skeleton]}
+    };
+    #else
+    {
+        #showme {You will now automatically create new skeletal minions upon their death.};
+        #variable {auto[skeleton]} {true}
+    }
+}
+{9}
+
 #ALIAS {^{sf|sfo|sfor|sforg|sforge|soulforg|soulforge} %1}
 {
     vcast soulforge %1 2.%1
@@ -1513,11 +1552,9 @@
 {9}
 
 
-
 #GAG {^Looks like the corpse of %1 is too damaged for you to use.$}
 #GAG {^None of your minions seem hungry at the moment.$}
 #GAG {^{boneguardian|metal|woad}{C|c}ounter_%*}
-
 
 #VARIABLE {boneFortBreakCounter} {0}
 #VARIABLE {fullforge} {}

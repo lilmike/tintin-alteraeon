@@ -2,7 +2,7 @@
 {
 	#nop {Hook name: assist};
 	#nop {Hook args: none};
-	#if {!&{spam[cassist]} || {${spam[cassist]}} != {true}}
+	#if {!@is_spammed{cassist}}
 	{
 		spamset cassist 3;
 		#if {{${character[inBattle]}} == {true}}

@@ -4,6 +4,8 @@
 }
 
 
+#TAB {exitfind}
+#TAB {noexitfind}
 #TAB {autoberserk}
 #TAB {autobid}
 #TAB {autobloodsacrifice}
@@ -56,6 +58,7 @@
 #TAB {autoretreat}
 #TAB {autoriposte}
 #TAB {autosell}
+#TAB {autoskeleton}
 #TAB {autostarcatcher}
 #TAB {autostealth}
 #TAB {autostop}
@@ -110,6 +113,7 @@
 #TAB {noautoretreat}
 #TAB {noautoriposte}
 #TAB {noautosell}
+#TAB {noautoskeleton}
 #TAB {noautostarcatcher}
 #TAB {noautostealth}
 #TAB {noautostop}

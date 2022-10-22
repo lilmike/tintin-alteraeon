@@ -77,7 +77,7 @@
     };
     #if {{$msp} == {true}}
     {
-        #system {play -qV0 "$($shuf -n 1 -e $HOME/sounds/%1[^_]*wav)" gain $volume &> /dev/null &}
+        #system {/bin/bash -c 'play -qV0 "$($shuf -n 1 -e $HOME/sounds/%1[^_]*wav)" gain $volume' &> /dev/null &}
     }
 }
 {9}
