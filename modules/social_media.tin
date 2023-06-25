@@ -116,7 +116,7 @@
 {
     #if {{$leaderboardUpdateString} != {}}
     {
-        post $leaderboardUpdateString;
+        #nop post $leaderboardUpdateString;
         notify-send $leaderboardUpdateString;
         #variable {leaderboardUpdateString} {}
     }

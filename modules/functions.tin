@@ -79,7 +79,7 @@
 {
      @var_save{script};
      @var_save{characters};
-     #list {characters} {explode} {%1};
+     #list {characters} {tokenize} {%1};
      @var_save{y};
      #variable {y} {1};
      @var_save{length};

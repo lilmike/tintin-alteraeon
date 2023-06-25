@@ -8,21 +8,21 @@
         #list {discList} {find} {all} {discIndex};
         #if {$discIndex != 0}
         {
-            put all $diskNumb.tensor | grep -v put | tail 1
+            put all $diskNumb.tensor | grep -v put | grep -v fit | tail 1
         };
         #else
         {
             #list {discList} {size} {discLoopCounter};
             #loop {1} {$discLoopCounter} {i}
             {
-                put all\.${discList[$i]} $diskNumb.tensor | grep -v put | tail 1
+                put all\.${discList[$i]} $diskNumb.tensor | grep -v put | grep -v fit | tail 1
             };
             #unvariable {discLoopCounter}
         };
         #nop vcast tensors floating disc;
         #variable {discSpamCatcher} {true};
         #unticker {unspamcatch};
-        #line oneshot #ticker {spamcatch} {#var {discSpamCatcher} {false}} {5}
+        #line oneshot #ticker {spamcatch} {#var {discSpamCatcher} {false}} {10}
     }
 }
 {9}
@@ -42,14 +42,14 @@
         #list {discList} {find} {all} {discIndex};
         #if {$discIndex != 0}
         {
-            put all $diskNumb.tensor | grep -v put | tail 1
+            put all $diskNumb.tensor | grep -v put | grep -v fit | tail 1
         };
         #else
         {
             #list {discList} {size} {discLoopCounter};
             #loop {1} {$discLoopCounter} {i}
             {
-                put all\.${discList[$i]} $diskNumb.tensor | grep -v put | tail 1
+                put all\.${discList[$i]} $diskNumb.tensor | grep -v put | grep -v fit | tail 1
             };
             #unvariable {discLoopCounter}
         }
@@ -87,14 +87,14 @@
     #list {discList} {find} {all} {discIndex};
     #if {$discIndex != 0}
     {
-        put all $diskNumb.tensor | grep -v put | tail 1
+        put all $diskNumb.tensor | grep -v put | grep -v fit | tail 1
     };
     #else
     {
         #list {discList} {size} {discLoopCounter};
         #loop {1} {$discLoopCounter} {i}
         {
-            put all\.${discList[$i]} $diskNumb.tensor | grep -v put | tail 1
+            put all\.${discList[$i]} $diskNumb.tensor | grep -v put | grep -v fit | tail 1
         };
         #unvariable {discLoopCounter}
     };
