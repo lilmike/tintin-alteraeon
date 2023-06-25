@@ -42,7 +42,7 @@
 
 #ACTION {^%w calls upon %2 to bring the corpse of $name back to life!$}
 {
-    post $name was resurrected by %1!;
+    #nop post $name was resurrected by %1!;
     notify-send $name was resurrected by %1!
 }
 {9}
@@ -161,11 +161,11 @@
     };
     #if {${character[level]} < 30}
     {
-     spamset socialMedia 1800
+     spamset socialMedia 3600
     };
     #else
     {
-     spamset socialMedia 300
+     spamset socialMedia 900
     }
 }
 {9}
