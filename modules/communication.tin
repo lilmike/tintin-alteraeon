@@ -400,8 +400,7 @@
 #ALIAS {^Channel_Event %S %2}
 {
     #nop {Return for things that do not need any processing at all.};
-    #if {{%1} == {{example|gain|are|i|Number|cost|damage|Type|bid|Flag|Balance|Email|Account|difficulty|string|Weapon|Comp|name|character|date|balance|bank|account|remaining|skill|spell|battle|flag|editor|wa|Level|Name|uptime|player|spammer|Statu|time|Desc|vnum|str|against|Qualitie|usage|value|list|markup|inventory|rent|register|credit}}}
-    {
+    #if {{%1} == {{example|gain|are|i|Number|cost|damage|Type|bid|Flag|Balance|Email|Account|difficulty|string|Weapon|Comp|name|character|date|balance|bank|account|remaining|skill|spell|battle|flag|editor|wa|Level|Name|uptime|player|spammer|Statu|time|Desc|vnum|str|against|Qualitie|usage|value|list|markup|inventory|rent|register|credit|\d+}}}    {
         #return
     };
     #if {&{%1Channel}}
