@@ -285,7 +285,7 @@
 }
 {9}
 
-#ACTION {^[event announcement] THE ARCHERY CONTEST HAS ENDED, PLAYER '%w' IS THE WINNER WITH %d POINTS!$}
+#ACTION {^[event] announcement: THE ARCHERY CONTEST HAS ENDED, PLAYER '%w' IS THE WINNER WITH %d POINTS!$}
 {
     #local {tmp} {};
     #format {tmp} {%l} {%1};
@@ -297,7 +297,7 @@
 }
 {9}
 
-#ACTION {^[event announcement] THE FISHING DERBY HAS ENDED, PLAYER '%w' IS THE WINNER!$}
+#ACTION {^[event] announcement: THE FISHING DERBY HAS ENDED, PLAYER '%w' IS THE WINNER!$}
 {
     #local {tmp} {};
     #format {tmp} {%l} {%1};
