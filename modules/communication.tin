@@ -1,7 +1,7 @@
 #ACTION {^silent_paste_END_OF_PASTE_TEXT$}
 {
     #replace {pasteText} { %s} { };
-    #script {IFS=$'\n';for xline in $(fold -s -w 480 <<< "${pasteText}");do echo "${pasteChannel} $xline";done}
+    #script {echo "$pasteText" | fold  -s -w  480 | while read -r xline;do echo "${pasteChannel} $xline";done}
 }
 {2}
 
