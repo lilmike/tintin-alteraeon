@@ -216,6 +216,15 @@
 }
 {9}
 
+#ACTION {^silent_You feel sharp, and currently gain %d hitpoints, %d mana, and %d movement while {standing|sleeping|sitting}.$}
+{
+    #math {character[hpRegenTime]} {(${character[maxHp]} - ${character[currentHp]}) / %1};
+    #math {character[mnRegenTime]} {(${character[maxMana]} - ${character[currentMana]}) / %2};
+    #math {character[mvRegenTime]} {(${character[maxMv]} - ${character[currentMv]}) / %3};
+    #delay {0.1} {#variable {character[regenTime]} {${character[hpRegenTime]}};#if {${character[mnRegenTime]} > ${character[regenTime]}}{#variable {character[regenTime]} {${character[mnRegenTime]}}}; #if {${character[mvRegenTime]} > ${character[regenTime]}}{#variable {character[regenTime]} {${character[mvRegenTime]}}};#if {${character[regenTime]} > 0}{#showme {Approximately ${character[regenTime]} ticks until regeneration is complete.}}}
+}
+{9}
+
 #ACTION {^silent_You currently gain %1 hitpoints, %2 mana, and %3 movement while {standing|sleeping|sitting}.$}
 {
     #math {character[hpRegenTime]} {(${character[maxHp]} - ${character[currentHp]}) / %1};
