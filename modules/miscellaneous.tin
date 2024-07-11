@@ -499,7 +499,7 @@
         #variable {tmp} {$x};
         #unvariable {x}
     };
-    #line substitute escapes #script {if [ -f "help/%1.hlp" ] ; then IFS=$'\n'; for x in $(fold -s -w $(tput cols) "help/%1.hlp");do echo "#echo {$x}";done; else echo "#echo {No help on %1}" ; fi};
+    #line substitute escapes #script {if [ -f "help/%1.hlp" ] ; then fold -s -w $(tput cols) "help/%1.hlp" | while read -r x;do echo "#echo {$x}";done; else echo "#echo {No help on %1}" ; fi};
     #if {$found}
     {
         #variable {x} {$tmp}
@@ -518,7 +518,7 @@
         #unvariable {x}
     };
     #echo {Help topics:};
-    #line substitute escapes #script {if [ -d "help" ] ; then IFS=$'\n' ; for x in $(find help -iname '*.hlp' -exec basename -s .hlp {} +); do echo "#echo {$x}" ; done ; fi};
+    #line substitute escapes #script {if [ -d "help" ] ; then find help -iname '*.hlp' -exec basename -s .hlp {} + | while read -r x; do echo "#echo {$x}" ; done ; fi};
     #if {${found}}
     {
         #variable {x} {$tmp}
