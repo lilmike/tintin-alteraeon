@@ -149,9 +149,9 @@
 }
 {9}
 
-#ACTION {^You find and gather up {a|some} {handful of different fruits|handful of local vegetables|large, edible roots|large greenish yellow squash|small, soft potato|stale bread crust|handful of edible leaves|.+ egg|handful of sour crabapples}.$}
+#ACTION {^You find and gather up {a|an|some} {handful of different fruits|handful of local vegetables|large, edible roots|large greenish yellow squash|small, soft potato|stale bread crust|handful of edible leaves|.+ egg|handful of sour crabapples}.$}
 {
-    #if {{${auto[junk]}} == {true}}
+    #if {{${auto[junk]}} == {true} && {%2} != {{.+Easter egg}}}
     {
         #regexp {%2} {{.*} {.*}}
         {
