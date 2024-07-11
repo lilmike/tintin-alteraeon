@@ -13,7 +13,7 @@
         #if {${client[tipsIndex]} <= ${client[tipsSize]}}
         {
             #echo {Tip:};
-            #script {IFS=$'\n' ; for x in $(cat ${client[tips][${client[tipsIndex]}]}) ; do echo "#showme {$x};" ; done};
+            #script {cat ${client[tips][${client[tipsIndex]}]} | while read -r x ; do echo "#showme {$x};" ; done};
             #math {client[tipsIndex]} {${client[tipsIndex]} + 1}
         };
         #else

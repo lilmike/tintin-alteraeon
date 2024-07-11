@@ -1,142 +1,56 @@
-#ALIAS {mp{l|ly|lyr|lyri|lyric|lyrics} %2}
-{
-    Get_Music_Message_String;
-    #script {scripts/lyrics.sh '%2' "${music[newAutoTitleString]}"}
-}
-{8}
-
 #ALIAS {^Get_Music_Message_String$}
 {
-    #switch {{${music[player]}}}
-    {
-        #nop {Variable order artist, title, and album.};
-        #case {{audacious}}
-        {
-            #script {i} {audtool -Q --current-song-tuple-data artist | $sed "s/;/ - /g"};
-            #format {msg[1]} {%p} {${i[1]}};
-            #script {i} {audtool --current-song-tuple-data title | $sed "s/;/ - /g"};
-            #format {msg[2]} {%p} {${i[1]}};
-            #script {i} {audtool --current-song-tuple-data album | $sed "s/;/ - /g"};
-            #format {msg[3]} {%p} {${i[1]}}
-        };
-        #case {{moc}}
-        {
-            #script {i} {mocp -Q %artist | $sed "s/;/ - /g"};
-            #format {msg[1]} {%p} {${i[1]}};
-            #script {i} {mocp -Q %title | $sed "s/;/ - /g"};
-            #format {msg[2]} {%p} {${i[1]}};
-            #script {i} {mocp -Q %album | $sed "s/;/ - /g"};
-            #format {msg[3]} {%p} {${i[1]}}
-        };
-        #case {{m{opidy|pd}}}
-        {
-            #script {i} {mpc -f %artist% current | $sed "s/;/ - /g"};
-            #format {msg[1]} {%p} {${i[1]}};
-            #script {i} {mpc -f %title% current | $sed "s/;/ - /g"};
-            #format {msg[2]} {%p} {${i[1]}};
-            #script {i} {mpc -f %album% current | $sed "s/;/ - /g"};
-            #format {msg[3]} {%p} {${i[1]}}
-        };
-        #case {{pianobar}}
-        {
-            #script {i} {cut -f 1 -d '\' "$HOME/../pianobar/nowplaying" 2> /dev/null | $sed "s/;/ - /g"};
-            #format {msg[1]} {%p} {${i[1]}};
-            #script {i} {cut -f 2 -d '\' "$HOME/../pianobar/nowplaying" 2> /dev/null | $sed "s/;/ - /g"};
-            #format {msg[2]} {%p} {${i[1]}};
-            #script {i} {cut -f 3 -d '\' "$HOME/../pianobar/nowplaying" 2> /dev/null | $sed "s/;/ - /g"};
-            #variable {msg[3]} {%p} {${i[1]}}
-        };
-        #case {{xmms2}}
-        {
-            #script {i} {xmms2 info | grep artist | cut -d '=' -f2- | sed -e 's/^ *//' -e 's/ *$//' | $sed "s/;/ - /g"};
-            #variable {msg[1]} {${i[1]}};
-            #script {i} {xmms2 info | grep title | cut -d '=' -f2- | sed -e 's/^ *//' -e 's/ *$//' | $sed "s/;/ - /g"};
-            #variable {msg[2]} {${i[1]}};
-            #script {i} {xmms2 info | grep album | cut -d '=' -f2- | sed -e 's/^ *//' -e 's/ *$//' | $sed "s/;/ - /g"};
-            #variable {msg[3]} {${i[1]}}
-        };
-        #default
-        {
-            #script {i} {cmus-remote -Q | sed -n 's/^tag artist //p' | $sed "s/;/ - /g"};
-            #format {msg[1]} {%p} {${i[1]}};
-            #script {i} {cmus-remote -Q | sed -n 's/^tag title //p' | $sed "s/;/ - /g"};
-            #format {msg[2]} {%p} {${i[1]}};
-            #script {i} {cmus-remote -Q | sed -n 's/^tag album //p' | $sed "s/;/ - /g"};
-            #format {msg[3]} {%p} {${i[1]}}
-        }
-    };
-    #variable {music[newAutoTitleString]} {${msg[1]} - ${msg[2]}};
+    #script {i} {playerctl -p %any,chromium metadata -f '{{artist}} - {{title}}'};
+    #variable {music[newAutoTitleString]} {${i[1]}};
+    #replace {music[newAutoTitleString]} {;} { - };
     #replace {music[newAutoTitleString]} {ö} {o};
-    #variable {msg} {"${msg[2]}" by "${msg[1]}" from "${msg[3]}"};
+    #script {i} {playerctl -p %any,chromium metadata -f '"{{title}}" by "{{artist}}" from "{{album}}"'};
+    #variable {msg} {${i[1]}};
+    #replace {msg} {;} { - };
     #replace {msg} {ö} {o};
-    #regexp {$msg} {Now playing:{\s}via{\s}{.*}.}
-    {
-        #switch {{${music[player]}}}{#case {{cmus}} {#script {msg} {basename {$(cmus-remote -Q | head -2 | tail -1)} | rev | cut -d '.' -f2- | rev}};#case {{mpd}} {#script {msg} {mpc current | sed 's/\// - /g' | rev | cut -d '.' -f2- | rev}};#case {{xmms2}} {#script {msg} {basename {$(xmms2 info | tail -n 1 | sed 's/^\[server\] url = file:\/\/\///' | rev | cut -d '.' -f2- | rev)}}};};#variable {msg} {${msg[1]}};#replace {msg} {+} { };#replace {msg} {\%27} {'};#replace {msg} {\%28} {(};#replace {msg} {\%29} {)};#replace {msg} {\%2c} {,};#variable {newAutoTitleString} {$msg}
-    };
+    #replace {msg} {by ""} {};
     #replace {msg} {from ""} {}
 }
 {9}
 
 #ALIAS {^musiclinks %s%S %s%S$}
 {
-    #variable {music[links[apiUrl]]} {%2/yourls-api.php};
-    #variable {music[links[apiKey]]} {%4};
-    #echo {music links enabled using ${music[links[apiUrl]]}\.}
-}
-{9}
-
-#ALIAS {^musicplayer %s{audacious|cmus|moc|mopidy|mpc|mpd|pianobar|xmms2}$}
-{
-    #if {{%2} == {mpc}}
-    {
-        #variable {music[player]} {mpd}
-    };
-    #else
-    {
-        #variable {music[player]} {%2}
-    };
-    #echo {music player set to ${music[player]}\.}
+    #variable {music[links][apiUrl]} {%2/yourls-api.php};
+    #variable {music[links][apiKey]} {%4};
+    NOTIFY music links enabled using ${music[links][apiUrl]}.;
+    CSAVE
 }
 {9}
 
 #ALIAS {^m{p|po|pos|post} %2}
 {
+    #if {@check_music_player{} == 1}
+    {
+        #return #nop
+    };
     Get_Music_Message_String;
-    #if {!&{music[links[apiKey]]}}
+    #script {i} {playerctl -p %any,chromium metadata -f '{{playerName}}'};
+    #if {!&{music[links][apiKey]}}
     {
-        %2 Now playing: $msg via ${music[player]}\.
+        %2 Now playing: $msg via ${i[1]}.
     };
     #else
     {
-        #variable {music[links[longUrl]]} {https://www.youtube.com/results?search_query=${music[newAutoTitleString]}};
-        #replace {music[links[longUrl]]} { } {+};
-        #replace {music[links[longUrl]]} {&} {%%26};
-        #script {i} {curl -s --data "signature=${music[links[apiKey]]}" --data "action=shorturl" --data "format=text" --data-urlencode "url=${music[links[longUrl]]}" ${music[links[apiUrl]]}};
-        #variable {music[links[shortUrl]]} {${i[1]}};
-        %2 Now playing: $msg via ${music[player]}\. ${music[links[shortUrl]]}
-    }
-}
-{9}
-
-#ALIAS {^{auto|noauto}title$}
-{
-    #if {{%0} == {autotitle}}
-    {
-        #echo {Your title will automatically change to currently playing song.};
-        #variable {auto[title]} {true}
-    };
-    #else
-    {
-        #echo {Your title will no longer be automatically set.};
-        #variable {auto[title]} {false}
+        #variable {music[links][longUrl]} {https://www.youtube.com/results?search_query=${music[newAutoTitleString]}};
+        #replace {music[links][longUrl]} { } {+};
+        #replace {music[links][longUrl]} {&} {%%26};
+        #script {i} {curl --connect-timeout 10 -s --data "signature=${music[links][apiKey]}" --data "action=shorturl" --data "format=text" --data-urlencode "url=${music[links][longUrl]}" ${music[links][apiUrl]}};
+        #variable {music[links][shortUrl]} {${i[1]}};
+        %2 Now playing: $msg via ${i[1]}. ${music[links][shortUrl]}
     }
 }
 {9}
 
 #ALIAS {^{musicc|musicch|musiccha|musicchan|musicchann|musicchanne|musicchannel} %s%S$}
 {
-    #variable {character[musicChannel]} {%3};
-    #echo {Music channel set to %3.}
+    #variable {music[channel]} {%3};
+    NOTIFY Music channel set to %3.;
+    CSAVE
 }
 {9}
 
@@ -144,384 +58,146 @@
 {
     #if {{%0} == {musiclinks}}
     {
-        #variable {music[links[apiUrl]]} {https://1u.rs/yourls-api.php};
-        #variable {music[links[apiKey]]} {b0dda9c182};
-        #echo {music links enabled using ${music[links[apiUrl]]}\.}
+        #variable {music[links][apiUrl]} {https://1u.rs/yourls-api.php};
+        #variable {music[links][apiKey]} {b0dda9c182};
+        NOTIFY music links enabled using ${music[links][apiUrl]}.
     };
     #else
     {
         #unvariable {music[links]};
-        #echo {Music links disabled.}
-    }
+        NOTIFY Music links disabled.
+    };
+    CSAVE
 }
 {9}
 
-#ALIAS {mp{l|ly|lyr|lyri|lyric|lyrics}$}
+#ALIAS {mp{l|ly|lyr|lyri|lyric|lyrics} %2}
 {
-    #if {!&{character[musicChannel]}}
+    #if {@check_music_player{} == 1}
     {
-        #variable {character[musicChannel]} {music}
+        #return #nop
     };
     Get_Music_Message_String;
-    #script {scripts/lyrics.sh '${character[musicChannel]}' "${music[newAutoTitleString]}"}
+    #script {scripts/lyrics.sh '%2' "${music[newAutoTitleString]}"}
 }
 {9}
+
+
+#FUNCTION {check_music_player}
+{
+    #script {command -v playerctl &> /dev/null || echo "#echo {Please install playerctl.};#return 1"};
+    #script {i} {playerctl -p %any,chromium status};
+    #variable {i} {${i[1]}};
+    #if {{$i} != {Playing}}
+    {
+        NOTIFY No detected music.;
+        #return 1
+    };
+    #return 0
+}
 
 
 #MACRO {\e+}
 {
     #nop {Increase music player volume};
-    #switch {{${music[player]}}}
-    {
-        #case {{audacious}}
-        {
-            #system {audtool --set-volume $(($(audtool --get-volume) + 10))}
-        };
-        #case {{moc}}
-        {
-            #system {mocp -v +5}
-        };
-        #case {{{mpd|mopidy}}}
-        {
-            #system {mpc -q volume +5}
-        };
-        #case {{pianobar}}
-        {
-            #system {echo -n ')' > ~/.config/pianobar/ctl}
-        };
-        #case {{xmms2}}
-        {
-            #script {i} {xmms2 server config equalizer.preamp | tr -Cd "[:digit:]-"};
-            #math {i} {${i[1]} + 1};
-            #system {xmms2 server config equalizer.preamp $i}
-        };
-        #default
-        {
-            #system {cmus-remote -v +5%}
-        }
-    }
+    #system {playerctl -p %any,chromium volume 0.05+}
 }
 
 #MACRO {\eB}
 {
     #nop {Music player next};
-    #switch {{${music[player]}}}
-    {
-        #case {{audacious}}
-        {
-            #system {audtool --playlist-advance}
-        };
-        #case {{moc}}
-        {
-            #system {mocp -f}
-        };
-        #case {{{mpd|mopidy}}}
-        {
-            #system {mpc -q next}
-        };
-        #case {{pianobar}}
-        {
-            #system {echo -n 'n' > ~/.config/pianobar/ctl}
-        };
-        #case {{xmms2}}
-        {
-            #system {xmms2 next}
-        };
-        #default
-        {
-            #system {cmus-remote -n}
-        }
-    }
+    #system {playerctl -p %any,chromium next};
+    #nop {Currently playing track};
+    #delay {0.5} Get_Music_Message_String;
+    #delay 0.5 {NOTIFY $msg.}
 }
 
 #MACRO {\eC}
 {
     #nop {Music player pause};
-    #switch {{${music[player]}}}
-    {
-        #case {{audacious}}
-        {
-            #system {audtool --playback-pause}
-        };
-        #case {{moc}}
-        {
-            #system {mocp -G}
-        };
-        #case {{{mpd|mopidy}}}
-        {
-            #system {mpc -q pause}
-        };
-        #case {{pianobar}}
-        {
-            #system {echo -n 'p' > ~/.config/pianobar/ctl}
-        };
-        #case {{xmms2}}
-        {
-            #system {xmms2 toggle}
-        };
-        #default
-        {
-            #system {cmus-remote -u}
-        }
-    }
+    #system {playerctl -p %any,chromium play-pause}
 }
 
 #MACRO {\eM}
 {
-    #if {!&{character[musicChannel]}}
+    #if {!&{music[channel]}}
     {
-        #variable {character[musicChannel]} {music}
+        #variable {music[channel]} {ooc}
     };
-    mpost ${character[musicChannel]}
+    mpost ${music[channel]}
 }
 
 #MACRO {\eR}
 {
     #nop {Music player repeat.};
-    #switch {{${music[player]}}}
+    #script {i} {playerctl -p %any,chromium loop};
+    #variable {i} {${i[1]}};
+    #switch {{${i}}}
     {
-        #case {{audacious}}
+        #case {{None}}
         {
-            #system {audtool --playlist-repeat-toggle&&echo "Repeat $(audtool --playlist-repeat-status)."}
+            #system {playerctl -p %any,chromium loop playlist}
         };
-        #case {{moc}}
+        #case {{Playlist}}
         {
-            #system {mocp -O Repeat=yes}
+            #system {playerctl -p %any,chromium loop track}
         };
-        #case {{{mpd|mopidy}}}
+        #case {{Track}}
         {
-            #system {mpc repeat | grep repeat: | tr -s " " | cut -d " " -f3- | cut -d " " -f-2}
-        };
-        #case {{xmms2}}
-        {
-            #system {xmms2 repeat}
-        };
-        #default
-        {
-            #system {cmus-remote -R};
-            #script {echo "#showme {Cmus $(cmus-remote -Q | grep 'repeat ' | sed 's/true/on/g' | sed 's/false/off/g' | sed 's/set //').}"}
+            #system {playerctl -p %any,chromium loop none}
         }
-    }
+    };
+    #script {i} {playerctl -p %any,chromium loop 2>&1};
+    #variable {i} {${i[1]}};
+    NOTIFY Repeat $i.
 }
 
 #MACRO {\eS}
 {
     #nop {Music player randomize tracks.};
-    #switch {{${music[player]}}}
-    {
-        #case {{audacious}}
-        {
-            #system {audtool --playlist-shuffle-toggle&&echo "Shuffle $(audtool --playlist-shuffle-status)."}
-        };
-        #case {{moc}}
-        {
-            #system {mocp -O Shuffle=yes}
-        };
-        #case {{{mpd|mopidy}}}
-        {
-            #system {mpc random | grep random: | tr -s " " | cut -d " " -f5- | cut -d " " -f-2}
-        };
-        #case {{xmms2}}
-        {
-            #system {xmms2 playlist shuffle;if [ $? -eq 0 ] ; then echo "Playlist shuffled.";fi}
-        };
-        #default
-        {
-            #system {cmus-remote -S};
-            #script {echo "#showme {Cmus $(cmus-remote -Q | grep 'shuffle' | sed 's/true/on/g' | sed 's/false/off/g' | sed 's/set //').}"}
-        }
-    }
+    #system {playerctl -p %any,chromium shuffle toggle};
+    #script {i} {playerctl -p %any,chromium shuffle 2>&1};
+    #variable {i} {${i[1]}};
+    NOTIFY Shuffle $i.
 }
 
 #MACRO {\eU}
 {
     #nop {Currently playing track};
     Get_Music_Message_String;
-    #showme {$msg\.}
+    NOTIFY $msg.
 }
 
 #MACRO {\eV}
 {
     #nop {Music player stop.};
-    #switch {{${music[player]}}}
-    {
-        #case {{audacious}}
-        {
-            #system {audtool --playback-stop}
-        };
-        #case {{moc}}
-        {
-            #system {mocp -s}
-        };
-        #case {{{mpd|mopidy}}}
-        {
-            #system {mpc -q stop}
-        };
-        #case {{pianobar}}
-        {
-            #system {echo -n 'S' > ~/.config/pianobar/ctl}
-        };
-        #case {{xmms2}}
-        {
-            #system {xmms2 stop}
-        };
-        #default
-        {
-            #system {cmus-remote -s}
-        }
-    }
+    #system {playerctl -p %any,chromium stop}
 }
 
 #MACRO {\eX}
 {
     #nop {Music player play.};
-    #switch {{${music[player]}}}
-    {
-        #case {{audacious}}
-        {
-            #system {if ! ps -C audacious &> /dev/null ; then audacious -Hp &> /dev/null&fi;audtool --playback-play}
-        };
-        #case {{moc}}
-        {
-            #system {mocp -p}
-        };
-        #case {{{mpd|mopidy}}}
-        {
-            #system {mpc -q play}
-        };
-        #case {{pianobar}}
-        {
-            #system {echo -n 'P' > ~/.config/pianobar/ctl}
-        };
-        #case {{xmms2}}
-        {
-            #system {xmms2 play}
-        };
-        #default
-        {
-            #system {cmus-remote -p}
-        }
-    }
+    #system {playerctl -p %any,chromium play};
+    #nop {Currently playing track};
+    Get_Music_Message_String;
+    NOTIFY $msg.
 }
 
 #MACRO {\eZ}
 {
     #nop {Music player previous track.};
-    #switch {{${music[player]}}}
-    {
-        #case {{audacious}}
-        {
-            #system {audtool --playlist-reverse}
-        };
-        #case {{moc}}
-        {
-            #system {mocp -r}
-        };
-        #case {{{mpd|mopidy}}}
-        {
-            #system {mpc -q prev}
-        };
-        #case {{xmms2}}
-        {
-            #system {xmms2 prev}
-        };
-        #default
-        {
-            #system {cmus-remote -r}
-        }
-    }
-}
-
-#MACRO {\e\x7B}
-{
-    #nop {Music player seek backward.};
-    #switch {{${music[player]}}}
-    {
-        #case {{audacious}}
-        {
-            #system {audtool --playback-seek-relative -5}
-        };
-        #case {{moc}}
-        {
-            #system {mocp -k -5}
-        };
-        #case {{{mpd|mopidy}}}
-        {
-            #system {mpc -q seek -5}
-        };
-        #case {{xmms2}}
-        {
-            #system {xmms2 seek -5}
-        };
-        #default
-        {
-            #system {cmus-remote -k -5}
-        }
-    }
-}
-
-#MACRO {\e\x7D}
-{
-    #nop {Music player seek forward.};
-    #switch {{${music[player]}}}
-    {
-        #case {{audacious}}
-        {
-            #system {audtool --playback-seek-relative 5}
-        };
-        #case {{moc}}
-        {
-            #system {mocp -k +5}
-        };
-        #case {{{mpd|mopidy}}}
-        {
-            #system {mpc -q seek +5}
-        };
-        #case {{xmms2}}
-        {
-            #system {xmms2 seek +5}
-        };
-        #default
-        {
-            #system {cmus-remote -k +5}
-        }
-    }
+    #system {playerctl -p %any,chromium previous};
+    #nop {Currently playing track};
+    #delay 0.5 Get_Music_Message_String;
+    #delay 0.5 {NOTIFY $msg.}
 }
 
 #MACRO {\e_}
 {
     #nop {Music player volume down.};
-    #switch {{${music[player]}}}
-    {
-        #case {{audacious}}
-        {
-            #system {audtool --set-volume $(($(audtool --get-volume) - 10))}
-        };
-        #case {{moc}}
-        {
-            #system {mocp -v -5}
-        };
-        #case {{{mpd|mopidy}}}
-        {
-            #system {mpc -q volume -5}
-        };
-        #case {{pianobar}}
-        {
-            #system {echo -n '(' > ~/.config/pianobar/ctl}
-        };
-        #case {{xmms2}}
-        {
-            #script {i} {xmms2 server config equalizer.preamp | tr -Cd "[:digit:]-"};
-            #math {i} {${i[1]} - 1};
-            #system {xmms2 server config equalizer.preamp $i}
-        };
-        #default
-        {
-            #system {cmus-remote -v -5%}
-        }
-    }
+    #system {playerctl -p %any,chromium volume 0.05-}
 }
 
 
-#TICKER {autotitle} {#if {{${auto[title]}} == {true} && {${kxwt[context]}} == {{(none)?}}}{Get_Music_Message_String;#if {{${music[newAutoTitleString]}} != {${music[oldAutoTitleString]}}}{#variable {music[oldAutoTitleString]} {${music[newAutoTitleString]}};title ${music[newAutoTitleString]} | prefix silent_}}} {0.50}
+#VARIABLE {msg} {}
 

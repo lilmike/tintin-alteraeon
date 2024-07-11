@@ -1,7 +1,12 @@
+#alias {^NOTIFY %*$} {
+#echo {%1}
+}
+{9}
+
 #ACTION {^silent_paste_END_OF_PASTE_TEXT$}
 {
     #replace {pasteText} { %s} { };
-    #script {IFS=$'\n';for xline in $(fold -s -w 480 <<< "${pasteText}");do echo "${pasteChannel} $xline";done}
+    #script {echo "$pasteText" | fold  -s -w  480 | while read -r xline;do echo "${pasteChannel} $xline";done}
 }
 {2}
 
@@ -285,7 +290,7 @@
 }
 {9}
 
-#ACTION {^[event announcement] THE ARCHERY CONTEST HAS ENDED, PLAYER '%w' IS THE WINNER WITH %d POINTS!$}
+#ACTION {^[event] announcement: THE ARCHERY CONTEST HAS ENDED, PLAYER '%w' IS THE WINNER WITH %d POINTS!$}
 {
     #local {tmp} {};
     #format {tmp} {%l} {%1};
@@ -297,7 +302,7 @@
 }
 {9}
 
-#ACTION {^[event announcement] THE FISHING DERBY HAS ENDED, PLAYER '%w' IS THE WINNER!$}
+#ACTION {^[event] announcement: THE FISHING DERBY HAS ENDED, PLAYER '%w' IS THE WINNER!$}
 {
     #local {tmp} {};
     #format {tmp} {%l} {%1};
@@ -406,7 +411,7 @@
 #ALIAS {^Channel_Event %S %2}
 {
     #nop {Return for things that do not need any processing at all.};
-    #if {{%1} == {{example|gain|are|i|Number|cost|damage|Type|bid|Flag|Balance|Email|Account|difficulty|string|Weapon|Comp|name|character|date|balance|bank|account|remaining|skill|spell|battle|flag|editor|wa|Level|Name|uptime|player|spammer|Statu|time|Desc|vnum|str|against|Qualitie|usage|value|list|markup|inventory|rent|register|credit|\d+}}}
+    #if {{%1} == {{example|gain|are|i|Number|cost|damage|Type|bid|Flag|Balance|Email|Account|difficulty|string|Weapon|Comp|name|character|date|balance|bank|account|remaining|skill|spell|battle|flag|editor|wa|Level|Name|uptime|player|spammer|Statu|time|Desc|vnum|str|against|Qualitie|usage|value|list|markup|inventory|rent|register|credit|\d+|composite|number}}}
     {
         #return
     };
