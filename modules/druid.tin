@@ -137,6 +137,15 @@
 }
 {9}
 
+#ACTION {^You find and gather up wild honeycomb.$}
+{
+    #if {{${auto[junk]}} == {true}}
+    {
+        ${auto[junkType]} honeycomb
+    }
+}
+{9}
+
 #ACTION {^You find and gather up {a basket of nuts and seeds|a bunch of berries|a basket of berries|a handful of nuts and seeds}.$}
 {
     #if {{${auto[junk]}} == {true} && {${skillsAndSpells[thunder seeds]}} != {true}}
@@ -149,7 +158,7 @@
 }
 {9}
 
-#ACTION {^You find and gather up {a|an|some} {handful of different fruits|handful of local vegetables|large, edible roots|large greenish yellow squash|small, soft potato|stale bread crust|handful of edible leaves|.+ egg|handful of sour crabapples}.$}
+#ACTION {^You find and gather up {a|an|some} {handful of different fruits|handful of local vegetables|large, edible roots|large greenish yellow squash|small, soft potato|stale bread crust|handful of edible leaves|.+ egg|handful of sour crabapples|summer squash}.$}
 {
     #if {{${auto[junk]}} == {true} && {%2} != {{.+Easter egg}}}
     {
