@@ -132,7 +132,7 @@
     };
     #if {{$mastodon} == {true}}
     {
-        #script {dummyvar} {toot post --quiet -v public -p "Alter Aeon" "%1 http://www.alteraeon.com/" &> /dev/null&}
+        #script {dummyvar} {toot post -v public -p "Alter Aeon" "%1 http://www.alteraeon.com/" &> /dev/null&}
     };
     #if {{$pump} == {true}}
     {
