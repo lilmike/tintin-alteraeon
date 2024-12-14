@@ -54,17 +54,6 @@
 }
 {9}
 
-#ACTION {^%d exp!$}
-{
-    #if {${thirstyComplete}}
-    {
-        #variable {thirstyXp} {%1};
-        autobrag You quenched your thirst for adventure! Fame and glory! $thirstyXp exp!;
-        #variable {thirstyComplete} {0}
-    }
-}
-{9}
-
 #ACTION {^%d exp.$}
 {
     #if {${fishingWin}}
@@ -262,7 +251,8 @@
 
 #ACTION {^You quenched your thirst for adventure! Fame and glory!$}
 {
-    #variable {thirstyComplete} {1}
+    autobrag You quenched your thirst for adventure! Fame and glory!;
+    gift | tail -n 1 | prefix silent_
 }
 {9}
 
