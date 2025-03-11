@@ -26,7 +26,7 @@
 {
     #if {@check_music_player{} == 1}
     {
-        #return #nop
+        #return {#nop}
     };
     Get_Music_Message_String;
     #script {i} {playerctl -p %any,chromium metadata -f '{{playerName}}'};
@@ -75,7 +75,7 @@
 {
     #if {@check_music_player{} == 1}
     {
-        #return #nop
+        #return {#nop}
     };
     Get_Music_Message_String;
     #script {scripts/lyrics.sh '%2' "${music[newAutoTitleString]}"}
@@ -83,17 +83,18 @@
 {9}
 
 
+
 #FUNCTION {check_music_player}
 {
-    #script {command -v playerctl &> /dev/null || echo "#echo {Please install playerctl.};#return 1"};
+    #script {command -v playerctl > /dev/null 2>&1 || echo "#echo {Please install playerctl.};#return 1"};
     #script {i} {playerctl -p %any,chromium status};
     #variable {i} {${i[1]}};
     #if {{$i} != {Playing}}
     {
         NOTIFY No detected music.;
-        #return 1
+        #return {1}
     };
-    #return 0
+    #return {0}
 }
 
 
@@ -120,9 +121,10 @@
 
 #MACRO {\eM}
 {
-    #if {!&{music[channel]}}
+    #nop {Have to make sure the music channel is not ooc since in the past the default channel was incorrectly set to that.};
+    #if {!&{music[channel]} || {${music[channel]}} == {ooc}}
     {
-        #variable {music[channel]} {ooc}
+        #variable {music[channel]} {music}
     };
     mpost ${music[channel]}
 }
@@ -197,6 +199,7 @@
     #nop {Music player volume down.};
     #system {playerctl -p %any,chromium volume 0.05-}
 }
+
 
 
 #VARIABLE {msg} {}
