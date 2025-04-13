@@ -44,7 +44,7 @@
 
 #ACTION {^A {straw man|clay man|bone guardian|flesh beast|metal construct|wood woad} {starts|stops} following you.$}
 {
-    #if {{${client[releasing]}} != {true}}
+    #if {!${spam[releasing]}}
     {
         #if {{%2} == {starts}}
         {
@@ -93,7 +93,7 @@
     };
     #else
     {
-        #variable {client[releasing]} {false}
+        #variable {spam[releasing]} {0}
     }
 }
 {4}
@@ -707,7 +707,7 @@
 
 #ACTION {^You release %1 from your control.$}
 {
-    spamset {client[releasing]} {true}
+    spamset releasing
 }
 {9}
 

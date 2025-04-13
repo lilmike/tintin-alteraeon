@@ -15,7 +15,7 @@
 	{
 		#variable {castTankMinion} {true}
 	};
-	#if {{${client[releasing]}} != {true}}
+	#if {!${spam[releasing]}}
 	{
 		#if {{${auto[iceElemental]}} == {true} && ${character[currentMana]} > 200}
 		{
@@ -40,7 +40,7 @@
 	};
 	#else
 	{
-		#variable {client[releasing]} {false}
+		#variable {spam[releasing]} {0}
 	}
 }
 {9}

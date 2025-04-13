@@ -61,7 +61,7 @@
 {
     #if {{${auto[mound]}} == {true}}
     {
-        #if {{%0} == {A shambling mound stops following you.} && {${client[releasing]}} != {true}}
+        #if {{%0} == {A shambling mound stops following you.} && !${spam[releasing]}}
         {
             vcast shambling mound
         };
@@ -71,7 +71,7 @@
         };
         #else
         {
-            #variable {client[releasing]} {false}
+            #variable {spam[releasing]} {0}
         }
     }
 }
@@ -232,7 +232,7 @@
 
 #ACTION {^{A|a} water weird stops following you.$}
 {
-    #if {{${client[releasing]}} != {true} && {${auto[weird]}} == {true}}
+    #if {!${spam[releasing]} && {${auto[weird]}} == {true}}
     {
         #if {{${kxwt[terrain]}} == {{38|32|29|21|20|19|18|7}} || {${client[spring]}} == {true}}
         {
