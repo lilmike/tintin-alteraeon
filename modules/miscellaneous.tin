@@ -216,7 +216,7 @@
 }
 {9}
 
-#ACTION {^silent_You feel sharp, and currently gain %d hitpoints, %d mana, and %d movement while {standing|sleeping|sitting}.$}
+#ACTION {^silent_You currently gain %1 hitpoints, %2 mana, and %3 movement while {standing|sleeping|sitting}.$}
 {
     #math {character[hpRegenTime]} {(${character[maxHp]} - ${character[currentHp]}) / %1};
     #math {character[mnRegenTime]} {(${character[maxMana]} - ${character[currentMana]}) / %2};
@@ -225,7 +225,7 @@
 }
 {9}
 
-#ACTION {^silent_You currently gain %1 hitpoints, %2 mana, and %3 movement while {standing|sleeping|sitting}.$}
+#ACTION {^silent_You feel sharp, and currently gain %d hitpoints, %d mana, and %d movement while {standing|sleeping|sitting}.$}
 {
     #math {character[hpRegenTime]} {(${character[maxHp]} - ${character[currentHp]}) / %1};
     #math {character[mnRegenTime]} {(${character[maxMana]} - ${character[currentMana]}) / %2};
@@ -465,10 +465,12 @@
     #else
     {
         #nop local variables suck apparently. #local {dayOfWeek} {};
-        #script {dayOfWeek} {date +%w};
+        #script {dayOfWeek} {TZ=EST5EDT date +%w};
         #if {{${dayOfWeek[1]}} != {3}}
         {
-            #showme {It doesn't appear to be hump day right now, but in case it is in server time...}
+            #showme {It doesn't appear to be hump day right now...};
+            #unvariable {dayOfWeek};
+            #return
         };
         #unvariable {dayOfWeek};
         #local {time} {};
@@ -523,12 +525,6 @@
     {
         #variable {x} {$tmp}
     }
-}
-{9}
-
-#ALIAS {^{fi(?:n(?:g(?:e(?:r)?)?)?)?} %1}
-{
-    profile %1
 }
 {9}
 
@@ -728,6 +724,12 @@
 }
 {9}
 
+#ALIAS {^{fi(?:n(?:g(?:e(?:r)?)?)?)?} %1}
+{
+    profile %1
+}
+{9}
+
 #ALIAS {^{loa|load}$}
 {
     spells;
@@ -839,6 +841,7 @@
 {9}
 
 
+
 #FUNCTION {command}
 {
     #script {result} {bash scripts/rndcmd.sh "%1" "%2"};
@@ -853,6 +856,7 @@
     #showme {Buffer lock toggled.};
     #buffer {lock}
 }
+
 
 
 #SUBSTITUTE {MOV_REGEN} {MOVE_REGEN} {5}
