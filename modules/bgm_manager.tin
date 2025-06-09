@@ -32,7 +32,8 @@
     #if {{%1} == {no}}
     {
         #showme {Background music disabled.};
-        #variable {character[music]} {0}
+        #variable {character[music]} {0};
+        #system {pkill music-daemon > /dev/null 2>&1}
     };
     #else
     {
