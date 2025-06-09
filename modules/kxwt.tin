@@ -1,3 +1,30 @@
+#action {^kxwt_music %S %S$} {
+#var {kxwt[music]} {%1 %2};
+#if {{%1} != {channel_stop}} {
+#showme {Warning, unexpected music command received. Please notify the developers and include any text in music-errors.log in your tintin-alteraeon directory.};
+#system {echo "Unexpected command received, expecting channel_stop: %0" >> music-errors.log}
+};
+MUSIC_STOP %2
+}
+{8}
+
+#action {^kxwt_music %S %S %S$} {
+#var {kxwt[music]} {%1 %2 %3};
+#if {{%1} != {channel_play}} {
+#showme {Warning, unexpected music command received. Please notify the developers and include any text in music-errors.log in your tintin-alteraeon directory.};
+#system {echo "Unexpected command received, expecting channel_play: %0" >> music-errors.log}
+};
+MUSIC_PLAY %2 %3
+}
+{8}
+
+#action {^kxwt_music%*} {
+#var {kxwt[music]} {%1};
+#showme {Warning, unexpected music command received. Please notify the developers and include any text in music-errors.log in your tintin-alteraeon directory.};
+#system {echo "Unexpected music format received: %0" >> music-errors.log}
+}
+{9}
+
 #ACTION {^kxwt_area -1}
 {
     #variable {kxwt[area]} {-1};
@@ -319,6 +346,9 @@
 
 #ACTION {^kxwt_%1 %2}
 {
+#if {{%1} == {music}} {
+#system {echo "%2" >> music.log}
+};
     #variable {kxwt[%1]} {%2}
 }
 {9}
