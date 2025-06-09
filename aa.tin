@@ -209,6 +209,7 @@
 
 #EVENT {SESSION DISCONNECTED}
 {
+#system {pkill music-daemon &> /dev/null};
 	qcsave;
 	#unvariable {connected};
 	#end

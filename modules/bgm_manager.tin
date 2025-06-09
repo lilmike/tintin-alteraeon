@@ -1,12 +1,16 @@
 #ALIAS {^MUSIC_PLAY %S %*}
 {
-    #system {if ! pgrep -u $USER music-daemon > /dev/null 2>&1 ; then ./music-manager-go/bin/music-daemon > /dev/null 2>&1 & fi};
-    #local {mVolume} {};
-    #if {{%1} == {music}}
+    #if {!@is_spammed{%2}}
     {
-        #variable {mVolume} {--volume -0.5}
-    };
-    #system {./music-manager-go/bin/music-client play "http://alteraeon.com/soundpack/wav_v1/%2.wav" %1 $(if echo "%2.wav" | grep -q "/" ; then echo "%2.wav" | rev | cut -d/ -f2- | rev ; fi) --loop $mVolume > /dev/null 2>&1 &}
+        spamset %2 1;
+        #system {if ! pgrep -u $USER music-daemon > /dev/null 2>&1 ; then ./music-manager-go/bin/music-daemon > /dev/null 2>&1 & fi};
+        #local {mVolume} {};
+        #if {{%1} == {music}}
+        {
+            #variable {mVolume} {--volume -0.5}
+        };
+        #system {./music-manager-go/bin/music-client play "http://alteraeon.com/soundpack/wav_v1/%2.wav" %1 $(if echo "%2.wav" | grep -q "/" ; then echo "%2.wav" | rev | cut -d/ -f2- | rev ; fi) --loop $mVolume > /dev/null 2>&1 &}
+    }
 }
 {9}
 
