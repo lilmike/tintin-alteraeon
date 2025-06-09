@@ -1,15 +1,22 @@
 #ALIAS {^MUSIC_PLAY %S %*}
 {
-    #if {!@is_spammed{%2}}
+    #if {!&{character[music]}}
     {
-        spamset %2 1;
-        #system {if ! pgrep -u $USER music-daemon > /dev/null 2>&1 ; then ./music-manager-go/bin/music-daemon > /dev/null 2>&1 & fi};
-        #local {mVolume} {};
-        #if {{%1} == {music}}
+        #variable {character[music]} {1}
+    };
+    #if {${character[music]}}
+    {
+        #if {!@is_spammed{%2}}
         {
-            #variable {mVolume} {--volume -0.5}
-        };
-        #system {./music-manager-go/bin/music-client play "http://alteraeon.com/soundpack/wav_v1/%2.wav" %1 $(if echo "%2.wav" | grep -q "/" ; then echo "%2.wav" | rev | cut -d/ -f2- | rev ; fi) --loop $mVolume > /dev/null 2>&1 &}
+            spamset %2 1;
+            #system {if ! pgrep -u $USER music-daemon > /dev/null 2>&1 ; then ./music-manager-go/bin/music-daemon > /dev/null 2>&1 & fi};
+            #local {mVolume} {};
+            #if {{%1} == {music}}
+            {
+                #variable {mVolume} {--volume -0.5}
+            };
+            #system {./music-manager-go/bin/music-client play "http://alteraeon.com/soundpack/wav_v1/%2.wav" %1 $(if echo "%2.wav" | grep -q "/" ; then echo "%2.wav" | rev | cut -d/ -f2- | rev ; fi) --loop $mVolume > /dev/null 2>&1 &}
+        }
     }
 }
 {9}
@@ -19,4 +26,20 @@
     #system {if pgrep -u $USER music-daemon > /dev/null 2>&1  ; then ./music-manager-go/bin/music-client stop %1 > /dev/null 2>&1 & fi}
 }
 {9}
+
+#ALIAS {^{no|}bgm$}
+{
+    #if {{%1} == {no}}
+    {
+        #showme {Background music disabled.};
+        #variable {character[music]} {0}
+    };
+    #else
+    {
+        #showme {Background music enabled. Music will start playing when next requested by the game.};
+        #variable {character[music]} {1}
+    }
+}
+{9}
+
 
