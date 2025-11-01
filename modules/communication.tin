@@ -1,8 +1,3 @@
-#alias {^NOTIFY %*$} {
-#echo {%1}
-}
-{9}
-
 #ACTION {^silent_paste_END_OF_PASTE_TEXT$}
 {
     #replace {pasteText} { %s} { };
@@ -168,6 +163,12 @@
 {
     autobrag You successfully hunted all six kinds of snipe! You received %1 snipe hunt exp!;
     post $name successfully hunted all six kinds of snipe and received %1 snipe hunt experience!
+}
+{9}
+
+#ACTION {^A table appears before you, with %*, %*, and %* seated around it.$}
+{
+    #variable {client[gambleGame]} {stud}
 }
 {9}
 
@@ -470,6 +471,12 @@
     #unvariable {i};
     @extract_link{$realMSG};
     #unvariable {realMSG}
+}
+{9}
+
+#ALIAS {^NOTIFY %*$}
+{
+    #echo {%1}
 }
 {9}
 

@@ -166,7 +166,7 @@
     #if {{${auto[gamble]}} == {false}}
     {
         #line {gag};
-        #echo {%0 (You can automatically spend gambling gold by typing autogamble gametype where gametype is merchant or slots.)}
+        #echo {%0 (You can automatically spend gambling gold by typing autogamble game where game is merchant, stud, or slots.)}
     };
     #else
     {
@@ -397,14 +397,14 @@
 
 #ALIAS {^autogamble %S}
 {
-    #if {{%1} == {{merchant|slots}}}
+    #if {{%1} == {{merchant|slots|stud}}}
     {
         #variable {auto[gamble]} {%1};
         #showme {You will now automatically spend gambling gold on the %1 game. Good luck!}
     };
     #else
     {
-        #showme {Invalid game type chosen. Choices are merchant or slots.}
+        #showme {Invalid game type chosen. Choices are merchant, stud, or slots.}
     }
 }
 {9}

@@ -17,7 +17,8 @@
 
 #ACTION {^junk_You drop %*.$}
 {
-    sac $junkItem #unvariable {junkItem}
+    sac $junkItem;
+#unvariable {junkItem}
 }
 {9}
 
